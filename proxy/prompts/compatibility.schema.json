@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inkstone.app/schemas/compatibility.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["headline", "overall_band", "overall_score", "score_breakdown", "strengths", "friction", "tips", "favourable_years_note", "rule_citations", "disclaimer"],
+  "properties": {
+    "headline": { "type": "string", "maxLength": 100 },
+    "overall_band": { "type": "string", "enum": ["strong", "good", "mixed", "challenging"] },
+    "overall_score": { "type": "number", "minimum": 0, "maximum": 100 },
+    "score_breakdown": {
+      "type": "array", "maxItems": 6,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["method", "score", "explanation"],
+        "properties": {
+          "method": { "type": "string", "enum": ["day_master_interaction", "branch_relations", "spouse_palace", "zodiac_harmony", "ziwei_marriage_palace", "western_synastry"] },
+          "score": { "type": "number", "minimum": 0, "maximum": 100 },
+          "explanation": { "type": "string", "maxLength": 500 }
+        }
+      }
+    },
+    "strengths": { "type": "array", "maxItems": 5, "items": { "type": "string", "maxLength": 300 } },
+    "friction": { "type": "array", "maxItems": 5, "items": { "type": "string", "maxLength": 300 } },
+    "tips": { "type": "array", "maxItems": 5, "items": { "type": "string", "maxLength": 300 } },
+    "favourable_years_note": { "type": ["string", "null"], "maxLength": 400 },
+    "rule_citations": {
+      "type": "array", "minItems": 1, "maxItems": 10,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["rule", "source_field"],
+        "properties": {
+          "rule": { "type": "string", "maxLength": 200 },
+          "source_field": { "type": "string", "maxLength": 100 }
+        }
+      }
+    },
+    "disclaimer": { "type": "string", "maxLength": 200 }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "inkstone-proxy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Stateless AI and Maps proxy for the Inkstone app. Stores nothing.",
+  "scripts": {
+    "dev": "wrangler dev --var INTEGRITY_MODE:off",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240919.0",
+    "typescript": "^5.5.4",
+    "wrangler": "^3.78.0"
+  }
+}

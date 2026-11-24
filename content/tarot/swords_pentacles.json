@@ -1,0 +1,735 @@
+{
+  "version": 1,
+  "locale": "en-SG",
+  "disclaimer": "For reflection and entertainment. Not professional advice.",
+  "cards": [
+    {
+      "id": "ace-of-swords",
+      "name": "Ace of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 1,
+      "element": "Air",
+      "keywords_upright": ["clarity", "truth", "new idea", "breakthrough"],
+      "keywords_reversed": ["confusion", "mixed signals", "rushed judgement"],
+      "upright": {
+        "summary": "A clear thought cuts through the fog. You can see what is true and name it simply.",
+        "love": "Honest words open the door. Say what you mean, kindly.",
+        "career": "A fresh idea or plan takes shape. Write it down while it is sharp.",
+        "money": "You see your numbers clearly. A simple, tidy plan feels within reach.",
+        "advice": "Trust the clear thought and act on it gently."
+      },
+      "reversed": {
+        "summary": "The picture is a little blurry right now. Give your thoughts time to settle before deciding.",
+        "love": "Messages may be misread. Ask before you assume.",
+        "career": "Too many ideas compete at once. Pick one and test it.",
+        "money": "Details feel unclear. Review the basics before any choice.",
+        "advice": "Slow down and ask one more question."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A single upright sword rising from soft midnight clouds, its blade glowing champagne gold, a fine crown floating at the tip."
+    },
+    {
+      "id": "two-of-swords",
+      "name": "Two of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 2,
+      "element": "Air",
+      "keywords_upright": ["choice", "pause", "balance", "stalemate"],
+      "keywords_reversed": ["indecision", "information overload", "opening up"],
+      "upright": {
+        "summary": "Two paths sit side by side and you are weighing them. A quiet pause can be wise before you choose.",
+        "love": "You may be holding back feelings. A calm talk can ease the tension.",
+        "career": "A decision waits on your desk. List the facts on both sides.",
+        "money": "Two options look similar. Compare them plainly before committing.",
+        "advice": "Take the pause, then make the choice."
+      },
+      "reversed": {
+        "summary": "The waiting is starting to weigh on you. More information may help, but too much can cloud things.",
+        "love": "Avoided topics come to the surface. That can be a relief.",
+        "career": "Others' opinions feel loud. Return to what you know.",
+        "money": "Endless comparing tires you out. Set a simple deadline.",
+        "advice": "Lower the blindfold and look at what is really there."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A calm blindfolded figure on a stone bench holding two crossed gold swords, a crescent moon over a still midnight sea."
+    },
+    {
+      "id": "three-of-swords",
+      "name": "Three of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 3,
+      "element": "Air",
+      "keywords_upright": ["heartache", "honest feelings", "release", "grief"],
+      "keywords_reversed": ["healing", "forgiveness", "moving on"],
+      "upright": {
+        "summary": "Something tender asks to be felt. Naming the hurt is the first step toward easing it.",
+        "love": "A hard truth may surface. Be gentle with yourself and others.",
+        "career": "A setback or harsh word may sting. It does not define you.",
+        "money": "A disappointment may need accepting. Learn from it and reset.",
+        "advice": "Let yourself feel it, then let it pass like rain."
+      },
+      "reversed": {
+        "summary": "The hurt is softening. You are ready to forgive and breathe again.",
+        "love": "Old wounds begin to heal. Kind words help.",
+        "career": "You recover from a rough patch with new wisdom.",
+        "money": "You move past a small loss and rebuild calmly.",
+        "advice": "Choose healing over replaying the story."
+      },
+      "yes_no": "no",
+      "image_prompt": "A soft gold heart pierced by three slender swords, gentle rain falling from midnight clouds that are beginning to part."
+    },
+    {
+      "id": "four-of-swords",
+      "name": "Four of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 4,
+      "element": "Air",
+      "keywords_upright": ["rest", "recovery", "stillness", "retreat"],
+      "keywords_reversed": ["restlessness", "burnout", "slow return"],
+      "upright": {
+        "summary": "This is a time to rest and recharge. Stillness now makes the next step stronger.",
+        "love": "Space can be healthy. Quiet time together or apart restores you.",
+        "career": "Step back from the rush. A short break sharpens your focus.",
+        "money": "Pause big decisions. Let things settle first.",
+        "advice": "Rest is part of the work."
+      },
+      "reversed": {
+        "summary": "You may be pushing on when you need a pause. Or you are slowly ready to return.",
+        "love": "Restless feelings stir. Talk before you withdraw.",
+        "career": "Watch for tiredness. Ease back in at a steady pace.",
+        "money": "Avoid deciding while worn out.",
+        "advice": "Listen to your body before your to-do list."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A peaceful figure resting in a quiet temple hall, three gold swords on the wall and one beneath, soft midnight light through a window."
+    },
+    {
+      "id": "five-of-swords",
+      "name": "Five of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 5,
+      "element": "Air",
+      "keywords_upright": ["conflict", "winning at a cost", "pride", "tension"],
+      "keywords_reversed": ["making peace", "letting go", "reconciliation"],
+      "upright": {
+        "summary": "A win may not feel like a win. Ask whether the fight is worth it.",
+        "love": "Being right matters less than being close. Soften your tone.",
+        "career": "Office tension rises. Choose your battles with care.",
+        "money": "Avoid deals that leave someone feeling cheated.",
+        "advice": "Pick peace over pride."
+      },
+      "reversed": {
+        "summary": "The dust is settling. There is room to apologise and move forward.",
+        "love": "A sincere sorry can mend things.",
+        "career": "Old tensions ease. Find common ground.",
+        "money": "Settle small disputes simply and fairly.",
+        "advice": "Lay down the sword and offer your hand."
+      },
+      "yes_no": "no",
+      "image_prompt": "A figure holding gold swords on a windswept shore at dusk, two others walking away, midnight clouds streaked with champagne light."
+    },
+    {
+      "id": "six-of-swords",
+      "name": "Six of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 6,
+      "element": "Air",
+      "keywords_upright": ["transition", "moving on", "calmer waters", "journey"],
+      "keywords_reversed": ["stuck", "unfinished business", "resistance"],
+      "upright": {
+        "summary": "You are moving toward calmer waters. The journey is quiet but steady.",
+        "love": "You leave old patterns behind and find more ease.",
+        "career": "A change of role or approach brings relief.",
+        "money": "Things slowly steady. Keep a calm, simple course.",
+        "advice": "Keep rowing; the shore is closer than it looks."
+      },
+      "reversed": {
+        "summary": "Something holds you back from moving on. Look at what you still carry.",
+        "love": "Old feelings linger. Give them a kind goodbye.",
+        "career": "A change is delayed. Prepare while you wait.",
+        "money": "Clear small loose ends before the next step.",
+        "advice": "Set down what you no longer need to carry."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A small boat gliding across a midnight river toward a gold-lit shore, six swords standing upright in the bow."
+    },
+    {
+      "id": "seven-of-swords",
+      "name": "Seven of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 7,
+      "element": "Air",
+      "keywords_upright": ["strategy", "discretion", "shortcuts", "caution"],
+      "keywords_reversed": ["coming clean", "honesty", "rethinking plans"],
+      "upright": {
+        "summary": "Clever thinking helps, but check that it stays honest. Not everything is as it seems.",
+        "love": "Be open about your feelings. Hidden things tend to surface.",
+        "career": "Work smart and keep your notes. Protect your ideas.",
+        "money": "Read the fine print. If it seems too easy, look again.",
+        "advice": "Be clever and stay honest."
+      },
+      "reversed": {
+        "summary": "Truth wants to come out. Honesty clears the air.",
+        "love": "A frank talk brings relief.",
+        "career": "You drop a shortcut that was not working.",
+        "money": "You return to a plain, open approach.",
+        "advice": "Choose the straight path."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A quiet figure tiptoeing away from a moonlit camp carrying five gold swords, two left behind glinting in the grass."
+    },
+    {
+      "id": "eight-of-swords",
+      "name": "Eight of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 8,
+      "element": "Air",
+      "keywords_upright": ["feeling stuck", "self-doubt", "limiting beliefs", "overthinking"],
+      "keywords_reversed": ["freedom", "new perspective", "self-trust"],
+      "upright": {
+        "summary": "You may feel boxed in, but the walls are thinner than they seem. A small step can show the way out.",
+        "love": "Worry may shape the story. Check the facts with your partner.",
+        "career": "Doubt holds you back more than reality does.",
+        "money": "Options exist. List them before deciding there are none.",
+        "advice": "Question the thought that says you cannot."
+      },
+      "reversed": {
+        "summary": "The blindfold slips and you see more choices. Confidence returns.",
+        "love": "You speak up for what you need.",
+        "career": "You find a way around an old obstacle.",
+        "money": "A clearer view brings calm.",
+        "advice": "Take the first step out."
+      },
+      "yes_no": "no",
+      "image_prompt": "A loosely blindfolded figure standing among eight gold swords in soft midnight mist, a path of light opening behind them."
+    },
+    {
+      "id": "nine-of-swords",
+      "name": "Nine of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 9,
+      "element": "Air",
+      "keywords_upright": ["worry", "sleepless nights", "overthinking", "stress"],
+      "keywords_reversed": ["relief", "reaching out", "perspective"],
+      "upright": {
+        "summary": "Late-night worries can feel bigger than they are. Morning often brings a kinder view.",
+        "love": "Fears may run ahead of facts. Share them gently.",
+        "career": "Stress builds in your head. Write worries down to shrink them.",
+        "money": "Worry clouds judgement. Look at the real numbers calmly.",
+        "advice": "Talk to someone you trust."
+      },
+      "reversed": {
+        "summary": "The worry is lifting. You find support and a clearer head.",
+        "love": "Reassurance comes when you open up.",
+        "career": "A problem turns out smaller than feared.",
+        "money": "You regain calm and a sense of control.",
+        "advice": "Let the light in a little at a time."
+      },
+      "yes_no": "no",
+      "image_prompt": "A figure sitting up in bed under a starry midnight sky, nine faint gold swords on the wall, a gentle lamp glowing nearby."
+    },
+    {
+      "id": "ten-of-swords",
+      "name": "Ten of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 10,
+      "element": "Air",
+      "keywords_upright": ["ending", "rock bottom", "release", "new dawn"],
+      "keywords_reversed": ["recovery", "rising again", "lessons learned"],
+      "upright": {
+        "summary": "A chapter closes fully. Once it is over, there is only up, and dawn is near.",
+        "love": "A pattern ends. That makes room for something healthier.",
+        "career": "One path finishes. Rest, then look ahead.",
+        "money": "Accept what is done and start a fresh plan.",
+        "advice": "Let the ending be an ending."
+      },
+      "reversed": {
+        "summary": "You are getting back on your feet. The worst has passed.",
+        "love": "Healing begins slowly and steadily.",
+        "career": "You rebuild with new wisdom.",
+        "money": "Small, steady steps restore balance.",
+        "advice": "Rise slowly and kindly."
+      },
+      "yes_no": "no",
+      "image_prompt": "A quiet shoreline at first light, ten gold swords resting in the sand, a champagne sunrise breaking over a midnight sea."
+    },
+    {
+      "id": "page-of-swords",
+      "name": "Page of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 11,
+      "element": "Air",
+      "keywords_upright": ["curiosity", "learning", "alertness", "new ideas"],
+      "keywords_reversed": ["gossip", "scattered focus", "all talk"],
+      "upright": {
+        "summary": "A curious mind is eager to learn. Questions lead to useful answers.",
+        "love": "Lively talk sparks connection. Listen as much as you speak.",
+        "career": "A course or new skill catches your interest.",
+        "money": "Research before acting. Curiosity pays off in knowledge.",
+        "advice": "Ask good questions."
+      },
+      "reversed": {
+        "summary": "Energy is scattered or words run ahead of action. Focus helps.",
+        "love": "Avoid gossip and hasty remarks.",
+        "career": "Finish one idea before starting another.",
+        "money": "Do not act on rumours.",
+        "advice": "Think before you speak."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A young figure on a windy hill holding a gold sword aloft, birds circling in a midnight-blue sky edged with gold."
+    },
+    {
+      "id": "knight-of-swords",
+      "name": "Knight of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 12,
+      "element": "Air",
+      "keywords_upright": ["drive", "speed", "ambition", "direct action"],
+      "keywords_reversed": ["haste", "impatience", "bluntness"],
+      "upright": {
+        "summary": "Things move fast and you are ready to charge ahead. Direction matters as much as speed.",
+        "love": "Feelings come on strong. Be bold, and be kind.",
+        "career": "Push a project forward with energy.",
+        "money": "Quick chances appear. Check them before rushing.",
+        "advice": "Move fast, but look where you are going."
+      },
+      "reversed": {
+        "summary": "Rushing may cause stumbles. Slow down a notch.",
+        "love": "Blunt words can hurt. Soften them.",
+        "career": "Impatience creates mistakes. Double-check.",
+        "money": "Avoid impulse choices.",
+        "advice": "Ease off the reins a little."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A knight galloping on a white horse through midnight wind, gold sword forward, clouds streaming like champagne silk."
+    },
+    {
+      "id": "queen-of-swords",
+      "name": "Queen of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 13,
+      "element": "Air",
+      "keywords_upright": ["clarity", "independence", "honesty", "fair judgement"],
+      "keywords_reversed": ["coldness", "harsh words", "guardedness"],
+      "upright": {
+        "summary": "Clear sight and kind honesty guide you. You see things as they are.",
+        "love": "You know what you want and say it plainly.",
+        "career": "Your sharp judgement is valued. Speak with confidence.",
+        "money": "A clear-eyed review keeps things tidy.",
+        "advice": "Be honest, and let warmth soften it."
+      },
+      "reversed": {
+        "summary": "Clarity may turn cold. Let some warmth back in.",
+        "love": "Walls may be up. Let someone in a little.",
+        "career": "Criticism lands harder than you intend.",
+        "money": "Avoid judging too fast.",
+        "advice": "Lead with understanding."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A composed queen on a carved throne among the clouds, gold sword upright, one hand open, a single bird overhead in a midnight sky."
+    },
+    {
+      "id": "king-of-swords",
+      "name": "King of Swords",
+      "arcana": "minor",
+      "suit": "swords",
+      "number": 14,
+      "element": "Air",
+      "keywords_upright": ["authority", "logic", "integrity", "clear rules"],
+      "keywords_reversed": ["rigidity", "misused power", "overthinking"],
+      "upright": {
+        "summary": "Calm logic and fairness lead the way. Decisions come from a steady mind.",
+        "love": "Steady, honest talk builds trust.",
+        "career": "Good structure and clear thinking earn respect.",
+        "money": "Rules and order keep things on track.",
+        "advice": "Decide with a clear head and a fair heart."
+      },
+      "reversed": {
+        "summary": "Logic may become too strict. Make room for feeling.",
+        "love": "Being right is not the same as being close.",
+        "career": "Avoid control for its own sake.",
+        "money": "Rigid plans may need some flex.",
+        "advice": "Balance reason with kindness."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A wise king seated high above the clouds, gold sword held upright, butterflies carved on his throne, midnight sky with gold stars."
+    },
+    {
+      "id": "ace-of-pentacles",
+      "name": "Ace of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 1,
+      "element": "Earth",
+      "keywords_upright": ["new opportunity", "stability", "growth", "grounding"],
+      "keywords_reversed": ["missed chance", "poor planning", "delay"],
+      "upright": {
+        "summary": "A solid new beginning is offered. Plant the seed and tend it.",
+        "love": "Something steady and real can grow.",
+        "career": "A new role or project shows promise.",
+        "money": "A good start for a practical plan.",
+        "advice": "Take the opportunity with both hands."
+      },
+      "reversed": {
+        "summary": "A chance may slip by or need more groundwork. Plan before planting.",
+        "love": "Focus on what makes you feel secure.",
+        "career": "Details need sorting before you begin.",
+        "money": "Pause and build a simple plan first.",
+        "advice": "Prepare the soil."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A hand emerging from a midnight cloud holding a glowing gold coin, a garden gate and lush path below."
+    },
+    {
+      "id": "two-of-pentacles",
+      "name": "Two of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 2,
+      "element": "Earth",
+      "keywords_upright": ["balance", "juggling", "adaptability", "priorities"],
+      "keywords_reversed": ["overwhelm", "overcommitment", "disorder"],
+      "upright": {
+        "summary": "You are juggling several things, and doing it well. Stay light on your feet.",
+        "love": "Make time for each other amid busy days.",
+        "career": "Multitasking works if you stay flexible.",
+        "money": "Keep a simple balance between in and out.",
+        "advice": "Keep the rhythm, not perfection."
+      },
+      "reversed": {
+        "summary": "Too many balls in the air. Something needs to drop.",
+        "love": "Busy schedules crowd out closeness.",
+        "career": "Say no to one task.",
+        "money": "Tidy up loose ends before adding more.",
+        "advice": "Simplify."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A dancer juggling two gold coins linked by an infinity ribbon, ships rolling on midnight waves behind."
+    },
+    {
+      "id": "three-of-pentacles",
+      "name": "Three of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 3,
+      "element": "Earth",
+      "keywords_upright": ["teamwork", "skill", "collaboration", "craft"],
+      "keywords_reversed": ["misalignment", "poor teamwork", "low standards"],
+      "upright": {
+        "summary": "Good work comes from working together. Your skill is noticed.",
+        "love": "Building something together brings you closer.",
+        "career": "Collaboration and craft shine.",
+        "money": "Shared planning brings good results.",
+        "advice": "Ask for input and share credit."
+      },
+      "reversed": {
+        "summary": "The team is out of step. Clear roles help.",
+        "love": "Agree on shared goals.",
+        "career": "Clarify who does what.",
+        "money": "Check that everyone is on the same page.",
+        "advice": "Talk it through together."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A craftsperson in a cathedral archway with two planners, three gold coins carved into the stonework, lit by midnight lanterns."
+    },
+    {
+      "id": "four-of-pentacles",
+      "name": "Four of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 4,
+      "element": "Earth",
+      "keywords_upright": ["security", "saving", "control", "holding on"],
+      "keywords_reversed": ["letting go", "generosity", "loosening grip"],
+      "upright": {
+        "summary": "You value safety and hold things close. Make sure it does not become a tight grip.",
+        "love": "Feeling safe matters. Share a little more of yourself.",
+        "career": "Protect what you built, but stay open to change.",
+        "money": "Careful habits feel comforting. Balance them with ease.",
+        "advice": "Hold firmly, not tightly."
+      },
+      "reversed": {
+        "summary": "You loosen your grip and feel lighter. Generosity flows.",
+        "love": "Opening up deepens trust.",
+        "career": "Sharing ideas brings support.",
+        "money": "Review where you hold too tightly or too loosely.",
+        "advice": "Let some things go."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A seated figure hugging a gold coin, one on the crown, two beneath the feet, a quiet city skyline at midnight."
+    },
+    {
+      "id": "five-of-pentacles",
+      "name": "Five of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 5,
+      "element": "Earth",
+      "keywords_upright": ["hardship", "feeling left out", "worry", "seeking help"],
+      "keywords_reversed": ["recovery", "support found", "better times"],
+      "upright": {
+        "summary": "A lean season may feel cold. Help is often closer than you think.",
+        "love": "You may feel unseen. Reach out rather than wait.",
+        "career": "A tough stretch tests you. Ask for support.",
+        "money": "Things feel tight. Look at simple steps and trusted help.",
+        "advice": "Look for the lit window."
+      },
+      "reversed": {
+        "summary": "Warmth returns. You find support and a way forward.",
+        "love": "Connection comes back after distance.",
+        "career": "Recovery begins step by step.",
+        "money": "Pressure eases slowly.",
+        "advice": "Accept the help offered."
+      },
+      "yes_no": "no",
+      "image_prompt": "Two figures walking through soft snow past a glowing stained-glass window with five gold coins, midnight sky above."
+    },
+    {
+      "id": "six-of-pentacles",
+      "name": "Six of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 6,
+      "element": "Earth",
+      "keywords_upright": ["generosity", "sharing", "fairness", "giving and receiving"],
+      "keywords_reversed": ["strings attached", "imbalance", "one-sided giving"],
+      "upright": {
+        "summary": "Giving and receiving flow fairly. Kindness comes back around.",
+        "love": "Mutual care keeps things balanced.",
+        "career": "Mentoring or support is shared well.",
+        "money": "A fair exchange feels good.",
+        "advice": "Give what you can, and receive with grace."
+      },
+      "reversed": {
+        "summary": "The balance tips. Check that giving is fair both ways.",
+        "love": "One person may give too much.",
+        "career": "Watch for favours with strings.",
+        "money": "Keep agreements clear.",
+        "advice": "Restore the balance."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A kind merchant holding gold scales, offering coins to two figures, six gold coins glowing against a midnight backdrop."
+    },
+    {
+      "id": "seven-of-pentacles",
+      "name": "Seven of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 7,
+      "element": "Earth",
+      "keywords_upright": ["patience", "assessment", "long-term view", "steady growth"],
+      "keywords_reversed": ["impatience", "wasted effort", "rethinking"],
+      "upright": {
+        "summary": "Your effort is growing quietly. Pause to see what is working.",
+        "love": "Steady care builds something lasting.",
+        "career": "Review progress before the next push.",
+        "money": "Slow, steady habits add up over time.",
+        "advice": "Be patient with the harvest."
+      },
+      "reversed": {
+        "summary": "You may feel results are slow. Check if the method needs a change.",
+        "love": "Ask if both of you are tending the garden.",
+        "career": "Redirect effort to what bears fruit.",
+        "money": "Rethink what is not working.",
+        "advice": "Adjust, do not abandon."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A gardener leaning on a hoe, gazing at a vine heavy with seven gold coins, under a twilight-to-midnight sky."
+    },
+    {
+      "id": "eight-of-pentacles",
+      "name": "Eight of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 8,
+      "element": "Earth",
+      "keywords_upright": ["diligence", "mastery", "practice", "focus"],
+      "keywords_reversed": ["perfectionism", "boredom", "cutting corners"],
+      "upright": {
+        "summary": "Practice builds real skill. Steady effort leads to quality.",
+        "love": "Small daily efforts make love strong.",
+        "career": "Focused work and learning pay off.",
+        "money": "Good habits, repeated, make a difference.",
+        "advice": "Do the next piece well."
+      },
+      "reversed": {
+        "summary": "Work may feel dull or overly perfect. Find meaning or ease.",
+        "love": "Avoid treating love like a chore.",
+        "career": "Do not polish forever; ship it.",
+        "money": "Check for careless shortcuts.",
+        "advice": "Good enough can be great."
+      },
+      "yes_no": "yes",
+      "image_prompt": "An artisan at a workbench carving gold coins, finished coins displayed on the wall, warm lamplight in a midnight workshop."
+    },
+    {
+      "id": "nine-of-pentacles",
+      "name": "Nine of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 9,
+      "element": "Earth",
+      "keywords_upright": ["self-reliance", "comfort", "reward", "independence"],
+      "keywords_reversed": ["overspending", "dependence", "insecurity"],
+      "upright": {
+        "summary": "You enjoy the fruits of your effort. Comfort and confidence sit well with you.",
+        "love": "You are whole on your own, which makes love lighter.",
+        "career": "Your hard work is recognised.",
+        "money": "A feeling of comfort and good habits.",
+        "advice": "Enjoy what you built."
+      },
+      "reversed": {
+        "summary": "Comfort may feel shaky. Look at what truly makes you secure.",
+        "love": "Avoid relying on others for your worth.",
+        "career": "Build skills that keep you independent.",
+        "money": "Watch small treats that add up.",
+        "advice": "Root your sense of security within."
+      },
+      "yes_no": "yes",
+      "image_prompt": "An elegant figure in a vineyard with a falcon on her glove, nine gold coins among the vines, champagne-gold evening under a midnight sky."
+    },
+    {
+      "id": "ten-of-pentacles",
+      "name": "Ten of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 10,
+      "element": "Earth",
+      "keywords_upright": ["legacy", "family", "lasting security", "tradition"],
+      "keywords_reversed": ["family tension", "instability", "short-term thinking"],
+      "upright": {
+        "summary": "Lasting foundations bring comfort. Family and tradition feel supportive.",
+        "love": "Commitment and shared roots grow stronger.",
+        "career": "Long-term stability is within reach.",
+        "money": "Think in seasons and generations.",
+        "advice": "Build for the long run."
+      },
+      "reversed": {
+        "summary": "Family matters or long-term plans feel unsettled. Talk openly.",
+        "love": "Differing values need gentle discussion.",
+        "career": "A stable path may need rethinking.",
+        "money": "Avoid quick fixes over lasting plans.",
+        "advice": "Strengthen the foundations."
+      },
+      "yes_no": "yes",
+      "image_prompt": "Three generations under a stone archway with dogs at their feet, ten gold coins arranged in a tree pattern, midnight courtyard lit by lanterns."
+    },
+    {
+      "id": "page-of-pentacles",
+      "name": "Page of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 11,
+      "element": "Earth",
+      "keywords_upright": ["study", "new skill", "ambition", "diligence"],
+      "keywords_reversed": ["procrastination", "lack of focus", "unrealistic goals"],
+      "upright": {
+        "summary": "A practical new goal sparks your interest. Learning step by step works well.",
+        "love": "Slow, sincere interest grows into something real.",
+        "career": "A study path or apprenticeship looks promising.",
+        "money": "Learning basics builds confidence.",
+        "advice": "Start small and stay curious."
+      },
+      "reversed": {
+        "summary": "Plans stay plans. Take one real step.",
+        "love": "Show interest through action.",
+        "career": "Procrastination slows progress.",
+        "money": "Keep goals realistic.",
+        "advice": "Do one small thing today."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A young student in a green field gazing at a gold coin held up to the sky, midnight blue horizon with a few gold stars."
+    },
+    {
+      "id": "knight-of-pentacles",
+      "name": "Knight of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 12,
+      "element": "Earth",
+      "keywords_upright": ["reliability", "routine", "hard work", "patience"],
+      "keywords_reversed": ["stagnation", "boredom", "stubbornness"],
+      "upright": {
+        "summary": "Steady and reliable wins the day. Slow progress is still progress.",
+        "love": "Dependable care shows love.",
+        "career": "Consistent effort earns trust.",
+        "money": "Routine habits keep things steady.",
+        "advice": "Keep going, one step at a time."
+      },
+      "reversed": {
+        "summary": "Routine may become a rut. A little change helps.",
+        "love": "Add some spark to the routine.",
+        "career": "Do not resist needed change.",
+        "money": "Review habits that no longer serve you.",
+        "advice": "Shake things up gently."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A knight on a sturdy dark horse standing still in a ploughed field, holding a gold coin, under a calm midnight sky."
+    },
+    {
+      "id": "queen-of-pentacles",
+      "name": "Queen of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 13,
+      "element": "Earth",
+      "keywords_upright": ["nurturing", "practicality", "home comfort", "abundance"],
+      "keywords_reversed": ["self-neglect", "overgiving", "imbalance"],
+      "upright": {
+        "summary": "Warm, practical care makes life feel abundant. Home and wellbeing matter.",
+        "love": "Nurturing gestures speak loudly.",
+        "career": "You balance care and competence well.",
+        "money": "Sensible, grounded choices bring comfort.",
+        "advice": "Care for others and yourself."
+      },
+      "reversed": {
+        "summary": "You may give too much and forget yourself. Refill your cup.",
+        "love": "Ask for care in return.",
+        "career": "Watch work spilling into rest.",
+        "money": "Keep home spending in balance.",
+        "advice": "Put yourself on the list."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A gentle queen in a lush garden throne cradling a gold coin, a rabbit at her feet, flowers glowing under a midnight sky."
+    },
+    {
+      "id": "king-of-pentacles",
+      "name": "King of Pentacles",
+      "arcana": "minor",
+      "suit": "pentacles",
+      "number": 14,
+      "element": "Earth",
+      "keywords_upright": ["abundance", "leadership", "security", "discipline"],
+      "keywords_reversed": ["materialism", "stubbornness", "overwork"],
+      "upright": {
+        "summary": "Steady leadership and wise effort create lasting comfort. You are a safe pair of hands.",
+        "love": "Loyal, generous and protective love.",
+        "career": "Leadership and good results come together.",
+        "money": "Discipline and patience bring a sense of security.",
+        "advice": "Lead with steadiness and generosity."
+      },
+      "reversed": {
+        "summary": "Focus on things may crowd out what matters. Rebalance.",
+        "love": "Give time, not just things.",
+        "career": "Overwork can cost too much.",
+        "money": "Avoid chasing more for its own sake.",
+        "advice": "Remember what the wealth is for."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A calm king on a throne carved with bulls and grapevines, holding a gold coin, a gold-lit castle against a deep midnight sky."
+    }
+  ]
+}

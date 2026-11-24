@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "locale": "en-SG",
+  "disclaimer": "For reflection and entertainment. Not professional advice.",
+  "term": {"zh": "飞星", "pinyin": "fēi xīng", "en": "Flying Stars"},
+  "stars": [
+    {"number": 1, "name_zh": "贪狼", "name_pinyin": "tān láng", "name_en": "Greedy Wolf", "element": "water", "colour": "white", "nature_by_period": {"8": "future prosperity", "9": "future prosperity"}, "meaning": "Career, wisdom, and new opportunities.", "when_good": "Brings promotion and good connections.", "when_bad": "Can bring restlessness or overindulgence.", "remedies_traditional": ["Metal objects to strengthen", "A small water feature when timely"], "hdb_friendly_remedy": "Keep a metal bowl or white ornament in the area."},
+    {"number": 2, "name_zh": "巨门", "name_pinyin": "jù mén", "name_en": "Huge Door", "element": "earth", "colour": "black", "nature_by_period": {"8": "untimely", "9": "future prosperity"}, "meaning": "Linked to wellbeing and property.", "when_good": "Supports land and property matters.", "when_bad": "Associated with feeling run down.", "remedies_traditional": ["Brass gourd (wu lou)", "Metal wind chime"], "hdb_friendly_remedy": "Place a brass gourd and keep the area quiet and tidy."},
+    {"number": 3, "name_zh": "禄存", "name_pinyin": "lù cún", "name_en": "Quarrel Star", "element": "wood", "colour": "jade", "nature_by_period": {"8": "untimely", "9": "untimely"}, "meaning": "Linked to arguments and competition.", "when_good": "Drive and ambition.", "when_bad": "Disputes and misunderstandings.", "remedies_traditional": ["Red items", "Fire element"], "hdb_friendly_remedy": "Add a red cushion or warm lamp."},
+    {"number": 4, "name_zh": "文曲", "name_pinyin": "wén qǔ", "name_en": "Literary Star", "element": "wood", "colour": "green", "nature_by_period": {"8": "untimely", "9": "untimely"}, "meaning": "Study, writing, and romance.", "when_good": "Helps exams and creativity.", "when_bad": "Distraction and romantic confusion.", "remedies_traditional": ["Four bamboo stalks in water", "Writing brushes"], "hdb_friendly_remedy": "Keep a vase of lucky bamboo on the study desk."},
+    {"number": 5, "name_zh": "廉贞", "name_pinyin": "lián zhēn", "name_en": "Five Yellow", "element": "earth", "colour": "yellow", "nature_by_period": {"8": "untimely", "9": "untimely"}, "meaning": "The most disruptive star. Best kept quiet.", "when_good": "Rarely favourable.", "when_bad": "Obstacles and setbacks.", "remedies_traditional": ["Six-rod metal wind chime", "Salt water cure", "Brass objects"], "hdb_friendly_remedy": "Avoid renovation here and place a brass ornament or metal wind chime."},
+    {"number": 6, "name_zh": "武曲", "name_pinyin": "wǔ qǔ", "name_en": "Heavenly Luck", "element": "metal", "colour": "white", "nature_by_period": {"8": "retreating", "9": "retreating"}, "meaning": "Authority, mentors, and helpful people.", "when_good": "Support from benefactors.", "when_bad": "Rigidity and loneliness.", "remedies_traditional": ["Earth crystals", "Metal coins"], "hdb_friendly_remedy": "Place a small crystal or ceramic piece here."},
+    {"number": 7, "name_zh": "破军", "name_pinyin": "pò jūn", "name_en": "Broken Soldier", "element": "metal", "colour": "red", "nature_by_period": {"8": "untimely", "9": "untimely"}, "meaning": "Linked to loss and conflict.", "when_good": "Sharp communication.", "when_bad": "Theft risk and disputes.", "remedies_traditional": ["Still water", "Blue items"], "hdb_friendly_remedy": "Keep doors locked and add a blue or black accent."},
+    {"number": 8, "name_zh": "左辅", "name_pinyin": "zuǒ fǔ", "name_en": "Wealth Star", "element": "earth", "colour": "white", "nature_by_period": {"8": "timely", "9": "retreating"}, "meaning": "Wealth and stability.", "when_good": "Steady growth and savings.", "when_bad": "Stubbornness when weak.", "remedies_traditional": ["Fire to strengthen", "Earth crystals"], "hdb_friendly_remedy": "Keep the area bright with a warm lamp."},
+    {"number": 9, "name_zh": "右弼", "name_pinyin": "yòu bì", "name_en": "Prosperity Star", "element": "fire", "colour": "purple", "nature_by_period": {"8": "future prosperity", "9": "timely"}, "meaning": "Celebration, recognition, and future joy.", "when_good": "Fame and happy events.", "when_bad": "Overexcitement.", "remedies_traditional": ["Wood and fire elements", "Red items"], "hdb_friendly_remedy": "Add plants and keep lights on in this sector."}
+  ],
+  "combinations": [
+    {"pair": "2-5", "name": "Double illness", "meaning": "Heavy, draining energy.", "good_or_bad": "bad", "remedy": "Brass gourd and metal wind chime."},
+    {"pair": "5-2", "name": "Double illness", "meaning": "Heavy energy; keep the area quiet.", "good_or_bad": "bad", "remedy": "Metal objects, avoid renovation."},
+    {"pair": "1-6", "name": "Scholarly success", "meaning": "Career and study support.", "good_or_bad": "good", "remedy": "Activate with metal."},
+    {"pair": "6-1", "name": "Scholarly success", "meaning": "Mentors and promotion.", "good_or_bad": "good", "remedy": "Keep area bright."},
+    {"pair": "4-1", "name": "Romance and study", "meaning": "Good for exams and love.", "good_or_bad": "good", "remedy": "Lucky bamboo."},
+    {"pair": "1-4", "name": "Romance and study", "meaning": "Creativity and connection.", "good_or_bad": "good", "remedy": "Keep plants here."},
+    {"pair": "6-8", "name": "Wealth and authority", "meaning": "Strong prosperity.", "good_or_bad": "good", "remedy": "Keep tidy and lit."},
+    {"pair": "8-6", "name": "Wealth and authority", "meaning": "Steady gains.", "good_or_bad": "good", "remedy": "Earth crystals."},
+    {"pair": "7-9", "name": "Fire hazard", "meaning": "Risk of heated tempers.", "good_or_bad": "bad", "remedy": "Still water; check appliances."},
+    {"pair": "9-7", "name": "Fire hazard", "meaning": "Restless energy.", "good_or_bad": "bad", "remedy": "Blue accents."},
+    {"pair": "3-2", "name": "Quarrel and gossip", "meaning": "Disputes likely.", "good_or_bad": "bad", "remedy": "Red items."},
+    {"pair": "2-3", "name": "Quarrel and gossip", "meaning": "Arguments at home.", "good_or_bad": "bad", "remedy": "Red cushion or lamp."},
+    {"pair": "8-9", "name": "Joyful wealth", "meaning": "Celebration and gains.", "good_or_bad": "good", "remedy": "Plants and lights."},
+    {"pair": "9-8", "name": "Joyful wealth", "meaning": "Happy events.", "good_or_bad": "good", "remedy": "Warm lighting."},
+    {"pair": "1-8", "name": "Wealth flow", "meaning": "Good fortune.", "good_or_bad": "good", "remedy": "Small water feature."},
+    {"pair": "8-1", "name": "Wealth flow", "meaning": "Steady growth.", "good_or_bad": "good", "remedy": "Keep clean."},
+    {"pair": "2-8", "name": "Property luck", "meaning": "Land and assets.", "good_or_bad": "good", "remedy": "Earth items."},
+    {"pair": "8-2", "name": "Property luck", "meaning": "Asset growth.", "good_or_bad": "good", "remedy": "Keep stable."},
+    {"pair": "3-7", "name": "Robbery risk", "meaning": "Loss and conflict.", "good_or_bad": "bad", "remedy": "Still water, lock doors."},
+    {"pair": "7-3", "name": "Robbery risk", "meaning": "Disputes.", "good_or_bad": "bad", "remedy": "Blue accents."},
+    {"pair": "5-9", "name": "Amplified obstacles", "meaning": "Five Yellow strengthened.", "good_or_bad": "bad", "remedy": "Metal objects."},
+    {"pair": "9-5", "name": "Amplified obstacles", "meaning": "Avoid renovation.", "good_or_bad": "bad", "remedy": "Brass ornament."},
+    {"pair": "4-9", "name": "Bright scholar", "meaning": "Fame through learning.", "good_or_bad": "good", "remedy": "Plants."},
+    {"pair": "9-4", "name": "Bright scholar", "meaning": "Creative recognition.", "good_or_bad": "good", "remedy": "Lucky bamboo."},
+    {"pair": "6-7", "name": "Crossing swords", "meaning": "Conflict and competition.", "good_or_bad": "bad", "remedy": "Still water."},
+    {"pair": "7-6", "name": "Crossing swords", "meaning": "Arguments.", "good_or_bad": "bad", "remedy": "Blue accents."},
+    {"pair": "2-7", "name": "Fire formation", "meaning": "Restless heat.", "good_or_bad": "bad", "remedy": "Metal and water."},
+    {"pair": "7-2", "name": "Fire formation", "meaning": "Tensions rise.", "good_or_bad": "bad", "remedy": "Brass gourd."},
+    {"pair": "1-9", "name": "Water meets Fire", "meaning": "Mixed energy.", "good_or_bad": "mixed", "remedy": "Wood to bridge."},
+    {"pair": "9-1", "name": "Water meets Fire", "meaning": "Balancing needed.", "good_or_bad": "mixed", "remedy": "Plants."}
+  ],
+  "annual_2026": {
+    "centre_star": 1,
+    "note": "Star 1 in the centre supports career and new connections.",
+    "sectors": {
+      "C": {"star": 1, "highlight": "Good for career and learning."},
+      "NW": {"star": 2, "highlight": "Keep this area quiet. Add a brass gourd."},
+      "W": {"star": 3, "highlight": "Quarrel star. Add red accents."},
+      "NE": {"star": 4, "highlight": "Good for study and romance."},
+      "S": {"star": 5, "highlight": "Five Yellow. Avoid renovation here."},
+      "N": {"star": 6, "highlight": "Helpful people and mentors."},
+      "SW": {"star": 7, "highlight": "Lock up and stay alert. Blue accents help."},
+      "E": {"star": 8, "highlight": "Steady wealth. Keep tidy."},
+      "SE": {"star": 9, "highlight": "Joy and recognition. Add plants."}
+    }
+  },
+  "annual_2027": {
+    "centre_star": 9,
+    "note": "Star 9 in the centre brings joy and recognition.",
+    "sectors": {
+      "C": {"star": 9, "highlight": "Celebration and future luck."},
+      "NW": {"star": 1, "highlight": "Career growth."},
+      "W": {"star": 2, "highlight": "Keep quiet. Add a brass gourd."},
+      "NE": {"star": 3, "highlight": "Quarrel star. Add red accents."},
+      "S": {"star": 4, "highlight": "Study and romance."},
+      "N": {"star": 5, "highlight": "Five Yellow. Avoid renovation here."},
+      "SW": {"star": 6, "highlight": "Mentors and support."},
+      "E": {"star": 7, "highlight": "Stay alert. Blue accents help."},
+      "SE": {"star": 8, "highlight": "Steady wealth."}
+    }
+  }
+}

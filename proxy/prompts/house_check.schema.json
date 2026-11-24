@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inkstone.app/schemas/house_check.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "refusal_reason", "external_forms", "verdict_band", "verdict_summary", "mitigations", "confidence", "needs_user_confirmation", "disclaimer"],
+  "$defs": {
+    "conf": { "type": "number", "minimum": 0, "maximum": 1 },
+    "feature": {
+      "type": "object", "additionalProperties": false,
+      "required": ["description", "position", "effect", "confidence"],
+      "properties": {
+        "description": { "type": "string", "maxLength": 400 },
+        "position": { "type": "string", "enum": ["front", "behind", "left", "right", "facing_door", "unclear"] },
+        "effect": { "type": "string", "enum": ["supportive", "neutral", "challenging"] },
+        "confidence": { "$ref": "#/$defs/conf" }
+      }
+    },
+    "list": { "type": "array", "maxItems": 8, "items": { "$ref": "#/$defs/feature" } }
+  },
+  "properties": {
+    "status": { "type": "string", "enum": ["ok", "refused"] },
+    "refusal_reason": { "type": ["string", "null"], "maxLength": 300 },
+    "external_forms": {
+      "type": "object", "additionalProperties": false,
+      "required": ["roads", "t_junction", "sharp_corners", "water", "hills_and_tall_buildings", "nearby_features"],
+      "properties": {
+        "roads": { "$ref": "#/$defs/list" },
+        "t_junction": {
+          "type": "object", "additionalProperties": false,
+          "required": ["present", "note"],
+          "properties": {
+            "present": { "type": "string", "enum": ["yes", "no", "unclear"] },
+            "note": { "type": "string", "maxLength": 400 }
+          }
+        },
+        "sharp_corners": { "$ref": "#/$defs/list" },
+        "water": { "$ref": "#/$defs/list" },
+        "hills_and_tall_buildings": { "$ref": "#/$defs/list" },
+        "nearby_features": {
+          "type": "array", "maxItems": 12,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["tag", "seen_in_images", "effect", "note"],
+            "properties": {
+              "tag": { "type": "string", "maxLength": 60 },
+              "seen_in_images": { "type": "boolean" },
+              "effect": { "type": "string", "enum": ["supportive", "neutral", "challenging"] },
+              "note": { "type": "string", "maxLength": 300 }
+            }
+          }
+        }
+      }
+    },
+    "verdict_band": { "type": "string", "enum": ["favourable", "mixed", "challenging", "insufficient_view"] },
+    "verdict_summary": { "type": "string", "maxLength": 800 },
+    "mitigations": {
+      "type": "array", "maxItems": 6,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["issue", "remedy", "rule_cited", "cost_hint"],
+        "properties": {
+          "issue": { "type": "string", "maxLength": 300 },
+          "remedy": { "type": "string", "maxLength": 400 },
+          "rule_cited": { "type": "string", "maxLength": 300 },
+          "cost_hint": { "type": "string", "enum": ["free", "low", "optional_purchase"] }
+        }
+      }
+    },
+    "confidence": { "$ref": "#/$defs/conf" },
+    "needs_user_confirmation": { "type": "array", "maxItems": 8, "items": { "type": "string", "maxLength": 300 } },
+    "disclaimer": { "type": "string", "maxLength": 300 }
+  }
+}

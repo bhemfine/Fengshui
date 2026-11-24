@@ -1,0 +1,735 @@
+{
+  "version": 1,
+  "locale": "en-SG",
+  "disclaimer": "For reflection and entertainment. Not professional advice.",
+  "cards": [
+    {
+      "id": "ace-of-wands",
+      "name": "Ace of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 1,
+      "element": "Fire",
+      "keywords_upright": ["spark", "inspiration", "new venture", "energy"],
+      "keywords_reversed": ["delay", "low motivation", "false start", "hesitation"],
+      "upright": {
+        "summary": "A fresh spark of energy arrives. It is a good moment to begin something that excites you.",
+        "love": "New attraction or renewed passion may light up your days.",
+        "career": "A new idea or project feels ready to start. Take the first step.",
+        "money": "A fresh opportunity may appear. Look at it calmly before you commit.",
+        "advice": "Act on the idea that makes you feel most alive."
+      },
+      "reversed": {
+        "summary": "The spark is there, but it feels hard to light. Timing or energy may simply need more care.",
+        "love": "Interest may feel uneven for now. Give things room to grow.",
+        "career": "A project may stall. Rest and revisit your plan.",
+        "money": "Hold off on rushed starts. Clarity will come.",
+        "advice": "Rest first, then try again with a clearer plan."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A single glowing wand sprouting gold leaves, held by a hand from midnight clouds, champagne-gold flame accents."
+    },
+    {
+      "id": "two-of-wands",
+      "name": "Two of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 2,
+      "element": "Fire",
+      "keywords_upright": ["planning", "vision", "choices", "future"],
+      "keywords_reversed": ["indecision", "fear of change", "playing small", "unclear plans"],
+      "upright": {
+        "summary": "You are looking ahead and weighing your options. The wider world is open to you.",
+        "love": "You may be thinking about where a relationship is heading. Share your hopes.",
+        "career": "Plan your next move with care. A bigger path is possible.",
+        "money": "Think long term. A simple plan can guide your choices.",
+        "advice": "Map out the path before you set off."
+      },
+      "reversed": {
+        "summary": "Uncertainty may keep you in a familiar place. It is fine to move slowly, but do move.",
+        "love": "Mixed feelings may need honest talk.",
+        "career": "A plan may feel unclear. Break it into small steps.",
+        "money": "Avoid staying stuck out of worry. Review your options calmly.",
+        "advice": "Choose one small step and take it."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A figure on a midnight castle wall holding a small golden globe, two wands beside them, gold-lit sea beyond."
+    },
+    {
+      "id": "three-of-wands",
+      "name": "Three of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 3,
+      "element": "Fire",
+      "keywords_upright": ["expansion", "progress", "foresight", "momentum"],
+      "keywords_reversed": ["delays", "frustration", "limited view", "setbacks"],
+      "upright": {
+        "summary": "Your efforts are starting to show results. Things are moving outward and growing.",
+        "love": "A relationship may grow in a hopeful direction, perhaps over distance.",
+        "career": "Progress is visible. Keep building on what works.",
+        "money": "Steady effort may bring returns over time.",
+        "advice": "Keep your eyes on the horizon and keep going."
+      },
+      "reversed": {
+        "summary": "Plans may take longer than you hoped. Patience helps more than pushing.",
+        "love": "Expectations may need adjusting. Talk them through.",
+        "career": "Delays are a chance to refine your plan.",
+        "money": "Be patient with results. Avoid chasing quick wins.",
+        "advice": "Adjust the plan rather than giving it up."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A figure watching golden ships sail across a midnight sea, three wands planted on a cliff, stars above."
+    },
+    {
+      "id": "four-of-wands",
+      "name": "Four of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 4,
+      "element": "Fire",
+      "keywords_upright": ["celebration", "home", "harmony", "milestone"],
+      "keywords_reversed": ["unsettled", "tension at home", "postponed plans", "transition"],
+      "upright": {
+        "summary": "A joyful milestone is worth marking. Home and community feel warm and supportive.",
+        "love": "A happy time for commitment, gatherings or simple shared joy.",
+        "career": "Celebrate a finished stage with your team.",
+        "money": "Stability feels good. Enjoy it with gratitude.",
+        "advice": "Pause and celebrate how far you have come."
+      },
+      "reversed": {
+        "summary": "Things at home or in a group may feel a little unsettled. Small kindnesses can restore harmony.",
+        "love": "Plans together may shift. Stay gentle with each other.",
+        "career": "Team spirit may need attention. Reconnect with people.",
+        "money": "Keep celebrations simple for now.",
+        "advice": "Create calm at home before anything else."
+      },
+      "yes_no": "yes",
+      "image_prompt": "Four wands forming a garland arch of gold flowers, figures celebrating under a midnight sky with lanterns."
+    },
+    {
+      "id": "five-of-wands",
+      "name": "Five of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 5,
+      "element": "Fire",
+      "keywords_upright": ["competition", "debate", "friction", "energy"],
+      "keywords_reversed": ["avoiding conflict", "resolution", "inner tension", "truce"],
+      "upright": {
+        "summary": "Different views are clashing. Handled well, this friction can spark better ideas.",
+        "love": "Small disagreements may come up. Listen more than you argue.",
+        "career": "Competition is lively. Stay fair and focused on your work.",
+        "money": "Many voices may offer advice. Keep your own plan steady.",
+        "advice": "Treat the challenge as practice, not a battle."
+      },
+      "reversed": {
+        "summary": "Tension may be easing, or being quietly avoided. Honest, calm talk helps.",
+        "love": "A disagreement may settle. Make peace kindly.",
+        "career": "Find common ground with colleagues.",
+        "money": "Step back from stressful comparisons.",
+        "advice": "Seek agreement instead of winning."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "Five figures crossing golden wands in playful sparring under midnight blue, gold sparks flying."
+    },
+    {
+      "id": "six-of-wands",
+      "name": "Six of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 6,
+      "element": "Fire",
+      "keywords_upright": ["recognition", "success", "confidence", "victory"],
+      "keywords_reversed": ["self-doubt", "lack of recognition", "ego", "quiet progress"],
+      "upright": {
+        "summary": "Success and recognition are near. Your effort is being noticed.",
+        "love": "You may feel admired and appreciated.",
+        "career": "A win or praise may come your way. Accept it with grace.",
+        "money": "Good results may follow good work.",
+        "advice": "Let yourself enjoy the win, and thank those who helped."
+      },
+      "reversed": {
+        "summary": "Recognition may feel slow to come. Your worth does not depend on applause.",
+        "love": "Seek reassurance through honest talk, not tests.",
+        "career": "Keep doing good work, even quietly.",
+        "money": "Avoid spending to impress others.",
+        "advice": "Value your own progress first."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A rider on a white horse with a golden laurel wreath on a wand, crowd under midnight sky, gold banners."
+    },
+    {
+      "id": "seven-of-wands",
+      "name": "Seven of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 7,
+      "element": "Fire",
+      "keywords_upright": ["standing firm", "perseverance", "boundaries", "conviction"],
+      "keywords_reversed": ["overwhelm", "giving in", "exhaustion", "defensiveness"],
+      "upright": {
+        "summary": "You may need to stand by what you believe. Calm confidence will carry you.",
+        "love": "Protect healthy boundaries with kindness.",
+        "career": "Hold your position on what matters. Your ideas have value.",
+        "money": "Stick to your budget, even under pressure.",
+        "advice": "Stand firm, but stay kind."
+      },
+      "reversed": {
+        "summary": "You may feel worn out from defending too much. Choose which battles matter.",
+        "love": "Let go of needing to be right.",
+        "career": "Ask for support instead of carrying everything.",
+        "money": "Simplify commitments that drain you.",
+        "advice": "Rest, and keep only the stands that matter."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A figure on a midnight hilltop holding one golden wand against six rising below, determined pose, gold rim light."
+    },
+    {
+      "id": "eight-of-wands",
+      "name": "Eight of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 8,
+      "element": "Fire",
+      "keywords_upright": ["speed", "movement", "news", "progress"],
+      "keywords_reversed": ["delays", "waiting", "scattered energy", "miscommunication"],
+      "upright": {
+        "summary": "Things are moving fast. News or progress may arrive quickly.",
+        "love": "Messages flow easily. Feelings may develop swiftly.",
+        "career": "Momentum is strong. Act while it lasts.",
+        "money": "Matters may move quickly. Still read the details.",
+        "advice": "Move with the flow while staying alert."
+      },
+      "reversed": {
+        "summary": "Things may feel slow or scattered. Use the pause to get organised.",
+        "love": "Mixed signals may happen. Ask clearly.",
+        "career": "Waiting can be useful. Prepare for the next push.",
+        "money": "Avoid hasty decisions while things are unclear.",
+        "advice": "Slow down and focus on one thing."
+      },
+      "yes_no": "yes",
+      "image_prompt": "Eight golden wands flying in parallel across a midnight sky, trailing champagne-gold light streaks."
+    },
+    {
+      "id": "nine-of-wands",
+      "name": "Nine of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 9,
+      "element": "Fire",
+      "keywords_upright": ["resilience", "persistence", "last stretch", "courage"],
+      "keywords_reversed": ["fatigue", "guardedness", "burnout", "needing rest"],
+      "upright": {
+        "summary": "You have come far and the finish is near. Keep going with steady courage.",
+        "love": "Past lessons make you wiser. Stay open, not closed.",
+        "career": "One more push may see a task through.",
+        "money": "Your careful habits are serving you. Keep them.",
+        "advice": "Trust your strength for the final stretch."
+      },
+      "reversed": {
+        "summary": "You may be tired and on guard. It is okay to rest and ask for help.",
+        "love": "Old hurts may make you wary. Go gently.",
+        "career": "Watch for overwork. Take real breaks.",
+        "money": "Simplify where you can to ease pressure.",
+        "advice": "Rest is part of resilience."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A weary figure leaning on a golden wand before eight others, bandaged but upright, midnight dusk glow."
+    },
+    {
+      "id": "ten-of-wands",
+      "name": "Ten of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 10,
+      "element": "Fire",
+      "keywords_upright": ["burden", "responsibility", "hard work", "overload"],
+      "keywords_reversed": ["letting go", "delegating", "release", "relief"],
+      "upright": {
+        "summary": "You may be carrying too much. Success is close, but the load is heavy.",
+        "love": "Share responsibilities so love has room to breathe.",
+        "career": "Too many tasks may weigh on you. Prioritise.",
+        "money": "Review commitments that feel heavy.",
+        "advice": "Put down what is not yours to carry."
+      },
+      "reversed": {
+        "summary": "Relief is possible as you release some burdens. Delegating is a strength.",
+        "love": "Lighten the load together.",
+        "career": "Hand off tasks and set clear limits.",
+        "money": "Trim what you do not need.",
+        "advice": "Let go of one task today."
+      },
+      "yes_no": "no",
+      "image_prompt": "A figure carrying a bundle of ten golden wands toward a distant midnight town, warm gold windows ahead."
+    },
+    {
+      "id": "page-of-wands",
+      "name": "Page of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 11,
+      "element": "Fire",
+      "keywords_upright": ["curiosity", "enthusiasm", "exploration", "good news"],
+      "keywords_reversed": ["impatience", "scattered ideas", "restlessness", "false starts"],
+      "upright": {
+        "summary": "Curiosity and excitement bring new ideas. Explore with an open heart.",
+        "love": "Playful, flirty energy brightens connection.",
+        "career": "Try learning something new. Fresh ideas are welcome.",
+        "money": "Learn before you leap. Curiosity can guide smart choices.",
+        "advice": "Follow your curiosity and see where it leads."
+      },
+      "reversed": {
+        "summary": "Ideas may come fast but fade quickly. Focus helps them take root.",
+        "love": "Excitement may fade without care.",
+        "career": "Finish one idea before starting another.",
+        "money": "Avoid impulse buys.",
+        "advice": "Pick one idea and nurture it."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A young figure gazing at a sprouting golden wand in a midnight desert, salamander motifs on tunic."
+    },
+    {
+      "id": "knight-of-wands",
+      "name": "Knight of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 12,
+      "element": "Fire",
+      "keywords_upright": ["action", "adventure", "boldness", "passion"],
+      "keywords_reversed": ["haste", "impulsiveness", "frustration", "scattered drive"],
+      "upright": {
+        "summary": "Bold energy pushes you forward. Adventure and action are favoured.",
+        "love": "Passion runs high. Enjoy it, and stay considerate.",
+        "career": "Take confident action on your goals.",
+        "money": "Energy is high. Pair it with a simple plan.",
+        "advice": "Go for it, with a little care."
+      },
+      "reversed": {
+        "summary": "Haste may lead to stumbles. Slow down enough to steer.",
+        "love": "Avoid rushing feelings or decisions.",
+        "career": "Think before acting on frustration.",
+        "money": "Pause before quick spending.",
+        "advice": "Channel your fire instead of letting it scatter."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A knight on a rearing horse holding a golden wand, flame-pattern cloak, midnight desert, gold sparks."
+    },
+    {
+      "id": "queen-of-wands",
+      "name": "Queen of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 13,
+      "element": "Fire",
+      "keywords_upright": ["confidence", "warmth", "charisma", "independence"],
+      "keywords_reversed": ["self-doubt", "jealousy", "burnout", "insecurity"],
+      "upright": {
+        "summary": "Warm confidence draws people to you. You shine by being yourself.",
+        "love": "Your warmth and self-assurance are attractive.",
+        "career": "Lead with charisma and kindness.",
+        "money": "Confident, organised choices serve you well.",
+        "advice": "Own your light without dimming others."
+      },
+      "reversed": {
+        "summary": "Confidence may feel shaky for now. Reconnect with what you enjoy.",
+        "love": "Comparisons may cause unease. Speak openly.",
+        "career": "Rest before you burn out.",
+        "money": "Avoid spending to feel better.",
+        "advice": "Be as kind to yourself as you are to others."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A queen on a lion throne holding a golden wand and sunflower, black cat at her feet, midnight backdrop."
+    },
+    {
+      "id": "king-of-wands",
+      "name": "King of Wands",
+      "arcana": "minor",
+      "suit": "wands",
+      "number": 14,
+      "element": "Fire",
+      "keywords_upright": ["leadership", "vision", "boldness", "inspiration"],
+      "keywords_reversed": ["impatience", "high expectations", "domineering", "rash choices"],
+      "upright": {
+        "summary": "Visionary leadership is in your hands. Inspire others with your clear direction.",
+        "love": "Steady, generous energy supports the relationship.",
+        "career": "Take the lead on a big idea.",
+        "money": "Think strategically and long term.",
+        "advice": "Lead with vision and lift others up."
+      },
+      "reversed": {
+        "summary": "Strong will may tip into impatience. Listening makes leadership better.",
+        "love": "Ease up on control. Share decisions.",
+        "career": "Avoid setting goals too high too fast.",
+        "money": "Think twice before bold moves.",
+        "advice": "Lead by listening as well as speaking."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A king on a throne carved with lions and salamanders, holding a golden wand, midnight sky with gold stars."
+    },
+    {
+      "id": "ace-of-cups",
+      "name": "Ace of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 1,
+      "element": "Water",
+      "keywords_upright": ["new feelings", "love", "compassion", "openness"],
+      "keywords_reversed": ["blocked emotions", "self-care", "holding back", "emptiness"],
+      "upright": {
+        "summary": "A fresh flow of feeling opens your heart. Kindness and connection are close.",
+        "love": "New love or deeper closeness may bloom.",
+        "career": "Work that touches your heart feels meaningful now.",
+        "money": "Generosity and gratitude help you feel abundant.",
+        "advice": "Let your heart stay open."
+      },
+      "reversed": {
+        "summary": "Feelings may be held back. Turning that care inward first can help.",
+        "love": "Take time to understand your own feelings.",
+        "career": "Find small moments of joy at work.",
+        "money": "Avoid comfort spending.",
+        "advice": "Fill your own cup before pouring for others."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A golden chalice overflowing with five streams of light, hand from midnight cloud, white dove above."
+    },
+    {
+      "id": "two-of-cups",
+      "name": "Two of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 2,
+      "element": "Water",
+      "keywords_upright": ["partnership", "mutual respect", "connection", "harmony"],
+      "keywords_reversed": ["imbalance", "miscommunication", "distance", "tension"],
+      "upright": {
+        "summary": "A balanced, caring connection forms. Two people meet as equals.",
+        "love": "Mutual attraction and respect are strong.",
+        "career": "A good partnership or collaboration is favoured.",
+        "money": "Shared plans work best with clear agreement.",
+        "advice": "Meet others halfway."
+      },
+      "reversed": {
+        "summary": "A connection may feel out of balance. Honest words can restore it.",
+        "love": "Talk openly about needs.",
+        "career": "Clarify roles in a partnership.",
+        "money": "Put shared arrangements in writing.",
+        "advice": "Listen as much as you speak."
+      },
+      "yes_no": "yes",
+      "image_prompt": "Two figures exchanging golden cups beneath a winged lion caduceus, midnight blue sky, soft gold glow."
+    },
+    {
+      "id": "three-of-cups",
+      "name": "Three of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 3,
+      "element": "Water",
+      "keywords_upright": ["friendship", "celebration", "community", "joy"],
+      "keywords_reversed": ["overindulgence", "gossip", "isolation", "imbalance"],
+      "upright": {
+        "summary": "Friends and good times are highlighted. Shared joy grows when you celebrate together.",
+        "love": "Social gatherings may spark warmth.",
+        "career": "Teamwork and team spirit go well.",
+        "money": "Celebrate within your means.",
+        "advice": "Make time for the people who lift you."
+      },
+      "reversed": {
+        "summary": "Social life may feel off balance. Choose quality over quantity.",
+        "love": "Keep outside opinions from crowding your bond.",
+        "career": "Stay clear of office gossip.",
+        "money": "Watch spending on outings.",
+        "advice": "Nurture a few close friendships."
+      },
+      "yes_no": "yes",
+      "image_prompt": "Three dancers raising golden cups in a midnight orchard, gold fruit and garlands around them."
+    },
+    {
+      "id": "four-of-cups",
+      "name": "Four of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 4,
+      "element": "Water",
+      "keywords_upright": ["contemplation", "apathy", "reevaluation", "missed offers"],
+      "keywords_reversed": ["renewed interest", "acceptance", "new perspective", "moving on"],
+      "upright": {
+        "summary": "You may feel a little flat or withdrawn. Look again, as something good may be on offer.",
+        "love": "Notice the care already around you.",
+        "career": "A quiet pause helps you rethink what you want.",
+        "money": "Review options you may have overlooked.",
+        "advice": "Look up and notice what is offered."
+      },
+      "reversed": {
+        "summary": "Interest returns and you feel ready to engage. A fresh view arrives.",
+        "love": "You may feel open to connection again.",
+        "career": "Motivation picks up. Say yes to something new.",
+        "money": "You see your options more clearly.",
+        "advice": "Accept the new chance gently."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A figure under a tree with arms crossed, three golden cups before them, a hand offering a fourth from midnight cloud."
+    },
+    {
+      "id": "five-of-cups",
+      "name": "Five of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 5,
+      "element": "Water",
+      "keywords_upright": ["disappointment", "regret", "grief", "focus on loss"],
+      "keywords_reversed": ["acceptance", "healing", "moving forward", "forgiveness"],
+      "upright": {
+        "summary": "You may be feeling a loss. Something good still stands behind you.",
+        "love": "Give yourself time to feel, then notice what remains.",
+        "career": "A setback is a lesson, not the end.",
+        "money": "Learn from a past choice and move on gently.",
+        "advice": "Honour the feeling, then turn around."
+      },
+      "reversed": {
+        "summary": "Healing begins as you accept what happened. You are ready to look forward.",
+        "love": "Forgiveness may bring peace.",
+        "career": "You find the lesson and move ahead.",
+        "money": "Recovery comes step by step.",
+        "advice": "Let go and look toward what still remains."
+      },
+      "yes_no": "no",
+      "image_prompt": "A cloaked figure facing three spilled cups, two golden cups standing behind, a bridge to a gold-lit house at midnight."
+    },
+    {
+      "id": "six-of-cups",
+      "name": "Six of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 6,
+      "element": "Water",
+      "keywords_upright": ["nostalgia", "kindness", "innocence", "memories"],
+      "keywords_reversed": ["stuck in the past", "idealising", "moving on", "growing up"],
+      "upright": {
+        "summary": "Sweet memories and simple kindness are present. The past brings gentle comfort.",
+        "love": "An old flame or familiar warmth may return.",
+        "career": "Draw on early passions for new ideas.",
+        "money": "Simple pleasures can be enough.",
+        "advice": "Offer a small kindness today."
+      },
+      "reversed": {
+        "summary": "Holding on to the past may keep you from today. It is time to look ahead.",
+        "love": "Let old patterns rest.",
+        "career": "Update old ways of working.",
+        "money": "Spend on what fits your life now.",
+        "advice": "Keep the memory, release the longing."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A child handing a golden cup of white flowers to another in a midnight courtyard, gold lantern light."
+    },
+    {
+      "id": "seven-of-cups",
+      "name": "Seven of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 7,
+      "element": "Water",
+      "keywords_upright": ["choices", "imagination", "daydreams", "options"],
+      "keywords_reversed": ["clarity", "decision", "focus", "reality check"],
+      "upright": {
+        "summary": "Many options appear, some more real than others. Dream, then choose with care.",
+        "love": "See people as they are, not as you imagine.",
+        "career": "Too many ideas can scatter focus. Pick one.",
+        "money": "Be careful with offers that sound too good.",
+        "advice": "Ground your dreams in one practical step."
+      },
+      "reversed": {
+        "summary": "The fog lifts and you see clearly. A firm decision is within reach.",
+        "love": "You know what you truly want.",
+        "career": "Focus brings real progress.",
+        "money": "Clear choices replace wishful thinking.",
+        "advice": "Commit to the clear choice."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "Seven golden cups floating in midnight clouds, each holding a symbol: jewels, castle, wreath, dragon, veiled figure."
+    },
+    {
+      "id": "eight-of-cups",
+      "name": "Eight of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 8,
+      "element": "Water",
+      "keywords_upright": ["walking away", "seeking meaning", "transition", "letting go"],
+      "keywords_reversed": ["fear of change", "aimlessness", "staying too long", "second thoughts"],
+      "upright": {
+        "summary": "You may be ready to leave something behind. Looking for deeper meaning is healthy.",
+        "love": "Ask whether a situation still nourishes you.",
+        "career": "You may seek more purpose in your work.",
+        "money": "Let go of what no longer serves you.",
+        "advice": "Walk toward what feels truer."
+      },
+      "reversed": {
+        "summary": "You may feel torn between staying and going. Take time to understand why.",
+        "love": "Be honest about what you need.",
+        "career": "Reflect before making a big move.",
+        "money": "Avoid staying in something just from habit.",
+        "advice": "Listen to what your heart is asking."
+      },
+      "yes_no": "no",
+      "image_prompt": "A cloaked figure walking away from eight stacked golden cups toward mountains under a crescent moon."
+    },
+    {
+      "id": "nine-of-cups",
+      "name": "Nine of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 9,
+      "element": "Water",
+      "keywords_upright": ["contentment", "wishes", "satisfaction", "gratitude"],
+      "keywords_reversed": ["unmet wishes", "excess", "dissatisfaction", "inner happiness"],
+      "upright": {
+        "summary": "Contentment and wishes fulfilled are in view. Enjoy what you have.",
+        "love": "Happiness flows easily. Savour it.",
+        "career": "Satisfaction with your work is high.",
+        "money": "Feel grateful for comfort and stability.",
+        "advice": "Count your blessings and enjoy them."
+      },
+      "reversed": {
+        "summary": "Something may feel missing. True contentment often starts within.",
+        "love": "Look past surface wishes to deeper needs.",
+        "career": "Reconsider what success means to you.",
+        "money": "More is not always better. Keep it balanced.",
+        "advice": "Find joy in what is already here."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A smiling figure seated before an arc of nine golden cups on midnight drapery, warm gold light."
+    },
+    {
+      "id": "ten-of-cups",
+      "name": "Ten of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 10,
+      "element": "Water",
+      "keywords_upright": ["harmony", "family", "fulfilment", "lasting joy"],
+      "keywords_reversed": ["disconnection", "misaligned values", "family tension", "unmet ideals"],
+      "upright": {
+        "summary": "Emotional harmony and family joy shine. Relationships feel full and warm.",
+        "love": "A loving, lasting bond is highlighted.",
+        "career": "Work and life feel in balance.",
+        "money": "Comfort comes from shared security.",
+        "advice": "Cherish the people who feel like home."
+      },
+      "reversed": {
+        "summary": "Home life may feel out of tune. Small gestures can reconnect you.",
+        "love": "Talk about shared values.",
+        "career": "Rebalance work and home time.",
+        "money": "Agree together on priorities.",
+        "advice": "Reconnect through simple time together."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A family beneath a rainbow of ten golden cups across a midnight sky, a cosy home with gold windows."
+    },
+    {
+      "id": "page-of-cups",
+      "name": "Page of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 11,
+      "element": "Water",
+      "keywords_upright": ["creativity", "intuition", "sweet message", "curiosity"],
+      "keywords_reversed": ["emotional immaturity", "blocked creativity", "moodiness", "escapism"],
+      "upright": {
+        "summary": "A gentle creative or emotional message arrives. Stay open to surprise.",
+        "love": "A sweet gesture or note may brighten your day.",
+        "career": "Creative ideas flow. Note them down.",
+        "money": "Trust intuition, then check the facts.",
+        "advice": "Let your playful side speak."
+      },
+      "reversed": {
+        "summary": "Feelings may swing or creativity may feel stuck. Be gentle with yourself.",
+        "love": "Avoid reading too much into small things.",
+        "career": "Rest helps creativity return.",
+        "money": "Avoid mood-driven spending.",
+        "advice": "Name your feelings kindly."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A youth holding a golden cup with a small fish peeking out, midnight shoreline, gold wave patterns."
+    },
+    {
+      "id": "knight-of-cups",
+      "name": "Knight of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 12,
+      "element": "Water",
+      "keywords_upright": ["romance", "charm", "invitation", "idealism"],
+      "keywords_reversed": ["moodiness", "unrealistic hopes", "unreliability", "jealousy"],
+      "upright": {
+        "summary": "A romantic or heartfelt offer may come. Follow your heart with grace.",
+        "love": "Romance and charm are in the air.",
+        "career": "A creative proposal may appeal to you.",
+        "money": "Weigh heartfelt choices with practical sense.",
+        "advice": "Lead with your heart, and keep your feet on the ground."
+      },
+      "reversed": {
+        "summary": "Promises may sound better than they are. Watch actions, not just words.",
+        "love": "Look for consistency.",
+        "career": "Check the details of any offer.",
+        "money": "Avoid dreamy plans without numbers.",
+        "advice": "Balance feeling with reality."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A knight on a calm white horse offering a golden cup, winged helmet, river under a midnight sky."
+    },
+    {
+      "id": "queen-of-cups",
+      "name": "Queen of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 13,
+      "element": "Water",
+      "keywords_upright": ["compassion", "intuition", "calm", "emotional care"],
+      "keywords_reversed": ["overgiving", "emotional overwhelm", "self-neglect", "insecurity"],
+      "upright": {
+        "summary": "Deep compassion and intuition guide you. You offer calm care to others.",
+        "love": "Emotional understanding brings you closer.",
+        "career": "Your empathy is an asset at work.",
+        "money": "Trust your calm judgement.",
+        "advice": "Listen to your intuition."
+      },
+      "reversed": {
+        "summary": "You may be giving too much and feeling drained. Your needs matter too.",
+        "love": "Set gentle boundaries.",
+        "career": "Avoid absorbing everyone's stress.",
+        "money": "Care for yourself without overspending.",
+        "advice": "Care for yourself as you care for others."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A queen on a shore throne gazing into an ornate golden lidded cup, midnight sea, gold shell carvings."
+    },
+    {
+      "id": "king-of-cups",
+      "name": "King of Cups",
+      "arcana": "minor",
+      "suit": "cups",
+      "number": 14,
+      "element": "Water",
+      "keywords_upright": ["emotional balance", "wisdom", "diplomacy", "calm"],
+      "keywords_reversed": ["moodiness", "suppressed feelings", "manipulation", "volatility"],
+      "upright": {
+        "summary": "Calm wisdom keeps you steady. You balance heart and head well.",
+        "love": "Mature, caring support strengthens love.",
+        "career": "Diplomacy helps resolve situations.",
+        "money": "Steady, calm decisions serve you.",
+        "advice": "Stay calm and kind, even in rough waters."
+      },
+      "reversed": {
+        "summary": "Feelings may be held in or spilling over. Find a healthy outlet.",
+        "love": "Share what you feel honestly.",
+        "career": "Pause before reacting.",
+        "money": "Avoid decisions when upset.",
+        "advice": "Breathe, then respond."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A king on a stone throne floating on a midnight sea, holding a golden cup, fish and ship in gold detail."
+    }
+  ]
+}

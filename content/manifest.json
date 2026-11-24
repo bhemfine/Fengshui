@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "locale": "en-SG",
+  "disclaimer": "For reflection and entertainment. Not professional advice.",
+  "files": [
+    {"path": "content/forecast_templates.json", "counts": {"day_officers": 12, "monthly": 12, "yearly_animals_per_year": 12}},
+    {"path": "content/kua_directions.json", "counts": {"kua": 9, "direction_types": 8}},
+    {"path": "content/flying_stars.json", "counts": {"stars": 9, "combinations_min": 30}},
+    {"path": "content/tarot/major_arcana.json", "counts": {"major_arcana": 22}},
+    {"path": "content/tarot/wands_cups.json", "counts": {"wands_cups": 28}},
+    {"path": "content/tarot/swords_pentacles.json", "counts": {"swords_pentacles": 28}},
+    {"path": "content/crystals.json", "counts": {"crystals": 40}},
+    {"path": "content/rituals.json", "counts": {"rituals": 30}}
+  ],
+  "expected_totals": {
+    "tarot": 78,
+    "major_arcana": 22,
+    "wands_cups": 28,
+    "swords_pentacles": 28,
+    "crystals": 40,
+    "rituals": 30,
+    "day_officers": 12,
+    "kua": 9,
+    "direction_types": 8,
+    "stars": 9
+  }
+}

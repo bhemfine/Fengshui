@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inkstone.app/schemas/floor_plan_reading.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "refusal_reason", "rooms_detected", "palace_grid", "flying_star_notes", "top_actions", "placement_advice", "red_flags", "confidence", "needs_user_confirmation", "disclaimer"],
+  "$defs": {
+    "palace": { "type": "string", "enum": ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "C"] },
+    "conf": { "type": "number", "minimum": 0, "maximum": 1 },
+    "placement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["suggested_palace", "reason", "rule_cited"],
+      "properties": {
+        "suggested_palace": { "type": ["string", "null"], "enum": ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "C", null] },
+        "reason": { "type": "string", "maxLength": 600 },
+        "rule_cited": { "type": "string", "maxLength": 300 }
+      }
+    }
+  },
+  "properties": {
+    "status": { "type": "string", "enum": ["ok", "refused"] },
+    "refusal_reason": { "type": ["string", "null"], "maxLength": 300 },
+    "rooms_detected": {
+      "type": "array", "maxItems": 30,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["label", "palace", "confidence"],
+        "properties": {
+          "label": { "type": "string", "maxLength": 60 },
+          "palace": { "$ref": "#/$defs/palace" },
+          "confidence": { "$ref": "#/$defs/conf" }
+        }
+      }
+    },
+    "palace_grid": {
+      "type": "array", "maxItems": 9,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["palace", "rooms", "eight_mansions_note"],
+        "properties": {
+          "palace": { "$ref": "#/$defs/palace" },
+          "rooms": { "type": "array", "maxItems": 10, "items": { "type": "string", "maxLength": 60 } },
+          "eight_mansions_note": { "type": "string", "maxLength": 400 }
+        }
+      }
+    },
+    "flying_star_notes": {
+      "type": "array", "maxItems": 9,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["palace", "stars_from_input", "note"],
+        "properties": {
+          "palace": { "$ref": "#/$defs/palace" },
+          "stars_from_input": { "type": ["string", "null"], "maxLength": 40 },
+          "note": { "type": "string", "maxLength": 500 }
+        }
+      }
+    },
+    "top_actions": {
+      "type": "array", "maxItems": 3,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["action", "where", "rule_cited"],
+        "properties": {
+          "action": { "type": "string", "maxLength": 400 },
+          "where": { "$ref": "#/$defs/palace" },
+          "rule_cited": { "type": "string", "maxLength": 300 }
+        }
+      }
+    },
+    "placement_advice": {
+      "type": "object", "additionalProperties": false,
+      "required": ["bed", "desk", "stove"],
+      "properties": {
+        "bed": { "$ref": "#/$defs/placement" },
+        "desk": { "$ref": "#/$defs/placement" },
+        "stove": { "$ref": "#/$defs/placement" }
+      }
+    },
+    "red_flags": {
+      "type": "array", "maxItems": 10,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["issue", "palace", "severity", "mitigation", "rule_cited"],
+        "properties": {
+          "issue": { "type": "string", "maxLength": 300 },
+          "palace": { "$ref": "#/$defs/palace" },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] },
+          "mitigation": { "type": "string", "maxLength": 400 },
+          "rule_cited": { "type": "string", "maxLength": 300 }
+        }
+      }
+    },
+    "confidence": { "$ref": "#/$defs/conf" },
+    "needs_user_confirmation": { "type": "array", "maxItems": 10, "items": { "type": "string", "maxLength": 300 } },
+    "disclaimer": { "type": "string", "maxLength": 300 }
+  }
+}

@@ -1,0 +1,579 @@
+{
+  "version": 1,
+  "locale": "en-SG",
+  "disclaimer": "For reflection and entertainment. Not professional advice.",
+  "cards": [
+    {
+      "id": "the-fool",
+      "name": "The Fool",
+      "arcana": "major",
+      "suit": null,
+      "number": 0,
+      "element": "Air",
+      "keywords_upright": ["new beginnings", "curiosity", "freedom", "trust"],
+      "keywords_reversed": ["hesitation", "carelessness", "holding back", "naivety"],
+      "upright": {
+        "summary": "A fresh start is calling you. Step forward with an open heart and light luggage.",
+        "love": "Let things unfold without a script. A playful, honest approach brings warmth.",
+        "career": "A new path or project may suit you well. Say yes to learning something new.",
+        "money": "Stay curious but keep a simple plan. Small, sensible steps are enough.",
+        "advice": "Take the first step and enjoy the walk."
+      },
+      "reversed": {
+        "summary": "You may be rushing in or not starting at all. Pause, look around, then move.",
+        "love": "Check that you are both ready for the same adventure. Gentle talk helps.",
+        "career": "Think a plan through before you leap. A little preparation goes a long way.",
+        "money": "Avoid impulse spending this week. A short pause saves regret.",
+        "advice": "Look before you leap, then leap kindly."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A young traveller at a cliff edge under a midnight-blue sky, small dog at heel, champagne-gold sun and fine-line stars, elegant minimal style."
+    },
+    {
+      "id": "the-magician",
+      "name": "The Magician",
+      "arcana": "major",
+      "suit": null,
+      "number": 1,
+      "element": "Air",
+      "keywords_upright": ["skill", "focus", "action", "resourcefulness"],
+      "keywords_reversed": ["scattered energy", "untapped talent", "trickery", "doubt"],
+      "upright": {
+        "summary": "You have what you need to begin. Focus your skills and turn ideas into action.",
+        "love": "Clear, confident words help. Show up as yourself and connection follows.",
+        "career": "A good time to pitch, build or lead. Your abilities are noticed.",
+        "money": "Use the tools you already have. A practical idea could grow steadily.",
+        "advice": "Gather your tools and start today."
+      },
+      "reversed": {
+        "summary": "Your energy may feel scattered. Gather it back to one clear goal.",
+        "love": "Watch for mixed messages, yours or theirs. Honesty keeps things simple.",
+        "career": "Finish one task before starting three more. Your talent needs direction.",
+        "money": "Be wary of offers that sound too clever. Read the fine print.",
+        "advice": "Choose one aim and give it your full attention."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A figure raising a gold wand beneath a midnight sky, table with cup, sword and coin, infinity symbol glowing champagne gold above."
+    },
+    {
+      "id": "the-high-priestess",
+      "name": "The High Priestess",
+      "arcana": "major",
+      "suit": null,
+      "number": 2,
+      "element": "Water",
+      "keywords_upright": ["intuition", "inner knowing", "mystery", "stillness"],
+      "keywords_reversed": ["ignored instincts", "secrets", "noise", "disconnection"],
+      "upright": {
+        "summary": "Your quiet inner voice knows more than you think. Listen before you speak.",
+        "love": "Feelings run deeper than words right now. Give them time to surface.",
+        "career": "Observe before acting. Not everything is on the table yet.",
+        "money": "Hold steady and gather facts. Trust a calm, considered choice.",
+        "advice": "Make space for quiet and listen inward."
+      },
+      "reversed": {
+        "summary": "Outside noise may be drowning out your instincts. Step back and reconnect.",
+        "love": "Unspoken things may need gentle airing. Ask, rather than guess.",
+        "career": "Hidden details could matter. Ask questions politely and clearly.",
+        "money": "Do not decide on rumours. Check the facts yourself.",
+        "advice": "Turn down the noise and trust your gut."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A serene seated figure between two pillars, crescent moon at her feet, veil of champagne-gold pomegranates against deep midnight blue."
+    },
+    {
+      "id": "the-empress",
+      "name": "The Empress",
+      "arcana": "major",
+      "suit": null,
+      "number": 3,
+      "element": "Earth",
+      "keywords_upright": ["abundance", "nurturing", "creativity", "comfort"],
+      "keywords_reversed": ["overgiving", "creative block", "neglecting self", "smothering"],
+      "upright": {
+        "summary": "Growth comes from care and patience. Nurture what matters and it will flourish.",
+        "love": "Warmth and affection grow easily. Small kindnesses mean a lot.",
+        "career": "Creative work thrives now. Tend your projects like a garden.",
+        "money": "Steady growth is favoured. Enjoy comforts without overdoing it.",
+        "advice": "Care for yourself as you care for others."
+      },
+      "reversed": {
+        "summary": "You may be giving too much or too little to yourself. Rebalance gently.",
+        "love": "Give space as well as care. Healthy love lets both people breathe.",
+        "career": "A creative block may ease with rest. Step outside for fresh air.",
+        "money": "Watch comfort spending. Treats are nice, but balance is nicer.",
+        "advice": "Refill your own cup first."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A gracious figure in a flowing gown seated in a wheat field at night, gold stars in her crown, lush champagne-gold foliage."
+    },
+    {
+      "id": "the-emperor",
+      "name": "The Emperor",
+      "arcana": "major",
+      "suit": null,
+      "number": 4,
+      "element": "Fire",
+      "keywords_upright": ["structure", "stability", "leadership", "responsibility"],
+      "keywords_reversed": ["rigidity", "control", "stubbornness", "lack of discipline"],
+      "upright": {
+        "summary": "Order and steady leadership bring results. Build firm foundations.",
+        "love": "Reliability is attractive. Show up consistently and keep your word.",
+        "career": "Take charge with fairness. Clear plans and routines help you rise.",
+        "money": "Budgets and structure work in your favour. Stay disciplined.",
+        "advice": "Set clear boundaries and keep them kindly."
+      },
+      "reversed": {
+        "summary": "Too much control or too little may be causing friction. Find the middle ground.",
+        "love": "Let go of needing to be right. Listening softens tension.",
+        "career": "Rigid rules or a tough boss may test you. Stay calm and flexible.",
+        "money": "Your plan may need a little structure. Review it simply.",
+        "advice": "Lead with firmness and flexibility together."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A crowned ruler on a stone throne carved with rams, midnight mountains behind, champagne-gold armour and orb, strong geometric lines."
+    },
+    {
+      "id": "the-hierophant",
+      "name": "The Hierophant",
+      "arcana": "major",
+      "suit": null,
+      "number": 5,
+      "element": "Earth",
+      "keywords_upright": ["tradition", "guidance", "learning", "shared values"],
+      "keywords_reversed": ["rebellion", "new ways", "questioning rules", "restriction"],
+      "upright": {
+        "summary": "Trusted traditions and wise mentors can guide you. Learn from what has worked before.",
+        "love": "Shared values build lasting bonds. Family input may feel meaningful.",
+        "career": "Formal training or a mentor helps. Following proper steps pays off.",
+        "money": "Tried and tested approaches suit you now. Seek a qualified opinion if needed.",
+        "advice": "Ask someone wise and listen well."
+      },
+      "reversed": {
+        "summary": "You may want to do things your own way. Question rules thoughtfully, not angrily.",
+        "love": "Your relationship may not follow a usual script. That can be fine.",
+        "career": "An unconventional path may call. Weigh it carefully.",
+        "money": "Do not follow the crowd blindly. Think for yourself.",
+        "advice": "Keep what serves you and kindly release the rest."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A robed teacher raising a hand in blessing between pillars, crossed gold keys at his feet, midnight-blue arches with champagne-gold detail."
+    },
+    {
+      "id": "the-lovers",
+      "name": "The Lovers",
+      "arcana": "major",
+      "suit": null,
+      "number": 6,
+      "element": "Air",
+      "keywords_upright": ["connection", "harmony", "choice", "values"],
+      "keywords_reversed": ["imbalance", "misalignment", "indecision", "disharmony"],
+      "upright": {
+        "summary": "A meaningful connection or choice is before you. Let your values guide you.",
+        "love": "Harmony and mutual respect shine. Open hearts meet halfway.",
+        "career": "Good partnerships form now. Choose work that fits who you are.",
+        "money": "Decide together and openly. Shared goals keep things smooth.",
+        "advice": "Choose what aligns with your heart and values."
+      },
+      "reversed": {
+        "summary": "Something feels out of balance. Revisit what you truly want.",
+        "love": "Small misunderstandings may grow if left unspoken. Talk gently.",
+        "career": "A partnership may need clearer terms. Check that you agree.",
+        "money": "Disagreements about spending may surface. Find common ground.",
+        "advice": "Realign your choices with your values."
+      },
+      "yes_no": "yes",
+      "image_prompt": "Two figures facing each other under a radiant angel, midnight sky, champagne-gold sun rays and a blossoming tree."
+    },
+    {
+      "id": "the-chariot",
+      "name": "The Chariot",
+      "arcana": "major",
+      "suit": null,
+      "number": 7,
+      "element": "Water",
+      "keywords_upright": ["determination", "momentum", "willpower", "success"],
+      "keywords_reversed": ["lost direction", "scattered effort", "frustration", "delays"],
+      "upright": {
+        "summary": "Steady will carries you forward. Keep your eyes on the goal.",
+        "love": "Effort and commitment move things ahead. Pull in the same direction.",
+        "career": "Progress is strong. Push through with focus and confidence.",
+        "money": "Discipline brings results. Stay on course with your plan.",
+        "advice": "Hold the reins firmly and move forward."
+      },
+      "reversed": {
+        "summary": "You may feel pulled in two directions. Slow down and choose one road.",
+        "love": "Competing needs may cause strain. Agree on a shared direction.",
+        "career": "Delays are temporary. Reset your plan and try again.",
+        "money": "Avoid rushing decisions. Steady beats fast.",
+        "advice": "Pick a direction and steer gently."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A warrior in a canopied chariot drawn by one dark and one light sphinx, midnight city behind, champagne-gold stars on the canopy."
+    },
+    {
+      "id": "strength",
+      "name": "Strength",
+      "arcana": "major",
+      "suit": null,
+      "number": 8,
+      "element": "Fire",
+      "keywords_upright": ["courage", "patience", "gentleness", "inner strength"],
+      "keywords_reversed": ["self-doubt", "low energy", "impatience", "insecurity"],
+      "upright": {
+        "summary": "True strength is calm and kind. Patience wins more than force.",
+        "love": "Gentleness builds trust. Be soft and steady together.",
+        "career": "Quiet confidence earns respect. Handle challenges with grace.",
+        "money": "Calm self-control keeps you on track. Resist pressure kindly.",
+        "advice": "Meet difficulty with a soft heart and firm resolve."
+      },
+      "reversed": {
+        "summary": "Self-doubt may be louder than usual. Remember how far you have come.",
+        "love": "Do not shrink yourself to keep the peace. Your needs matter too.",
+        "career": "Rest if you feel drained. Strength returns with care.",
+        "money": "Avoid stress spending. A calm mind chooses better.",
+        "advice": "Be patient with yourself today."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A calm figure gently closing a lion's jaws, infinity sign glowing above, midnight meadow with champagne-gold flowers."
+    },
+    {
+      "id": "the-hermit",
+      "name": "The Hermit",
+      "arcana": "major",
+      "suit": null,
+      "number": 9,
+      "element": "Earth",
+      "keywords_upright": ["reflection", "solitude", "wisdom", "inner guidance"],
+      "keywords_reversed": ["isolation", "loneliness", "withdrawal", "avoidance"],
+      "upright": {
+        "summary": "Quiet time brings clarity. Step back and listen to your own wisdom.",
+        "love": "Time alone helps you know what you want. That is healthy.",
+        "career": "Deep, focused work suits you. Study and plan before acting.",
+        "money": "Review your situation quietly. A simple lifestyle feels good.",
+        "advice": "Take a quiet walk and let answers come."
+      },
+      "reversed": {
+        "summary": "Solitude may have turned into isolation. Reach out to someone you trust.",
+        "love": "Let people in a little. Connection can be gentle.",
+        "career": "Share your ideas rather than keep them hidden. Feedback helps.",
+        "money": "Do not avoid looking at your accounts. A quick check brings peace.",
+        "advice": "Balance quiet time with good company."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A cloaked elder on a snowy peak holding a lantern with a champagne-gold star inside, deep midnight sky, minimal composition."
+    },
+    {
+      "id": "wheel-of-fortune",
+      "name": "Wheel of Fortune",
+      "arcana": "major",
+      "suit": null,
+      "number": 10,
+      "element": "Fire",
+      "keywords_upright": ["change", "cycles", "good timing", "turning point"],
+      "keywords_reversed": ["resistance", "setbacks", "bad timing", "feeling stuck"],
+      "upright": {
+        "summary": "Life is turning in your favour. Go with the flow of change.",
+        "love": "A lucky meeting or new chapter may appear. Stay open.",
+        "career": "Timing works for you. Seize a fresh opportunity.",
+        "money": "Positive shifts are possible. Stay sensible as things move.",
+        "advice": "Welcome change with an open hand."
+      },
+      "reversed": {
+        "summary": "A small dip is part of the cycle. This too shall pass.",
+        "love": "Old patterns may repeat. Notice them and choose differently.",
+        "career": "Delays are not failures. Use the pause to prepare.",
+        "money": "Keep a small buffer for surprises. Steady habits help.",
+        "advice": "Ride out the turn calmly."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A great rotating wheel with symbols etched in champagne gold, clouds and four winged creatures in the corners, midnight-blue sky."
+    },
+    {
+      "id": "justice",
+      "name": "Justice",
+      "arcana": "major",
+      "suit": null,
+      "number": 11,
+      "element": "Air",
+      "keywords_upright": ["fairness", "truth", "balance", "accountability"],
+      "keywords_reversed": ["unfairness", "dishonesty", "imbalance", "avoiding responsibility"],
+      "upright": {
+        "summary": "Fair outcomes follow honest actions. Weigh things clearly and truthfully.",
+        "love": "Balance and honesty strengthen bonds. Give and take evenly.",
+        "career": "Fair treatment and clear agreements matter. Keep good records.",
+        "money": "Accounts balance out when you stay honest. Review the details.",
+        "advice": "Act with fairness and the rest follows."
+      },
+      "reversed": {
+        "summary": "Something may feel unfair or one-sided. Look honestly at all sides.",
+        "love": "One person may be giving more. Talk it through calmly.",
+        "career": "Double-check agreements. Speak up politely if something is unclear.",
+        "money": "Check bills and receipts. Small errors are easy to fix early.",
+        "advice": "Own your part and let go of the rest."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A composed figure holding upright sword and balanced gold scales, seated between pillars, midnight drapery with champagne-gold trim."
+    },
+    {
+      "id": "the-hanged-man",
+      "name": "The Hanged Man",
+      "arcana": "major",
+      "suit": null,
+      "number": 12,
+      "element": "Water",
+      "keywords_upright": ["pause", "new perspective", "surrender", "patience"],
+      "keywords_reversed": ["stalling", "resistance", "indecision", "needless delay"],
+      "upright": {
+        "summary": "A pause can show you things you missed. Try seeing it from another angle.",
+        "love": "Let things breathe. Patience brings understanding.",
+        "career": "Waiting is not wasting. Rethink your approach.",
+        "money": "Hold off on big moves. Clarity comes with time.",
+        "advice": "Pause and look at it upside down."
+      },
+      "reversed": {
+        "summary": "You may be waiting longer than needed. Gently get moving again.",
+        "love": "Avoid staying stuck out of habit. Ask what you truly want.",
+        "career": "A decision has waited long enough. Choose and move on.",
+        "money": "Do not let small tasks pile up. Handle one today.",
+        "advice": "End the waiting with one small step."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A serene figure hanging by one foot from a living tree, halo of champagne-gold light, calm expression, midnight-blue background."
+    },
+    {
+      "id": "death",
+      "name": "Death",
+      "arcana": "major",
+      "suit": null,
+      "number": 13,
+      "element": "Water",
+      "keywords_upright": ["endings", "transformation", "renewal", "letting go"],
+      "keywords_reversed": ["clinging", "fear of change", "stagnation", "slow transition"],
+      "upright": {
+        "summary": "This card speaks of change, not loss of life. One chapter closes so a new one can open.",
+        "love": "An old pattern may end, making room for something healthier.",
+        "career": "A role or habit may wrap up. A fresh direction follows.",
+        "money": "Clear out what no longer serves you. Simplify and renew.",
+        "advice": "Let go gracefully and welcome the new."
+      },
+      "reversed": {
+        "summary": "You may be holding on to what has run its course. Release it gently.",
+        "love": "Clinging to the past can block new joy. Let it rest.",
+        "career": "Change is coming either way. Embrace it at your own pace.",
+        "money": "Old habits may hold you back. Try one new routine.",
+        "advice": "Loosen your grip and breathe."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A gentle armoured rider on a white horse at dawn, sun rising between two towers in champagne gold, white rose banner, midnight sky softening."
+    },
+    {
+      "id": "temperance",
+      "name": "Temperance",
+      "arcana": "major",
+      "suit": null,
+      "number": 14,
+      "element": "Fire",
+      "keywords_upright": ["balance", "moderation", "patience", "harmony"],
+      "keywords_reversed": ["excess", "imbalance", "haste", "discord"],
+      "upright": {
+        "summary": "A middle path brings peace. Blend things slowly and patiently.",
+        "love": "Easy give and take keeps things sweet. Compromise feels natural.",
+        "career": "Steady, balanced effort works best. Avoid extremes.",
+        "money": "Moderation is your friend. Spend and save in balance.",
+        "advice": "Find the middle way and stay there."
+      },
+      "reversed": {
+        "summary": "Something is tipping into too much. Bring it back to centre.",
+        "love": "Overreacting may cause friction. Take a breath first.",
+        "career": "You may be overworking. Rest is part of good work.",
+        "money": "Rein in extra spending. Small cuts restore balance.",
+        "advice": "Slow down and rebalance."
+      },
+      "yes_no": "yes",
+      "image_prompt": "An angel pouring water between two gold cups, one foot on land and one in a pool, irises and a champagne-gold sunrise path, midnight tones."
+    },
+    {
+      "id": "the-devil",
+      "name": "The Devil",
+      "arcana": "major",
+      "suit": null,
+      "number": 15,
+      "element": "Earth",
+      "keywords_upright": ["attachment", "temptation", "habits", "materialism"],
+      "keywords_reversed": ["release", "freedom", "breaking habits", "awareness"],
+      "upright": {
+        "summary": "A habit or attachment may have too much pull. Notice it without judgement.",
+        "love": "Watch for patterns that feel heavy. Healthy love feels freeing.",
+        "career": "Do not let work or status take over everything. Keep perspective.",
+        "money": "Be mindful of temptation spending. Awareness is the first step.",
+        "advice": "Name what holds you, and you loosen it."
+      },
+      "reversed": {
+        "summary": "You are ready to break free. A lighter feeling is close.",
+        "love": "Old patterns lose their grip. Honest talk clears the air.",
+        "career": "You may outgrow a draining situation. Plan your next step calmly.",
+        "money": "Good time to drop a costly habit. Small wins add up.",
+        "advice": "Choose freedom one small step at a time."
+      },
+      "yes_no": "no",
+      "image_prompt": "A stylised horned figure on a dark pedestal, two figures with loose chains they could lift off, midnight shadows and muted champagne-gold accents, not frightening."
+    },
+    {
+      "id": "the-tower",
+      "name": "The Tower",
+      "arcana": "major",
+      "suit": null,
+      "number": 16,
+      "element": "Fire",
+      "keywords_upright": ["sudden change", "revelation", "clearing", "awakening"],
+      "keywords_reversed": ["avoiding change", "small shake-up", "delayed change", "recovery"],
+      "upright": {
+        "summary": "Something unsteady may shift quickly. What remains will be truer and stronger.",
+        "love": "A surprising truth may come out. Honesty clears the way.",
+        "career": "Plans may change suddenly. Stay flexible and keep calm.",
+        "money": "Keep a safety buffer. Being prepared makes surprises easier.",
+        "advice": "Let the shake-up show you what is solid."
+      },
+      "reversed": {
+        "summary": "Change may be gentler than feared. Rebuild at a calm pace.",
+        "love": "Address small cracks before they widen. Kind words help.",
+        "career": "A near miss is a chance to strengthen your plans.",
+        "money": "Review weak spots in your budget now, calmly.",
+        "advice": "Rebuild slowly on firmer ground."
+      },
+      "yes_no": "no",
+      "image_prompt": "A tall tower struck by a champagne-gold lightning bolt, crown tumbling, midnight storm clouds parting to reveal stars, dramatic but hopeful."
+    },
+    {
+      "id": "the-star",
+      "name": "The Star",
+      "arcana": "major",
+      "suit": null,
+      "number": 17,
+      "element": "Air",
+      "keywords_upright": ["hope", "healing", "renewal", "inspiration"],
+      "keywords_reversed": ["discouragement", "low faith", "disconnection", "fatigue"],
+      "upright": {
+        "summary": "Hope returns after a hard time. Calm, steady renewal is underway.",
+        "love": "Gentle optimism brings people closer. Trust feels possible again.",
+        "career": "Inspiration flows. Share your ideas with confidence.",
+        "money": "Things look brighter. Keep faith with a steady plan.",
+        "advice": "Keep hoping and keep going."
+      },
+      "reversed": {
+        "summary": "Hope may feel dim, but it is still there. Rest and look up again.",
+        "love": "Do not give up on kindness. Small gestures rekindle warmth.",
+        "career": "Motivation may dip. Revisit why you started.",
+        "money": "Avoid gloomy decisions. Wait for a clearer mood.",
+        "advice": "Rest, then let a little light back in."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A kneeling figure pouring water into a pool and onto land, one large champagne-gold star and seven small ones above, peaceful midnight night."
+    },
+    {
+      "id": "the-moon",
+      "name": "The Moon",
+      "arcana": "major",
+      "suit": null,
+      "number": 18,
+      "element": "Water",
+      "keywords_upright": ["intuition", "uncertainty", "dreams", "illusion"],
+      "keywords_reversed": ["clarity", "release of worry", "truth emerging", "confusion lifting"],
+      "upright": {
+        "summary": "Things may look unclear for now. Move slowly and trust your intuition.",
+        "love": "Feelings may be hard to read. Ask gently rather than assume.",
+        "career": "Not all information is in. Wait before big decisions.",
+        "money": "Avoid unclear deals. Get the full picture first.",
+        "advice": "Walk slowly by moonlight and trust your instincts."
+      },
+      "reversed": {
+        "summary": "The fog is lifting. Worries ease as the truth becomes clear.",
+        "love": "Misunderstandings clear up. Honest talk brings relief.",
+        "career": "Confusing details start to make sense. Move ahead carefully.",
+        "money": "Clarity returns. A good time to sort out paperwork.",
+        "advice": "Let clarity replace worry."
+      },
+      "yes_no": "maybe",
+      "image_prompt": "A full champagne-gold moon above a winding path between two towers, a dog and wolf howling, crayfish in a pool, misty midnight landscape."
+    },
+    {
+      "id": "the-sun",
+      "name": "The Sun",
+      "arcana": "major",
+      "suit": null,
+      "number": 19,
+      "element": "Fire",
+      "keywords_upright": ["joy", "success", "warmth", "vitality"],
+      "keywords_reversed": ["temporary clouds", "low mood", "delayed success", "overconfidence"],
+      "upright": {
+        "summary": "Joy and warmth surround you. Enjoy this bright, open time.",
+        "love": "Happiness flows easily. Celebrate together.",
+        "career": "Success and recognition shine. Your efforts are seen.",
+        "money": "A positive outlook supports good choices. Share the good fortune.",
+        "advice": "Let yourself shine and enjoy it."
+      },
+      "reversed": {
+        "summary": "The sun is behind a cloud, not gone. Brighter days are near.",
+        "love": "A small dip in mood will pass. Keep things light.",
+        "career": "Success may take a little longer. Stay positive and steady.",
+        "money": "Do not let optimism skip the details. Check before you commit.",
+        "advice": "Find one small joy today."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A radiant champagne-gold sun with a gentle face over a garden wall of sunflowers, a joyful child on a white horse, midnight edges fading into warm light."
+    },
+    {
+      "id": "judgement",
+      "name": "Judgement",
+      "arcana": "major",
+      "suit": null,
+      "number": 20,
+      "element": "Fire",
+      "keywords_upright": ["awakening", "reflection", "renewal", "calling"],
+      "keywords_reversed": ["self-criticism", "doubt", "ignoring the call", "hesitation"],
+      "upright": {
+        "summary": "A wake-up call invites you to rise. Reflect honestly and step into a new chapter.",
+        "love": "Fresh understanding renews a bond. Forgiveness opens doors.",
+        "career": "A true calling may become clearer. Answer it with confidence.",
+        "money": "Review past choices and learn from them. A fresh start is possible.",
+        "advice": "Listen for your calling and answer it."
+      },
+      "reversed": {
+        "summary": "You may be too hard on yourself. Learn the lesson and move on.",
+        "love": "Let go of old blame. Kindness helps both sides heal.",
+        "career": "Do not ignore what you truly want. Take a small step towards it.",
+        "money": "Avoid dwelling on past mistakes. Plan from where you are now.",
+        "advice": "Be kind to your past self."
+      },
+      "yes_no": "yes",
+      "image_prompt": "An angel blowing a champagne-gold trumpet from the clouds, figures rising with open arms below, midnight sky with streaming light."
+    },
+    {
+      "id": "the-world",
+      "name": "The World",
+      "arcana": "major",
+      "suit": null,
+      "number": 21,
+      "element": "Earth",
+      "keywords_upright": ["completion", "fulfilment", "wholeness", "achievement"],
+      "keywords_reversed": ["unfinished business", "delays", "seeking closure", "shortcuts"],
+      "upright": {
+        "summary": "A cycle comes to a happy close. Celebrate how far you have come.",
+        "love": "A sense of wholeness and belonging grows. Enjoy it together.",
+        "career": "A goal is reached. Take a bow before the next journey.",
+        "money": "Long efforts bear fruit. Enjoy the reward wisely.",
+        "advice": "Celebrate the finish, then begin again."
+      },
+      "reversed": {
+        "summary": "You are close to the finish line. Tie up loose ends.",
+        "love": "Some things need closure. A gentle talk helps.",
+        "career": "Finish what you started before moving on.",
+        "money": "Complete outstanding tasks and payments. It feels lighter after.",
+        "advice": "Close the loop, then rest."
+      },
+      "yes_no": "yes",
+      "image_prompt": "A dancing figure within a champagne-gold laurel wreath, four symbolic creatures in the corners, star-filled midnight sky, sense of completion."
+    }
+  ]
+}

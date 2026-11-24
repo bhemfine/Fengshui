@@ -1,0 +1,255 @@
+{
+  "version": 1,
+  "locale": "en-SG",
+  "disclaimer": "For reflection and entertainment. Not professional advice.",
+  "placeholders": ["{name}", "{element}", "{lucky_hour}", "{lucky_direction}", "{lucky_colour}"],
+  "daily": {
+    "by_score_band": {
+      "great": {
+        "range": [80, 100],
+        "headlines": [
+          "A bright, open day, {name}",
+          "The wind is at your back today",
+          "Good energy flows your way",
+          "A day to step forward with ease",
+          "Your {element} energy shines today",
+          "Doors open a little wider today"
+        ],
+        "bodies": [
+          "Things line up nicely today, {name}. Start the task you have been putting off. Your best window is {lucky_hour}.",
+          "Your {element} nature feels steady and strong. Face {lucky_direction} when you plan or write. A touch of {lucky_colour} adds a nice lift.",
+          "People are open to your ideas today. Share them kindly and clearly. Try to have key talks around {lucky_hour}.",
+          "A good day to begin, ask, or reach out. Keep your plans simple and your tone warm. {lucky_colour} suits your mood.",
+          "Momentum is on your side. Do one meaningful thing early, then enjoy the rest of the day. Sit facing {lucky_direction} if you can.",
+          "Small efforts go further than usual today. Say thank you, follow up, tidy one corner. Your {element} energy loves a clear space."
+        ]
+      },
+      "good": {
+        "range": [60, 79],
+        "headlines": [
+          "A steady, pleasant day",
+          "Quiet progress is still progress",
+          "A kind day for routine work",
+          "Good things grow slowly today",
+          "Calm and capable, {name}",
+          "A gentle push forward"
+        ],
+        "bodies": [
+          "Today supports steady effort, {name}. Finish what is in front of you before starting new things. {lucky_hour} is a good focus window.",
+          "Your {element} energy is balanced. Keep a light routine and a clear desk. Facing {lucky_direction} may help you settle.",
+          "A good day for small wins. Reply to messages, plan the week, share a meal. Wear a little {lucky_colour} for comfort.",
+          "No need to rush. Things move at a fair pace today. Save bigger decisions for after {lucky_hour} when your mind feels clear.",
+          "People around you are cooperative. Ask for help if you need it. A short walk can refresh your {element} side.",
+          "A reliable day for practical tasks. Tidy, sort, and prepare. Turn toward {lucky_direction} when you work."
+        ]
+      },
+      "mixed": {
+        "range": [40, 59],
+        "headlines": [
+          "A day of ups and downs",
+          "Take it one step at a time",
+          "Balance is your friend today",
+          "Go gently, {name}",
+          "Some green lights, some amber",
+          "A good day to keep it simple"
+        ],
+        "bodies": [
+          "Today has a bit of everything, {name}. Keep plans flexible and expectations light. {lucky_hour} may feel smoother than other hours.",
+          "Your {element} energy may feel a little scattered. Make a short list and tick off three things. That is enough.",
+          "Check details twice before you send or sign. Small slips are easy to fix if you slow down. A touch of {lucky_colour} can help you feel grounded.",
+          "Mixed signals are normal today. Listen more than you speak. Face {lucky_direction} when you need to think.",
+          "Choose rest and routine over big moves. Water a plant, clear a drawer, sleep a bit earlier.",
+          "Some things will flow, some will not. Put your energy where it flows. {lucky_hour} is your calmest window."
+        ]
+      },
+      "careful": {
+        "range": [0, 39],
+        "headlines": [
+          "A quiet day for rest and review",
+          "Slow and steady wins today",
+          "A day to look after yourself",
+          "Pause, breathe, then act",
+          "Keep things soft and simple, {name}",
+          "A good day to tend your own garden"
+        ],
+        "bodies": [
+          "Today is better for reflection than for big starts, {name}. Review, rest, and prepare. Tomorrow brings new energy.",
+          "Your {element} energy asks for a slower pace. Keep conversations kind and short. {lucky_hour} is a gentle time to get things done.",
+          "Hold off on major decisions if you can. If you must act, check twice and keep it simple. Face {lucky_direction} to steady your mind.",
+          "A good day for cleaning, tidying, and finishing old tasks. Clearing space often clears the mind too.",
+          "Be patient with yourself and others. Small misunderstandings pass quickly when met with calm. A little {lucky_colour} can feel comforting.",
+          "Think of today as a rest stop, not a roadblock. Recharge, drink water, and plan your next good step."
+        ]
+      }
+    },
+    "day_officers": [
+      {"id": "jian", "zh": "建", "pinyin": "jiàn", "en": "Establish", "meaning": "A day of fresh starts and setting foundations.", "good_for": ["planning", "interview", "prayer", "travel"], "avoid": ["groundbreaking", "moving_house"]},
+      {"id": "chu", "zh": "除", "pinyin": "chú", "en": "Remove", "meaning": "A day to clear out the old and make room.", "good_for": ["cleaning", "haircut", "medical_checkup", "prayer"], "avoid": ["wedding", "business_opening"]},
+      {"id": "man", "zh": "满", "pinyin": "mǎn", "en": "Full", "meaning": "A day of abundance and gathering.", "good_for": ["business_opening", "prayer", "signing", "first_date"], "avoid": ["medical_checkup", "funeral_matters"]},
+      {"id": "ping", "zh": "平", "pinyin": "píng", "en": "Balance", "meaning": "A level, ordinary day suited to steady work.", "good_for": ["renovation", "cleaning", "travel"], "avoid": ["wedding", "investment"]},
+      {"id": "ding", "zh": "定", "pinyin": "dìng", "en": "Stable", "meaning": "A settled day for commitments that should last.", "good_for": ["signing", "wedding", "buying_property", "business_opening"], "avoid": ["travel", "funeral_matters"]},
+      {"id": "zhi", "zh": "执", "pinyin": "zhí", "en": "Initiate", "meaning": "A day to hold firm and follow through.", "good_for": ["renovation", "groundbreaking", "interview", "signing"], "avoid": ["moving_house", "investment"]},
+      {"id": "po", "zh": "破", "pinyin": "pò", "en": "Break", "meaning": "A day of breaking down. Best for endings and demolition.", "good_for": ["cleaning", "medical_checkup"], "avoid": ["wedding", "signing", "business_opening", "moving_house"]},
+      {"id": "wei", "zh": "危", "pinyin": "wēi", "en": "Danger", "meaning": "A day to tread carefully and keep things modest.", "good_for": ["prayer", "cleaning"], "avoid": ["travel", "investment", "renovation"]},
+      {"id": "cheng", "zh": "成", "pinyin": "chéng", "en": "Success", "meaning": "A day when efforts come together nicely.", "good_for": ["wedding", "business_opening", "signing", "moving_house", "first_date"], "avoid": ["funeral_matters"]},
+      {"id": "shou", "zh": "收", "pinyin": "shōu", "en": "Receive", "meaning": "A day to collect, harvest, and wrap up.", "good_for": ["buying_property", "investment", "signing"], "avoid": ["funeral_matters", "medical_checkup"]},
+      {"id": "kai", "zh": "开", "pinyin": "kāi", "en": "Open", "meaning": "A day of openings and welcome beginnings.", "good_for": ["business_opening", "moving_house", "wedding", "interview", "travel"], "avoid": ["funeral_matters", "groundbreaking"]},
+      {"id": "bi", "zh": "闭", "pinyin": "bì", "en": "Close", "meaning": "A day to close, store, and rest.", "good_for": ["cleaning", "prayer", "funeral_matters"], "avoid": ["business_opening", "travel", "medical_checkup"]}
+    ],
+    "activity_tags": {
+      "moving_house": {"label": "Moving house", "do_text": "A kind day to move in or carry in your first items.", "avoid_text": "Perhaps not the day to move. Pack and prepare instead."},
+      "signing": {"label": "Signing agreements", "do_text": "A good day to sign and confirm plans.", "avoid_text": "Read through again and consider signing another day."},
+      "travel": {"label": "Travel", "do_text": "A smooth day to set off on a trip.", "avoid_text": "Allow extra time and keep travel plans simple."},
+      "haircut": {"label": "Haircut", "do_text": "A fresh cut suits today's energy.", "avoid_text": "Maybe leave the haircut for another day."},
+      "wedding": {"label": "Wedding", "do_text": "A warm, harmonious day for celebrations.", "avoid_text": "Many prefer another date for wedding ceremonies."},
+      "renovation": {"label": "Renovation", "do_text": "A good day to start or continue home works.", "avoid_text": "Hold off on starting new works today."},
+      "business_opening": {"label": "Business opening", "do_text": "A welcoming day to open your doors.", "avoid_text": "Consider a soft launch now and a grand opening later."},
+      "investment": {"label": "Financial decisions", "do_text": "A calm day to review plans. Always seek proper advice.", "avoid_text": "Not a day for big money moves. Review and wait."},
+      "medical_checkup": {"label": "Routine appointments", "do_text": "A fine day for routine appointments you have planned.", "avoid_text": "Keep any needed appointments. Simply avoid adding extra ones if they can wait."},
+      "prayer": {"label": "Prayer and blessings", "do_text": "A peaceful day for prayer, offerings, and gratitude.", "avoid_text": "Keep prayers simple and quiet today."},
+      "cleaning": {"label": "Cleaning and decluttering", "do_text": "A great day to clean, sort, and let go.", "avoid_text": "Light tidying only today."},
+      "interview": {"label": "Interviews", "do_text": "You come across clearly today. Good for interviews.", "avoid_text": "Prepare a little extra and speak slowly."},
+      "first_date": {"label": "First date", "do_text": "A warm day for meeting someone new.", "avoid_text": "Keep it casual. Coffee beats a big dinner today."},
+      "buying_property": {"label": "Property matters", "do_text": "A steady day for property viewings and decisions. Seek proper advice.", "avoid_text": "View and compare, but decide another day."},
+      "groundbreaking": {"label": "Groundbreaking", "do_text": "A supportive day to break ground.", "avoid_text": "Traditionally not a day to disturb the earth."},
+      "funeral_matters": {"label": "Funeral matters", "do_text": "A respectful day for rites and remembrance.", "avoid_text": "Many families prefer another date for these rites."}
+    },
+    "clash_text": [
+      "Today clashes with your {name} sign. Keep plans light and be extra kind to yourself.",
+      "A clash day for you. Slow down, double-check details, and skip big starts.",
+      "Your animal sign meets the day head-on. A good day for rest and routine.",
+      "Clash days can feel bumpy. Wear {lucky_colour} and keep your schedule simple.",
+      "Energy runs against your sign today. Let small things go and save big moves for later.",
+      "Treat today as a pause. Tidy, reflect, and look ahead to a smoother tomorrow."
+    ],
+    "lucky_colour_by_element": {
+      "wood": ["green", "teal", "black", "navy"],
+      "fire": ["red", "orange", "pink", "green"],
+      "earth": ["yellow", "beige", "brown", "red"],
+      "metal": ["white", "gold", "silver", "yellow"],
+      "water": ["black", "navy", "blue", "white"]
+    }
+  },
+  "monthly": [
+    {
+      "id": "tiger", "zh": "寅月", "pinyin": "yín yuè", "en": "Tiger month", "starts_approx": "Li Chun, around 4 Feb",
+      "theme": "New beginnings and setting intentions.",
+      "dos": ["Set three gentle goals for the year", "Clean your entrance", "Reconnect with family", "Start a simple daily habit", "Plan your budget for the year"],
+      "avoids": ["Overcommitting early", "Skipping rest after festivities", "Rushing big purchases", "Holding old grudges", "Ignoring clutter at the door"],
+      "focus": {"wood": "Grow one new skill.", "fire": "Share your plans with someone you trust.", "earth": "Build a steady routine.", "metal": "Sort and organise your papers.", "water": "Make time to reflect and journal."}
+    },
+    {
+      "id": "rabbit", "zh": "卯月", "pinyin": "mǎo yuè", "en": "Rabbit month", "starts_approx": "around 6 Mar",
+      "theme": "Growth, kindness, and gentle progress.",
+      "dos": ["Nurture friendships", "Add a plant to your home", "Learn something new", "Spend time outdoors", "Say yes to small invitations"],
+      "avoids": ["Gossip", "Overspending on wants", "Late nights in a row", "Forcing quick results", "Neglecting your desk"],
+      "focus": {"wood": "Let your ideas grow slowly.", "fire": "Use your warmth to encourage others.", "earth": "Stay flexible with plans.", "metal": "Be gentle in feedback.", "water": "Feed your curiosity."}
+    },
+    {
+      "id": "dragon", "zh": "辰月", "pinyin": "chén yuè", "en": "Dragon month", "starts_approx": "around 5 Apr",
+      "theme": "Ambition with patience.",
+      "dos": ["Review your goals", "Honour ancestors at Qing Ming", "Tidy storage areas", "Take on one stretch task", "Ask for feedback"],
+      "avoids": ["Pride in disagreements", "Big risks without advice", "Clutter under the bed", "Skipping meals", "Overpromising"],
+      "focus": {"wood": "Push one project forward.", "fire": "Lead with patience.", "earth": "Consolidate what you have.", "metal": "Refine your work.", "water": "Plan before acting."}
+    },
+    {
+      "id": "snake", "zh": "巳月", "pinyin": "sì yuè", "en": "Snake month", "starts_approx": "around 6 May",
+      "theme": "Insight and quiet strategy.",
+      "dos": ["Think before you speak", "Read or study", "Keep cool in the heat", "Review contracts carefully", "Spend time in calm places"],
+      "avoids": ["Hasty replies", "Heated arguments", "Overworking in the heat", "Secrets that weigh on you", "Impulse buys"],
+      "focus": {"wood": "Rest so your energy does not burn out.", "fire": "Channel energy into one goal.", "earth": "Enjoy steady support from others.", "metal": "Stay calm under pressure.", "water": "Hydrate and keep cool."}
+    },
+    {
+      "id": "horse", "zh": "午月", "pinyin": "wǔ yuè", "en": "Horse month", "starts_approx": "around 6 Jun",
+      "theme": "Energy, movement, and visibility.",
+      "dos": ["Exercise in cooler hours", "Speak up for your ideas", "Plan a short trip", "Celebrate small wins", "Air out your home"],
+      "avoids": ["Burning out", "Snapping at loved ones", "Overbooking your calendar", "Too much screen time at night", "Rash decisions"],
+      "focus": {"wood": "Share what you have built.", "fire": "Pace yourself.", "earth": "Use the boost to finish tasks.", "metal": "Keep your temper cool.", "water": "Protect your rest."}
+    },
+    {
+      "id": "goat", "zh": "未月", "pinyin": "wèi yuè", "en": "Goat month", "starts_approx": "around 7 Jul",
+      "theme": "Comfort, creativity, and care.",
+      "dos": ["Cook a meal for others", "Try a creative hobby", "Soften your home with textiles", "Check in on elders", "Slow down your mornings"],
+      "avoids": ["Worrying too much", "Comfort spending", "Isolating yourself", "Neglecting stretching", "Overthinking feedback"],
+      "focus": {"wood": "Create something by hand.", "fire": "Warm up a tired friendship.", "earth": "Look after your body and home.", "metal": "Accept help gracefully.", "water": "Let feelings flow through art."}
+    },
+    {
+      "id": "monkey", "zh": "申月", "pinyin": "shēn yuè", "en": "Monkey month", "starts_approx": "around 8 Aug",
+      "theme": "Clever ideas and quick action.",
+      "dos": ["Solve a nagging problem", "Network lightly", "Update your skills", "Organise digital files", "Respect quiet rituals in the Hungry Ghost period"],
+      "avoids": ["Cutting corners", "Overconfidence", "Late nights out", "Scattered focus", "Careless words"],
+      "focus": {"wood": "Stay rooted in your values.", "fire": "Use ideas, not force.", "earth": "Trust your practical sense.", "metal": "Your sharpness shines.", "water": "Follow good opportunities."}
+    },
+    {
+      "id": "rooster", "zh": "酉月", "pinyin": "yǒu yuè", "en": "Rooster month", "starts_approx": "around 8 Sep",
+      "theme": "Order, detail, and harvest.",
+      "dos": ["Review your finances", "Declutter wardrobes", "Enjoy Mid-Autumn with family", "Polish your work", "Keep promises"],
+      "avoids": ["Perfectionism", "Criticising others", "Messy paperwork", "Skipping rest days", "Comparing yourself to others"],
+      "focus": {"wood": "Prune what no longer grows.", "fire": "Be patient with details.", "earth": "Enjoy the harvest of effort.", "metal": "Lead with clarity.", "water": "Keep plans tidy."}
+    },
+    {
+      "id": "dog", "zh": "戌月", "pinyin": "xū yuè", "en": "Dog month", "starts_approx": "around 8 Oct",
+      "theme": "Loyalty, trust, and security.",
+      "dos": ["Strengthen close bonds", "Check home safety items", "Back up important files", "Support a friend", "Keep your word"],
+      "avoids": ["Suspicion without reason", "Stubbornness", "Lending beyond your comfort", "Neglecting sleep", "Holding in worries"],
+      "focus": {"wood": "Stand by people who stand by you.", "fire": "Rest after a busy season.", "earth": "Secure your foundations.", "metal": "Be fair and kind.", "water": "Share worries early."}
+    },
+    {
+      "id": "pig", "zh": "亥月", "pinyin": "hài yuè", "en": "Pig month", "starts_approx": "around 7 Nov",
+      "theme": "Generosity and enjoyment.",
+      "dos": ["Host a simple gathering", "Give thanks", "Enjoy good food mindfully", "Rest more", "Plan year-end goals"],
+      "avoids": ["Overindulging", "Saying yes to everything", "Lazy money habits", "Clutter in the kitchen", "Neglecting movement"],
+      "focus": {"wood": "Let others support you.", "fire": "Balance fun with rest.", "earth": "Keep spending steady.", "metal": "Relax a little.", "water": "Enjoy flowing social energy."}
+    },
+    {
+      "id": "rat", "zh": "子月", "pinyin": "zǐ yuè", "en": "Rat month", "starts_approx": "around 7 Dec",
+      "theme": "Reflection and fresh planning.",
+      "dos": ["Review the year kindly", "Enjoy Dong Zhi with family", "Save a little extra", "Plan next year's goals", "Sleep well"],
+      "avoids": ["Harsh self-judgement", "Year-end overspending", "Rushed decisions", "Ignoring tiredness", "Drifting without plans"],
+      "focus": {"wood": "Plant seeds for next year.", "fire": "Keep your inner fire steady.", "earth": "Count your blessings.", "metal": "Organise for the new year.", "water": "Trust your intuition."}
+    },
+    {
+      "id": "ox", "zh": "丑月", "pinyin": "chǒu yuè", "en": "Ox month", "starts_approx": "around 6 Jan",
+      "theme": "Patience, preparation, and spring cleaning.",
+      "dos": ["Spring clean before the new year", "Settle small debts", "Prepare red packets", "Fix broken items", "Rest before festivities"],
+      "avoids": ["Leaving clutter into the new year", "Last-minute rushing", "Arguments at home", "Overspending on festive items", "Skipping meals"],
+      "focus": {"wood": "Prepare your new plans.", "fire": "Keep warm and patient.", "earth": "Steady work pays off.", "metal": "Finish what you started.", "water": "Rest and recharge."}
+    }
+  ],
+  "yearly": {
+    "2026": {
+      "zh": "丙午", "pinyin": "bǐng wǔ", "en": "Fire Horse year",
+      "animals": {
+        "rat": {"overview": "A clash year with the Horse. Life may feel busy and changeable. Flexibility helps.", "career": "Changes at work are possible. Stay adaptable and keep good records.", "money": "Keep a buffer and avoid risky moves.", "love": "Patience smooths small tensions.", "health_wellbeing": "Protect your rest and keep a calm routine.", "dos": ["Plan ahead", "Keep calm in debates", "Save steadily", "Travel with extra time", "Lean on trusted friends"], "avoids": ["Rash changes", "Arguments", "Risky ventures", "Overworking", "Lending large sums"], "lucky_months": ["dragon", "monkey", "ox"], "tai_sui_note": "Clash (chōng 冲) with Tai Sui. Many people choose to pay respects to Tai Sui early in the year."},
+        "ox": {"overview": "A harm year. Small misunderstandings may arise, but steady effort carries you.", "career": "Quiet, reliable work is noticed.", "money": "Stable if you stay practical.", "love": "Speak clearly to avoid mixed signals.", "health_wellbeing": "Keep a gentle exercise habit.", "dos": ["Communicate clearly", "Keep routines", "Build skills", "Check details", "Rest well"], "avoids": ["Assuming", "Gossip", "Overthinking", "Big gambles", "Bottling up feelings"], "lucky_months": ["snake", "rooster", "rat"], "tai_sui_note": "Harm (hài 害) with Tai Sui. Keep relationships clear and kind."},
+        "tiger": {"overview": "A supportive year. The Horse is a trine ally, so energy flows well.", "career": "Good for growth and new roles.", "money": "Steady gains through effort.", "love": "Warm and lively.", "health_wellbeing": "Balance activity with rest.", "dos": ["Take initiative", "Network", "Learn", "Travel", "Share credit"], "avoids": ["Overconfidence", "Burnout", "Impulse buys", "Ignoring details", "Stubbornness"], "lucky_months": ["horse", "dog", "tiger"], "tai_sui_note": "Trine harmony (sān hé 三合) with Tai Sui."},
+        "rabbit": {"overview": "A year of small breaks in routine. Keep plans flexible.", "career": "Expect shifts. Stay adaptable.", "money": "Track spending closely.", "love": "Gentle care keeps bonds strong.", "health_wellbeing": "Keep sleep regular.", "dos": ["Stay flexible", "Keep savings", "Be patient", "Review agreements", "Rest"], "avoids": ["Rushing", "Overspending", "Conflict", "Late nights", "Rigid plans"], "lucky_months": ["pig", "goat", "rabbit"], "tai_sui_note": "Break (pò 破) with Tai Sui. Mild; keep things steady."},
+        "dragon": {"overview": "A productive year with room to shine.", "career": "Good for leadership.", "money": "Steady, with careful planning.", "love": "Make time for loved ones.", "health_wellbeing": "Watch stress levels.", "dos": ["Lead kindly", "Plan finances", "Exercise", "Listen", "Celebrate wins"], "avoids": ["Pride", "Overwork", "Risky deals", "Ignoring family", "Rushing"], "lucky_months": ["monkey", "rat", "rooster"], "tai_sui_note": "Neutral relationship with Tai Sui."},
+        "snake": {"overview": "A bright year with Fire support.", "career": "Your ideas gain attention.", "money": "Good with discipline.", "love": "Warm connections.", "health_wellbeing": "Keep cool and hydrated.", "dos": ["Share ideas", "Save", "Network", "Learn", "Rest"], "avoids": ["Overheating", "Arguments", "Overspending", "Secrecy", "Overcommitting"], "lucky_months": ["rooster", "ox", "monkey"], "tai_sui_note": "Neutral relationship with Tai Sui."},
+        "horse": {"overview": "Your own year. Energy is high but can feel restless.", "career": "Visible, but pace yourself.", "money": "Avoid impulse decisions.", "love": "Patience is key.", "health_wellbeing": "Rest and calm routines help.", "dos": ["Pace yourself", "Reflect", "Keep promises", "Rest", "Wear red for tradition"], "avoids": ["Rash moves", "Burnout", "Ego clashes", "Risky deals", "Skipping rest"], "lucky_months": ["tiger", "goat", "dog"], "tai_sui_note": "Ben ming nián (本命年) and self-punishment (zì xíng 自刑). Many people pay respects to Tai Sui."},
+        "goat": {"overview": "A harmonious year with the Horse as your ally.", "career": "Teamwork brings results.", "money": "Steady growth.", "love": "Sweet and supportive.", "health_wellbeing": "Keep balanced routines.", "dos": ["Collaborate", "Create", "Save", "Connect", "Rest"], "avoids": ["Worry", "Overspending", "Passivity", "Gossip", "Late nights"], "lucky_months": ["horse", "rabbit", "pig"], "tai_sui_note": "Six harmony (liù hé 六合) with Tai Sui."},
+        "monkey": {"overview": "A busy, clever year.", "career": "Problem-solving brings rewards.", "money": "Good if you stay careful.", "love": "Be present.", "health_wellbeing": "Slow down sometimes.", "dos": ["Solve problems", "Network", "Plan", "Rest", "Be honest"], "avoids": ["Shortcuts", "Scattered focus", "Overspending", "Arrogance", "Overwork"], "lucky_months": ["rat", "dragon", "snake"], "tai_sui_note": "Neutral relationship with Tai Sui."},
+        "rooster": {"overview": "A year for polish and refinement.", "career": "Quality work gets noticed.", "money": "Careful planning pays off.", "love": "Soften criticism.", "health_wellbeing": "Keep stress low.", "dos": ["Organise", "Refine", "Save", "Be kind", "Rest"], "avoids": ["Perfectionism", "Harsh words", "Risky deals", "Overwork", "Comparison"], "lucky_months": ["ox", "snake", "dragon"], "tai_sui_note": "Neutral relationship with Tai Sui."},
+        "dog": {"overview": "A supportive year. The Horse is a trine ally.", "career": "Good for steady promotion.", "money": "Stable gains.", "love": "Loyal and warm.", "health_wellbeing": "Keep active.", "dos": ["Take chances", "Support others", "Save", "Learn", "Celebrate"], "avoids": ["Worry", "Stubbornness", "Overlending", "Overwork", "Suspicion"], "lucky_months": ["tiger", "horse", "rabbit"], "tai_sui_note": "Trine harmony (sān hé 三合) with Tai Sui."},
+        "pig": {"overview": "A pleasant, social year.", "career": "Good relationships help progress.", "money": "Watch lifestyle spending.", "love": "Warm and open.", "health_wellbeing": "Balance treats with movement.", "dos": ["Connect", "Give thanks", "Budget", "Exercise", "Plan"], "avoids": ["Overindulging", "Saying yes to all", "Lazy habits", "Debt", "Late nights"], "lucky_months": ["rabbit", "goat", "tiger"], "tai_sui_note": "Neutral relationship with Tai Sui."}
+      }
+    },
+    "2027": {
+      "zh": "丁未", "pinyin": "dīng wèi", "en": "Fire Goat year",
+      "animals": {
+        "rat": {"overview": "A harm year. Keep communication clear.", "career": "Steady effort works best.", "money": "Stay practical.", "love": "Patience avoids misunderstandings.", "health_wellbeing": "Keep calm routines.", "dos": ["Communicate", "Plan", "Save", "Rest", "Be kind"], "avoids": ["Assumptions", "Gossip", "Risky moves", "Overwork", "Impatience"], "lucky_months": ["dragon", "monkey", "ox"], "tai_sui_note": "Harm (hài 害) with Tai Sui."},
+        "ox": {"overview": "A clash year. Expect change and stay flexible.", "career": "Shifts are possible. Keep adaptable.", "money": "Keep a safety buffer.", "love": "Gentle words help.", "health_wellbeing": "Prioritise rest.", "dos": ["Stay flexible", "Save", "Plan travel well", "Lean on friends", "Rest"], "avoids": ["Rash moves", "Arguments", "Risky deals", "Overwork", "Rigidity"], "lucky_months": ["snake", "rooster", "rat"], "tai_sui_note": "Clash (chōng 冲) and punishment (xíng 刑) with Tai Sui. Many people pay respects to Tai Sui."},
+        "tiger": {"overview": "A steady year for growth.", "career": "Good for learning and expansion.", "money": "Steady with planning.", "love": "Warm and lively.", "health_wellbeing": "Balance activity.", "dos": ["Learn", "Network", "Save", "Exercise", "Share"], "avoids": ["Overconfidence", "Burnout", "Impulse buys", "Rushing", "Stubbornness"], "lucky_months": ["horse", "dog", "pig"], "tai_sui_note": "Neutral relationship with Tai Sui."},
+        "rabbit": {"overview": "A harmonious year with the Goat as trine ally.", "career": "Support from others helps.", "money": "Good steady gains.", "love": "Sweet and kind.", "health_wellbeing": "Keep balanced.", "dos": ["Collaborate", "Create", "Save", "Connect", "Rest"], "avoids": ["Worry", "Overspending", "Passivity", "Gossip", "Late nights"], "lucky_months": ["pig", "goat", "dog"], "tai_sui_note": "Trine harmony (sān hé 三合) with Tai Sui."},
+        "dragon": {"overview": "A productive year.", "career": "Leadership chances appear.", "money": "Plan with care.", "love": "Make time for loved ones.", "health_wellbeing": "Manage stress.", "dos": ["Lead", "Plan", "Exercise", "Listen", "Celebrate"], "avoids": ["Pride", "Overwork", "Risky deals", "Neglect", "Rushing"], "lucky_months": ["monkey", "rat", "rooster"], "tai_sui_note": "Neutral relationship with Tai Sui."},
+        "snake": {"overview": "A warm, supportive year.", "career": "Ideas gain traction.", "money": "Good with discipline.", "love": "Warm connections.", "health_wellbeing": "Keep cool.", "dos": ["Share ideas", "Save", "Network", "Learn", "Rest"], "avoids": ["Overheating", "Arguments", "Overspending", "Secrecy", "Overcommitting"], "lucky_months": ["rooster", "ox", "monkey"], "tai_sui_note": "Neutral relationship with Tai Sui."},
+        "horse": {"overview": "A harmonious year with the Goat as your ally.", "career": "Teamwork shines.", "money": "Steady growth.", "love": "Sweet and supportive.", "health_wellbeing": "Pace yourself.", "dos": ["Collaborate", "Travel", "Save", "Connect", "Rest"], "avoids": ["Restlessness", "Overspending", "Rushing", "Ego clashes", "Late nights"], "lucky_months": ["tiger", "goat", "dog"], "tai_sui_note": "Six harmony (liù hé 六合) with Tai Sui."},
+        "goat": {"overview": "Your own year. A time for reflection and careful steps.", "career": "Steady, patient progress.", "money": "Avoid impulse spending.", "love": "Nurture what you have.", "health_wellbeing": "Rest and gentle routines help.", "dos": ["Reflect", "Pace yourself", "Save", "Rest", "Wear red for tradition"], "avoids": ["Worry", "Rash moves", "Burnout", "Risky deals", "Isolation"], "lucky_months": ["rabbit", "pig", "horse"], "tai_sui_note": "Ben ming nián (本命年). Many people pay respects to Tai Sui."},
+        "monkey": {"overview": "A clever, busy year.", "career": "Problem-solving rewarded.", "money": "Good with care.", "love": "Be present.", "health_wellbeing": "Slow down sometimes.", "dos": ["Solve problems", "Network", "Plan", "Rest", "Be honest"], "avoids": ["Shortcuts", "Scattered focus", "Overspending", "Arrogance", "Overwork"], "lucky_months": ["rat", "dragon", "snake"], "tai_sui_note": "Neutral relationship with Tai Sui."},
+        "rooster": {"overview": "A year for refinement.", "career": "Quality work noticed.", "money": "Careful planning pays.", "love": "Soften criticism.", "health_wellbeing": "Keep stress low.", "dos": ["Organise", "Refine", "Save", "Be kind", "Rest"], "avoids": ["Perfectionism", "Harsh words", "Risky deals", "Overwork", "Comparison"], "lucky_months": ["ox", "snake", "dragon"], "tai_sui_note": "Neutral relationship with Tai Sui."},
+        "dog": {"overview": "A year of small tests. Patience carries you.", "career": "Stay steady and fair.", "money": "Keep a buffer.", "love": "Be open, not guarded.", "health_wellbeing": "Protect your rest.", "dos": ["Be patient", "Save", "Communicate", "Rest", "Support friends"], "avoids": ["Stubbornness", "Suspicion", "Risky lending", "Arguments", "Overwork"], "lucky_months": ["tiger", "horse", "rabbit"], "tai_sui_note": "Punishment (xíng 刑) and break (pò 破) with Tai Sui. Many people pay respects to Tai Sui."},
+        "pig": {"overview": "A supportive year with the Goat as trine ally.", "career": "Good relationships help progress.", "money": "Steady with budgeting.", "love": "Warm and open.", "health_wellbeing": "Balance treats with movement.", "dos": ["Connect", "Give thanks", "Budget", "Exercise", "Plan"], "avoids": ["Overindulging", "Overcommitting", "Lazy habits", "Debt", "Late nights"], "lucky_months": ["rabbit", "goat", "tiger"], "tai_sui_note": "Trine harmony (sān hé 三合) with Tai Sui."}
+      }
+    }
+  }
+}

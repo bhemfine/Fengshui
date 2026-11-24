@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inkstone — clickable prototype (example data)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1026'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%23bfa577' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='12' fill='none' stroke='%23e3d6b8' stroke-width='1' stroke-dasharray='2 3'/%3E%3Ccircle cx='32' cy='12' r='2.5' fill='%23efe6d2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0b1026;--ink2:#121a3a;--lacquer:#161e42;--panel:#141b3c;
+  --gold:#bfa577;--gold2:#e3d6b8;--goldDeep:#8a7350;--goldHi:#efe6d2;
+  --goldDim:rgba(191,165,119,.36);
+  --silver:#e4e6ec;
+  --ivory:#f4efe4;--ivory2:#d8d2c4;--ox:#8e2a22;--ox2:#a8362c;
+  --good:#9fd3a8;--care:#efb894;
+  --display:"Cormorant SC",Georgia,serif;--body:"Source Serif 4",Georgia,serif;
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:radial-gradient(ellipse at 50% 30%,#1a2250,#070a1a 70%);color:var(--ivory);font-family:var(--body);display:flex;align-items:center;justify-content:center;gap:32px;padding:24px;min-height:100vh;flex-wrap:wrap}
+.desk{width:260px;font-size:15px;color:var(--ivory2);line-height:1.5}
+.desk h2{font-family:var(--display);color:var(--goldHi);font-size:26px;font-weight:600}
+.desk ol{margin:12px 0 0 22px;columns:1}
+.desk a{color:var(--gold2);text-underline-offset:3px}
+.desk a:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.desk .dn{margin-top:14px;border:1px solid var(--goldDim);border-radius:12px;padding:10px 12px;font-size:14px}
+.phone{width:390px;height:844px;border-radius:40px;border:1.5px solid #8a7656;box-shadow:0 0 0 1px #2a2418,0 30px 80px rgba(0,0,0,.6),0 0 0 8px #0d0f1a,0 0 0 9px rgba(191,165,119,.18);position:relative;overflow:hidden;background:var(--ink);flex-shrink:0}
+.phone ::selection{background:var(--gold2);color:var(--ink)}
+.phone :focus-visible{outline:2px solid var(--gold2);outline-offset:3px;border-radius:8px}
+.bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#sky{position:absolute;inset:0;width:100%;height:100%;display:block}
+.bg svg{position:absolute;left:50%;top:44%;width:760px;height:760px;margin:-380px 0 0 -380px;z-index:1;opacity:.55}
+.ring-glint,.ring-glint2{transform-origin:380px 380px}
+.ring-glint{animation:spin 28s linear infinite}
+.ring-glint2{animation:spin 40s linear infinite reverse}
+.r1{animation:spin 240s linear infinite;transform-origin:380px 380px}
+.r2{animation:spin 160s linear infinite reverse;transform-origin:380px 380px}
+.r3{animation:spin 90s linear infinite;transform-origin:380px 380px}
+.r4{animation:spin 86400s linear infinite;transform-origin:380px 380px}
+.tw{animation:tw 6s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes tw{50%{opacity:.25}}
+.status{position:relative;z-index:3;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:14px;font-weight:600}
+.status .ic{display:flex;gap:6px;align-items:center}
+.gesture{position:absolute;bottom:8px;left:50%;width:120px;height:4px;margin-left:-60px;border-radius:4px;background:var(--ivory2);z-index:9}
+#app{position:absolute;top:36px;left:0;right:0;bottom:22px;z-index:2}
+#app.withtabs{bottom:86px}
+.screen{position:absolute;inset:0;overflow-y:auto;padding:8px 20px 28px;display:none;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.screen.on{display:block}
+.screen.enter>*{animation:rise .22s ease-out both}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}}
+.screen.hasfoot{padding-bottom:96px}
+h1,.prompt{font-family:var(--display);font-weight:600;letter-spacing:.02em;line-height:1.1;color:var(--goldHi)}
+h1{font-size:30px}
+h1::after{content:"";display:block;width:44px;height:1px;margin-top:6px;background:linear-gradient(90deg,var(--gold),transparent)}
+h2{font-family:var(--display);font-weight:600;color:var(--goldHi);font-size:22px;line-height:1.15}
+.prompt{font-size:24px;text-align:center;min-height:30px;margin-top:4px}
+.sub{color:var(--ivory2);font-size:16px;margin-top:6px;line-height:1.45}
+.small{font-size:14px;color:var(--ivory2);line-height:1.45}
+.card{background:rgba(18,24,54,.94);border:1px solid var(--goldDim);border-radius:18px;padding:14px 16px;margin-top:12px}
+.card p{font-size:16px;line-height:1.5}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:16px;line-height:1.4}
+.meta dt{color:var(--gold2)}
+.tag{display:inline-block;font:600 11px var(--body);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--goldDim);border-radius:999px;padding:2px 8px;color:var(--gold2);vertical-align:middle}
+.tag.src{color:var(--silver);border-color:rgba(228,230,236,.3)}
+.btn{display:flex;width:100%;align-items:center;justify-content:center;gap:10px;font:600 17px var(--body);padding:13px;border-radius:14px;cursor:pointer;margin-top:12px;min-height:50px;position:relative;overflow:hidden;isolation:isolate;text-decoration:none}
+.primary{background:linear-gradient(180deg,#1d2552,#151c40);color:var(--ivory);border:1px solid rgba(191,165,119,.75);box-shadow:inset 0 1px 0 rgba(228,230,236,.1),0 0 0 3px rgba(191,165,119,.07);animation:pulse 3.6s ease-in-out infinite}
+.primary::after{content:"";position:absolute;inset:-20% -40%;background:linear-gradient(105deg,transparent 42%,rgba(232,222,198,.12) 50%,transparent 58%);transform:translateX(-130%);animation:glint 11s ease-in-out 3s infinite;pointer-events:none;z-index:1}
+.primary:hover{background:linear-gradient(180deg,#232c5e,#182046)}
+@keyframes pulse{50%{transform:scale(1.015)}}
+.secondary{background:transparent;color:var(--ivory);border:1px solid rgba(216,210,196,.3)}
+.row{display:flex;gap:10px}.row>.btn{flex:1}
+@keyframes glint{0%,80%{transform:translateX(-130%)}96%,100%{transform:translateX(130%)}}
+.textbtn{background:none;border:0;color:var(--gold2);font:600 16px var(--body);text-decoration:underline;text-underline-offset:4px;cursor:pointer;padding:10px 0;display:block;margin:0 auto}
+.foot{position:sticky;bottom:0;margin:12px -20px 0;padding:12px 20px 16px;background:var(--ink);z-index:4;border-top:1px solid var(--goldDim)}
+.foot .btn{margin-top:4px}
+.topbar{display:flex;align-items:center;gap:8px;min-height:44px;margin-bottom:4px}
+.topbar .ttl{font-family:var(--display);font-size:22px;font-weight:600;color:var(--goldHi);flex:1}
+.iconbtn{width:40px;height:40px;border-radius:50%;border:1px solid var(--goldDim);background:rgba(18,24,54,.8);color:var(--ivory);display:grid;place-items:center;cursor:pointer;flex-shrink:0}
+.seg{display:flex;border:1px solid var(--goldDim);border-radius:999px;padding:3px;background:rgba(11,16,38,.88);margin-top:8px}
+.seg button{flex:1;border:0;background:none;color:var(--ivory2);font:600 15px var(--body);padding:8px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed=true]{background:rgba(228,230,236,.07);color:var(--ivory);box-shadow:inset 0 0 0 1px rgba(191,165,119,.6)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{border:1px solid var(--goldDim);background:rgba(18,24,54,.8);color:var(--ivory2);font:600 15px var(--body);padding:7px 14px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed=true]{color:var(--ink);background:var(--gold2);border-color:var(--gold2)}
+input,select{width:100%;background:#0e1430;border:1px solid var(--goldDim);border-radius:12px;color:var(--ivory);font:15px var(--body);padding:11px 12px;margin-top:5px;color-scheme:dark;overflow:hidden;text-overflow:ellipsis}
+input:disabled{opacity:.4}
+input::placeholder{color:#a39d90}
+label{font-size:15px;color:var(--ivory2)}
+.field{margin-top:10px}
+.chk{display:flex;gap:10px;align-items:center;margin-top:10px;font-size:16px;color:var(--ivory)}
+.chk input{width:20px;height:20px;margin:0;accent-color:#bfa577}
+.list{list-style:none}
+.list li{display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid rgba(191,165,119,.18);font-size:16px;line-height:1.4}
+.list li:first-child{border-top:0}
+.navrow{display:flex;width:100%;gap:12px;align-items:center;background:rgba(18,24,54,.94);border:1px solid var(--goldDim);border-radius:16px;padding:12px 14px;margin-top:10px;color:var(--ivory);font:16px var(--body);text-align:left;cursor:pointer}
+.navrow b{font-family:var(--display);font-size:20px;color:var(--goldHi);font-weight:600;display:block}
+.navrow span.s{color:var(--ivory2);font-size:15px}
+.navrow .chev{margin-left:auto;color:var(--gold)}
+.glyph{width:40px;height:40px;border-radius:50%;border:1px solid var(--goldDim);display:grid;place-items:center;color:var(--gold2);flex-shrink:0;font-family:var(--display);font-size:18px}
+.good{color:var(--good)}.care{color:var(--care)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--good)}
+.banner{border:1px solid rgba(239,184,148,.45);background:rgba(239,184,148,.07);border-radius:14px;padding:10px 12px;font-size:15px;color:var(--ivory);margin-top:10px;line-height:1.45}
+/* welcome */
+.seal{width:150px;height:150px;margin:6px auto 0;position:relative}
+.seal svg{position:absolute;inset:0}
+.spinslow{animation:spin 60s linear infinite;transform-origin:50% 50%}
+.spinrev{animation:spin 90s linear infinite reverse;transform-origin:50% 50%}
+.sealch{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.sealch b{font-size:46px;color:var(--ivory);font-weight:400;line-height:1;display:block}
+.sealch i{font-style:normal;font-family:var(--display);font-size:13px;color:var(--gold2);letter-spacing:.1em}
+.points li{align-items:flex-start}
+/* today */
+.dayhead{display:flex;gap:14px;align-items:center}
+.wheel{width:118px;height:118px;position:relative;flex-shrink:0}
+.wheel svg{position:absolute;inset:0}
+.wheel .big{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:46px;color:var(--ivory);font-weight:600}
+.alm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.alm h3{font-family:var(--display);font-size:18px;font-weight:600}
+.alm ul{list-style:none;font-size:16px;line-height:1.6}
+.alm li{opacity:1}
+.screen.enter .alm li{animation:tick .4s ease-out both}
+.alm li:nth-child(2){animation-delay:.08s!important}.alm li:nth-child(3){animation-delay:.16s!important}
+@keyframes tick{from{opacity:0;transform:translateX(-4px)}}
+.hours{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;margin-top:8px;scrollbar-width:thin;scrollbar-color:var(--goldDim) transparent}
+.hour{flex:0 0 64px;width:64px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px 10px;border:1px solid var(--goldDim);border-radius:12px;background:rgba(14,20,48,.7);text-align:center}
+.hour b{font-family:var(--display);font-size:22px;font-weight:600;color:var(--ivory);line-height:1.1}
+.hour span{font-size:11px;color:var(--ivory2);letter-spacing:.02em}
+.hour small{font-size:11px;color:var(--ivory2);font-variant-numeric:tabular-nums}
+.hour.good b{color:var(--good)}
+.hour .dot,.hour i.dot{width:6px;height:6px;border-radius:50%;background:var(--good);display:block;margin-top:3px}
+
+.hr{flex:0 0 74px;border:1px solid var(--goldDim);border-radius:12px;padding:8px 6px;text-align:center;font-size:13px;color:var(--ivory2);background:rgba(11,16,38,.6)}
+.hr b{display:block;font-size:15px;color:var(--ivory)}
+.hr.hour.now,.now{border-color:var(--gold2);box-shadow:0 0 0 2px rgba(227,214,184,.28)}
+.hr .dot{margin-top:4px}
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px;text-align:center}
+.cal .wd{font-size:12px;color:var(--gold2);padding:2px 0}
+.cal button{aspect-ratio:1;border:1px solid transparent;background:rgba(11,16,38,.55);border-radius:10px;color:var(--ivory);font:600 15px var(--body);cursor:pointer;position:relative}
+.cal button.g::after{content:"";position:absolute;left:50%;bottom:5px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--good)}
+.cal button.c::after{content:"";position:absolute;left:50%;bottom:4px;width:10px;height:2px;margin-left:-5px;background:var(--care)}
+.cal button.t{border-color:var(--gold2);background:rgba(191,165,119,.14)}
+/* orbit */
+.horo{position:relative;height:170px;margin-top:6px}
+.horo svg{width:100%;height:100%}
+.orb{transform-origin:170px 85px}
+.o1{animation:spin 20s linear infinite}.o2{animation:spin 30s linear infinite reverse}.o3{animation:spin 40s linear infinite}
+.yring{position:absolute;right:-40px;top:-30px;width:180px;height:180px;opacity:.4;pointer-events:none}
+.months{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.months li{font-size:15px;border-left:1px solid var(--goldDim);padding:2px 8px}
+.months b{color:var(--gold2);font-weight:600}
+/* plan (B3) */
+.slot{height:200px;border:1px dashed var(--goldDim);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--ivory2);font-size:16px;background:rgba(11,16,38,.9)}
+.planwrap{position:relative;margin-top:10px;border-radius:18px;background:#0e1430;border:1px solid var(--goldDim);padding:8px;overflow:hidden}
+.planwrap svg{display:block;width:100%;height:auto}
+.room{fill:#172049;stroke:#9c8a6a;stroke-width:1.2}
+.rl{fill:var(--ivory);font:600 11px var(--body);text-anchor:middle}
+.compass{transform-origin:170px 150px;opacity:0;transform:scale(1.6) rotate(-90deg)}
+.scanning .compass{animation:settle 1s cubic-bezier(.2,.8,.2,1) forwards}
+.result .compass{opacity:.55;transform:none}
+@keyframes settle{to{opacity:1;transform:scale(1) rotate(0)}}
+.sweep{transform-origin:170px 150px;opacity:0}
+.scanning .sweep{animation:sweep 1.5s .9s linear forwards}
+@keyframes sweep{0%{opacity:1;transform:rotate(0)}95%{opacity:1}100%{opacity:0;transform:rotate(360deg)}}
+.zone{fill:rgba(191,165,119,0);stroke:none;transition:fill .4s}
+.zone.lit{fill:rgba(191,165,119,.12)}
+.grid line{stroke:var(--gold);stroke-dasharray:3 4;stroke-width:1;opacity:0;transition:opacity .5s}
+.result .grid line{opacity:.6}
+.star{opacity:0;transition:opacity .4s}
+.result .star{opacity:1}
+.star circle{fill:var(--ink);stroke:var(--gold);stroke-width:1.1}
+.star text{fill:var(--goldHi);font:700 12px var(--body);text-anchor:middle}
+.hit{fill:transparent;cursor:pointer;display:none}
+.result .hit{display:block}
+.hit:hover,.hit.sel{fill:rgba(228,230,236,.1)}
+.statusline{margin-top:10px;font-size:17px;color:var(--gold2);display:flex;align-items:center;gap:10px}
+.dotspin{width:16px;height:16px;border:2px solid var(--goldDim);border-top-color:var(--gold2);border-radius:50%;animation:spin 1s linear infinite}
+.legend{font-size:14px;color:var(--ivory2);margin-top:8px;line-height:1.4}
+.tipbox{font-size:16px;line-height:1.5;min-height:48px}
+.tips{list-style:none;margin-top:6px}
+.tips li{display:flex;gap:12px;padding:10px 0;border-top:1px solid rgba(191,165,119,.18);font-size:16px;line-height:1.45}
+.tips li:first-child{border-top:0}
+.badge{flex-shrink:0;display:flex;align-items:center;gap:5px;font-size:14px;font-weight:600;width:96px}
+.badge.g{color:var(--good)}.badge.c{color:var(--care)}
+.stepper{display:flex;align-items:center;gap:10px;margin-top:6px}
+.stepper output{flex:1;text-align:center;font-size:17px}
+.prog{height:4px;border-radius:4px;background:rgba(191,165,119,.2);overflow:hidden;margin-top:8px}
+.prog i{display:block;height:100%;width:0;background:var(--gold2);transition:width 1.2s ease-out}
+/* scores */
+.score{display:flex;align-items:center;gap:12px;margin-top:10px}
+.score .num{font-family:var(--display);font-size:34px;font-weight:600;color:var(--ivory);width:64px}
+.bar{height:6px;border-radius:6px;background:rgba(191,165,119,.18);overflow:hidden;flex:1}
+.bar i{display:block;height:100%;width:0;border-radius:6px;background:var(--good);transition:width .48s ease-out}
+.bar.c i{background:var(--care)}
+.bigscore{display:flex;align-items:center;gap:16px}
+.ringscore{width:96px;height:96px;position:relative;flex-shrink:0}
+.ringscore b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:34px;color:var(--ivory)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g2 ul{list-style:none;font-size:15px;line-height:1.55}
+/* bazi */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px;text-align:center}
+.pil{border:1px solid var(--goldDim);border-radius:12px;padding:6px 2px;background:rgba(11,16,38,.6)}
+.pil.me{border-color:var(--gold2)}
+.pil small{font-size:13px;color:var(--gold2);display:block}
+.pil b{font-size:24px;font-weight:400;display:block;line-height:1.25}
+.pil span{font-size:13px;color:var(--ivory2)}
+.elrow{display:grid;grid-template-columns:62px 1fr 20px;gap:8px;align-items:center;font-size:15px;margin-top:5px}
+.elrow .bar i{background:var(--gold2)}
+.luck{display:flex;gap:6px;margin-top:8px}
+.luck div{flex:1;text-align:center;border:1px solid rgba(191,165,119,.2);border-radius:10px;padding:6px 0;font-size:13px;color:var(--ivory2)}
+.luck div b{display:block;font-size:17px;color:var(--ivory);font-weight:400}
+.luck .cur{border:1.5px solid var(--gold2)}
+/* shop */
+.item{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid rgba(191,165,119,.18)}
+.item:first-child{border-top:0}
+.thumb{width:52px;height:52px;border-radius:12px;border:1px solid var(--goldDim);position:relative;overflow:hidden;flex-shrink:0;display:grid;place-items:center;background:radial-gradient(circle at 40% 35%,#2a3366,#121a3a)}
+.thumb::after{content:"";position:absolute;inset:-30%;background:linear-gradient(115deg,transparent 40%,rgba(239,230,210,.35) 50%,transparent 60%);animation:shim 4.5s ease-in-out infinite;transform:translateX(-120%)}
+@keyframes shim{0%,55%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.item .info{flex:1;min-width:0}
+.item .info b{font-size:16px;display:block}
+.item .info span{font-size:14px;color:var(--ivory2);line-height:1.35;display:block}
+.buy{border:1px solid rgba(191,165,119,.75);background:linear-gradient(180deg,#1d2552,#151c40);color:var(--ivory);font:600 15px var(--body);border-radius:10px;padding:7px 12px;cursor:pointer;text-align:center}
+.buy small{display:block;font-size:12px;color:var(--gold2);font-weight:400}
+/* masters */
+.mcard{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;font:16px var(--body);color:var(--ivory)}
+button.mcard{cursor:pointer;border:1px solid var(--gold)}
+.mcard b{font-family:var(--display);font-size:21px;color:var(--goldHi);font-weight:600}
+.mcard .s{font-size:14px;color:var(--ivory2);line-height:1.4;display:block}
+.av{width:48px;height:48px;border-radius:50%;border:1px solid var(--gold2);display:grid;place-items:center;font-size:20px;flex-shrink:0;background:#1a2250}
+/* tracker */
+.track{display:flex;justify-content:space-between;margin-top:10px;position:relative}
+.track::before{content:"";position:absolute;left:12%;right:12%;top:11px;height:1px;background:var(--goldDim)}
+.track div{text-align:center;font-size:14px;color:var(--ivory2);position:relative;flex:1}
+.track i{display:block;width:22px;height:22px;margin:0 auto 4px;border-radius:50%;border:1px solid var(--goldDim);background:var(--ink)}
+.track .cur i{border-color:var(--gold2);box-shadow:0 0 0 4px rgba(227,214,184,.12)}
+.track .cur{color:var(--ivory)}
+.track .ok i{background:var(--good);border-color:var(--good)}
+.track .ok{color:var(--ivory)}
+.dateseal{width:84px;height:84px;border:1px solid var(--gold2);border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:38px;color:var(--ivory);flex-shrink:0;box-shadow:0 0 0 5px rgba(191,165,119,.08)}
+#burst{position:absolute;inset:0;pointer-events:none;z-index:20}
+.pt{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--goldHi);left:50%;top:22%;animation:fly 1.1s ease-out forwards}
+@keyframes fly{to{transform:translate(var(--x),var(--y)) scale(.3);opacity:0}}
+/* palm */
+.palmbox{position:relative;height:250px;border:1px solid var(--goldDim);border-radius:18px;background:#0e1430;margin-top:10px;overflow:hidden;display:grid;place-items:center}
+.palmbox svg{height:230px}
+.scanbar{position:absolute;left:0;right:0;height:50px;top:-50px;background:linear-gradient(180deg,transparent,rgba(227,214,184,.25),transparent)}
+.palmbox.scan .scanbar{animation:scanv 1.6s ease-in-out 1}
+@keyframes scanv{to{top:250px}}
+.pline{stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset 1s}
+.palmbox.done .pline{stroke-dashoffset:0}
+.num1{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;border:1px solid var(--gold2);font-size:13px;color:var(--gold2);flex-shrink:0}
+/* tarot (B3) */
+.table{position:relative;height:280px;margin-top:6px}
+.orbitring{position:absolute;left:50%;top:50%;width:260px;height:260px;margin:-130px;border:1px solid rgba(191,165,119,.5);border-radius:50%;opacity:0;transition:opacity .4s}
+.shuffling .orbitring{opacity:1}
+.tcard{position:absolute;left:50%;top:50%;width:76px;height:120px;margin:-60px 0 0 -38px;cursor:pointer;border:0;background:none;padding:0;perspective:800px;transition:transform .7s cubic-bezier(.3,.8,.3,1),opacity .5s}
+.tcard .inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.4,.1,.2,1)}
+.face{position:absolute;inset:0;border-radius:9px;backface-visibility:hidden;overflow:hidden}
+.back{background:linear-gradient(160deg,#18214d,#0c1230);border:1px solid rgba(191,165,119,.7);box-shadow:0 6px 16px rgba(0,0,0,.5)}
+.back::before{content:"";position:absolute;inset:8px;border:1px solid rgba(191,165,119,.35);border-radius:5px;background:radial-gradient(circle,rgba(191,165,119,.25) 0 3px,transparent 4px)}
+.front{background:#0f1636;border:1px solid var(--gold2);box-shadow:0 0 10px rgba(228,220,200,.12);transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--display);color:var(--goldHi);font-size:12px;text-align:center;padding:4px;gap:6px}
+.tcard.flip .inner{transform:rotateY(180deg)}
+.tcard.rev .front svg{transform:rotate(180deg)}
+.tcard.out{opacity:.12;pointer-events:none}
+.tcard[disabled]{cursor:default}
+.reveal{opacity:1;transform:none;transition:opacity .45s,transform .45s}
+.reveal.on{opacity:1;transform:none}
+#tarot.drawn #qwrap{display:none}
+#tarot.drawn .table{height:200px;margin-top:0}
+#tarot.drawn .tcard.chosen{transform:translate(0,0) scale(1.15)!important}
+.reveal h2{font-size:26px}
+.reveal p{font-size:17px;line-height:1.5;margin-top:4px}
+/* paywall */
+.cmp{width:100%;border-collapse:collapse;font-size:15px;margin-top:6px}
+.cmp th{font-family:var(--display);color:var(--gold2);font-weight:600;font-size:17px;text-align:center;padding:4px}
+.cmp th:first-child{text-align:left}
+.cmp td{padding:7px 4px;border-top:1px solid rgba(191,165,119,.16);text-align:center}
+.cmp td:first-child{text-align:left}
+/* tabbar */
+#tabbar{position:absolute;left:0;right:0;bottom:22px;height:64px;z-index:6;display:flex;background:rgba(9,13,32,.97);border-top:1px solid var(--goldDim)}
+#tabbar button{flex:1;border:0;background:none;color:var(--ivory2);font:600 12px var(--body);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer}
+#tabbar button[aria-current=page]{color:var(--goldHi)}
+#tabbar button[aria-current=page] svg{filter:drop-shadow(0 0 4px rgba(227,214,184,.5))}
+/* overlays */
+#scrim{position:absolute;inset:0;background:rgba(5,8,20,.6);z-index:10;opacity:0;transition:opacity .2s}
+#scrim.on{opacity:1}
+#sheet{position:absolute;left:0;right:0;bottom:0;z-index:11;background:#121a3a;border-top:1px solid var(--gold);border-radius:22px 22px 0 0;padding:14px 20px 40px;transform:translateY(100%);transition:transform .25s ease-out}
+#sheet.on{transform:none}
+#sheet .grab{width:40px;height:4px;border-radius:4px;background:var(--goldDim);margin:0 auto 10px}
+#dlg{position:absolute;left:24px;right:24px;top:30%;z-index:12;background:#141b3c;border:1px solid var(--gold);border-radius:20px;padding:20px}
+#snack{position:absolute;left:16px;right:16px;bottom:100px;z-index:13;background:#efe6d2;color:#0b1026;border-radius:12px;padding:12px 14px;font-size:15px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}
+#snack.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .r1,.r2,.r3,.r4,.tw,.dotspin,.ring-glint,.ring-glint2,.primary::after,.primary,.spinslow,.spinrev,.orb,.thumb::after{animation:none!important}
+  .ring-glint,.ring-glint2{display:none}
+  .screen.enter>*,.screen.enter .alm li{animation:none!important}
+  .scanning .compass{animation:none;opacity:1;transform:none}
+  .scanning .sweep{animation:none;opacity:0}
+  .palmbox.scan .scanbar{animation:none}
+  .pline,.bar i,#sheet{transition:none}
+  .tcard{transition:opacity .2s}
+  .tcard .inner{transition:none}
+  .tcard.flip .inner{transform:none}
+  .tcard.flip .back{opacity:0;transition:opacity .3s}
+  .front{transform:none;opacity:0;transition:opacity .3s}
+  .tcard.flip .front{opacity:1}
+  .zone,.grid line,.star{transition:none}
+}
+@media (max-width:760px){.desk{order:2;width:390px}}
+</style>
+</head>
+<body>
+<aside class="desk" aria-label="Prototype screens">
+  <h2>Inkstone</h2>
+  <p>Clickable prototype, 21 screens.</p>
+  <ol>
+    <li><a href="#welcome">Welcome</a></li><li><a href="#birth">Birth details</a></li><li><a href="#today">Today</a></li><li><a href="#monthly">Monthly</a></li><li><a href="#yearly">Yearly</a></li><li><a href="#floor-upload">Floor upload</a></li><li><a href="#floor-result">Floor result</a></li><li><a href="#house-check">House check</a></li><li><a href="#readings">Readings</a></li><li><a href="#tarot">Tarot</a></li><li><a href="#palm">Palm</a></li><li><a href="#bazi">BaZi</a></li><li><a href="#compatibility">Compatibility</a></li><li><a href="#shop">Remedies</a></li><li><a href="#masters">Masters</a></li><li><a href="#master-profile">Master profile</a></li><li><a href="#booking-pending">Booking pending</a></li><li><a href="#booking-confirm">Booking confirmed</a></li><li><a href="#prescription">Prescription</a></li><li><a href="#profile">Me</a></li><li><a href="#paywall">Plans</a></li>
+  </ol>
+  <p class="dn">Example data, not a live reading. Nothing is stored, sent or billed.</p>
+</aside>
+
+<div class="phone" id="phone">
+  <div class="bg" aria-hidden="true">
+    <canvas id="sky"></canvas>
+    <svg viewBox="0 0 760 760">
+      <defs>
+        <linearGradient id="goldMetal" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#e3d6b8"/><stop offset="0.3" stop-color="#bfa577"/><stop offset="0.55" stop-color="#8a7350"/><stop offset="0.8" stop-color="#b89f72"/><stop offset="1" stop-color="#d8ccb0"/>
+        </linearGradient>
+        <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <g opacity=".2"><circle cx="380" cy="380" r="375" fill="none" stroke="url(#goldMetal)" stroke-width="1"/></g>
+      <g class="r1" fill="none" stroke="url(#goldMetal)" opacity=".55"><circle cx="380" cy="380" r="360"/><circle cx="380" cy="380" r="340"/><g id="ticks"></g></g>
+      <g class="r2" fill="none" stroke="url(#goldMetal)" opacity=".45"><circle cx="380" cy="380" r="260" stroke-dasharray="2 6"/><ellipse cx="380" cy="380" rx="250" ry="120"/><circle cx="630" cy="380" r="4" fill="url(#goldMetal)"/></g>
+      <g class="r3" fill="none" stroke="url(#goldMetal)" opacity=".4"><circle cx="380" cy="380" r="170"/><circle cx="380" cy="380" r="150" stroke-dasharray="1 4"/><path d="M380 210 L380 550 M210 380 L550 380"/></g>
+      <g class="ring-glint" fill="none" stroke="#ece4d2" filter="url(#goldGlow)" opacity=".35"><circle cx="380" cy="380" r="360" stroke-width="1.4" stroke-dasharray="80 2182" stroke-linecap="round"/></g>
+      <g class="ring-glint2" fill="none" stroke="#e6e8ee" filter="url(#goldGlow)" opacity=".25"><circle cx="380" cy="380" r="260" stroke-width="1.2" stroke-dasharray="60 1574" stroke-linecap="round"/></g>
+      <g class="r4"><circle cx="380" cy="30" r="2.5" fill="#e6dcc6" class="tw"/><circle cx="730" cy="380" r="2" fill="#e6dcc6" class="tw" style="animation-delay:1.5s"/><circle cx="128" cy="628" r="2" fill="#e6dcc6" class="tw" style="animation-delay:3s"/></g>
+    </svg>
+  </div>
+  <div class="status"><span>7:20</span><span class="ic" aria-label="Signal, wifi, battery">
+    <svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true"><path d="M1 13h2v-3H1zM5 13h2V8H5zM9 13h2V5H9zM13 13h2V1h-2z" fill="#f4efe4"/></svg>
+    <svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true"><path d="M8 13l2-2.5a3 3 0 0 0-4 0zM3.5 7.5a6.5 6.5 0 0 1 9 0l1.4-1.5a8.5 8.5 0 0 0-11.8 0zM.5 4.3a11 11 0 0 1 15 0L16.9 2.8a13 13 0 0 0-17.8 0z" fill="#f4efe4"/></svg>
+    <svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true"><rect x=".5" y=".5" width="20" height="11" rx="2" fill="none" stroke="#f4efe4"/><rect x="2" y="2" width="14" height="8" rx="1" fill="#f4efe4"/><rect x="21.5" y="4" width="2" height="4" fill="#f4efe4"/></svg></span></div>
+
+<main id="app">
+
+<!-- 1 welcome -->
+<section class="screen" id="welcome" data-tab="" aria-label="Welcome">
+  <div class="seal" aria-label="Seal 砚 — Inkstone">
+    <svg viewBox="0 0 150 150" aria-hidden="true"><g class="spinslow"><circle cx="75" cy="75" r="72" fill="none" stroke="#bfa577" stroke-opacity=".6"/><circle cx="75" cy="75" r="64" fill="none" stroke="#bfa577" stroke-dasharray="1 5"/><circle cx="75" cy="3" r="3" fill="#efe6d2"/></g><g class="spinrev"><ellipse cx="75" cy="75" rx="70" ry="30" fill="none" stroke="#e3d6b8" stroke-opacity=".35"/><circle cx="145" cy="75" r="2" fill="#e4e6ec"/></g><circle cx="75" cy="75" r="44" fill="#121a3a" stroke="#e3d6b8"/></svg>
+    <div class="sealch"><div><b lang="zh">砚</b><i>Inkstone</i></div></div>
+  </div>
+  <h1 style="text-align:center;font-size:40px;margin-top:6px">Inkstone</h1>
+  <p class="sub" style="text-align:center;font-size:18px">Your almanac, your home, your chart. Plainly told.</p>
+  <div class="card"><ul class="list points">
+    <li><span class="glyph" aria-hidden="true">✦</span><span><b>Calculated</b><br><span class="small">Almanac, BaZi and Kua come from your birth details.</span></span></li>
+    <li><span class="glyph" aria-hidden="true">◎</span><span><b>Read from your photo</b><br><span class="small">Floor plans and palms, read then deleted.</span></span></li>
+    <li><span class="glyph" aria-hidden="true">谭</span><span><b>Real masters</b><br><span class="small">Book verified practitioners by video.</span></span></li>
+  </ul></div>
+  <button class="btn primary" data-go="birth">Begin</button>
+  <button class="textbtn" data-go="birth">I have an account — sign in</button>
+  <p class="small" style="text-align:center">For guidance and entertainment. Not medical, legal or financial advice.</p>
+</section>
+
+<!-- 2 birth -->
+<section class="screen hasfoot" id="birth" data-tab="" aria-label="Birth details">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">Your birth details</span><span class="tag">Example</span></div>
+  <div class="field"><label for="f-name">Name</label><input id="f-name" value="Mei Lin" autocomplete="name"></div>
+  <div class="field"><label for="f-gender">Gender (for Kua number)</label><select id="f-gender"><option selected>Female</option><option>Male</option></select></div>
+  <div class="row"><div class="field" style="flex:1"><label for="f-date">Date of birth</label><input id="f-date" type="date" value="1992-03-12"></div>
+  <div class="field" style="flex:1"><label for="f-time">Time</label><input id="f-time" type="time" value="08:15"></div></div>
+  <label class="chk"><input type="checkbox" id="f-unk"> I don't know my birth time</label>
+  <p class="small" id="f-unk-note" hidden style="margin-top:4px;color:var(--care)">Hour pillar will be left out. Add it any time in Me.</p>
+  <div class="field"><label for="f-place">Place of birth</label><input id="f-place" value="Singapore (example) · UTC+8"></div>
+  <p class="small" style="margin-top:10px">You can delete these details any time in Me.</p>
+  <div class="foot"><button class="btn primary" data-go="today">Save and see today</button></div>
+</section>
+
+<!-- 3 today -->
+<section class="screen" id="today" data-tab="today" aria-label="Today">
+  <div class="dayhead">
+    <div class="wheel" aria-hidden="true"><svg viewBox="0 0 118 118"><g class="spinslow"><circle cx="59" cy="59" r="56" fill="none" stroke="#bfa577" stroke-opacity=".7"/><circle cx="59" cy="59" r="49" fill="none" stroke="#bfa577" stroke-dasharray="1 4"/><g id="wheelTicks" stroke="#e3d6b8" stroke-opacity=".6"></g><circle cx="59" cy="3" r="2.5" fill="#efe6d2"/></g><circle cx="59" cy="59" r="38" fill="#121a3a" stroke="#e3d6b8" stroke-opacity=".6"/></svg><div class="big">23</div></div>
+    <div><p style="font-family:var(--display);font-size:26px;color:var(--goldHi);line-height:1.1">Monday<br>November 2026</p><p class="small">Lunar 10th month, day 15 — full moon (example)</p><span class="tag">Example</span></div>
+  </div>
+  <div class="card" style="margin-top:8px"><p>Lucky: face north-east when you work. Lucky colour: deep green (example).</p></div>
+  <div class="card"><h2>Almanac <span class="tag src">Calculated</span></h2>
+    <div class="alm"><div><h3 class="good">Good for (宜)</h3><ul><li>Sign papers</li><li>Travel</li><li>Visit family</li></ul></div>
+    <div><h3 class="care">Avoid (忌)</h3><ul><li>Move heavy furniture</li><li>Start renovation</li><li>Cut hair</li></ul></div></div>
+  </div>
+  <div class="row"><button class="btn primary" data-go="monthly">See this month</button><button class="btn secondary" data-go="yearly">See this year</button></div>
+  <div class="card"><h2>Double hours <span class="tag src">Calculated</span></h2><p class="small"><span class="dot"></span> Good hour. Outlined: now.</p><div class="hours" id="hours"></div></div>
+</section>
+
+<!-- 4 monthly -->
+<section class="screen" id="monthly" data-tab="today" aria-label="This month">
+  <div class="seg" role="group" aria-label="Range"><button data-seg="today" aria-pressed="false">Day</button><button aria-pressed="true">Month</button><button data-seg="yearly" aria-pressed="false">Year</button></div>
+  <h1 style="margin-top:10px">November 2026 <span class="tag">Example</span></h1>
+  <p class="small" style="margin-top:4px"><span class="dot"></span> Good day &nbsp; <span style="display:inline-block;width:10px;height:2px;background:var(--care);vertical-align:middle"></span> Take care &nbsp; Tap a day.</p>
+  <div class="cal" id="cal"></div>
+  <button class="btn primary" id="open-day">Open a day</button>
+  <div class="card"><h2>Month outlook <span class="tag src">Calculated</span></h2><ul class="list">
+    <li><b style="width:70px">Career</b><span>Steady. Finish what is open before starting new work.</span></li>
+    <li><b style="width:70px">Money</b><span>Good for saving. Delay big purchases to mid-month.</span></li>
+    <li><b style="width:70px">Health</b><span>Rest early on take-care days. Warm food helps.</span></li>
+    <li><b style="width:70px">Love</b><span>Plan time together; small gestures land well.</span></li></ul></div>
+</section>
+
+<!-- 5 yearly -->
+<section class="screen" id="yearly" data-tab="today" aria-label="This year">
+  <svg class="yring spinslow" viewBox="0 0 180 180" aria-hidden="true"><circle cx="90" cy="90" r="86" fill="none" stroke="#bfa577"/><circle cx="90" cy="90" r="70" fill="none" stroke="#bfa577" stroke-dasharray="2 5"/></svg>
+  <div class="seg" role="group" aria-label="Range"><button data-seg="today" aria-pressed="false">Day</button><button data-seg="monthly" aria-pressed="false">Month</button><button aria-pressed="true">Year</button></div>
+  <h1 style="margin-top:10px">2026 outlook <span class="tag">Example</span></h1>
+  <p class="sub">A year to tidy, not to leap.</p>
+  <button class="btn primary" data-go="bazi">Read my BaZi</button>
+  <div class="card"><h2>Key notes <span class="tag src">Calculated</span></h2><ul class="list">
+    <li><span>Tai Sui (太岁 — the year's ruling star) calm this year (example).</span></li>
+    <li><span>Luck pillar: Fire decade, ages 32–41: visibility grows (example).</span></li>
+    <li><span>Home Flying Stars (飞星 — energy in each area of the home): Wealth star 8 sits south-east, by your door (example).</span></li></ul></div>
+  <div class="card"><h2>Sky chart <span class="tag">Decorative</span></h2>
+    <div class="horo" aria-hidden="true"><svg viewBox="0 0 340 170">
+      <g fill="none" stroke="#bfa577" stroke-opacity=".5"><ellipse cx="170" cy="85" rx="40" ry="40"/><ellipse cx="170" cy="85" rx="70" ry="70" stroke-dasharray="2 4"/><ellipse cx="170" cy="85" rx="80" ry="80" stroke-opacity=".2"/></g>
+      <circle cx="170" cy="85" r="9" fill="#e3d6b8"/><circle cx="170" cy="85" r="15" fill="none" stroke="#e3d6b8" stroke-opacity=".3"/>
+      <g class="orb o1"><circle cx="210" cy="85" r="3.5" fill="#f4efe4"/></g>
+      <g class="orb o2"><circle cx="170" cy="15" r="4.5" fill="#e4e6ec"/></g>
+      <g class="orb o3"><circle cx="90" cy="85" r="3" fill="#efe6d2"/></g>
+    </svg></div></div>
+  <div class="card"><h2>Month by month <span class="tag">Example</span></h2><ul class="months" id="months"></ul></div>
+</section>
+
+<!-- 6 floor-upload -->
+<section class="screen hasfoot" id="floor-upload" data-tab="home" aria-label="Add your floor plan">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">Add your floor plan</span></div>
+  <div id="fu-frame" class="slot"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#bfa577" stroke-width="1.2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h9V3M12 12v9M16 8h5"/></svg><span id="fu-label">No plan chosen yet</span></div>
+  <div class="row"><button class="btn secondary" id="fu-example">Use example plan</button><button class="btn secondary" id="fu-photo">Photograph a plan</button></div>
+  <div class="card"><label id="deg-l">Front door faces</label>
+    <div class="stepper"><button class="iconbtn" id="deg-minus" aria-label="Decrease bearing">−</button><output id="deg" aria-labelledby="deg-l">142° South-east (example)</output><button class="iconbtn" id="deg-plus" aria-label="Increase bearing">+</button></div></div>
+  <ul class="list small" style="margin-top:8px"><li>Lay the plan flat, in good light.</li><li>Show all rooms, including the door.</li><li>Stand at the door facing out to take the bearing.</li></ul>
+  <div class="foot"><div id="fu-proc" hidden><p class="small">Reading your plan…</p><div class="prog"><i id="fu-bar"></i></div></div><button class="btn primary" id="fu-read">Read my home</button></div>
+</section>
+
+<!-- 7 floor-result -->
+<section class="screen" id="floor-result" data-tab="home" aria-label="Your home reading">
+  <div class="topbar"><span class="ttl">Your home reading</span><span class="tag">Example</span></div>
+  <p class="small">Tampines 4-room · Faces SE 142° · Period 8 · completed 2012 (example) <span class="tag src">Read from your photo</span></p>
+  <div class="row"><button class="btn primary" data-go="house-check" style="margin-top:8px">House check</button><button class="btn secondary" data-go="floor-upload" style="margin-top:8px">Change plan</button></div>
+  <div class="planwrap" id="plan">
+    <svg viewBox="0 0 340 300" role="img" aria-label="Example 4-room HDB floor plan">
+      <defs><linearGradient id="sw" x1="0" x2="1"><stop offset="0" stop-color="#e3d6b8" stop-opacity="0"/><stop offset="1" stop-color="#ece6d8" stop-opacity=".45"/></linearGradient></defs>
+      <rect class="room" x="10" y="10" width="110" height="95"/><text class="rl" x="65" y="90">Master bedroom</text>
+      <rect class="room" x="120" y="10" width="100" height="95"/><text class="rl" x="170" y="90">Bedroom 2</text>
+      <rect class="room" x="220" y="10" width="110" height="95"/><text class="rl" x="275" y="90">Study (bedroom 3)</text>
+      <rect class="room" x="10" y="105" width="70" height="90"/><text class="rl" x="45" y="182">Bath</text>
+      <rect class="room" x="80" y="105" width="250" height="90"/><text class="rl" x="205" y="182">Living / dining</text>
+      <rect class="room" x="10" y="195" width="140" height="95"/><text class="rl" x="80" y="278">Kitchen</text>
+      <rect class="room" x="150" y="195" width="180" height="95"/><text class="rl" x="240" y="278">Entrance</text>
+      <g id="zones"></g>
+      <g class="grid"><line x1="116" y1="10" x2="116" y2="290"/><line x1="223" y1="10" x2="223" y2="290"/><line x1="10" y1="103" x2="330" y2="103"/><line x1="10" y1="196" x2="330" y2="196"/></g>
+      <g id="stars9"></g>
+      <path class="sweep" d="M170 150 L170 -40 A190 190 0 0 1 300 10 Z" fill="url(#sw)"/>
+      <g class="compass" fill="none" stroke="#d6c7a6">
+        <circle cx="170" cy="150" r="128" stroke-width="1"/><circle cx="170" cy="150" r="120" stroke-dasharray="1 5"/>
+        <path d="M170 18v12M170 270v12M38 150h12M290 150h12" stroke-width="1.6"/>
+        <text x="170" y="14" fill="#e3d6b8" stroke="none" font-size="11" text-anchor="middle" font-family="Cormorant SC">N</text>
+        <path d="M170 150 L250 220" stroke-width="1.3" stroke-dasharray="4 3"/>
+      </g>
+      <g id="hits"></g>
+    </svg>
+  </div>
+  <div class="statusline" id="stl"><span class="dotspin"></span><span id="stt">Reading the plan…</span></div>
+  <div id="res" hidden>
+    <p class="legend">Flying Stars (飞星 — energy in each area of the home), example. Tap any square for a tip.</p>
+    <div class="card"><div class="tipbox" id="tip" aria-live="polite">Tap a square on the plan to see what its number means.</div></div>
+    <div class="card">
+      <h2>Placement tips <span class="tag">Example</span></h2>
+      <ul class="tips">
+        <li><span class="badge g"><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="currentColor"/></svg>Good</span><span><b>Master bedroom</b> — headboard to the north-east wall.</span></li>
+        <li><span class="badge c"><svg width="14" height="14" aria-hidden="true"><path d="M7 1l6 12H1z" fill="currentColor"/></svg>Take care</span><span><b>Kitchen</b> — keep the stove off the sink line.</span></li>
+        <li><span class="badge g"><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="currentColor"/></svg>Good</span><span><b>Study (bedroom 3)</b> — desk facing north-east, back to a wall.</span></li>
+        <li><span class="badge g"><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="currentColor"/></svg>Good</span><span><b>Entrance</b> — keep it lit and clear.</span></li>
+      </ul>
+    </div>
+    <button class="btn secondary" data-go="shop">See optional remedies</button>
+    <button class="textbtn" id="again">Scan again</button>
+  </div>
+</section>
+
+<!-- 8 house-check -->
+<section class="screen" id="house-check" data-tab="home" aria-label="House check">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">House check</span><span class="tag">Example</span></div>
+  <div class="field"><label for="hc-a">Address</label><input id="hc-a" value="Block 123 Tampines Street 11, #08-45 (example)"></div>
+  <div class="field"><label for="hc-f">Front door</label><input id="hc-f" value="South-east · 142° (example)"></div>
+  <div class="card"><h2>Couple fit <span class="tag">Example</span></h2>
+    <p style="margin-top:6px">Mei Lin — <span class="good">Good fit</span></p>
+    <div class="score"><span class="num"><span data-count="82">82</span></span><div class="bar"><i data-w="82"></i></div><span class="small">/100</span></div>
+    <p style="margin-top:8px">Wei Hao — <span class="care">Take care</span></p>
+    <div class="score"><span class="num"><span data-count="54">54</span></span><div class="bar c"><i data-w="54"></i></div><span class="small">/100</span></div>
+    <p class="small">Birth time unknown — hour-based checks left out.</p></div>
+  <button class="btn primary" data-go="floor-result">See the floor reading</button>
+  <div class="card"><h2>Why <span class="tag src">Calculated</span></h2><ul class="list">
+    <li>South-east door suits Mei Lin's Kua 1 (example).</li>
+    <li>Wealth star 8 sits by the door this period (example).</li>
+    <li>Wei Hao's best directions face away from the door (example).</li></ul></div>
+</section>
+
+<!-- 9 readings -->
+<section class="screen" id="readings" data-tab="readings" aria-label="Readings">
+  <h1>Readings</h1>
+  <p class="sub">Pick one. Each says where its answer comes from.</p>
+  <button class="navrow" data-go="tarot"><span class="glyph" aria-hidden="true">✧</span><span><b>Tarot</b><span class="s">One card a day on Free</span></span><span class="chev" aria-hidden="true">›</span></button>
+  <button class="navrow" data-go="palm"><span class="glyph" aria-hidden="true">✋</span><span><b>Palm reading</b><span class="s">Read from your photo</span></span><span class="chev" aria-hidden="true">›</span></button>
+  <button class="navrow" data-go="bazi"><span class="glyph" aria-hidden="true">四</span><span><b>Your BaZi</b><span class="s">Four pillars, calculated</span></span><span class="chev" aria-hidden="true">›</span></button>
+  <button class="navrow" data-go="compatibility"><span class="glyph" aria-hidden="true">∞</span><span><b>Compatibility</b><span class="s">Mei Lin and Wei Hao</span></span><span class="chev" aria-hidden="true">›</span></button>
+  <button class="navrow" data-go="yearly"><span class="glyph" aria-hidden="true">◐</span><span><b>This year</b><span class="s">2026 outlook</span></span><span class="chev" aria-hidden="true">›</span></button>
+  <p class="small" style="margin-top:12px">All readings shown are example data.</p>
+</section>
+
+<!-- 10 tarot -->
+<section class="screen" id="tarot" data-tab="readings" aria-label="Tarot">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">Tarot</span><span class="tag">Example</span></div>
+  <p class="sub" style="margin-top:0">A calm, single-card draw.</p>
+  <div id="qwrap" style="margin-top:8px"><label for="q">Your question (optional)</label><input id="q" placeholder="What should I focus on this week?"></div>
+  <div class="table" id="table"><div class="orbitring"></div></div>
+  <div class="prompt" id="prompt" aria-live="polite"></div>
+  <div class="reveal card" id="reveal" hidden>
+    <h2><span id="rv-name">Temperance</span> <span class="tag" id="rv-or">Upright</span></h2>
+    <p id="rv-text">Mix slowly. Patience brings the balance you want.</p>
+    <p style="font-size:14px;color:var(--ivory2)">Random draw (example)</p>
+  </div>
+  <button class="btn primary" id="shuf">Shuffle</button>
+</section>
+
+<!-- 11 palm -->
+<section class="screen" id="palm" data-tab="readings" aria-label="Palm reading">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">Palm reading</span><span class="tag">Example</span></div>
+  <div class="palmbox" id="palmbox">
+    <svg viewBox="0 0 160 220" aria-label="Example hand outline" role="img"><path d="M40 210 L40 120 L22 70 Q18 60 28 58 Q36 58 40 70 L52 100 L50 30 Q50 20 58 20 Q66 20 66 30 L70 90 L74 18 Q74 8 82 8 Q90 8 90 18 L90 90 L98 28 Q100 18 108 20 Q116 22 114 32 L108 96 L120 50 Q124 42 131 45 Q138 48 136 58 L124 130 Q118 180 110 210 Z" fill="rgba(23,32,73,.8)" stroke="#d6c7a6" stroke-width="1.3"/>
+      <path class="pline" d="M58 120 Q85 105 118 115" fill="none" stroke="#9fd3a8" stroke-width="2"/>
+      <path class="pline" d="M52 138 Q85 128 112 148" fill="none" stroke="#e3d6b8" stroke-width="2"/>
+      <path class="pline" d="M62 122 Q50 160 70 200" fill="none" stroke="#efb894" stroke-width="2"/></svg>
+    <div class="scanbar" aria-hidden="true"></div>
+  </div>
+  <div id="palm-guide">
+    <p class="sub">Line up your left palm. Good light, fingers apart.</p>
+    <div class="row"><button class="btn primary" id="palm-ex">Use example photo</button><button class="btn secondary" id="palm-take">Read my palm</button></div>
+    <p class="small" style="margin-top:8px">Photos are read and then deleted. We do not keep them.</p>
+  </div>
+  <div id="palm-proc" hidden class="statusline"><span class="dotspin"></span>Reading your palm…</div>
+  <div id="palm-result" hidden>
+    <div class="row" style="margin-top:4px"><button class="btn primary" data-snack="Reading saved (example)">Save reading</button><button class="btn secondary" id="palm-retake">Retake photo</button></div>
+    <div class="card"><p class="small"><span class="tag">Example</span> <span class="tag src">Read from your photo</span> · Clear</p><ul class="list">
+      <li><span class="num1">1</span><span><b class="good">Heart line</b> Long and curved: warm, open with feelings.</span></li>
+      <li><span class="num1">2</span><span><b style="color:var(--gold2)">Head line</b> Gently sloped: practical with room for ideas.</span></li>
+      <li><span class="num1">3</span><span><b class="care">Life line</b> Wide arc: steady energy. Not a lifespan.</span></li></ul></div>
+  </div>
+</section>
+
+<!-- 12 bazi -->
+<section class="screen hasfoot" id="bazi" data-tab="readings" aria-label="Your BaZi">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">Your BaZi</span><span class="tag">Example</span></div>
+  <p class="small">BaZi (八字 — four pillars of destiny) for Mei Lin <span class="tag src">Calculated</span></p>
+  <div class="pillars">
+    <div class="pil"><small>Year</small><b lang="zh">壬<br>申</b><span>Water</span></div>
+    <div class="pil"><small>Month</small><b lang="zh">癸<br>卯</b><span>Wood</span></div>
+    <div class="pil me"><small>You</small><b lang="zh">丙<br>午</b><span>Fire</span></div>
+    <div class="pil"><small>Hour</small><b lang="zh">壬<br>辰</b><span>Earth</span></div>
+  </div>
+  <div class="card"><p><b>Day Master (日主): Bing Fire</b> — the element that stands for you. Like the sun: warm, visible, generous.</p></div>
+  <div class="card"><h2>Element balance</h2>
+    <div class="elrow"><span>Wood</span><div class="bar"><i data-w="40"></i></div><span>2</span></div>
+    <div class="elrow"><span>Fire</span><div class="bar"><i data-w="40"></i></div><span>2</span></div>
+    <div class="elrow"><span>Earth</span><div class="bar"><i data-w="20"></i></div><span>1</span></div>
+    <div class="elrow"><span>Metal</span><div class="bar"><i data-w="20"></i></div><span>1</span></div>
+    <div class="elrow"><span>Water</span><div class="bar"><i data-w="60"></i></div><span>3</span></div></div>
+  <div class="card"><h2>Kua number (卦 — your personal direction number)</h2><p>Kua 1 (example)</p>
+    <p class="good">Good: N, E, SE, S</p><p class="care">Take care: W, NE, NW, SW</p></div>
+  <div class="card"><h2>Luck pillars (大运 — ten-year phases)</h2>
+    <div class="luck"><div>2<b>甲辰</b></div><div>12<b>乙巳</b></div><div>22<b>丙午</b></div><div class="cur">32<b>丁未</b></div><div>42<b>戊申</b></div></div>
+    <p class="small" style="margin-top:6px">Starting age shown. Current phase outlined.</p></div>
+  <div class="foot"><button class="btn primary" data-go="masters">Ask a master</button></div>
+</section>
+
+<!-- 13 compatibility -->
+<section class="screen hasfoot" id="compatibility" data-tab="readings" aria-label="Compatibility">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">Compatibility</span><span class="tag">Example</span></div>
+  <p class="small">Mei Lin and Wei Hao <span class="tag src">Calculated</span></p>
+  <div class="card bigscore">
+    <div class="ringscore"><svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="42" fill="none" stroke="rgba(191,165,119,.2)" stroke-width="4"/><circle id="cring" cx="48" cy="48" r="42" fill="none" stroke="#9fd3a8" stroke-width="4" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" transform="rotate(-90 48 48)" style="transition:stroke-dashoffset .48s ease-out"/></svg><b data-count="76">76</b></div>
+    <div><p class="good" style="font-weight:600">Good fit</p><p>Fire meets Earth: he steadies, she warms.</p></div></div>
+  <div class="banner">Wei Hao's birth time is unknown. Hour-based results are unavailable.</div>
+  <div class="card g2"><div><h2 class="good" style="color:var(--good)">Good together</h2><ul><li>Shared goals at home</li><li>Patient with each other</li><li>Year pillars combine</li></ul></div>
+    <div><h2 style="color:var(--care)">Take care</h2><ul><li>Spending styles</li><li>Rushed decisions</li><li>Busy months clash</li></ul></div></div>
+  <div class="card"><p><b>Communication tip:</b> Talk money on calm weekends, not late at night.</p></div>
+  <div class="foot"><button class="btn primary" data-snack="Link copied (example)">Share result</button></div>
+</section>
+
+<!-- 14 shop -->
+<section class="screen" id="shop" data-tab="home" aria-label="Remedies">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">Remedies</span><span class="tag">Example</span></div>
+  <div class="banner" style="margin-top:0">Remedies are optional. They are not medicine.</div>
+  <div class="chips" id="shop-chips"></div>
+  <div class="card"><h2>From your home reading <span class="tag">Example</span></h2><div id="shop-list"></div></div>
+  <p class="small" style="margin-top:10px">Nothing is added unless you tap Buy. No checkout in this prototype.</p>
+</section>
+
+<!-- 15 masters -->
+<section class="screen" id="masters" data-tab="masters" aria-label="Masters">
+  <h1>Masters</h1>
+  <p class="sub">Verified practitioners, by video. <span class="tag">Example</span></p>
+  <div class="chips" id="master-chips"><button class="chip" aria-pressed="false">Feng shui</button><button class="chip" aria-pressed="false">BaZi</button><button class="chip" aria-pressed="false">English</button><button class="chip" aria-pressed="false">Mandarin</button></div>
+  <div id="master-list"></div>
+  <button class="textbtn" data-go="master-profile">View Master Tan's profile</button>
+</section>
+
+<!-- 16 master-profile -->
+<section class="screen hasfoot" id="master-profile" data-tab="masters" aria-label="Master Tan Su Ling">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">Master profile</span><span class="tag">Example</span></div>
+  <div class="mcard"><span class="av" lang="zh">谭</span><span><b>Tan Su Ling</b> <span class="tag">Verified</span><span class="s">Excellent · 4.9 · 212 readings</span><span class="s">English / Mandarin / Hokkien · from S$88 (example)</span></span></div>
+  <p class="small" style="margin-top:12px">Choose a time</p>
+  <div class="chips" id="slots"><button class="chip" aria-pressed="true">Tue 24 Nov, 7:30pm SGT</button><button class="chip" aria-pressed="false">Wed 25 Nov, 8:00pm SGT</button></div>
+  <div class="card"><h2>About</h2><p>Twenty years reading homes across Singapore. Calm, practical advice you can act on this week (example).</p>
+    <p class="small" style="margin-top:6px">Specialities: Flying Stars, BaZi, new homes</p></div>
+  <div class="card"><h2>Reviews <span class="tag">Example</span></h2><ul class="list"><li>“Clear and kind. Small changes, big calm.” — J.</li><li>“Explained my chart in plain English.” — R.</li></ul></div>
+  <div class="foot"><p class="small">Payment is authorised, not charged, until the master accepts (example).</p><button class="btn primary" data-go="booking-pending">Request this time</button></div>
+</section>
+
+<!-- 17 booking-pending -->
+<section class="screen" id="booking-pending" data-tab="masters" aria-label="Request sent">
+  <h1>Request sent</h1>
+  <p class="sub">Waiting for Master Tan. Most masters reply within a few hours.</p>
+  <div class="card"><div class="track"><div class="cur"><i></i>Requested</div><div><i></i>Accepted</div><div><i></i>Confirmed</div></div></div>
+  <div class="card"><p>Tue 24 Nov, 7:30pm SGT · 45 min video · S$88 (example) — authorised, not charged.</p></div>
+  <button class="btn primary" data-go="today">Back to Today</button>
+  <button class="btn secondary" data-snack="Request cancelled (example)">Cancel request</button>
+  <button class="textbtn" data-go="booking-confirm">Preview: master accepts (example)</button>
+</section>
+
+<!-- 18 booking-confirm -->
+<section class="screen" id="booking-confirm" data-tab="masters" aria-label="Booking confirmed">
+  <h1>Booking confirmed</h1>
+  <div class="card" style="display:flex;gap:14px;align-items:center"><span class="dateseal">24</span><div><p><b>Tue 24 November</b></p><p>7:30–8:15pm SGT</p><p class="small">Video call with Master Tan <span class="tag">Example</span></p></div></div>
+  <div class="card"><div class="track"><div class="ok"><i></i>Requested</div><div class="ok"><i></i>Accepted</div><div class="ok"><i></i>Confirmed</div></div></div>
+  <div class="row"><button class="btn primary" data-snack="Added to calendar (example)">Add to calendar</button><button class="btn secondary" data-go="prescription">View example prescription</button></div>
+  <p class="small" style="margin-top:8px">A confirmation email has been sent (example).</p>
+  <div class="card"><h2>What to prepare</h2><ul class="list"><li>Share my charts</li><li>Have your floor plan nearby</li><li>Note two questions</li></ul></div>
+</section>
+
+<!-- 19 prescription -->
+<section class="screen" id="prescription" data-tab="masters" aria-label="Prescription">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">Master Tan</span><span class="tag">Example</span></div>
+  <p class="small">Session 24 Nov 2026 <span class="tag src">From Master Tan</span></p>
+  <div class="card"><ul class="list">
+    <li><span class="num1">1</span><span><b>Move the bed</b><br><span class="small">Master bedroom, headboard to north-east wall.</span></span></li>
+    <li><span class="num1">2</span><span><b>Light the entrance</b><br><span class="small">South-east door. Warm lamp on in the evening.</span></span></li>
+    <li><span class="num1">3</span><span><b>Calm the kitchen</b><br><span class="small">Small plant between stove and sink.</span></span></li></ul></div>
+  <div class="card"><h2>Suggested items (optional)</h2>
+    <div class="item"><span class="thumb" aria-hidden="true">⚱</span><div class="info"><b>Brass wu lou</b><span>S$32 (example)</span></div><button class="buy" data-snack="Added to your list — you can remove it any time (example)">Buy</button></div>
+    <div class="item"><span class="thumb" aria-hidden="true">❦</span><div class="info"><b>Small money plant</b><span>S$12 (example)</span></div><button class="buy" data-snack="Added to your list — you can remove it any time (example)">Buy</button></div></div>
+  <div class="banner">Remedies are optional. They are not medicine.</div>
+</section>
+
+<!-- 20 profile -->
+<section class="screen hasfoot" id="profile" data-tab="profile" aria-label="Me">
+  <h1>Me</h1>
+  <div class="card"><p><b>Mei Lin</b> <span class="tag">Example</span></p><p class="small">12 Mar 1992, 08:15 · Singapore · Female</p><button class="textbtn" style="margin:0" data-go="birth">Edit birth details</button></div>
+  <button class="navrow" data-snack="Family details are example only"><span><b>Family</b><span class="s">Wei Hao — birth time unknown</span></span><span class="chev">›</span></button>
+  <button class="navrow" data-go="booking-confirm"><span><b>Bookings</b><span class="s">Tue 24 Nov with Master Tan</span></span><span class="chev">›</span></button>
+  <button class="navrow" data-go="prescription"><span><b>Prescription</b><span class="s">View example prescription</span></span><span class="chev">›</span></button>
+  <div class="card"><ul class="list">
+    <li><span style="flex:1">Current plan</span><b>Free</b></li>
+    <li><span style="flex:1">Notifications</span><button class="textbtn" style="margin:0;padding:0" data-snack="Daily card at 7:00am (example)">Daily card at 7:00am</button></li>
+    <li><span style="flex:1">Language</span><button class="textbtn" style="margin:0;padding:0" data-snack="Only English in this prototype">English</button></li>
+    <li><button class="textbtn" style="margin:0;padding:0;color:var(--care)" id="del">Delete my data</button></li></ul></div>
+  <p class="small" style="margin-top:10px">For guidance and entertainment. Not medical, legal or financial advice.</p>
+  <div class="foot"><button class="btn primary" data-go="paywall">See plans</button></div>
+</section>
+
+<!-- 21 paywall -->
+<section class="screen" id="paywall" data-tab="profile" aria-label="Your plan">
+  <div class="topbar"><button class="iconbtn" data-back aria-label="Back">‹</button><span class="ttl">Your plan</span><span class="tag">Example</span></div>
+  <p class="sub" style="margin-top:0">Free covers the basics. Premium opens everything.</p>
+  <button class="btn primary" data-snack="This prototype does not bill you.">Subscribe</button>
+  <div class="card"><table class="cmp"><thead><tr><th scope="col">Feature</th><th scope="col">Free</th><th scope="col">Premium</th></tr></thead><tbody>
+    <tr><td>Profile and basic BaZi</td><td>✓</td><td>✓</td></tr>
+    <tr><td>Daily card</td><td>✓</td><td>✓</td></tr>
+    <tr><td>Tarot</td><td>1 a day</td><td>Unlimited</td></tr>
+    <tr><td>Full month and year forecasts</td><td>—</td><td>✓</td></tr>
+    <tr><td>Home analyser</td><td>—</td><td>✓</td></tr>
+    <tr><td>Compatibility</td><td>—</td><td>✓</td></tr>
+    <tr><td>Unlimited Ask the Master</td><td>—</td><td>✓</td></tr>
+    <tr><td>Ad-free</td><td>—</td><td>✓</td></tr></tbody></table></div>
+  <p class="small" style="margin-top:8px">Price is shown when you choose a plan. Example only — not billed in this prototype.</p>
+  <button class="textbtn" data-snack="Nothing to restore (example)">Restore purchases</button>
+</section>
+</main>
+
+<nav id="tabbar" aria-label="Main">
+  <button data-tab="today"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>Today</button>
+  <button data-tab="home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 11l9-7 9 7v9H3z"/><path d="M10 20v-5h4v5"/></svg>Home</button>
+  <button data-tab="readings"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M12 8l1.5 3 3 .5-2.2 2 .6 3L12 15l-2.9 1.5.6-3-2.2-2 3-.5z"/></svg>Readings</button>
+  <button data-tab="masters"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 15-5 16 0"/></svg>Masters</button>
+  <button data-tab="profile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18c2-3 9-3 11 0"/></svg>Me</button>
+</nav>
+
+<div id="scrim" hidden></div>
+<div id="sheet" role="dialog" aria-modal="true" aria-label="Day reading" hidden><div class="grab"></div><div id="sheet-body"></div><button class="btn secondary" id="sheet-close">Close</button></div>
+<div id="dlg" role="alertdialog" aria-modal="true" aria-labelledby="dlg-t" hidden><h2 id="dlg-t">Delete my data</h2><p style="margin-top:8px">This is a prototype. No real data is stored, so nothing is deleted.</p><button class="btn primary" id="dlg-ok">OK</button></div>
+<div id="snack" role="status" aria-live="polite"></div>
+<div id="burst" aria-hidden="true"></div>
+<div class="gesture"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var on=function(el,ev,fn){if(el)el.addEventListener(ev,fn)};
+var timers=[];function later(fn,ms){var t=setTimeout(fn,ms);timers.push(t);return t}
+
+/* ticks */
+var tk=$('#ticks');if(tk){var s='';for(var i=0;i<72;i++){var a=i*5*Math.PI/180,r1=340,r2=i%6?348:356;s+='<line x1="'+(380+r1*Math.sin(a))+'" y1="'+(380-r1*Math.cos(a))+'" x2="'+(380+r2*Math.sin(a))+'" y2="'+(380-r2*Math.cos(a))+'"/>'}tk.innerHTML=s}
+var wt=$('#wheelTicks');if(wt){var w='';for(var j=0;j<24;j++){var b=j*15*Math.PI/180;w+='<line x1="'+(59+44*Math.sin(b))+'" y1="'+(59-44*Math.cos(b))+'" x2="'+(59+49*Math.sin(b))+'" y2="'+(59-49*Math.cos(b))+'"/>'}wt.innerHTML=w}
+
+/* sky */
+(function(){
+  var c=$('#sky');if(!c)return;var x=c.getContext('2d');var W=0,H=0,stars=[],shoot=null;
+  function size(){var r=c.getBoundingClientRect(),d=window.devicePixelRatio||1;W=r.width;H=r.height;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);stars=[];for(var i=0;i<140;i++){var big=Math.random()<.06;stars.push({x:Math.random()*W,y:Math.random()*H,r:big?1.6:Math.random()*.9+.3,p:Math.random()*6.28,s:.4+Math.random()*1.2,f:big})}draw(0)}
+  function draw(t){x.clearRect(0,0,W,H);for(var i=0;i<stars.length;i++){var s=stars[i];var a=RM?.7:.45+.45*Math.sin(t/1000*s.s+s.p);x.globalAlpha=a;x.fillStyle=s.f?'#efe6d2':'#e4e6ec';x.beginPath();x.arc(s.x,s.y,s.r,0,6.283);x.fill();if(s.f){x.strokeStyle='rgba(239,230,210,'+(a*.5)+')';x.lineWidth=.6;x.beginPath();x.moveTo(s.x-6,s.y);x.lineTo(s.x+6,s.y);x.moveTo(s.x,s.y-6);x.lineTo(s.x,s.y+6);x.stroke()}}
+    if(shoot){shoot.k+=1;var px=shoot.x+shoot.k*6,py=shoot.y+shoot.k*2.4;var g=x.createLinearGradient(px-60,py-24,px,py);g.addColorStop(0,'rgba(239,230,210,0)');g.addColorStop(1,'rgba(239,230,210,.8)');x.globalAlpha=Math.max(0,1-shoot.k/50);x.strokeStyle=g;x.lineWidth=1.2;x.beginPath();x.moveTo(px-60,py-24);x.lineTo(px,py);x.stroke();if(shoot.k>50)shoot=null}
+    x.globalAlpha=1}
+  function loop(t){draw(t);if(!shoot&&Math.random()<.0012)shoot={x:Math.random()*W*.6,y:Math.random()*H*.4,k:0};requestAnimationFrame(loop)}
+  if('ResizeObserver' in window)new ResizeObserver(size).observe(c);else on(window,'resize',size);
+  size();if(!RM)requestAnimationFrame(loop);
+})();
+
+/* snack */
+var snack=$('#snack'),snT;
+function showSnack(t){if(!snack)return;snack.textContent=t;snack.classList.add('on');clearTimeout(snT);snT=setTimeout(hideSnack,2600)}
+function hideSnack(){if(snack){snack.classList.remove('on');clearTimeout(snT)}}
+
+/* sheet & dialog */
+var sheet=$('#sheet'),scrim=$('#scrim'),dlg=$('#dlg');
+function openSheet(html){$('#sheet-body').innerHTML=html;scrim.hidden=false;sheet.hidden=false;requestAnimationFrame(function(){scrim.classList.add('on');sheet.classList.add('on')});var b=$('#sheet-close');if(b)b.focus()}
+function closeSheet(){if(!sheet)return;sheet.classList.remove('on');scrim.classList.remove('on');sheet.hidden=true;scrim.hidden=true;if(dlg)dlg.hidden=true}
+on($('#sheet-close'),'click',closeSheet);on(scrim,'click',closeSheet);
+on($('#del'),'click',function(){scrim.hidden=false;scrim.classList.add('on');dlg.hidden=false;$('#dlg-ok').focus()});
+on($('#dlg-ok'),'click',closeSheet);
+on(document,'keydown',function(e){if(e.key==='Escape')closeSheet()});
+
+/* router */
+var roots={today:'today',home:'floor-result',readings:'readings',masters:'masters',profile:'profile'};
+var prev=null,fromUpload=false;
+function go(id){location.hash='#'+id}
+function back(){if(history.length>1)history.back();else go('today')}
+function show(id){
+  var el=document.getElementById(id);if(!el||!el.classList.contains('screen')){id='welcome';el=$('#welcome')}
+  timers.forEach(clearTimeout);timers=[];
+  $$('.screen.on').forEach(function(s){s.classList.remove('on','enter')});
+  el.classList.add('on');el.scrollTop=0;window.scrollTo(0,0);
+  hideSnack();closeSheet();
+  var tab=el.getAttribute('data-tab')||'';var tb=$('#tabbar');
+  tb.hidden=!tab;$('#app').classList.toggle('withtabs',!!tab);
+  $$('#tabbar button').forEach(function(b){if(b.getAttribute('data-tab')===tab)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  if(!RM){void el.offsetWidth;el.classList.add('enter')}
+  runCounts(el);
+  if(id==='tarot')resetTarot();
+  if(id==='palm')resetPalm();
+  if(id==='floor-upload'){$('#fu-proc').hidden=true;$('#fu-read').disabled=false;$('#fu-bar').style.width='0'}
+  if(id==='floor-result'){runPlan(fromUpload);fromUpload=false}
+  if(id==='booking-confirm')burst();
+  prev=id;
+}
+function route(){show((location.hash||'').slice(1)||'welcome')}
+on(window,'hashchange',route);
+if(!location.hash)history.replaceState(null,'','#welcome');
+
+on(document,'click',function(e){
+  var t=e.target.closest('[data-go],[data-back],[data-go-replace],[data-snack],[data-seg]');if(!t)return;
+  if(t.closest('#tabbar'))return;
+  if(t.hasAttribute('data-snack')){showSnack(t.getAttribute('data-snack'));return}
+  if(t.hasAttribute('data-go')){go(t.getAttribute('data-go'));return}
+  if(t.hasAttribute('data-back')){back();return}
+  if(t.hasAttribute('data-go-replace')){location.replace('#'+t.getAttribute('data-go-replace'));return}
+  if(t.hasAttribute('data-seg')){
+    var grp=t.parentNode;if(grp)Array.prototype.forEach.call(grp.querySelectorAll('[data-seg]'),function(s){s.setAttribute('aria-pressed',s===t?'true':'false')});
+    var v=t.getAttribute('data-seg');if(v)location.replace('#'+v);
+  }
+});
+$$('#tabbar [data-tab]').forEach(function(b){on(b,'click',function(){var r=roots[b.getAttribute('data-tab')];if(r)go(r)})});
+
+function applyShop(){
+  var pressed=$$('#shop-chips .chip[aria-pressed="true"]').map(function(c){return c.getAttribute('data-cat')});
+  $$('#shop-list [data-cat]').forEach(function(it){it.hidden=pressed.length>0&&pressed.indexOf(it.getAttribute('data-cat'))<0});
+}
+on(document,'click',function(e){
+  var c=e.target.closest('.chip');if(!c||c.hasAttribute('data-seg'))return;
+  if(c.closest('#slots')){$$('#slots .chip').forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false')});return}
+  c.setAttribute('aria-pressed',c.getAttribute('aria-pressed')==='true'?'false':'true');
+  if(c.closest('#shop-chips'))applyShop();
+});
+
+on($('#f-unk'),'change',function(){var ch=this.checked;var ft=$('#f-time');if(ft)ft.disabled=ch;var n=$('#f-unk-note');if(n)n.hidden=!ch});
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+(function(){
+  var h=$('#hours');if(!h)return;
+  var ch='子丑寅卯辰巳午未申酉戌亥'.split(''),en=['Zi','Chou','Yin','Mao','Chen','Si','Wu','Wei','Shen','You','Xu','Hai'],tm=['11–1','1–3','3–5','5–7','7–9','9–11','11–1','1–3','3–5','5–7','7–9','9–11'],good=[0,3,4,6,9],html='';
+  for(var i=0;i<12;i++){var g=good.indexOf(i)>=0;html+='<div class="hour'+(i===3?' now':'')+(g?' good':'')+'" aria-label="'+en[i]+' hour, '+tm[i]+(g?', good':'')+(i===3?', now':'')+'"><b>'+ch[i]+'</b><span>'+en[i]+'</span><small>'+tm[i]+'</small>'+(g?'<i class="dot"></i>':'')+'</div>'}
+  h.innerHTML=html;
+  setTimeout(function(){var n=h.querySelector('.now');if(n)h.scrollLeft=Math.max(0,n.offsetLeft-h.clientWidth/2+n.offsetWidth/2)},80);
+})();
+
+var GOOD=[2,6,9,13,17,20,23,27],CARE=[4,11,15,22,29];
+function openDay(d){
+  var g=GOOD.indexOf(d)>=0,c=CARE.indexOf(d)>=0;
+  var txt=g?'A good day for signing papers and travel.':c?'A take-care day: rest, and avoid big purchases.':'An ordinary day. Keep to your usual plans.';
+  openSheet('<h3>'+d+' November 2026</h3><p>'+txt+'</p><span class="badge">Example / Calculated</span>');
+}
+(function(){
+  var c=$('#cal');if(!c)return;var html='';
+  'MTWTFSS'.split('').forEach(function(w){html+='<div class="wd" aria-hidden="true">'+w+'</div>'});
+  for(var i=0;i<6;i++)html+='<div class="blank"></div>';
+  for(var d=1;d<=30;d++){var g=GOOD.indexOf(d)>=0,k=CARE.indexOf(d)>=0;html+='<button type="button" class="day'+(g?' good':'')+(k?' care':'')+(d===23?' today':'')+'" data-day="'+d+'" aria-label="'+d+' November'+(g?', good day':'')+(k?', take care':'')+(d===23?', today':'')+'">'+d+(g?'<i class="dot mint"></i>':'')+(k?'<i class="mark apricot"></i>':'')+'</button>'}
+  c.innerHTML=html;
+  on(c,'click',function(e){var b=e.target.closest('[data-day]');if(b)openDay(+b.getAttribute('data-day'))});
+})();
+on($('#open-day'),'click',function(){openDay(23)});
+
+(function(){
+  var m=$('#months');if(!m)return;
+  var L=[['Jan','Plan quietly'],['Feb','New starts at work'],['Mar','Watch spending'],['Apr','Good for travel'],['May','Rest more'],['Jun','Family first'],['Jul','Money flows in'],['Aug','Avoid big moves'],['Sep','Learn something'],['Oct','Steady progress'],['Nov','Finish projects'],['Dec','Celebrate gently']];
+  m.innerHTML=L.map(function(x){return '<div class="month"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join('');
+})();
+
+(function(){
+  var sc=$('#shop-chips');if(sc)sc.innerHTML=['Wealth','Love','Protection','Home'].map(function(c){return '<button type="button" class="chip" aria-pressed="false" data-cat="'+c+'">'+c+'</button>'}).join('');
+  var sl=$('#shop-list');if(!sl)return;
+  var I=[['Citrine cluster','Wealth','Supports the wealth star by the door. Place in the south-east.','S$38'],['Black tourmaline','Protection','Steadies busy energy. Place near the entrance shoe rack.','S$24'],['Salt water cure','Home','Softens the take-care star. Place in the kitchen corner.','S$15'],['Brass wu lou','Home','Traditional gourd for rest. Place on the bedside table.','S$32'],['Rose quartz pair','Love','Shared calm. Place in the south-west of the bedroom.','S$28']];
+  sl.innerHTML=I.map(function(x){return '<div class="card item" data-cat="'+x[1]+'"><div class="thumb" aria-hidden="true"></div><div class="info"><h4>'+esc(x[0])+'</h4><p>'+esc(x[2])+'</p><p class="price">'+x[3]+' (example)</p></div><button type="button" class="btn" data-snack="Added to your list — you can remove it any time (example)">Buy</button></div>'}).join('');
+})();
+
+(function(){
+  var ml=$('#master-list');if(!ml)return;
+  var M=[['Tan Su Ling','谭','Flying Stars, BaZi, new homes','English/Mandarin/Hokkien','Excellent · 4.9 · 212 readings','From S$88 (example)',1],['Lim Boon Kiat','林','Commercial feng shui, dates','English/Mandarin/Cantonese','Very good · 4.7 · 98 readings','From S$120 (example)',0],['Nur Aisyah Rahman','N','BaZi for careers, compatibility','English/Malay','Very good · 4.8 · 64 readings','From S$70 (example)',0]];
+  ml.innerHTML=M.map(function(x){var inner='<span class="av" aria-hidden="true">'+x[1]+'</span><span class="info"><b>'+x[0]+'</b> <span class="badge">Verified</span> <span class="badge">Example</span><br><small>'+x[2]+'</small><br><small>'+x[3]+'</small><br><small>'+x[4]+'</small><br><small>'+x[5]+'</small></span>';return x[6]?'<button type="button" class="card master" data-go="master-profile">'+inner+'</button>':'<div class="card master">'+inner+'</div>'}).join('');
+})();
+
+function runCounts(root){
+  if(!root)return;
+  $$('[data-count]',root).forEach(function(n){
+    var v=+n.getAttribute('data-count')||0;
+    if(RM){n.textContent=v;return}
+    var t0=performance.now();
+    (function f(t){var p=Math.min(1,(t-t0)/480);n.textContent=Math.round(v*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0);
+  });
+  $$('.bar i[data-w]',root).forEach(function(b){b.style.width='0';var w=b.getAttribute('data-w')+'%';if(RM)b.style.width=w;else requestAnimationFrame(function(){requestAnimationFrame(function(){b.style.width=w})})});
+  var r=root.querySelector('#cring');if(r){var o=264*(1-76/100);if(RM)r.style.strokeDashoffset=o;else{r.style.strokeDashoffset=264;requestAnimationFrame(function(){requestAnimationFrame(function(){r.style.strokeDashoffset=o})})}}
+}
+
+var NS='http://www.w3.org/2000/svg';
+function sv(tag,a,p){var e=document.createElementNS(NS,tag);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+var Z=[[10,10,106,93],[116,10,107,93],[223,10,107,93],[10,103,106,93],[116,103,107,93],[223,103,107,93],[10,196,106,94],[116,196,107,94],[223,196,107,94]];
+var NUMS=[[1,7],[6,2],[8,4],[9,5],[2,3],[4,9],[5,1],[7,6],[3,8]];
+var ZN=['North-west','North','North-east','West','Centre','East','South-west','South','South-east'];
+var TIPS=['Steady energy. Good for rest; keep the room tidy.','Quiet area. Soft light helps.','Strong, lucky area (吉 — favourable). Ideal for the desk or bed head.','Busy energy. Avoid clutter here.','Heart of the home. Keep it open and bright.','Growth area. Plants do well here.','Heavy energy. Keep metal decor, not fire colours.','Warm area. Good for gathering.','The door side. Keep it lit and clear to welcome good energy.'];
+var zoneEls=[],hitEls=[],TIP0=$('#tip')?$('#tip').innerHTML:'Tap a room to see its star.';
+(function(){
+  var zg=$('#zones'),sg=$('#stars9'),hg=$('#hits');if(!zg||!sg||!hg)return;
+  Z.forEach(function(z,i){
+    zoneEls.push(sv('rect',{'class':'zone',x:z[0],y:z[1],width:z[2],height:z[3]},zg));
+    var g=sv('g',{'class':'star'},sg);
+    sv('circle',{cx:z[0]+z[2]/2,cy:z[1]+z[3]/2,r:18},g);
+    var t=sv('text',{x:z[0]+z[2]/2,y:z[1]+z[3]/2+5,'text-anchor':'middle'},g);t.textContent=NUMS[i][0]+'·'+NUMS[i][1];
+    var h=sv('rect',{'class':'hit',x:z[0],y:z[1],width:z[2],height:z[3],tabindex:0,role:'button','aria-label':ZN[i]+', stars '+NUMS[i][0]+' and '+NUMS[i][1]},hg);
+    hitEls.push(h);
+    function pick(){zoneEls.forEach(function(e,j){e.classList.toggle('sel',j===i)});hitEls.forEach(function(e,j){e.classList.toggle('sel',j===i)});var tp=$('#tip');if(tp)tp.innerHTML='<b>'+ZN[i]+' · '+NUMS[i][0]+'·'+NUMS[i][1]+'</b> — '+TIPS[i]}
+    h.addEventListener('click',pick);
+    h.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick()}});
+  });
+})();
+var planTimers=[];
+function runPlan(animate){
+  planTimers.forEach(clearTimeout);planTimers=[];
+  var res=$('#res'),stl=$('#stl'),stt=$('#stt'),plan=$('#plan');
+  zoneEls.forEach(function(e){e.classList.remove('lit','sel')});hitEls.forEach(function(e){e.classList.remove('sel')});
+  var tp=$('#tip');if(tp)tp.innerHTML=TIP0;
+  if(!animate){if(res)res.hidden=false;if(stl)stl.hidden=true;if(plan){plan.classList.remove('scanning');plan.classList.add('result')}return}
+  if(res)res.hidden=true;if(stl)stl.hidden=false;if(stt)stt.textContent='Reading the plan…';
+  if(plan){plan.classList.remove('result','scanning');void plan.getBoundingClientRect();plan.classList.add('scanning')}
+  var total=RM?400:2500,step=RM?0:220;
+  [1,2,5,8,7,6,3,0,4].forEach(function(z,k){planTimers.push(setTimeout(function(){if(zoneEls[z])zoneEls[z].classList.add('lit')},k*step))});
+  planTimers.push(setTimeout(function(){
+    if(plan){plan.classList.remove('scanning');plan.classList.add('result')}
+    if(stl)stl.hidden=true;if(res)res.hidden=false;
+    zoneEls.forEach(function(e){e.classList.remove('lit')});
+    if(tp)tp.innerHTML=TIP0;
+  },total));
+}
+on($('#again'),'click',function(){runPlan(true)});
+
+var deg=142,DIRS=['North','North-east','East','South-east','South','South-west','West','North-west'];
+function dirOf(b){return DIRS[Math.round(((b%360)+360)%360/45)%8]}
+function paintDeg(){var d=$('#deg');if(d)d.textContent=deg+'° '+dirOf(deg)+' (example)'}
+on($('#deg-minus'),'click',function(){deg=(deg+359)%360;paintDeg()});
+on($('#deg-plus'),'click',function(){deg=(deg+1)%360;paintDeg()});
+paintDeg();
+var hasPlan=false;
+function loadEx(){hasPlan=true;var f=$('#fu-frame');if(f)f.classList.add('has-plan');var l=$('#fu-label');if(l)l.innerHTML='Example plan loaded · 4-room HDB, Tampines <span class="badge">Example</span>'}
+function startRead(){
+  var b=$('#fu-read');if(b)b.disabled=true;
+  var p=$('#fu-proc');if(p)p.hidden=false;
+  var bar=$('#fu-bar'),d=RM?150:1100;
+  if(bar){bar.style.transition='none';bar.style.width='0';void bar.offsetWidth;bar.style.transition='width '+d+'ms linear';bar.style.width='100%'}
+  later(function(){fromUpload=true;if(b)b.disabled=false;go('floor-result')},d);
+}
+on($('#fu-example'),'click',function(){loadEx();startRead()});
+on($('#fu-photo'),'click',function(){loadEx();showSnack('Camera not used in prototype — example plan loaded')});
+on($('#fu-read'),'click',function(){if(!hasPlan)loadEx();startRead()});
+
+var DECK=[['Temperance','Mix slowly. Patience brings the balance you want.'],['The Star','Hope returns. Take one small hopeful step.'],['Eight of Pentacles','Practise the craft. Steady work pays.'],['The Hermit','Step back and think before you answer.'],['Two of Cups','A partnership deepens. Say thank you.']];
+var tcards=[],tTimers=[],tState='idle';
+function tClear(){tTimers.forEach(clearTimeout);tTimers=[]}
+function tLater(f,ms){tTimers.push(setTimeout(f,RM?Math.min(ms,60):ms))}
+function buildCards(){
+  var tb=$('#table');if(!tb||tcards.length)return;
+  for(var i=0;i<7;i++){
+    var b=document.createElement('button');b.type='button';b.className='tcard';b.setAttribute('aria-label','Card '+(i+1));b.disabled=true;
+    b.innerHTML='<span class="inner"><span class="face back"></span><span class="face front"><b></b><small></small></span></span>';
+    (function(idx){b.addEventListener('click',function(){pickCard(idx)})})(i);
+    tb.appendChild(b);tcards.push(b);
+  }
+}
+function stack(){tcards.forEach(function(c,i){c.className='tcard';c.disabled=true;c.style.transition=RM?'none':'';c.style.transform='translate(-50%,-50%) translate('+(i*0.6)+'px,'+(-i*0.6)+'px)';c.style.zIndex=i})}
+function resetTarot(){
+  tClear();buildCards();stack();tState='idle';
+  var r=$('#reveal');if(r){r.hidden=true;r.classList.remove('on')}var t=$('#tarot');if(t)t.classList.remove('drawn');
+  var s=$('#shuf');if(s){s.textContent='Shuffle';s.disabled=false}
+  var p=$('#prompt');if(p)p.textContent='';
+}
+function shuffle(){
+  tClear();buildCards();stack();
+  var r=$('#reveal');if(r){r.hidden=true;r.classList.remove('on')}var t=$('#tarot');if(t)t.classList.remove('drawn');
+  var s=$('#shuf');if(s)s.disabled=true;var p=$('#prompt');if(p)p.textContent='Shuffling…';
+  tState='shuffling';
+  if(!RM){
+    var t0=performance.now();
+    (function orbit(now){
+      if(tState!=='shuffling')return;
+      var k=(now-t0)/1900;if(k>=1)return;
+      tcards.forEach(function(c,i){var a=k*Math.PI*4+i*(Math.PI*2/7),rad=60*Math.sin(k*Math.PI);c.style.transition='none';c.style.transform='translate(-50%,-50%) translate('+(Math.cos(a)*rad)+'px,'+(Math.sin(a)*rad*0.5)+'px) rotate('+(a*20)+'deg)'});
+      requestAnimationFrame(orbit);
+    })(t0);
+  }
+  tLater(function(){
+    tState='arc';
+    tcards.forEach(function(c,i){var o=i-3;c.style.transition=RM?'none':'transform .5s ease';c.style.transform='translate(-50%,-50%) translate('+(o*44)+'px,'+(Math.abs(o)*8)+'px) rotate('+(o*7)+'deg)';c.style.zIndex=i;c.disabled=false});
+    if(p)p.textContent='Pick one card';if(s)s.disabled=false;
+  },1900);
+}
+function pickCard(i){
+  if(tState!=='arc')return;tState='picked';
+  var p=$('#prompt');if(p)p.textContent='';
+  var di=i%DECK.length,rev=di===3,cd=DECK[di];
+  tcards.forEach(function(c,j){c.disabled=true;if(j!==i)c.classList.add('out')});
+  var c=tcards[i];c.style.transition=RM?'none':'transform .5s ease';c.style.zIndex=20;c.style.transform='translate(-50%,-50%) translate(0,-10px) scale(1.25)'+(rev?' rotate(180deg)':'');
+  var f=c.querySelector('.front b'),sm=c.querySelector('.front small');if(f)f.textContent=cd[0];if(sm)sm.textContent=rev?'Reversed':'Upright';
+  tLater(function(){c.classList.add('flip')},450);
+  tLater(function(){
+    var r=$('#reveal');if(r){r.hidden=false;r.classList.add('on')}
+    var n=$('#rv-name');if(n)n.textContent=cd[0];var o=$('#rv-or');if(o)o.textContent=rev?'Reversed':'Upright';var tx=$('#rv-text');if(tx)tx.textContent=cd[1];
+    var s=$('#shuf');if(s)s.textContent='Shuffle again';var t=$('#tarot');if(t)t.classList.add('drawn');
+    c.classList.add('chosen');
+  },1100);
+}
+on($('#shuf'),'click',function(){var t=$('#tarot');if(t)t.classList.remove('drawn');shuffle()});
+
+var palmT=null;
+function resetPalm(){
+  if(palmT){clearTimeout(palmT);palmT=null}
+  var g=$('#palm-guide');if(g)g.hidden=false;var r=$('#palm-result');if(r)r.hidden=true;var p=$('#palm-proc');if(p)p.hidden=true;
+  $$('.palmbox').forEach(function(b){b.classList.remove('scan','done')});
+}
+function palmRead(take){
+  var p=$('#palm-proc');if(p)p.hidden=false;
+  $$('.palmbox').forEach(function(b){b.classList.add('scan')});
+  if(take)showSnack('Camera not used in prototype — example photo used');
+  if(palmT)clearTimeout(palmT);
+  palmT=setTimeout(function(){palmT=null;var g=$('#palm-guide');if(g)g.hidden=true;if(p)p.hidden=true;var r=$('#palm-result');if(r)r.hidden=false;$$('.palmbox').forEach(function(b){b.classList.remove('scan');b.classList.add('done')})},RM?150:1100);
+}
+on($('#palm-ex'),'click',function(){palmRead(false)});
+on($('#palm-take'),'click',function(){palmRead(true)});
+on($('#palm-retake'),'click',resetPalm);
+
+function burst(){
+  if(RM)return;var host=$('#burst');if(!host)return;
+  host.innerHTML='';var n=16+Math.floor(Math.random()*9),cols=['#e8d3a2','#f6efe0','#d9bf86','#fffaf0'];
+  for(var i=0;i<n;i++){
+    var d=document.createElement('i'),a=Math.random()*Math.PI*2,r=50+Math.random()*70,s=4+Math.random()*5;
+    d.style.cssText='position:absolute;left:50%;top:50%;width:'+s+'px;height:'+s+'px;border-radius:50%;background:'+cols[i%4]+';pointer-events:none';
+    host.appendChild(d);
+    if(d.animate)d.animate([{transform:'translate(-50%,-50%)',opacity:1},{transform:'translate(calc(-50% + '+Math.cos(a)*r+'px),calc(-50% + '+Math.sin(a)*r+'px)) scale(.6)',opacity:0}],{duration:700+Math.random()*200,easing:'cubic-bezier(.2,.7,.3,1)',fill:'forwards'});
+  }
+  setTimeout(function(){host.innerHTML=''},1000);
+}
+
+route();
+})();
+</script></body></html>

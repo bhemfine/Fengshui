@@ -1,0 +1,11 @@
+name: inkstone_engine
+description: Offline, pure-Dart chart engine for the Inkstone feng shui app (Ba Zi, Kua, Flying Stars, daily almanac).
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.8.0
+
+dev_dependencies:
+  lints: ^5.0.0
+  test: ^1.25.0
