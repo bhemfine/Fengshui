@@ -35,9 +35,9 @@ class _HouseCheckScreenState extends State<HouseCheckScreen> {
   @override
   Widget build(BuildContext context) {
     const reasons = [
-      "South-east door suits Mei Lin's Kua 1 (example).",
+      "South-east door is Liu Sha (Six Killings) for Mei Lin's Kua 7 (example).",
       'Wealth star 8 sits by the door this period (example).',
-      "Wei Hao's best directions face away from the door (example).",
+      "South-east is Wu Gui (Five Ghosts) for Wei Hao's Kua 2; his good directions are NE, W, NW, SW (example).",
     ];
     return InkstoneScaffold(
       title: 'House check',
@@ -68,6 +68,11 @@ class _HouseCheckScreenState extends State<HouseCheckScreen> {
         ),
         const SizedBox(height: 12),
         MidnightButton(label: 'See the floor reading', onPressed: () => context.go(Routes.floorResult)),
+        const SizedBox(height: 10),
+        ButtonRow(
+          first: GhostButton(label: 'Quick check', onPressed: () => context.push(Routes.quickCheck)),
+          second: GhostButton(label: 'Home checklist', onPressed: () => context.push(Routes.homeChecklist)),
+        ),
         InkstoneCard(
           title: 'Why',
           source: SourceBadge.calculated,

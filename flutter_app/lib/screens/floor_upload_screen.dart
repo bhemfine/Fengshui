@@ -72,6 +72,20 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
         MidnightButton(label: 'Read my home', onPressed: _reading ? null : _read),
       ]),
       children: [
+        InkstoneCard(
+          key: const Key('fu-quick-check'),
+          title: 'Buying or checking a home?',
+          margin: const EdgeInsets.only(bottom: 12),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('Facing and Kua for one or two people, plus the HDB, condo and landed checklist. Works offline.',
+                style: InkText.small),
+            const SizedBox(height: 10),
+            ButtonRow(
+              first: MidnightButton(label: 'Quick check', onPressed: () => context.push(Routes.quickCheck)),
+              second: GhostButton(label: 'Checklist', onPressed: () => context.push(Routes.homeChecklist)),
+            ),
+          ]),
+        ),
         Container(
           height: 200,
           decoration: BoxDecoration(

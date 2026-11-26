@@ -8,3 +8,5 @@ export 'src/kua.dart';
 export 'src/models.dart';
 export 'src/solar_terms.dart';
 export 'src/stems_branches.dart';
+export 'src/home_checklist.dart';
+export 'src/home_facing.dart';

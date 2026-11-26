@@ -155,7 +155,8 @@ const meiLin = Person(
   birthLabel: '12 Mar 1992, 08:15',
   place: 'Singapore (example) · UTC+8',
   gender: 'Female',
-  kua: 1,
+  // Female, solar year 1992: (1992 % 9 + 4) % 9 = 7. Checked by test/kua_sample_test.dart.
+  kua: 7,
 );
 
 const weiHao = Person(
@@ -253,7 +254,7 @@ const samplePlacementTips = <PlacementTip>[
 ];
 
 const houseCheckScores = <(String, int, bool)>[
-  ('Mei Lin', 82, true),
+  ('Mei Lin', 58, false),
   ('Wei Hao', 54, false),
 ];
 
@@ -280,8 +281,9 @@ const sampleLuckPillars = <LuckPillar>[
   LuckPillar(age: 42, chinese: '戊申'),
 ];
 
-const kuaGoodDirections = 'N, E, SE, S';
-const kuaCareDirections = 'W, NE, NW, SW';
+// Mei Lin, Kua 7 (West group).
+const kuaGoodDirections = 'NW, SW, NE, W';
+const kuaCareDirections = 'N, S, SE, E';
 
 // ---- Masters & booking ----
 

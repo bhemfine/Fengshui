@@ -14,3 +14,4 @@ export 'sticky_cta.dart';
 export 'tarot_deck.dart';
 export 'term.dart';
 export 'transitions.dart';
+export 'choice_pills.dart';

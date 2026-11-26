@@ -11,6 +11,13 @@ dependencies:
     sdk: flutter
   go_router: ^16.0.0
   google_fonts: ^6.2.1
+  # Offline chart engine (Kua, facing, period, checklist rules).
+  inkstone_engine:
+    path: ../engine
+  # Compass for the direction calculator (accelerometer + magnetometer).
+  sensors_plus: ^7.1.1
+  # Small on-device key/value store (checklist answers only; never synced).
+  shared_preferences: ^2.5.6
   # TODO(phase-2): local encrypted storage
   # drift: ^2.22.0
   # sqlcipher_flutter_libs: ^0.6.4
@@ -27,3 +34,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/content/home_checklist.json

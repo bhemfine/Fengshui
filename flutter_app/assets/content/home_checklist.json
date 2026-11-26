@@ -1,0 +1,1077 @@
+{
+ "version": 1,
+ "source": "PLAN.md Module 2 - Home checklist by property type",
+ "sections": [
+  {
+   "id": "all",
+   "title": "All homes",
+   "intro": "Shape, door, kitchen, bedrooms, surroundings and lucky spots."
+  },
+  {
+   "id": "hdb",
+   "title": "HDB",
+   "intro": "HDB-only checks. Cures stay within HDB rules: no structural changes, and never moving the household shelter."
+  },
+  {
+   "id": "condo",
+   "title": "Condo",
+   "intro": "Read in layers: site, tower, stack, then unit."
+  },
+  {
+   "id": "landed",
+   "title": "Landed",
+   "intro": "Gate, plot, slopes and roads. Structural changes are allowed."
+  },
+  {
+   "id": "buying",
+   "title": "Buying stage",
+   "intro": "Do these before paying the option or booking fee."
+  },
+  {
+   "id": "reno",
+   "title": "Reno tips",
+   "intro": "Dates come from the almanac, not AI."
+  }
+ ],
+ "notes": {
+  "reno_2026": "2026 renovation note: avoid starting hacking in the south (Five Yellow and Grand Duke) and the north (Three Killings). Pick start dates from the almanac.",
+  "hdb_cures": "HDB cures stay within HDB renovation rules: no structural changes, and the household shelter is never moved or altered.",
+  "myths": "Myths vs practice: 'south-facing is always best' and lucky numbers matter much less than facing, completion year and surroundings. Crystals do not turn a badly sited home into a good one.",
+  "disclaimer": "For reflection and entertainment. Not professional advice."
+ },
+ "items": [
+  {
+   "id": "shape_regular",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the floor plan roughly square or rectangular?",
+   "flag_on": "no",
+   "issue": "Irregular shape: one or more Bagua sectors may be missing (a cut of about a third of a side counts; a small notch usually does not).",
+   "cure": "Mark the missing sector on the floor plan. Strengthen it with lighting, a mirror on the adjacent wall or zoning furniture rather than rebuilding.",
+   "cure_hdb": "Use lighting, furniture zoning or a mirror on the adjacent wall. No hacking or extending walls."
+  },
+  {
+   "id": "shape_missing_sw",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the south-west corner missing (cut by a yard, bay window or balcony)?",
+   "flag_on": "yes",
+   "issue": "Missing south-west: linked to relationships and the mother figure.",
+   "cure": "Brighten the area next to the missing corner with warm light and earth tones; place a pair of objects or a healthy plant there.",
+   "cure_hdb": "Warm lighting and earth-tone décor next to the missing corner. Do not hack or enclose the yard or bay window."
+  },
+  {
+   "id": "door_faces_door",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Does the main door face a neighbour's door directly?",
+   "flag_on": "yes",
+   "issue": "Door-to-door clash: opposing doors are said to fight for qi.",
+   "cure": "Keep a solid door, add a door mat and a screen or shoe cabinet just inside to soften the line.",
+   "cure_hdb": "A door mat and an indoor screen or shoe cabinet just inside. Do not change the corridor or the door position."
+  },
+  {
+   "id": "door_faces_lift",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Does the main door face a lift, rubbish chute or staircase?",
+   "flag_on": "yes",
+   "issue": "Lift or staircase facing the door: qi rushes past or away; a chute brings stale qi.",
+   "cure": "Keep the door closed, use an indoor screen or partition, and keep the entrance well lit.",
+   "cure_hdb": "Indoor screen or shoe cabinet, good entrance lighting. No change to the common corridor."
+  },
+  {
+   "id": "door_line_window",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Can you see straight from the main door to a window, balcony or back door?",
+   "flag_on": "yes",
+   "issue": "Straight line through the home: qi is said to flow out without settling.",
+   "cure": "Break the line with a screen, curtain, console or tall plant between the door and the opening."
+  },
+  {
+   "id": "two_main_doors",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Does the home have two main doors (or a second door used as a main entry)?",
+   "flag_on": "yes",
+   "issue": "Two main doors split the 'mouth of qi'.",
+   "cure": "Choose one door as the main entry and use it daily; keep the other for occasional use."
+  },
+  {
+   "id": "long_corridor",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is there a long, narrow corridor straight from the entrance?",
+   "flag_on": "yes",
+   "issue": "Long entrance corridor speeds qi up instead of letting it settle.",
+   "cure": "Add rugs, artwork or lighting at intervals to slow the corridor; avoid a mirror at the far end."
+  },
+  {
+   "id": "toilet_centre",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is a toilet or bathroom in the centre of the home?",
+   "flag_on": "yes",
+   "issue": "Toilet in the centre (Tai Chi): said to affect the whole household.",
+   "cure": "Keep the door shut, lid down and room dry and bright; add plants or earth-tone items outside it."
+  },
+  {
+   "id": "toilet_faces_door",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Does a toilet door face the main door, kitchen or a bed?",
+   "flag_on": "yes",
+   "issue": "Toilet door facing the main door, kitchen or bed.",
+   "cure": "Keep the toilet door closed; add a door curtain or screen; keep it clean and ventilated."
+  },
+  {
+   "id": "toilet_lucky_sector",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is a toilet in a household member's lucky sector (see the Quick check result)?",
+   "flag_on": "yes",
+   "issue": "Toilet in a good-direction sector presses down that person's luck there.",
+   "cure": "Keep it shut and clean; strengthen the person's other good sectors (bed and desk direction)."
+  },
+  {
+   "id": "stove_faces_door",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Does the stove face, or sit in line with, the main door?",
+   "flag_on": "yes",
+   "issue": "Stove facing the main door: wealth and health are said to leak.",
+   "cure": "Place a screen or half-partition between the door and the kitchen, or keep the kitchen door closed.",
+   "cure_hdb": "A screen or sliding kitchen door within renovation rules; do not move gas points without approval."
+  },
+  {
+   "id": "stove_sink",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the stove right next to, or directly facing, the sink or fridge?",
+   "flag_on": "yes",
+   "issue": "Fire and water clash between stove and sink or fridge.",
+   "cure": "Keep at least a small gap or a wooden/green element (a board, plant or wooden utensil holder) between them."
+  },
+  {
+   "id": "stove_window",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is there a window (not a solid wall) behind the hob?",
+   "flag_on": "yes",
+   "issue": "No solid backing behind the stove.",
+   "cure": "Where possible use a solid backsplash wall; otherwise keep the window closed while cooking and add a solid panel."
+  },
+  {
+   "id": "cook_sees_entrance",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Can the cook NOT see the kitchen entrance while cooking?",
+   "flag_on": "yes",
+   "issue": "Cook cannot see who enters (back exposed).",
+   "cure": "Place a small reflective surface (e.g. a shiny hood or splashback) so the entrance is visible."
+  },
+  {
+   "id": "stove_toilet",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Does the stove face a toilet or bedroom door, or share a wall with a toilet?",
+   "flag_on": "yes",
+   "issue": "Stove facing or back-to-back with a toilet or bedroom door.",
+   "cure": "Keep those doors closed; add a wooden or plant element between; avoid the stove on the shared wall at the next renovation."
+  },
+  {
+   "id": "bed_beam",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is a bed, sofa or desk under a beam?",
+   "flag_on": "yes",
+   "issue": "Beam pressing down on a bed, sofa or desk.",
+   "cure": "Move the furniture out from under the beam, or plan a false ceiling to conceal it."
+  },
+  {
+   "id": "mirror_bed",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Does a mirror face the bed?",
+   "flag_on": "yes",
+   "issue": "Mirror facing the bed: said to disturb sleep and relationships.",
+   "cure": "Move the mirror or cover it at night (wardrobe mirrors can face inward or be covered)."
+  },
+  {
+   "id": "bed_door_line",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is a bed in line with the bedroom door (feet or head pointing at the door)?",
+   "flag_on": "yes",
+   "issue": "Bed in the 'coffin position' in line with the door.",
+   "cure": "Shift the bed diagonally away from the door so you can see the door from bed."
+  },
+  {
+   "id": "headboard_wall",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is a headboard against a window, or sharing a wall with a toilet, lift shaft or rubbish chute?",
+   "flag_on": "yes",
+   "issue": "Headboard without solid support, or backing onto a toilet, lift shaft or chute.",
+   "cure": "Move the bed to a solid wall; if impossible, use a solid padded headboard and keep the other side dry and tidy."
+  },
+  {
+   "id": "ac_over_bed",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is an air-conditioner, ceiling fan, pendant light or storage loft directly over a bed, sofa or desk?",
+   "flag_on": "yes",
+   "issue": "Heavy or moving fixture over a bed, sofa or desk.",
+   "cure": "Shift the furniture so the fixture is not directly overhead."
+  },
+  {
+   "id": "floor_number",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo"
+   ],
+   "school": "popular",
+   "question": "Does the floor or unit number contain a 4 (or a number you consider unlucky)?",
+   "flag_on": "yes",
+   "issue": "Number luck (popular belief): widely used in Singapore buying but much less important than facing, completion year and surroundings.",
+   "cure": "Treat as a preference only; check facing and surroundings first."
+  },
+  {
+   "id": "corridor_facing",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo"
+   ],
+   "school": "classical",
+   "question": "Does the main door or bedroom window face a common corridor?",
+   "flag_on": "yes",
+   "issue": "Corridor-facing: foot traffic and noise disturb qi and privacy.",
+   "cure": "Use frosted film or curtains, and a door screen inside."
+  },
+  {
+   "id": "t_junction",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is a road, T-junction or expressway aimed straight at the home?",
+   "flag_on": "yes",
+   "issue": "Road aimed at the home ('road arrow').",
+   "cure": "Place a solid screen, plants or a heavy object facing the line; keep curtains on that side."
+  },
+  {
+   "id": "nearby_sites",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "popular",
+   "question": "Are a hospital, funeral parlour, temple, substation, police station or government building very close or directly in view?",
+   "flag_on": "yes",
+   "issue": "Sensitive buildings nearby (popular and form-school belief).",
+   "cure": "Use curtains or plants on that side; weigh the practical impact (noise, traffic) more than the belief."
+  },
+  {
+   "id": "bright_hall",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is there open space, a park or water in front of the facing (a 'bright hall')?",
+   "flag_on": "no",
+   "issue": "No bright hall: the facing looks onto a close wall or block.",
+   "cure": "Keep the front area uncluttered and bright inside; favour units with an open outlook when choosing."
+  },
+  {
+   "id": "wind_gap",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "From the window, do you see a narrow gap between two tall blocks?",
+   "flag_on": "yes",
+   "issue": "Wind gap ('heaven's cut') between two tall blocks.",
+   "cure": "Use curtains or blinds on that window; place plants or solid décor on the sill."
+  },
+  {
+   "id": "sharp_corner",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "From the window, does a neighbour's sharp corner or roof edge point at the home?",
+   "flag_on": "yes",
+   "issue": "Sharp corner ('poison arrow') aimed at the home.",
+   "cure": "Keep curtains on that side and place plants or a solid screen to block the line of sight."
+  },
+  {
+   "id": "glare",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is there strong glare from glass façades or a pool into the home?",
+   "flag_on": "yes",
+   "issue": "Reflected glare (light sha).",
+   "cure": "Use sheer curtains or tinted film on that side."
+  },
+  {
+   "id": "noise",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "practical",
+   "question": "Is there constant noise from an MRT line or expressway?",
+   "flag_on": "yes",
+   "issue": "Noise and vibration from an MRT line or expressway.",
+   "cure": "Use double-glazed or acoustic windows and heavy curtains; place bedrooms on the quiet side.",
+   "cure_hdb": "Heavy curtains and approved window upgrades only; bedrooms on the quieter side."
+  },
+  {
+   "id": "sea_close",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the home right at a very close sea or waterfront?",
+   "flag_on": "yes",
+   "issue": "Very close open water is sometimes said not to let qi gather.",
+   "cure": "Use curtains and a solid sill feature on the water side; this rule is contested.",
+   "contested": true
+  },
+  {
+   "id": "floor_above",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo"
+   ],
+   "school": "classical",
+   "question": "Is a toilet in the unit above directly over your stove, bed or main door, or a bedroom above your kitchen? (assume the repeating stack layout if unknown)",
+   "flag_on": "yes",
+   "issue": "Floor-above clash: a fixed clash in stacked blocks.",
+   "cure": "Move the bed or desk away from that spot where possible; this cannot be cured by décor alone.",
+   "cure_hdb": "Shift the bed or desk away from that spot; no structural changes."
+  },
+  {
+   "id": "centre_heavy",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the centre of the home taken up by a household shelter, kitchen, toilet or heavy storage?",
+   "flag_on": "yes",
+   "issue": "Blocked centre (Tai Chi): the centre should stay open.",
+   "cure": "Keep the centre tidy and uncluttered; move heavy storage elsewhere.",
+   "cure_hdb": "Keep the shelter tidy and clutter-free inside. The household shelter cannot be moved or altered under HDB rules, and the app never suggests it."
+  },
+  {
+   "id": "pillar",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is there a standalone structural pillar in the living area ('piercing heart')?",
+   "flag_on": "yes",
+   "issue": "Standalone pillar in the middle of a room.",
+   "cure": "Soften it with plants or wrap it with a shelf or mirror panels.",
+   "cure_hdb": "Soften it with plants or a non-structural wrap. Do not hack the pillar."
+  },
+  {
+   "id": "straight_line",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is there a long straight line through the home from front to back?",
+   "flag_on": "yes",
+   "issue": "Long straight line through the home: qi rushes through.",
+   "cure": "Break the line with furniture, rugs or a screen."
+  },
+  {
+   "id": "altar_placement",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the altar under a beam or air-conditioner, or backing onto/facing a toilet, kitchen, bedroom, store or household shelter?",
+   "flag_on": "yes",
+   "issue": "Altar badly placed.",
+   "cure": "Place the altar on a solid, quiet living-room wall, clear of beams, air-conditioners, toilets, the kitchen and bedrooms."
+  },
+  {
+   "id": "aquarium_placement",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is an aquarium or water feature in a bedroom or kitchen, under a beam, or under or next to the altar?",
+   "flag_on": "yes",
+   "issue": "Aquarium or water feature misplaced (water–fire clash with the altar).",
+   "cure": "Move it to the living room (often north, south-east or east), away from beams and the altar."
+  },
+  {
+   "id": "wealth_corner_bh",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "black_hat",
+   "question": "Is the far-left corner from the main door (Black Hat wealth corner) cluttered or a toilet?",
+   "flag_on": "yes",
+   "issue": "Black Hat wealth corner blocked.",
+   "cure": "Keep the far-left corner clear and bright; a healthy plant is a common choice.",
+   "contested": true
+  },
+  {
+   "id": "wealth_corner_classical",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the south-east sector (classical wealth area) cluttered or a toilet?",
+   "flag_on": "yes",
+   "issue": "Classical south-east wealth area blocked. Flying Star wealth stars are checked separately on the floor reading.",
+   "cure": "Keep the south-east clear and bright; see this year's Flying Stars for the current wealth star.",
+   "contested": true
+  },
+  {
+   "id": "colours_sector",
+   "section": "all",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "popular",
+   "question": "Do you want colour advice by sector?",
+   "flag_on": "yes",
+   "issue": "Colours by sector are optional and school-dependent; some classical writers say colours are not feng shui.",
+   "cure": "Treat colour tips as optional; prioritise layout and facing.",
+   "contested": true
+  },
+  {
+   "id": "hdb_facing_method",
+   "section": "hdb",
+   "types": [
+    "hdb"
+   ],
+   "school": "classical",
+   "question": "Are you unsure whether to read the facing from the main door or the balcony / living-room window?",
+   "flag_on": "yes",
+   "issue": "Facing method unclear: many masters use the balcony or living-room opening; others use the main door.",
+   "cure": "Run the Quick check with 'Not sure — show both' to see both results."
+  },
+  {
+   "id": "hdb_special_unit",
+   "section": "hdb",
+   "types": [
+    "hdb"
+   ],
+   "school": "classical",
+   "question": "Is this a corner, jumbo or lift-lobby unit?",
+   "flag_on": "yes",
+   "issue": "Special unit: the stack-wide reading may not apply.",
+   "cure": "Take a compass reading at this unit's own opening rather than assuming the stack facing."
+  },
+  {
+   "id": "hdb_bay_yard",
+   "section": "hdb",
+   "types": [
+    "hdb"
+   ],
+   "school": "classical",
+   "question": "Do a bay window or yard create a cut-out corner?",
+   "flag_on": "yes",
+   "issue": "Bay window or yard creating a missing corner.",
+   "cure": "Brighten the adjacent area with lighting or décor. Do not hack or enclose them."
+  },
+  {
+   "id": "hdb_west_living",
+   "section": "hdb",
+   "types": [
+    "hdb"
+   ],
+   "school": "practical",
+   "question": "Does the living room face west (afternoon sun)?",
+   "flag_on": "yes",
+   "issue": "West-facing living room: year-round afternoon heat.",
+   "cure": "Use blinds, UV film and light colours; plan the sofa away from direct sun."
+  },
+  {
+   "id": "hdb_high_windy",
+   "section": "hdb",
+   "types": [
+    "hdb"
+   ],
+   "school": "practical",
+   "question": "Is the unit on a very high, windy floor?",
+   "flag_on": "yes",
+   "issue": "Very high, windy floor; mid floors are often preferred.",
+   "cure": "Use heavier curtains and window stoppers; keep doors from slamming."
+  },
+  {
+   "id": "hdb_layout_changed",
+   "section": "hdb",
+   "types": [
+    "hdb"
+   ],
+   "school": "classical",
+   "question": "(Resale) Has the layout been changed from the original HDB plan?",
+   "flag_on": "yes",
+   "issue": "As-built layout differs from the original HDB plan: the chart stays with the building but which sectors are lived in can change.",
+   "cure": "Compare the as-built layout with the original HDB plan and re-mark rooms on the floor reading. Use the lease commencement year as the completion year."
+  },
+  {
+   "id": "condo_stack_facing",
+   "section": "condo",
+   "types": [
+    "condo"
+   ],
+   "school": "classical",
+   "question": "Do stacks in this project face different ways?",
+   "flag_on": "yes",
+   "issue": "Stacks face different ways: one tower facing does not apply to every unit.",
+   "cure": "Read in layers: site, tower, stack, then this unit's own facing."
+  },
+  {
+   "id": "condo_entrance",
+   "section": "condo",
+   "types": [
+    "condo"
+   ],
+   "school": "classical",
+   "question": "Are the main entrance or drop-off awkward (aimed at the block, or a driveway mouth below the unit)?",
+   "flag_on": "yes",
+   "issue": "Main entrance, drop-off or driveway mouth pressing on the unit.",
+   "cure": "Prefer stacks away from the driveway mouth; use curtains on that side."
+  },
+  {
+   "id": "condo_pool",
+   "section": "condo",
+   "types": [
+    "condo"
+   ],
+   "school": "classical",
+   "question": "Does the pool or water feature sit in front of this stack?",
+   "flag_on": "yes",
+   "issue": "Pool position: helps some stacks and burdens others depending on the unit's chart.",
+   "cure": "Check where the water sits on this unit's Flying Star chart before deciding.",
+   "contested": true
+  },
+  {
+   "id": "condo_transfer_deck",
+   "section": "condo",
+   "types": [
+    "condo"
+   ],
+   "school": "classical",
+   "question": "Is the unit over a transfer deck, driveway mouth or substation?",
+   "flag_on": "yes",
+   "issue": "Unit over a transfer deck, driveway mouth or substation.",
+   "cure": "Consider another stack or floor; keep the bedroom away from that side."
+  },
+  {
+   "id": "condo_tower_corner",
+   "section": "condo",
+   "types": [
+    "condo"
+   ],
+   "school": "classical",
+   "question": "From this floor (not the showflat), can you see a sharp corner of another tower?",
+   "flag_on": "yes",
+   "issue": "Sharp tower corner visible only from this floor.",
+   "cure": "Visit the actual floor; use curtains or plants to block the line if you buy."
+  },
+  {
+   "id": "landed_gate",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the main gate misaligned with the front door or blocked?",
+   "flag_on": "yes",
+   "issue": "Main gate and front door not working together.",
+   "cure": "Check the gate facing as well as the door; keep the path between them clear. Structural changes are possible for landed homes."
+  },
+  {
+   "id": "landed_plot",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the plot irregular (triangular, narrowing at the back)?",
+   "flag_on": "yes",
+   "issue": "Irregular plot shape.",
+   "cure": "Use landscaping, fencing or planting to square off the plot."
+  },
+  {
+   "id": "landed_slope",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the house lower than the road, or lacking support at the back (slope down behind)?",
+   "flag_on": "yes",
+   "issue": "House lower than the road, or no backing behind the house.",
+   "cure": "Add a solid fence, hedge or tall planting at the back; improve drainage at the front."
+  },
+  {
+   "id": "landed_stairs_door",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Does a staircase face the main door directly?",
+   "flag_on": "yes",
+   "issue": "Staircase facing the main door: qi rushes upstairs.",
+   "cure": "Add a screen or turn the bottom steps; renovation can reposition the stair."
+  },
+  {
+   "id": "landed_front_back",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the front door in a straight line with the back door or a rear window?",
+   "flag_on": "yes",
+   "issue": "Front door in line with the back door.",
+   "cure": "Place a screen, plants or furniture between them, or move a door during renovation."
+  },
+  {
+   "id": "landed_neighbour_arrow",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Does a neighbour's roof corner, lamp post, tree, chimney or gate point at the door or windows?",
+   "flag_on": "yes",
+   "issue": "Pointing object aimed at the house.",
+   "cure": "Use planting, a screen or a solid gate to block the line."
+  },
+  {
+   "id": "landed_roads",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the house at a Y-junction or inside an inverted-U road?",
+   "flag_on": "yes",
+   "issue": "Y-junction or inverted-U road.",
+   "cure": "Plant hedges or a solid fence on the road side."
+  },
+  {
+   "id": "landed_water",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is there a drain or canal in front, or water at the back?",
+   "flag_on": "yes",
+   "issue": "Drain or canal in front, or water at the back.",
+   "cure": "Keep drains clean; move ponds or water features to the front instead of the back."
+  },
+  {
+   "id": "landed_sandwich",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the house sandwiched between taller buildings, or is the fence higher than the house?",
+   "flag_on": "yes",
+   "issue": "House pressed between taller buildings, or fence taller than the house.",
+   "cure": "Keep the frontage open and bright; lower the fence where allowed."
+  },
+  {
+   "id": "landed_garage",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the master bedroom above the garage?",
+   "flag_on": "yes",
+   "issue": "Master bedroom over the garage (empty, moving space below).",
+   "cure": "Use another room as the master or keep the garage tidy and the floor well insulated."
+  },
+  {
+   "id": "landed_cul_de_sac",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the house at a cul-de-sac or dead end?",
+   "flag_on": "yes",
+   "issue": "Cul-de-sac: contested. Some classical lists treat it as unfavourable; some agents say judge turning space and congestion instead.",
+   "cure": "Judge on traffic and turning space rather than a blanket no.",
+   "contested": true
+  },
+  {
+   "id": "landed_each_storey",
+   "section": "landed",
+   "types": [
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Have you checked the centre of each storey, and re-read the chart after any extension or A&A?",
+   "flag_on": "no",
+   "issue": "Centre of each storey or post-extension chart not checked.",
+   "cure": "Check the centre of every storey and re-read the chart after extensions or A&A works."
+  },
+  {
+   "id": "buy_top_writing",
+   "section": "buying",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "practical",
+   "question": "Do you have the completion/TOP date and the unit facing in writing?",
+   "flag_on": "no",
+   "issue": "TOP date or facing not confirmed in writing.",
+   "cure": "Ask the agent or developer for the TOP date and facing in writing before paying the option or booking fee."
+  },
+  {
+   "id": "buy_ura",
+   "section": "buying",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "practical",
+   "question": "Have you checked the URA Master Plan for future buildings in front?",
+   "flag_on": "no",
+   "issue": "View not checked against the URA Master Plan: a good view can be built out.",
+   "cure": "Check the URA Master Plan before committing."
+  },
+  {
+   "id": "buy_compass_site",
+   "section": "buying",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "practical",
+   "question": "Have you taken a compass reading on site, held level and away from window grilles?",
+   "flag_on": "no",
+   "issue": "Facing not verified on site.",
+   "cure": "Use the Direction calculator on site, phone flat, away from grilles, three readings."
+  },
+  {
+   "id": "buy_before_fee",
+   "section": "buying",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "practical",
+   "question": "Are you doing this check before paying the option or booking fee?",
+   "flag_on": "no",
+   "issue": "Check done after paying the option or booking fee.",
+   "cure": "Do the feng shui check before you pay the option or booking fee."
+  },
+  {
+   "id": "buy_bazi",
+   "section": "buying",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Have you aligned the home with each occupant's BaZi or Kua (not just a couple Kua match to the door)?",
+   "flag_on": "no",
+   "issue": "Only a door-to-Kua match was done.",
+   "cure": "Use the BaZi screen or a master consult for a fuller match."
+  },
+  {
+   "id": "reno_2026_south",
+   "section": "reno",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Are you planning to start hacking or major works in the south sector in 2026?",
+   "flag_on": "yes",
+   "issue": "2026: avoid starting hacking in the south (Five Yellow and Grand Duke).",
+   "cure": "Start works in another sector first, or wait for a better year or date from the almanac.",
+   "year": 2026
+  },
+  {
+   "id": "reno_2026_north",
+   "section": "reno",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Are you planning to start hacking or major works in the north sector in 2026?",
+   "flag_on": "yes",
+   "issue": "2026: avoid starting hacking in the north (Three Killings).",
+   "cure": "Start works in another sector first, or pick a date from the almanac.",
+   "year": 2026
+  },
+  {
+   "id": "reno_ghost_month",
+   "section": "reno",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "popular",
+   "question": "Are works due to start in the Hungry Ghost month (7th lunar month)?",
+   "flag_on": "yes",
+   "issue": "Starting works in Hungry Ghost month is commonly avoided.",
+   "cure": "Start before or after the 7th lunar month; check the almanac for a good start date."
+  },
+  {
+   "id": "reno_unfinished",
+   "section": "reno",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Will the main door or kitchen be left unfinished for a long stretch?",
+   "flag_on": "yes",
+   "issue": "Main door or kitchen left unfinished for long.",
+   "cure": "Schedule the main door and kitchen to finish early."
+  },
+  {
+   "id": "reno_before_id",
+   "section": "reno",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "practical",
+   "question": "Will the feng shui check be done before the interior-design drawings are fixed?",
+   "flag_on": "no",
+   "issue": "Feng shui checked after ID drawings: door swing, stove, beds and desks may already be fixed.",
+   "cure": "Do the feng shui check before the ID drawings."
+  },
+  {
+   "id": "reno_beams",
+   "section": "reno",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "practical",
+   "question": "Did beams appear after hacking that will sit over a bed, sofa or desk?",
+   "flag_on": "yes",
+   "issue": "Exposed beams over furniture after hacking.",
+   "cure": "Plan a false ceiling now, before the furniture goes in."
+  },
+  {
+   "id": "reno_master_room",
+   "section": "reno",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Are you combining two bedrooms (which may change which room counts as the master)?",
+   "flag_on": "yes",
+   "issue": "Combining rooms can change which room counts as the master (often the largest).",
+   "cure": "Re-mark rooms on the floor reading after combining and check whose bed goes where."
+  },
+  {
+   "id": "reno_period_reset",
+   "section": "reno",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "classical",
+   "question": "Is the renovation major (roof, floor and main door)?",
+   "flag_on": "yes",
+   "issue": "Some lineages say substantial works can reset the period; others say ordinary renovation does not. The app does not auto-reset the period.",
+   "cure": "Ask a master whether your works count; the app keeps the original period unless you change it.",
+   "contested": true
+  },
+  {
+   "id": "reno_movein",
+   "section": "reno",
+   "types": [
+    "hdb",
+    "condo",
+    "landed"
+   ],
+   "school": "popular",
+   "question": "Have you picked a move-in date and house-warming checklist?",
+   "flag_on": "no",
+   "issue": "Move-in date not chosen.",
+   "cure": "Pick an auspicious date from the almanac that does not clash with household zodiacs. Optional rituals: open windows, light the stove, bring in rice, salt and red dates."
+  }
+ ]
+}

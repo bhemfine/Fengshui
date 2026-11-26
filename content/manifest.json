@@ -10,7 +10,8 @@
     {"path": "content/tarot/wands_cups.json", "counts": {"wands_cups": 28}},
     {"path": "content/tarot/swords_pentacles.json", "counts": {"swords_pentacles": 28}},
     {"path": "content/crystals.json", "counts": {"crystals": 40}},
-    {"path": "content/rituals.json", "counts": {"rituals": 30}}
+    {"path": "content/rituals.json", "counts": {"rituals": 30}},
+    {"path": "content/home_checklist.json", "counts": {"home_checklist_items": 76, "sections": 6}}
   ],
   "expected_totals": {
     "tarot": 78,
@@ -22,6 +23,7 @@
     "day_officers": 12,
     "kua": 9,
     "direction_types": 8,
-    "stars": 9
+    "stars": 9,
+    "home_checklist_items": 76
   }
 }
