@@ -213,7 +213,7 @@ Upload a floor plan or photos, set the facing direction, and get a room-by-room 
 
 1. **Upload the plan.** A photo or PDF of the floor plan, such as an HDB or condo brochure, is stored in the app's private encrypted storage.
 2. **Detect rooms.** In Phase 1 the user marks rooms by hand. In Phase 2 a vision model, called through the proxy, labels rooms, doors and windows and returns their outlines; the user corrects anything wrong by dragging. The proxy does not keep the image.
-3. **Set facing.** The user stands at the main door and the phone compass reads the bearing, or they enter it manually. Tilt and magnetic interference warnings are shown.
+3. **Set facing.** The user picks a facing method (main door, balcony or living-room opening, or block facing), then stands at that opening and the phone compass reads the bearing, or they enter it manually. Tilt and magnetic interference warnings are shown. For HDB the app asks which method to use and does not default to the main door.
 4. **Overlay grids.** The on-device engine divides the plan into nine palaces and overlays the Bagua, Eight Mansions sectors and the Flying Stars chart for the building's period and facing.
 5. **Match to the household.** Each person's Kua directions, already stored on the device, are compared with bedroom, bed and desk positions.
 6. **Generate advice.** Rules produce findings, such as the 2 and 5 sickness stars in the master bedroom this year; an optional AI write-up, from those findings only, goes through the proxy, with a cure such as metal objects or a brass wu lou.
@@ -224,7 +224,7 @@ Upload a floor plan or photos, set the facing direction, and get a room-by-room 
 
 - As a user, I want to upload a floor plan photo or PDF, including a typical HDB or condo brochure, so that I can analyse my home.
 - As a user, I want to mark rooms, doors and windows by hand (and later accept or correct AI outlines), so that the overlay matches the real layout.
-- As a user, I want to set facing with the phone compass or by typing it, with tilt and magnetic interference warnings, so that the chart uses a reliable door direction.
+- As a user, I want to set facing with the phone compass or by typing it, with tilt and magnetic interference warnings, and to choose the facing method, so that the chart uses a reliable direction.
 - As a user, I want Bagua, Eight Mansions and Flying Stars overlaid on nine palaces, matched to my household's Kua, so that I know what to place, move or fix in each room.
 - As a user, I want a cure shopping list and almanac-backed renovation dates, so that I can act on the findings.
 - As a user, I want my floor plan and home address to stay on this phone, not on the operator's servers.
@@ -265,6 +265,96 @@ Upload a floor plan or photos, set the facing direction, and get a room-by-room 
 - On the device: `homes`, `rooms`, `home_findings` (see [Data model](#15-data-model)).
 - Floor plan and room photos are local files, not object storage on an operator server.
 
+### Home checklist by property type (HDB, condo, landed)
+
+The analyser and the house-hunting score use the same checklist. It applies to HDB flats, condominiums (including executive condominiums) and landed homes. The user first chooses the property type. Checks that apply to every home are listed first. HDB, condo and landed then add their own. Buying-stage and renovation checks follow. Where schools disagree, the rule is tagged and is never hard-coded to one method.
+
+#### All homes
+
+- **Shape and missing corners.** A square or rectangular plan is preferred. An L-shaped or odd layout can leave a Bagua sector missing, for example a missing south-west, which is linked to relationships. A small notch usually does not count; a cut of about a third of a side does. Bay windows, yards and very large balconies often create these cuts. Show what is missing and suggest furniture, lighting or zoning cures, not a structural rebuild.
+- **Main door.** Flag a door that faces a neighbour's door, a lift, a rubbish chute or a staircase, and a straight line from the main door to a window, balcony or back door, where qi is said to flow out. Flag two main doors; if both exist, advise using only one. A long, narrow entrance corridor is said to speed qi rather than let it settle.
+- **Bathrooms and toilets.** Flag a toilet in the centre of the home or in a person's lucky sector, and a toilet door facing the main door, kitchen or bed. Suggest cures such as keeping the door closed.
+- **Kitchen.** Flag a stove facing the main door, a stove next to or directly facing the sink or fridge (a fire and water clash), and the stove's position relative to the household's Kua. Also check for a solid wall behind the hob, not a window; whether the cook can see the kitchen entrance; a stove facing a toilet or bedroom door; and a stove back-to-back with a toilet wall.
+- **Bedrooms.** Flag a bed under a beam, a mirror facing the bed, a bed in line with the door, and the best bed and headboard direction for each person. The headboard should rest against a solid wall and should not share a wall with a toilet, a lift shaft or a rubbish chute. Also flag an air-conditioner, ceiling fan, pendant light or storage loft over the bed, sofa or desk.
+- **Floor and unit number (popular belief).** The last digit of the floor can be given an element, and numbers such as 4 and 8 are widely used in Singapore buying. Tag this as popular belief and keep it separate from the classical reading.
+- **Surroundings.** Flag a corridor-facing door, a T-junction or expressway aimed at the home, nearby hospitals, funeral parlours, temples, substations, police stations or government buildings, and whether the outlook is an open view or a close wall. Add a bright-hall check: open space, a park or water in front of the facing is treated as one of the best external features. From the window, not by leaning out, flag a narrow wind gap between two tall blocks, a neighbour's sharp corner, glare from glass or a pool, and noise from an MRT line or expressway. A very close sea or waterfront is sometimes said not to let qi gather.
+- **Lucky spots.** Show the wealth corner and the annual Flying Stars: where to place a desk or plants this year, and which sector to leave alone. The definition of the wealth corner is school-dependent (see Where schools disagree).
+- **Completion year and Period 9.** The natal Flying Stars chart needs the building's completion or TOP year as well as the facing. Period 8 runs from Li Chun 2004 to just before Li Chun 2024. Period 9 runs from Li Chun (about 4 February) 2024 to early 2044. A flat completed in 2010 and a new BTO with the same facing therefore get different charts. The year flips at Li Chun, not on 1 January.
+- **Exact facing.** Store the bearing in degrees and as one of the 24 Mountains (15° bands). A few degrees can change the whole chart. A reading close to a boundary is flagged as a line facing.
+- **The floor above.** In stacked HDB and condo blocks, flag a toilet above the stove, bed or main door, and a bedroom above a kitchen. These are fixed clashes. Check the unit above, or assume the repeating stack layout when that is known.
+- **Keep the centre open.** The centre (Tai Chi) should stay open. Flag not only a central toilet but a household shelter, kitchen or heavy storage there. Also flag a standalone structural pillar, sometimes called piercing heart, and a long straight line through the home.
+- **Altar and aquarium.** These are common in Singapore homes and deserve their own rules. An altar should sit on a solid, quiet living-room wall, not under a beam or air-conditioner, and should not back onto or face a toilet, kitchen, bedroom, store or household shelter. An aquarium or water feature is usually placed in the living room, often the north, south-east or east; not in a bedroom or kitchen, not under a beam, and not under or next to the altar, which is read as a water–fire clash.
+
+#### HDB
+
+- Many masters read the facing from the living-room window or balcony, not the corridor door. The app asks which method to use and does not default to the main door. If the user is unsure, it shows both. Corner, jumbo and lift-lobby units need their own reading, not a stack-wide assumption.
+- The household shelter cannot be moved or structurally altered under HDB rules. If it sits near the centre, advise keeping it tidy. The app must never suggest moving the shelter as a cure. Cures must stay within what HDB allows: no structural changes.
+- Bay windows and yards often create missing corners, as above. West-facing living rooms take year-round afternoon heat; mid floors are often preferred over very high, windy ones. These are practical as well as form-school points.
+- For resale, the lease commencement date is a close proxy for the Flying Star period. Compare the as-built layout with the original HDB plan: the natal chart stays with the building, but which sectors are lived in can change.
+
+#### Condo
+
+- Read in layers: the site (block and surroundings), the tower facing, the stack, then the unit. Stacks in the same project can face different ways. Also check the main entrance and drop-off.
+- The pool and other water features can help one stack and burden another, depending on where they sit on that unit's chart. Flag units over transfer decks, driveway mouths or substations, and sharp corners of other towers that are visible only from that floor, not from the showflat or the ground.
+
+#### Landed
+
+- Check the main gate as well as the front door, the plot shape, the driveway, slopes and support at the back of the house, and the garden and water features. Structural renovation, extensions and moving the door are allowed here, unlike in an HDB flat.
+- Flag a staircase directly opposite the main door, where qi is said to rush upstairs, and a front door in a straight line with the back door or a rear window. Also flag a neighbour's roof corner, lamp post, tree, chimney or gate pointing at the door or windows; a Y-junction or inverted-U road; a drain or canal in front, or water at the back; a house lower than the road; a house sandwiched between taller buildings; a master bedroom above a garage; and a fence higher than the house.
+- Cul-de-sacs and dead ends are contested: some classical lists treat them as unfavourable; some Singapore agents say to judge turning space and congestion instead. Tag the rule and do not apply a blanket no.
+- Assess the centre on each storey. After an extension or addition and alteration, re-read the chart, because additions can disturb the original sectors.
+
+#### Buying stage
+
+- Get the completion or TOP date and the unit facing in writing. Check the URA Master Plan, because a good view can later be built out. Take the compass on site, held level and away from window grilles. Do the check before paying the option or booking fee.
+- Align the house chart with the occupants' BaZi or Ming Gua, not only a couple Kua match to the door.
+
+#### Reno tips
+
+- Suggest good start dates from the Module 5 almanac, and sectors not to hack this year. For 2026, avoid starting hacking in the south (Five Yellow and Grand Duke) and the north (Three Killings). Starting works in Hungry Ghost month is commonly avoided. Advise against leaving the main door or kitchen unfinished for a long stretch.
+- Do the feng shui check before the interior-design drawings, so door swing, stove, beds and desks are fixed first. If beams appear after hacking, plan a false ceiling then, not after the furniture goes in. Combining two bedrooms can change which room counts as the master, often the largest room, not only where someone sleeps.
+- Colours and materials by sector are optional and school-dependent. For HDB, list only cures that HDB rules allow, with no structural changes, and never suggest moving the household shelter.
+- **Move-in and house-warming.** Suggest auspicious dates, avoiding clash days with household zodiacs, and a simple checklist of rituals, such as opening windows, lighting the stove, and bringing in rice, salt and red dates, where the user wants them.
+
+#### Where schools disagree
+
+- **Facing of a flat.** Many classical and high-rise practitioners use the balcony or living-room opening, or the block orientation. Others still chart from the main door as the mouth of qi. The app must offer a facing-method setting (main door, balcony or living-room opening, or block) and, for HDB, ask the user rather than default to the main door. If the user is unsure, show both.
+- **Resetting the natal period.** Some lineages say a major renovation of the roof, floor and main door can change the period if the works are substantial. Others say ordinary renovation does not change the chart. Do not auto-reset the period; ask, and tag the view.
+- **Wealth corner.** Black Hat Sect uses the far-left corner from the main door. Classical practice often uses the south-east, or the Flying Star wealth stars. Let the user pick, or show both, and tag the school.
+- **Colours by sector.** Some popular and Flying Star practice uses them; some classical writers say colours are not feng shui. Treat colour advice as optional and school-dependent.
+
+#### Myths vs practice
+
+- "South-facing is always best" and lucky floor or unit numbers, such as 4 versus 8, are widely used in Singapore, but they matter much less than facing, completion year and surroundings. Tag number luck as popular belief.
+- Stories about previous owners are not a classical check. Crystals, charms and ornaments do not turn a badly sited house into a good one; selection comes first.
+
+#### Sources
+
+- [Singapore HDB and Condo Feng Shui](https://masterlimfengshui.com/info/learn/singapore-hdb-condo-feng-shui-guide/)
+- [Viewing a New Home: Feng Shui Checklist](https://masterlimfengshui.com/info/learn/viewing-new-home-feng-shui-checklist/)
+- [HDB Feng Shui Singapore](https://danielsiew.com/blog/feng-shui-hdb-flat-singapore)
+- [Resale HDB Feng Shui checklist](https://danielsiew.com/blog/resale-hdb-feng-shui-checklist)
+- [Feng Shui for Singapore Condos](https://danielsiew.com/blog/feng-shui-condo-singapore)
+- [Feng Shui Renovation 2026](https://danielsiew.com/blog/feng-shui-before-renovation-guide)
+- [Feng Shui Floor Plan Layouts Singapore](https://winfredquek.com/insights/feng-shui-floor-plan-guide-singapore)
+- [Kitchen and Stove Feng Shui](https://winfredquek.com/insights/feng-shui-kitchen-stove-hdb-condo)
+- [20 Fengshui Taboos, Qanvast](https://qanvast.com/sg/articles/20-fengshui-taboos-that-could-bring-negative-qi-and-to-avoid-3265)
+- [5 feng shui property misconceptions, 99.co](https://www.99.co/singapore/insider/feng-shui-property-misconceptions-harm-you/)
+- [Selecting a BTO with Period 9 Feng Shui](https://imperialharvest.com/blog/selecting-bto-with-auspicious-period-9-feng-shui/)
+- [HDB Facing Direction Feng Shui](https://9heavens.com/blogs/news/hdb-facing-direction-feng-shui)
+- [BTO Feng Shui: How to Read Your Floor Plan](https://adelinapang.com/bto-feng-shui-singapore-how-to-read-floor-plan/)
+- [Feng Shui for New Home Singapore](https://eastchenconsultancy.com/feng-shui-for-new-home-singapore-checklist-before-you-move-in/)
+- [Feng Shui for Landed Property in Singapore](https://eastchenconsultancy.com/feng-shui-for-landed-property-in-singapore-maximising-wealth-and-health-sectors/)
+- [Feng Shui for Renovation in Singapore](https://eastchenconsultancy.com/feng-shui-for-renovation-in-singapore-dos-and-donts-during-hacking-works/)
+- [Feng Shui and Landed Homes in Singapore](https://christopherng.com.sg/blog/feng-shui-and-landed-homes-in-singapore-should-buyers-really-consider-it)
+- [The Entrance, Geomancy.Net](https://www.geomancy.sg/resources/fst/fst-shapes-entrance.htm)
+- [Beginner's Guide to Property Feng Shui, Propwise](https://www.propwise.sg/the-beginners-guide-to-property-fengshui/)
+- [Exterior Sha Qi Singapore](https://www.fengshuidahouse.com/exterior-sha-qi-singapore-part-1/)
+- [Auspicious Setting of God Altar, Master Tham](https://www.mastertham.com.sg/auspicious-setting-of-god-altar-for-overall-wellbeing-in-fengshui-perspective)
+- [Chinese Altar Singapore](https://www.moonfengshui.com.sg/post/chinese-altar-singapore-feng-shui-placement)
+- [Aquarium Feng Shui Placement Guide](https://gensou.sg/aquarium-feng-shui-placement-guide/)
+- [HDB renovation guidelines, building works](https://www.hdb.gov.sg/cs/infoweb/residential/living-in-an-hdb-flat/renovation/guidelines/building-works)
+
 ### Acceptance criteria
 
 - Users can upload a photo or PDF floor plan, including typical HDB or condo brochure plans, stored only on the device.
@@ -276,6 +366,12 @@ Upload a floor plan or photos, set the facing direction, and get a room-by-room 
 - Renovation dates are taken from the Module 5 almanac, not invented by AI.
 - Annual and monthly star refresh can trigger a **local** notification when a bad star moves into a key room.
 - The operator does not keep floor plans, addresses or findings. Vision calls go through the proxy and are not logged or stored.
+- The app captures the property type (HDB, condo or landed) and the completion or TOP year. Period 8 versus Period 9 is taken from Li Chun 2024: Period 9 starts at Li Chun (about 4 February) 2024.
+- Facing is stored as a bearing in degrees and as one of the 24 Mountains (15° bands). Line facings near a boundary are flagged.
+- A facing-method setting offers main door, balcony or living-room opening, or block facing. For HDB the default is to ask the user; if they are unsure, both results are shown.
+- Floor-above stack checks flag a toilet above the stove, bed or main door, and a bedroom above a kitchen, when the layout of the unit above is known or is assumed from a repeating stack.
+- Rules are tagged by school (classical, Black Hat, or popular belief). Contested rules are not hard-coded to one method.
+- HDB cures stay within HDB renovation rules: no structural changes, and the app never suggests moving or altering the household shelter.
 
 ---
 
@@ -294,7 +390,72 @@ Drop a pin or paste a listing address and get a feng shui score for the home and
 
 > **Singapore specifics to build in:** HDB and condo unit floors and their element, block facing from the unit number stack, MRT lines and expressways, and the move-in date picker.
 
-Facing suggested from imagery is a hint only; the user should confirm it on site.
+Facing suggested from imagery is a hint only; the user should confirm it on site. The detailed home checklist for HDB, condo and landed homes, including where schools disagree, is in [Home checklist by property type](#home-checklist-by-property-type-hdb-condo-landed) under Module 2.
+
+### Quick check: home facing and Kua for one or two people (Phase 1, offline)
+
+A fast way to answer "does this HDB flat or house suit me and my partner?" before any maps or AI features. It runs fully on the phone and stores nothing beyond the local profiles. The fuller checks for HDB, condo and landed homes, including layout, surroundings, buying-stage questions and renovation tips, are in [Home checklist by property type](#home-checklist-by-property-type-hdb-condo-landed) in Module 2.
+
+**Step 1: property type, completion year and facing.** The app asks for the property type (HDB, condo or landed) and the completion or TOP year. For an HDB resale flat, the lease commencement date is close enough. The engine uses that year to set the Flying Star period: Period 8 if the building was completed from Li Chun 2004 to just before Li Chun 2024; Period 9 from Li Chun (about 4 February) 2024 onwards. The year flips at Li Chun, not on 1 January.
+
+It then asks which facing method to use: the main door, the balcony or living-room opening, or the block facing. For HDB it does not default to the main door; it asks the user, and if they are unsure it shows both. Then it asks: "Do you know which way this opening faces?"
+
+- **Yes, I know it.** Pick one of the eight directions (N, NE, E, SE, S, SW, W, NW) or type the degrees.
+- **No, work it out for me.** Open the direction calculator (below).
+
+**Step 2: direction calculator.** Gives a bearing in degrees, then converts it to a direction.
+
+- **Compass at the opening.** Stand inside at the chosen opening looking out, hold the phone flat and tap to read the bearing. The magnetic reading is converted to true north (Singapore's declination is near zero, but it is still applied). Tilt and magnetic interference warnings are shown, and the user is asked to take three readings, which are averaged.
+- **Map bearing (online, optional).** Drop a pin on the block and drag an arrow out of the chosen opening. The bearing of the arrow is calculated on the phone. A map tile is the only online call, made through the stateless proxy.
+- **Degrees to direction.** 337.5° to 22.5° is N, then every 45° (NE 22.5° to 67.5°, E 67.5° to 112.5°, and so on). The 24 Mountains sub-direction (15° each) is also stored for Flying Stars. A bearing within 3° of a boundary is flagged as a "line" facing and the user is asked to re-check.
+- The facing is the direction the opening looks **out** towards, not the direction a person faces when walking in.
+
+**Step 3: Kua calculator.** Uses birth date and gender from each saved profile, or a quick entry that is not saved.
+
+- Use the **solar year**: anyone born before the start of spring (Li Chun, about 4 February; exact date and time from the solar-term table) counts as the previous year.
+- Let `r = year mod 9`.
+  - Male: `k = (11 - r) mod 9`, and `0` becomes `9`.
+  - Female: `k = (r + 4) mod 9`, and `0` becomes `9`.
+  - Kua 5 becomes **2** for males and **8** for females.
+- Example checks:
+  - Female born 12 Mar 1992 gives Kua 7. This fixes the sample profile, which wrongly shows 1.
+  - Male born 1992 gives 8.
+  - Male born 2000 gives 9.
+  - Female born 2 Feb 1990 counts as 1989 and gives Kua 8.
+- East group is 1, 3, 4 and 9. West group is 2, 6, 7 and 8.
+- Four good directions (Sheng Qi, Tian Yi, Yan Nian, Fu Wei):
+
+| Kua | Good directions |
+| --- | --- |
+| 1 | SE, E, S, N |
+| 2 | NE, W, NW, SW |
+| 3 | S, N, SE, E |
+| 4 | N, S, E, SE |
+| 6 | W, NE, SW, NW |
+| 7 | NW, SW, NE, W |
+| 8 | SW, NW, W, NE |
+| 9 | E, SE, N, S |
+
+The other four directions are the bad ones (Huo Hai, Wu Gui, Liu Sha, Jue Ming).
+
+**Step 4: match the home to the people.**
+
+| Result | Meaning shown |
+| --- | --- |
+| Facing is good for both | Strong fit for the couple |
+| Good for one only | Suits that person; the app suggests bed and desk directions and cures for the other |
+| Bad for both | Weak fit; show cures and suggest checking other units |
+
+The app also shows which of the four good directions it is, for example "Sheng Qi, wealth" or "Tian Yi, health". In Phase 2 this result feeds into the full Flying Stars and surroundings score.
+
+**Acceptance criteria for the quick check**
+
+- The app asks for property type and the completion or TOP year, then about facing, before offering the calculator. Both facing paths end with a saved bearing and direction. Period 8 versus Period 9 is taken from Li Chun 2024.
+- The user picks the facing method (main door, balcony or living-room opening, or block). For HDB the app asks and does not default to the main door; if the user is unsure, both results are shown.
+- Facing is stored to the 24 Mountains (15° bands).
+- The Kua engine passes the example checks above, plus a test set of at least 20 birthdays (including Li Chun boundary days and births before 1950 and after 2030) matched against established calculators.
+- Compass readings show tilt and interference warnings, and line facings are flagged.
+- A couple result is shown for one or two people without needing a saved account. Quick-entry birthdates are not stored unless the user saves the profile.
 
 ### User stories
 
@@ -1414,7 +1575,7 @@ Steps 1 to 7 repeat as each feature phase is built. An iOS version is not part o
 
 1. **Phase 0: Foundations.** Temporary brand and name (Inkstone is the prototype name; the final name is still an open decision). Design system taken from `fengshui-ui-v3` and [DESIGN.md](DESIGN.md). Chart engine built and tested against known charts. Encrypted local storage and backup warning in place. No Play developer account and no hosted user database yet.
 
-2. **Phase 1: First version.** Local profile and BaZi chart, Kua directions, daily card calculated on the device, floor plan analyser with manual room marking, optional encrypted backup, basic subscription through Play Billing, and in-app data deletion. Closed test on Android, which is when the Play developer account should be opened.
+2. **Phase 1: First version.** Local profile and BaZi chart, Kua directions, the quick home-facing and Kua check for one or two people (facing question, direction calculator and Kua calculator), daily card calculated on the device, floor plan analyser with manual room marking, optional encrypted backup, basic subscription through Play Billing, and in-app data deletion. Closed test on Android, which is when the Play developer account should be opened.
 
 3. **Phase 2: Public launch features.** AI room detection and write-ups through the stateless proxy, monthly and yearly forecasts, compatibility, Ask the Master, and local notifications for clash days and solar terms.
 
