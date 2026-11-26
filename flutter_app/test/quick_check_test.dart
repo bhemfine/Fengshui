@@ -79,7 +79,7 @@ void main() {
     }
     // First item in "All homes" is the shape question (flag on "No").
     final list = find.byType(Scrollable).first;
-    await tester.scrollUntilVisible(find.text('No').first, 200, scrollable: list);
+    await tester.scrollUntilVisible(find.text('No'), 200, scrollable: list);
     await tester.tap(find.text('No').first);
     await tester.pump();
     expect(find.text('Flagged issues · 1'), findsOneWidget);
