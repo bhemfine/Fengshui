@@ -68,6 +68,7 @@ class _ListingImportScreenState extends State<ListingImportScreen> {
   bool _planBusy = false;
   SavedPlan? _saved;
   bool _showPlans = false;
+  String? _locFrom;
 
   @override
   void initState() {
@@ -169,7 +170,7 @@ class _ListingImportScreenState extends State<ListingImportScreen> {
         warn: true,
       );
     } else {
-      await _finish('Read the listing page on this phone.');
+      await _finish('Read the listing page on this phone (browser view).');
     }
   }
 
@@ -180,7 +181,9 @@ class _ListingImportScreenState extends State<ListingImportScreen> {
       _stage = _Stage.fetching;
     });
     final d = _current();
+    _locFrom = d.hasLocation ? 'from the listing page' : null;
     final g = await geocodeListing(d, _search);
+    if (_locFrom == null && g.hasLocation) _locFrom = 'from the map search';
     if (!mounted) return;
     setState(() {
       _d = g;
@@ -393,7 +396,7 @@ class _ListingImportScreenState extends State<ListingImportScreen> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(width: 110, child: _field('Block', _block, 'li-block', from: _from('block'))),
+                    SizedBox(width: 130, child: _field('Block', _block, 'li-block', from: _from('block'))),
                     const SizedBox(width: 8),
                     Expanded(child: _field('Street', _street, 'li-street', from: _from('street'))),
                   ],
@@ -437,7 +440,7 @@ class _ListingImportScreenState extends State<ListingImportScreen> {
                 const SizedBox(height: 12),
                 Text(
                   d.hasLocation
-                      ? 'Location found: ${d.lat!.toStringAsFixed(5)}, ${d.lng!.toStringAsFixed(5)}'
+                      ? 'Location found${_locFrom != null ? ' $_locFrom' : ''}: ${d.lat!.toStringAsFixed(5)}, ${d.lng!.toStringAsFixed(5)}'
                       : (busy ? 'Finding it on the map…' : 'Not found on the map yet. Search for it on the map.'),
                   style: InkText.body(size: 14, color: d.hasLocation ? AppColors.good : AppColors.ivory2),
                 ),
