@@ -80,8 +80,11 @@ void main() {
     // First item in "All homes" is the shape question (flag on "No").
     final list = find.byType(Scrollable).first;
     await tester.scrollUntilVisible(find.text('No'), 200, scrollable: list);
+    await tester.ensureVisible(find.text('No').first);
+    await tester.pump();
     await tester.tap(find.text('No').first);
     await tester.pump();
+    await tester.scrollUntilVisible(find.textContaining('Flagged issues'), -200, scrollable: list);
     expect(find.text('Flagged issues · 1'), findsOneWidget);
     final saved = (await tester.runAsync(() => LocalStore.instance.loadAnswers(PropertyType.hdb)))!;
     expect(saved['shape_regular'], Answer.no);
