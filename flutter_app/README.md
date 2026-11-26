@@ -8,4 +8,4 @@ Skeleton of the Ultimate Feng Shui app in the approved B3 look (midnight + champ
 - Structure: `lib/theme` (tokens), `lib/motion` (durations, reduced-motion helper), `lib/widgets` (starfield, buttons, cards, tarot deck, HDB scan, score ring, star burst, transitions…), `lib/screens` (21 screens), `lib/router.dart`, `API.md` (widget reference).
 - Reduced motion: every animation checks `MediaQuery.disableAnimationsOf` ("Remove animations" on Android).
 - Next phases (see PLAN.md): plug in `../engine` as a path dependency, load `../content/*.json` as assets, add encrypted local DB (drift + SQLCipher, key in Android Keystore), proxy calls, Play Billing.
-- Known: the sample profile says "Kua 1" for Mei Lin (female, 12 Mar 1992); the engine's standard formula gives Kua 7. Fix the sample data once the engine is wired in.
+- Example people: Chua Boon Eng (main user, Kua 1) and Chou Jiahui Victoria (partner, Kua 6); their Kua, BaZi and verdicts come from the engine.

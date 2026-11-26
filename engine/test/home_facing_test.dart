@@ -77,7 +77,7 @@ void main() {
     final wei = kuaResultFor(2); // good NE W NW SW
     final east = kuaResultFor(1); // good SE E S N
     test('good for both', () {
-      final m = matchFacing(Direction.nw, [('Mei Lin', mei), ('Wei Hao', wei)]);
+      final m = matchFacing(Direction.nw, [('A', mei), ('B', wei)]);
       expect(m.fit, FacingFit.goodForAll);
       expect(m.people.first.info.key, 'sheng_qi');
     });
@@ -87,7 +87,7 @@ void main() {
       expect(m.verdict, contains('A'));
     });
     test('good for neither', () {
-      final m = matchFacing(Direction.se, [('Mei Lin', mei), ('Wei Hao', wei)]);
+      final m = matchFacing(Direction.se, [('A', mei), ('B', wei)]);
       expect(m.fit, FacingFit.goodForNone);
     });
     test('single person', () {

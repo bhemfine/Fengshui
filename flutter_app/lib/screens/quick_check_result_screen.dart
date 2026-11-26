@@ -28,6 +28,14 @@ class QuickCheckResultScreen extends StatelessWidget {
       example: q.example,
       fallbackRoute: Routes.quickCheck,
       children: [
+        if (q.home != null && !q.home!.isEmpty)
+          InkstoneCard(
+            title: 'The home',
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(q.home!.summary, style: InkText.body()),
+              if (q.home!.source != null) Text('From ${q.home!.source}', style: InkText.small),
+            ]),
+          ),
         InkstoneCard(
           title: '${propertyLabel[q.type]} · Period ${period.period}',
           source: SourceBadge.calculated,

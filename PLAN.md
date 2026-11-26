@@ -392,6 +392,19 @@ Drop a pin or paste a listing address and get a feng shui score for the home and
 
 Facing suggested from imagery is a hint only; the user should confirm it on site. The detailed home checklist for HDB, condo and landed homes, including where schools disagree, is in [Home checklist by property type](#home-checklist-by-property-type-hdb-condo-landed) under Module 2.
 
+### Listing link import: PropertyGuru, 99.co and HDB Flat Portal (Phase 1, on the phone)
+
+Paste a listing link in the House tab or the quick check, or share it to Inkstone from the site's app (Android share of a text link). The app fills in what the listing shows; the user checks every field and **always picks the facing themselves**.
+
+- **Links understood.** PropertyGuru `/listing/hdb-for-sale-<block>-<street>-<id>`, `/listing/for-sale-<project>-<id>`, `/listing/for-rent-…` and the short `/l/<id>` link (redirects are followed). 99.co `/singapore/<sale|rent>/property/<slug>-<hdb|condo|landed…>-<id>`. HDB Flat Portal `homes.hdb.gov.sg/home/resale/<id>`.
+- **Step 1, link only (offline, never blocked).** Site, listing id, sale or rent, HDB/condo/landed hint, block and street (or project name) from the slug. A short PropertyGuru link carries only the id until the page is read.
+- **Step 2, page read on the phone.** A plain HTTPS fetch from the phone (no proxy) parses JSON-LD (skipping the site's own Organization block, e.g. 99.co's office postal code), `__NEXT_DATA__`, og: tags and the 99.co label/value rows. If the site returns a bot check (Cloudflare 403 "Just a moment", typical for PropertyGuru) or the page is a JavaScript app (HDB Flat Portal), the app opens the page in a small visible WebView on the phone, reads the visible text, then clears cookies, cache and storage. If that is also blocked, it says so plainly and keeps only the link data; the user types the rest. It never pretends.
+- **Fields.** Address, postal code, block, street, project, property type, floor (exact storey from `#12-34`, the HDB storey range, or "High/Mid/Low"), unit, completion or TOP year (HDB: worked out from the remaining lease and marked approximate), latitude and longitude, floor plan image URLs, and the listing's own facing words as a **hint only**.
+- **Map.** Missing coordinates (and a missing postal code) come from the Nominatim address search. The map bearing screen opens centred on the block, with the listing's facing shown only as a hint.
+- **Floor plan.** Shown only when the user asks, downloaded only when they tap "Save as my home plan", kept in the app's private folder (backup off) and shown on Add your floor plan, where it can be confirmed, replaced or removed. HDB Flat Portal has no per-flat plan the app can fetch, so the user is asked to upload a photo or screenshot (Android photo picker, no storage permission).
+- **Privacy.** Agent and seller names, phone numbers, prices and descriptions are never stored; the description is scanned in memory only for the postal code, unit, floor words and facing hint. Nothing is logged. Only what the user saves (the floor plan) is kept.
+- **Pre-fill.** "Use in quick check" fills the property type, TOP year, address, postal code, floor and unit. The facing is never pre-filled. (The floor-element note from the Singapore specifics above is not built yet.)
+
 ### Quick check: home facing and Kua for one or two people (Phase 1, offline)
 
 A fast way to answer "does this HDB flat or house suit me and my partner?" before any maps or AI features. It runs fully on the phone and stores nothing beyond the local profiles. The fuller checks for HDB, condo and landed homes, including layout, surroundings, buying-stage questions and renovation tips, are in [Home checklist by property type](#home-checklist-by-property-type-hdb-condo-landed) in Module 2.
@@ -418,7 +431,8 @@ It then asks which facing method to use: the main door, the balcony or living-ro
   - Female: `k = (r + 4) mod 9`, and `0` becomes `9`.
   - Kua 5 becomes **2** for males and **8** for females.
 - Example checks:
-  - Female born 12 Mar 1992 gives Kua 7. This fixes the sample profile, which wrongly shows 1.
+  - Female born 12 Mar 1992 gives Kua 7.
+  - Example couple: Chua Boon Eng, male, 26 Jun 1990, gives Kua 1 (East). Chou Jiahui Victoria, female, 28 Oct 1991, gives Kua 6 (West). They share no good direction.
   - Male born 1992 gives 8.
   - Male born 2000 gives 9.
   - Female born 2 Feb 1990 counts as solar year 1989 and gives Kua 4. (A female born after Li Chun 1990 gives Kua 8.)

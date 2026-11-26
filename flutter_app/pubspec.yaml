@@ -22,12 +22,15 @@ dependencies:
   http: ^1.6.0
   # Small on-device key/value store (checklist answers only; never synced).
   shared_preferences: ^2.5.6
+  # Listing import: renders listing pages that need JavaScript, on the phone only.
+  webview_flutter: ^4.14.1
+  # Saved home floor plan (app documents folder, never synced).
+  path_provider: ^2.1.6
+  # Upload your own floor plan (Android photo picker, no storage permission).
+  image_picker: ^1.2.4
   # TODO(phase-2): local encrypted storage
   # drift: ^2.22.0
   # sqlcipher_flutter_libs: ^0.6.4
-  # path_provider: ^2.1.5
-  # TODO(phase-3): camera / image picking for floor plans and palms
-  # image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:

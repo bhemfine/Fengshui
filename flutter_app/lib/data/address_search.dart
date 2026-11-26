@@ -4,8 +4,11 @@ import 'package:http/http.dart' as http;
 
 /// One address search hit.
 class AddressHit {
-  const AddressHit(this.label, this.lat, this.lon, {this.approximate = false});
+  const AddressHit(this.label, this.lat, this.lon, {this.approximate = false, this.postcode});
   final String label;
+
+  /// Six-digit postal code when the search result has one.
+  final String? postcode;
   final double lat;
   final double lon;
 
@@ -39,6 +42,7 @@ class AddressSearch {
       'countrycodes': 'sg',
       'format': 'jsonv2',
       'limit': '5',
+      'addressdetails': '1',
     });
     final r = await _client
         .get(uri, headers: {'User-Agent': userAgent, 'Accept-Language': 'en'})
@@ -59,6 +63,13 @@ List<AddressHit> parseNominatim(String body) {
         approximate: const {'postcode', 'road', 'residential', 'suburb', 'quarter', 'city'}
                 .contains(x['addresstype']) ||
             x['type'] == 'postcode',
+        postcode: _postcode(x['address']),
       ),
   ];
+}
+
+String? _postcode(Object? address) {
+  if (address is! Map) return null;
+  final p = address['postcode'];
+  return p is String && RegExp(r'^\d{6}$').hasMatch(p) ? p : null;
 }

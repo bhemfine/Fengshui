@@ -6,6 +6,8 @@ import 'package:inkstone_engine/inkstone_engine.dart';
 import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/quick_check.dart';
 import 'package:inkstone/router.dart';
+import 'package:inkstone/screens/listing_import_screen.dart' show ListingImportArgs;
+import 'package:inkstone/screens/map_bearing_screen.dart' show MapBearingArgs;
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
 import 'package:inkstone/widgets/widgets.dart';
@@ -13,7 +15,10 @@ import 'package:inkstone/widgets/widgets.dart';
 /// Quick check: property type, completion year, facing method, facing, people.
 /// Runs fully offline; quick-entry birthdays stay in memory only.
 class QuickCheckScreen extends StatefulWidget {
-  const QuickCheckScreen({super.key});
+  const QuickCheckScreen({super.key, this.prefill});
+
+  /// From a listing import. The facing is never pre-filled.
+  final QuickCheckPrefill? prefill;
   @override
   State<QuickCheckScreen> createState() => _QuickCheckScreenState();
 }
@@ -24,12 +29,66 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
   bool? _beforeLiChun;
   FacingMethod? _method;
   final Map<FacingMethod, double> _facings = {};
-  final Set<int> _picked = {};
+  // Boon Eng (main user) and Victoria (partner) are picked by default.
+  final Set<int> _picked = {0, 1};
   final List<KuaPerson> _quick = [];
+  final _address = TextEditingController();
+  final _postal = TextEditingController();
+  final _floor = TextEditingController();
+  final _unit = TextEditingController();
+  String? _facingHint;
+  String? _source;
+  double? _lat, _lng;
+  bool _yearApprox = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final p = widget.prefill;
+    if (p != null) _apply(p);
+  }
+
+  void _apply(QuickCheckPrefill p) {
+    if (p.type != null) _type = p.type;
+    if (p.completionYear != null) _year.text = '${p.completionYear}';
+    _yearApprox = p.completionApprox;
+    _beforeLiChun = null;
+    final h = p.home;
+    if (h != null) {
+      _address.text = h.address ?? _address.text;
+      _postal.text = h.postalCode ?? _postal.text;
+      _floor.text = h.floor ?? _floor.text;
+      _unit.text = h.unit ?? _unit.text;
+      _lat = h.lat;
+      _lng = h.lng;
+      _source = h.source;
+    }
+    _facingHint = p.facingHint;
+    if (_type == PropertyType.landed && _method == FacingMethod.block) _method = null;
+  }
+
+  Future<void> _importListing() async {
+    final p = await context.push<QuickCheckPrefill>(Routes.listingImport, extra: const ListingImportArgs(returnResult: true));
+    if (p != null && mounted) setState(() => _apply(p));
+  }
+
+  HomeDetails get _home => HomeDetails(
+        address: _address.text.trim().isEmpty ? null : _address.text.trim(),
+        postalCode: _postal.text.trim().isEmpty ? null : _postal.text.trim(),
+        floor: _floor.text.trim().isEmpty ? null : _floor.text.trim(),
+        unit: _unit.text.trim().isEmpty ? null : _unit.text.trim(),
+        lat: _lat,
+        lng: _lng,
+        source: _source,
+      );
 
   @override
   void dispose() {
     _year.dispose();
+    _address.dispose();
+    _postal.dispose();
+    _floor.dispose();
+    _unit.dispose();
     super.dispose();
   }
 
@@ -62,6 +121,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
       method: _method!,
       facings: {for (final m in methodsToRead(_method!)) m: _facings[m]!},
       people: _people,
+      home: _home.isEmpty ? null : _home,
     );
     context.push(Routes.quickCheckResult, extra: input);
   }
@@ -92,6 +152,18 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
         Text('Does this home suit me and my partner?', style: InkText.h1),
         const SizedBox(height: 6),
         Text('Works offline. Nothing here leaves your phone.', style: InkText.small),
+        const SizedBox(height: 10),
+        GhostButton(
+          key: const Key('qc-import'),
+          label: 'Paste a listing link',
+          icon: Icons.link,
+          onPressed: _importListing,
+        ),
+        if (_source != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text('Filled in from $_source. Check each field.', style: InkText.body(size: 14, color: AppColors.gold2)),
+          ),
 
         const SectionHeader(title: '1 · The home'),
         FieldBlock(
@@ -120,6 +192,12 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
             onChanged: (_) => setState(() => _beforeLiChun = null),
           ),
         ),
+        if (_yearApprox)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text('Worked out from the remaining lease, so it may be a year out. Check the TOP year.',
+                style: InkText.body(size: 14, color: AppColors.care)),
+          ),
         if (_needsLiChun)
           FieldBlock(
             label: 'Was it completed before Li Chun 立春 (about 4 February $y)?',
@@ -135,6 +213,49 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
             padding: const EdgeInsets.only(top: 8),
             child: Text('Period ${period.period} building', style: InkText.body(color: AppColors.gold2)),
           ),
+
+        FieldBlock(
+          label: 'Address (optional)',
+          child: TextField(
+            key: const Key('qc-address'),
+            controller: _address,
+            style: InkText.body(size: 15),
+            decoration: const InputDecoration(hintText: 'Block and street, or project'),
+          ),
+        ),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(
+            child: FieldBlock(
+              label: 'Postal code',
+              child: TextField(
+                key: const Key('qc-postal'),
+                controller: _postal,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(6)],
+                style: InkText.body(size: 15),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: FieldBlock(
+              label: 'Floor',
+              child: TextField(key: const Key('qc-floor'), controller: _floor, style: InkText.body(size: 15)),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: FieldBlock(
+              label: 'Unit',
+              child: TextField(
+                key: const Key('qc-unit'),
+                controller: _unit,
+                style: InkText.body(size: 15),
+                decoration: const InputDecoration(hintText: '#12-34'),
+              ),
+            ),
+          ),
+        ]),
 
         const SectionHeader(title: '2 · Facing method'),
         Text(
@@ -159,6 +280,9 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
               key: ValueKey('picker-${m.name}'),
               title: facingMethodLabel[m]!,
               value: _facings[m],
+              hint: _facingHint,
+              mapCenter: _lat != null && _lng != null ? (_lat!, _lng!) : null,
+              mapQuery: _postal.text.trim().isNotEmpty ? _postal.text.trim() : _address.text.trim(),
               onChanged: (d) => setState(() => d == null ? _facings.remove(m) : _facings[m] = d),
             ),
         ],
@@ -212,9 +336,22 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
 
 /// "Do you know which way it faces?" Yes: 8 directions or degrees. No: calculator.
 class _FacingPicker extends StatefulWidget {
-  const _FacingPicker({super.key, required this.title, required this.value, required this.onChanged});
+  const _FacingPicker({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.onChanged,
+    this.hint,
+    this.mapCenter,
+    this.mapQuery,
+  });
   final String title;
   final double? value;
+
+  /// What a listing says. Shown only; never selected for the user.
+  final String? hint;
+  final (double, double)? mapCenter;
+  final String? mapQuery;
   final ValueChanged<double?> onChanged;
 
   @override
@@ -238,6 +375,12 @@ class _FacingPickerState extends State<_FacingPicker> {
     return InkstoneCard(
       title: widget.title,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        if (widget.hint != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text('Listing says ${widget.hint}. Hint only: agents are often rough. Check it yourself.',
+                style: InkText.body(size: 14, color: AppColors.ivory2)),
+          ),
         Text('Do you know which way this opening faces?', style: InkText.body()),
         const SizedBox(height: 8),
         ChoicePills<bool>(
@@ -279,6 +422,19 @@ class _FacingPickerState extends State<_FacingPicker> {
               if (d != null) widget.onChanged(d);
             },
           ),
+          if (widget.mapCenter != null) ...[
+            const SizedBox(height: 8),
+            GhostButton(
+              label: 'Pick it on the map (centred on this home)',
+              icon: Icons.map_outlined,
+              onPressed: () async {
+                final c = widget.mapCenter!;
+                final d = await context.push<double>(Routes.mapBearing,
+                    extra: MapBearingArgs(lat: c.$1, lng: c.$2, query: widget.mapQuery, facingHint: widget.hint));
+                if (d != null) widget.onChanged(d);
+              },
+            ),
+          ],
         ],
         if (reading != null) ...[
           const SizedBox(height: 12),

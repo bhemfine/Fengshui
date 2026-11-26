@@ -37,4 +37,20 @@ void main() {
     expect(c.hour, isNull);
     expect(c.elementCounts.values.fold<int>(0, (a, b) => a + b), 6);
   });
+
+  test('luck pillars: male 26 Jun 1990 (yang Geng year) runs forward from Ren Wu', () {
+    final birth = DateTime(1990, 6, 26, 12);
+    final c = computeBazi(birthLocal: birth, utcOffsetHours: 8, hourKnown: false);
+    expect(c.year.chinese, '庚午');
+    expect(c.month.chinese, '壬午');
+    expect(c.day.chinese, '壬戌');
+    final l = luckPillarsFor(chart: c, birthUtc: DateTime.utc(1990, 6, 26, 4), gender: Gender.male, count: 3);
+    expect(l.map((p) => p.pillar.chinese), ['癸未', '甲申', '乙酉']);
+    expect(l.first.startAge, 4); // Xiao Shu ~7 Jul 1990: ~11 days / 3
+  });
+  test('luck pillars: female yang year runs backward', () {
+    final c = computeBazi(birthLocal: DateTime(1990, 6, 26, 12), utcOffsetHours: 8, hourKnown: false);
+    final l = luckPillarsFor(chart: c, birthUtc: DateTime.utc(1990, 6, 26, 4), gender: Gender.female, count: 2);
+    expect(l.map((p) => p.pillar.chinese), ['辛巳', '庚辰']);
+  });
 }

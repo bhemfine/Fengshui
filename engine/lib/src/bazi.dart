@@ -127,3 +127,34 @@ BaziChart computeBazi({
     utcOffsetHours: utcOffsetHours,
   );
 }
+
+/// One ten-year luck pillar (大运 Da Yun) starting at [startAge] (approx., in years).
+class LuckPillarResult {
+  const LuckPillarResult(this.startAge, this.pillar);
+  final int startAge;
+  final Pillar pillar;
+}
+
+/// Ten-year luck pillars. Forward for a yang-year male or yin-year female,
+/// backward otherwise. Start age = days to the next (or previous) jie 节 term / 3.
+List<LuckPillarResult> luckPillarsFor({
+  required BaziChart chart,
+  required DateTime birthUtc,
+  required Gender gender,
+  int count = 8,
+}) {
+  final forward = chart.year.stem.isYang == (gender == Gender.male);
+  final jie = <DateTime>[
+    for (var y = birthUtc.year - 1; y <= birthUtc.year + 1; y++)
+      for (var i = 0; i < 24; i += 2) solarTermUtc(y, i),
+  ]..sort();
+  final u = birthUtc.toUtc();
+  final DateTime edge = forward ? jie.firstWhere((t) => t.isAfter(u)) : jie.lastWhere((t) => !t.isAfter(u));
+  final days = (edge.difference(u).inMinutes.abs()) / 1440.0;
+  final start = (days / 3).round().clamp(1, 10);
+  final base = chart.month.cycleIndex;
+  return [
+    for (var i = 1; i <= count; i++)
+      LuckPillarResult(start + (i - 1) * 10, Pillar.fromCycleIndex(base + (forward ? i : -i))),
+  ];
+}

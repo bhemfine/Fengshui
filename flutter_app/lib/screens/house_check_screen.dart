@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:inkstone/data/example_charts.dart';
+import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/sample_data.dart';
+import 'package:inkstone_engine/inkstone_engine.dart' show directionAt, directionLong;
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -14,7 +17,8 @@ class HouseCheckScreen extends StatefulWidget {
 
 class _HouseCheckScreenState extends State<HouseCheckScreen> {
   final _a = TextEditingController(text: sampleHome.address);
-  final _f = TextEditingController(text: 'South-east · 142° (example)');
+  final _f = TextEditingController(
+      text: '${directionLong[directionAt(sampleHome.facingDegrees.toDouble())]} · ${sampleHome.facingDegrees}° (example)');
 
   @override
   void dispose() {
@@ -34,10 +38,14 @@ class _HouseCheckScreenState extends State<HouseCheckScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const reasons = [
-      "South-east door is Liu Sha (Six Killings) for Mei Lin's Kua 7 (example).",
+    final facing = directionAt(sampleHome.facingDegrees.toDouble());
+    final fits = [for (final p in [mainUser, partner]) homeFitFor(p, facing)];
+    final dirName = directionLong[facing]!;
+    final reasons = [
+      for (final f in fits)
+        '$dirName door is ${f.info.pinyin} (${f.info.english}) for ${shortName(f.person)}\'s Kua ${f.person.kua.kua}'
+            '${f.good ? '' : '; good directions are ${dirs(f.person.kua.lucky)}'} (example).',
       'Wealth star 8 sits by the door this period (example).',
-      "South-east is Wu Gui (Five Ghosts) for Wei Hao's Kua 2; his good directions are NE, W, NW, SW (example).",
     ];
     return InkstoneScaffold(
       title: 'House check',
@@ -51,19 +59,19 @@ class _HouseCheckScreenState extends State<HouseCheckScreen> {
           title: 'Couple fit',
           example: true,
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            for (final (i, s) in houseCheckScores.indexed) ...[
+            for (final (i, f) in fits.indexed) ...[
               SizedBox(height: i == 0 ? 6 : 8),
               Text.rich(TextSpan(children: [
-                TextSpan(text: '${s.$1} — ', style: InkText.body()),
+                TextSpan(text: '${shortName(f.person)} · Kua ${f.person.kua.kua} — ', style: InkText.body()),
                 TextSpan(
-                    text: s.$3 ? 'Good fit' : 'Take care',
-                    style: InkText.body(color: s.$3 ? AppColors.good : AppColors.care)),
+                    text: f.good ? 'Good fit' : 'Take care',
+                    style: InkText.body(color: f.good ? AppColors.good : AppColors.care)),
               ])),
               const SizedBox(height: 10),
-              ScoreBar(value: s.$2, color: s.$3 ? AppColors.good : AppColors.care),
+              ScoreBar(value: f.score, color: f.good ? AppColors.good : AppColors.care),
             ],
             const SizedBox(height: 6),
-            Text('Birth time unknown — hour-based checks left out.', style: InkText.small),
+            Text('Birth times unknown — hour-based checks left out. Scores rank the facing within each person\'s 8 directions.', style: InkText.small),
           ]),
         ),
         const SizedBox(height: 12),

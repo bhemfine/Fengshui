@@ -26,5 +26,12 @@ GitHub web upload takes max 100 files and 25 MB per file per upload, and keeps f
 
 ## Map bearing and example couple (Nov 2026)
 - `/map-bearing` (from Direction calculator → Map bearing): flutter_map with OneMap / OSM / Esri satellite tiles, Nominatim address search (keyless), north-up, pin + facing point → bearing (`engine/lib/src/geo.dart`). INTERNET permission added to the main manifest; no location permission.
-- Example profiles: Chua Boon Eng (26 Jun 1990, M, Kua 1 East) and Chou Jiahui Victoria (28 Oct 1991, F, Kua 6 West), plus Mei Lin and Wei Hao.
+- Example profiles: Chua Boon Eng (26 Jun 1990, M, Kua 1 East) and Chou Jiahui Victoria (28 Oct 1991, F, Kua 6 West).
 - Checked on the box (Flutter 3.50.1): `flutter analyze` 0 errors/warnings (52 info, material.dart deprecation), `flutter test` 61 pass, engine `dart test` 54 pass.
+
+## Listing link import and example couple only (Nov 2026)
+- Engine: `engine/lib/src/listing_import.dart` — `parseListingUrl` (PropertyGuru slug and `/l/<id>` short link, 99.co slug, HDB Flat Portal resale id), `parseListingHtml` (JSON-LD, `__NEXT_DATA__`, og:, 99.co rows and floor-plan items), `parseListingText` (rendered page text), `looksBlocked`. Fixtures in `engine/test/fixtures/listing/` are trimmed real pages with agent names, phone numbers, CEA numbers and descriptions removed. Also `luckPillarsFor` in `bazi.dart`.
+- App: `/listing-import` (House tab "Paste a listing link", quick check button, Android share of a text/plain link via `MainActivity` → `com.inkstone.app/share`). `lib/data/listing_fetch.dart` (plain fetch from the phone, follows redirects, block detection, Nominatim geocode), `lib/widgets/listing_render_view.dart` (visible WebView fallback; clears cookies, cache and storage after), `lib/data/home_plan_store.dart` (floor plan in the app documents folder). Quick check takes a `QuickCheckPrefill`; the facing is never pre-filled. `/map-bearing` takes `MapBearingArgs` (centre, search text, facing hint).
+- New packages: webview_flutter, path_provider, image_picker.
+- Examples: only Chua Boon Eng (main user) and Chou Jiahui Victoria (partner). BaZi, compatibility, house check and quick check verdicts are computed by the engine (`lib/data/example_charts.dart`).
+- Site status (tested Nov 2026): 99.co pages read with a plain fetch. PropertyGuru answers a plain fetch with a Cloudflare 403, including `/l/<id>` (no redirect is sent before the challenge), so the phone falls back to the WebView. HDB Flat Portal is a JavaScript app with no public JSON API found, so it always uses the WebView.

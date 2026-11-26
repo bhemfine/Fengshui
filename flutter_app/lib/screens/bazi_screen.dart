@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:inkstone/data/example_charts.dart';
+import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/sample_data.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
@@ -11,6 +13,11 @@ class BaziScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final me = mainUser;
+    final c = PersonChart(me);
+    final pillars = c.pillars;
+    final luck = c.luckPillars();
+    final k = me.kua;
     return InkstoneScaffold(
       title: 'Your BaZi',
       showBack: true,
@@ -24,16 +31,16 @@ class BaziScreen extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Term(english: 'BaZi', chinese: '八字', meaning: 'four pillars of destiny', style: InkText.small),
-            Text('for Mei Lin', style: InkText.small),
+            Text('for ${me.name}', style: InkText.small),
             const SourceBadge(label: SourceBadge.calculated),
           ],
         ),
         const SizedBox(height: 8),
         Row(
           children: [
-            for (var i = 0; i < sampleBaziPillars.length; i++) ...[
+            for (var i = 0; i < pillars.length; i++) ...[
               if (i > 0) const SizedBox(width: 6),
-              Expanded(child: _PillarCell(p: sampleBaziPillars[i])),
+              Expanded(child: _PillarCell(p: pillars[i])),
             ],
           ],
         ),
@@ -41,9 +48,9 @@ class BaziScreen extends StatelessWidget {
           child: Text.rich(TextSpan(children: [
             TextSpan(text: 'Day Master ', style: InkText.body(weight: FontWeight.w600)),
             TextSpan(text: '(日主 — your day element)', style: InkText.body(size: 14, color: AppColors.ivory2)),
-            TextSpan(text: ': Bing Fire', style: InkText.body(weight: FontWeight.w600)),
+            TextSpan(text: ': ${c.dayMaster}', style: InkText.body(weight: FontWeight.w600)),
             TextSpan(
-                text: ' — the element that stands for you. Like the sun: warm, visible, generous.',
+                text: ' — the element that stands for you. ${c.dayMasterImage}${me.timeKnown ? '' : ' Birth time unknown, so the hour pillar is left out.'}',
                 style: InkText.body(height: 1.5)),
           ])),
         ),
@@ -51,13 +58,13 @@ class BaziScreen extends StatelessWidget {
           title: 'Element balance',
           child: Column(
             children: [
-              for (final e in sampleElementBalance)
+              for (final e in c.elementBalance)
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: Row(children: [
                     SizedBox(width: 62, child: Text(e.$1, style: InkText.body(size: 15))),
                     const SizedBox(width: 8),
-                    Expanded(child: ScoreBar(value: e.$2, max: 5, color: AppColors.gold2, showNumber: false)),
+                    Expanded(child: ScoreBar(value: e.$2, max: 8, color: AppColors.gold2, showNumber: false)),
                     const SizedBox(width: 8),
                     SizedBox(width: 20, child: Text('${e.$2}', style: InkText.body(size: 15))),
                   ]),
@@ -71,9 +78,9 @@ class BaziScreen extends StatelessWidget {
             children: [
               Term(english: 'Kua number', chinese: '卦', meaning: 'your personal direction number', style: InkText.h2),
               const SizedBox(height: 6),
-              Text('Kua ${meiLin.kua} (example)', style: InkText.body()),
-              Text('Good: $kuaGoodDirections', style: InkText.body(color: AppColors.good)),
-              Text('Take care: $kuaCareDirections', style: InkText.body(color: AppColors.care)),
+              Text('Kua ${k.kua} · ${k.eastGroup ? 'East' : 'West'} group (example)', style: InkText.body()),
+              Text('Good: ${dirs(k.lucky)}', style: InkText.body(color: AppColors.good)),
+              Text('Take care: ${dirs(k.unlucky)}', style: InkText.body(color: AppColors.care)),
             ],
           ),
         ),
@@ -84,9 +91,9 @@ class BaziScreen extends StatelessWidget {
               Term(english: 'Luck pillars', chinese: '大运', meaning: 'ten-year phases', style: InkText.h2),
               const SizedBox(height: 8),
               Row(children: [
-                for (var i = 0; i < sampleLuckPillars.length; i++) ...[
+                for (var i = 0; i < luck.length; i++) ...[
                   if (i > 0) const SizedBox(width: 6),
-                  Expanded(child: _LuckCell(l: sampleLuckPillars[i])),
+                  Expanded(child: _LuckCell(l: luck[i])),
                 ],
               ]),
               const SizedBox(height: 6),

@@ -27,6 +27,8 @@ import 'screens/quick_check_result_screen.dart';
 import 'screens/direction_calculator_screen.dart';
 import 'screens/home_checklist_screen.dart';
 import 'screens/map_bearing_screen.dart';
+import 'screens/listing_import_screen.dart';
+import 'package:latlong2/latlong.dart';
 import 'data/quick_check.dart';
 import 'widgets/bottom_nav.dart';
 import 'widgets/transitions.dart';
@@ -59,6 +61,7 @@ abstract final class Routes {
   static const directionCalculator = '/direction-calculator';
   static const homeChecklist = '/home-checklist';
   static const mapBearing = '/map-bearing';
+  static const listingImport = '/listing-import';
 }
 
 GoRoute _r(String path, Widget child) => GoRoute(
@@ -85,7 +88,13 @@ final GoRouter appRouter = GoRouter(
           _r(Routes.floorResult, const FloorResultScreen()),
           _r(Routes.houseCheck, const HouseCheckScreen()),
           _r(Routes.shop, const ShopScreen()),
-          _r(Routes.quickCheck, const QuickCheckScreen()),
+          GoRoute(
+            path: Routes.quickCheck,
+            pageBuilder: (context, state) => fadeRisePage(
+              state: state,
+              child: QuickCheckScreen(prefill: state.extra is QuickCheckPrefill ? state.extra as QuickCheckPrefill : null),
+            ),
+          ),
           GoRoute(
             path: Routes.quickCheckResult,
             pageBuilder: (context, state) => fadeRisePage(
@@ -95,7 +104,28 @@ final GoRouter appRouter = GoRouter(
           ),
           _r(Routes.directionCalculator, const DirectionCalculatorScreen()),
           _r(Routes.homeChecklist, const HomeChecklistScreen()),
-          _r(Routes.mapBearing, const MapBearingScreen()),
+          GoRoute(
+            path: Routes.mapBearing,
+            pageBuilder: (context, state) {
+              final a = state.extra is MapBearingArgs ? state.extra as MapBearingArgs : null;
+              return fadeRisePage(
+                state: state,
+                child: MapBearingScreen(
+                  initialCenter: a?.lat != null && a?.lng != null ? LatLng(a!.lat!, a.lng!) : null,
+                  initialQuery: a?.query,
+                  facingHint: a?.facingHint,
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            path: Routes.listingImport,
+            pageBuilder: (context, state) => fadeRisePage(
+              state: state,
+              child: ListingImportScreen(
+                  args: state.extra is ListingImportArgs ? state.extra as ListingImportArgs : const ListingImportArgs()),
+            ),
+          ),
         ]),
         StatefulShellBranch(routes: [
           _r(Routes.readings, const ReadingsScreen()),

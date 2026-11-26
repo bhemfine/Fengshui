@@ -6,7 +6,7 @@ void main() {
       computeKua(DateTime(y, m, d, h, min), g).kua;
 
   group('PLAN.md example checks', () {
-    test('female 12 Mar 1992 = 7 (sample profile Mei Lin)', () {
+    test('female 12 Mar 1992 = 7', () {
       expect(k(1992, 3, 12, Gender.female, h: 8, min: 15), 7);
     });
     test('male 1992 = 8', () => expect(k(1992, 6, 1, Gender.male), 8));
@@ -100,8 +100,8 @@ void main() {
     expect(r.eastGroup, isFalse);
     expect(r.lucky.first.direction, Direction.sw);
     expect(r.unlucky.length, 4);
-    final meiLin = kuaResultFor(7);
-    expect(meiLin.lucky.map((d) => d.direction), [
+    final kua7 = kuaResultFor(7);
+    expect(kua7.lucky.map((d) => d.direction), [
       Direction.nw,
       Direction.sw,
       Direction.ne,

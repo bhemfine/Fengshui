@@ -10,11 +10,29 @@ import 'package:latlong2/latlong.dart';
 
 enum _Layer { oneMap, osm, satellite }
 
+/// Optional start point for the map (from an imported listing).
+class MapBearingArgs {
+  const MapBearingArgs({this.lat, this.lng, this.query, this.facingHint});
+  final double? lat;
+  final double? lng;
+  final String? query;
+  final String? facingHint;
+}
+
 /// Map bearing: drop a pin on the door or opening, then tap the way it faces.
 /// The bearing is worked out on the phone. Tiles and address search are the
 /// only network calls; nothing is stored. Pops with the bearing in degrees.
 class MapBearingScreen extends StatefulWidget {
-  const MapBearingScreen({super.key});
+  const MapBearingScreen({super.key, this.initialCenter, this.initialQuery, this.facingHint});
+
+  /// Where to centre the map (e.g. the block from an imported listing).
+  final LatLng? initialCenter;
+
+  /// Pre-filled search text (address or postal code).
+  final String? initialQuery;
+
+  /// What a listing says the home faces. Shown as a hint only.
+  final String? facingHint;
 
   /// Widget tests turn tiles off (no network in tests).
   static bool tilesEnabled = true;
@@ -28,7 +46,7 @@ class _MapBearingScreenState extends State<MapBearingScreen> {
   static const _userAgentPackage = 'com.inkstone.app';
 
   final _map = MapController();
-  final _query = TextEditingController();
+  late final _query = TextEditingController(text: widget.initialQuery ?? '');
   final _search = AddressSearch();
   _Layer _layer = _Layer.oneMap;
   LatLng? _pin;
@@ -190,6 +208,12 @@ class _MapBearingScreenState extends State<MapBearingScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Text(_searchError!, style: InkText.body(size: 14, color: AppColors.care)),
             ),
+          if (widget.facingHint != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: Text('Listing says ${widget.facingHint}. Hint only: tap the real door and direction yourself.',
+                  style: InkText.body(size: 14, color: AppColors.ivory2)),
+            ),
           for (final h in _hits)
             ListTile(
               dense: true,
@@ -210,8 +234,8 @@ class _MapBearingScreenState extends State<MapBearingScreen> {
               FlutterMap(
                 mapController: _map,
                 options: MapOptions(
-                  initialCenter: _singapore,
-                  initialZoom: 11.5,
+                  initialCenter: widget.initialCenter ?? _singapore,
+                  initialZoom: widget.initialCenter != null ? 18.5 : 11.5,
                   minZoom: 10,
                   maxZoom: 20,
                   backgroundColor: AppColors.ink2,

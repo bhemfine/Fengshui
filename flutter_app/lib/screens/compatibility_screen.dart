@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inkstone/data/sample_data.dart';
+import 'package:inkstone/data/example_charts.dart';
+import 'package:inkstone/data/household.dart';
+import 'package:inkstone_engine/inkstone_engine.dart' show directionShort, sharedGoodDirections;
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -10,6 +12,11 @@ class CompatibilityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final a = PersonChart(mainUser), b = PersonChart(partner);
+    final (verdict, line, score, good) = dayMasterFit(a, b);
+    final ka = mainUser.kua, kb = partner.kua;
+    final shared = sharedGoodDirections([ka, kb]);
+    final unknown = [for (final p in [mainUser, partner]) if (!p.timeKnown) shortName(p)];
     Widget list(String title, Color c, List<String> items) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,18 +37,18 @@ class CompatibilityScreen extends StatelessWidget {
           spacing: 8,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            Text('${meiLin.name} and ${weiHao.name}', style: InkText.small),
+            Text('${mainUser.name} and ${partner.name}', style: InkText.small),
             const SourceBadge(label: SourceBadge.calculated),
           ],
         ),
         InkstoneCard(
           child: Row(children: [
-            const ScoreRing(value: compatibilityScore),
+            ScoreRing(value: score),
             const SizedBox(width: 16),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('Good fit', style: InkText.body(weight: FontWeight.w600, color: AppColors.good)),
-                Text('Fire meets Earth: he steadies, she warms.', style: InkText.body(height: 1.5)),
+                Text(verdict, style: InkText.body(weight: FontWeight.w600, color: good ? AppColors.good : AppColors.care)),
+                Text('Day Masters ${a.dayMaster} and ${b.dayMaster}. $line', style: InkText.body(height: 1.5)),
               ]),
             ),
           ]),
@@ -54,8 +61,27 @@ class CompatibilityScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(14),
             border: Border.all(color: AppColors.care.withValues(alpha: 0.45)),
           ),
-          child: Text("Wei Hao's birth time is unknown. Hour-based results are unavailable.",
+          child: Text(
+              unknown.isEmpty
+                  ? 'Both birth times are known.'
+                  : '${unknown.join(' and ')}${unknown.length > 1 ? "'s birth times are" : "'s birth time is"} unknown. Hour-based results are unavailable.',
               style: InkText.body(size: 15)),
+        ),
+        InkstoneCard(
+          title: 'Home directions (Kua)',
+          source: SourceBadge.calculated,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('${shortName(mainUser)}: Kua ${ka.kua}, ${ka.eastGroup ? 'East' : 'West'} group · good ${dirs(ka.lucky)}',
+                style: InkText.body(size: 15, height: 1.5)),
+            Text('${shortName(partner)}: Kua ${kb.kua}, ${kb.eastGroup ? 'East' : 'West'} group · good ${dirs(kb.lucky)}',
+                style: InkText.body(size: 15, height: 1.5)),
+            const SizedBox(height: 6),
+            Text(
+                shared.isEmpty
+                    ? 'No shared good direction: a mixed couple. Pick the facing for the main earner and set beds and desks to each person\'s own good directions.'
+                    : 'Shared good directions: ${shared.map((d) => directionShort[d]).join(', ')}.',
+                style: InkText.body(size: 15, color: shared.isEmpty ? AppColors.care : AppColors.good, height: 1.5)),
+          ]),
         ),
         InkstoneCard(
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [

@@ -150,23 +150,6 @@ class PrescriptionStep {
 
 // ---- Household ----
 
-const meiLin = Person(
-  name: 'Mei Lin',
-  birthLabel: '12 Mar 1992, 08:15',
-  place: 'Singapore (example) · UTC+8',
-  gender: 'Female',
-  // Female, solar year 1992: (1992 % 9 + 4) % 9 = 7. Checked by test/kua_sample_test.dart.
-  kua: 7,
-);
-
-const weiHao = Person(
-  name: 'Wei Hao',
-  birthLabel: '3 Aug 1989',
-  place: 'Singapore (example)',
-  gender: 'Male',
-  birthTimeKnown: false,
-);
-
 const sampleHome = HomeInfo(
   type: '4-room HDB',
   town: 'Tampines',
@@ -253,37 +236,11 @@ const samplePlacementTips = <PlacementTip>[
   PlacementTip(room: 'Entrance', text: 'keep it lit and clear.', good: true),
 ];
 
-const houseCheckScores = <(String, int, bool)>[
-  ('Mei Lin', 58, false),
-  ('Wei Hao', 54, false),
-];
-
-const compatibilityScore = 76;
 
 // ---- BaZi ----
 
-const sampleBaziPillars = <Pillar>[
-  Pillar(label: 'Year', stem: '壬', branch: '申', element: 'Water'),
-  Pillar(label: 'Month', stem: '癸', branch: '卯', element: 'Wood'),
-  Pillar(label: 'You', stem: '丙', branch: '午', element: 'Fire', isSelf: true),
-  Pillar(label: 'Hour', stem: '壬', branch: '辰', element: 'Earth'),
-];
 
-const sampleElementBalance = <(String, int)>[
-  ('Wood', 2), ('Fire', 2), ('Earth', 1), ('Metal', 1), ('Water', 3),
-];
 
-const sampleLuckPillars = <LuckPillar>[
-  LuckPillar(age: 2, chinese: '甲辰'),
-  LuckPillar(age: 12, chinese: '乙巳'),
-  LuckPillar(age: 22, chinese: '丙午'),
-  LuckPillar(age: 32, chinese: '丁未', current: true),
-  LuckPillar(age: 42, chinese: '戊申'),
-];
-
-// Mei Lin, Kua 7 (West group).
-const kuaGoodDirections = 'NW, SW, NE, W';
-const kuaCareDirections = 'N, S, SE, E';
 
 // ---- Masters & booking ----
 

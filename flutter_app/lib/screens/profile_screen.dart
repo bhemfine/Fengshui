@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:inkstone/data/sample_data.dart';
+import 'package:inkstone/data/household.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -60,14 +60,14 @@ class ProfileScreen extends StatelessWidget {
         InkstoneCard(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Wrap(spacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
-              Text(meiLin.name, style: InkText.body(weight: FontWeight.w600)),
+              Text(mainUser.name, style: InkText.body(weight: FontWeight.w600)),
               const ExampleBadge(),
             ]),
-            Text('12 Mar 1992, 08:15 · Singapore · ${meiLin.gender}', style: InkText.small),
+            Text('${birthLabel(mainUser)} · Singapore · ${genderLabel(mainUser.gender)} · Kua ${mainUser.kua.kua}${mainUser.timeKnown ? '' : ' · birth time unknown'}', style: InkText.small),
             LinkButton(label: 'Edit birth details', center: false, onPressed: () => context.go(Routes.birth)),
           ]),
         ),
-        nav('Family', 'Wei Hao — birth time unknown',
+        nav('Family', '${partner.name} — partner, Kua ${partner.kua.kua}',
             () => showInkSnack(context, 'Family details are example only')),
         nav('Bookings', 'Tue 24 Nov with Master Tan', () => context.go(Routes.bookingConfirm)),
         nav('Prescription', 'View example prescription', () => context.go(Routes.prescription)),

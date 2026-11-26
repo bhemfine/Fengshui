@@ -130,7 +130,7 @@ Reuse the Option B3 single-card draw: seven stacked backs, a shuffle orbit (~1.9
 
 ### 6.9 Scores
 
-House check: Mei Lin 82 (mint bar), Wei Hao 54 (apricot bar), count-up 480ms. Compatibility: 76 in a mint ring (`#cring` stroke-dashoffset from 264). Instant values when reduced motion is on.
+House check: one bar per person (Boon Eng, Victoria), scored by the engine from the facing's rank in each person's 8 directions, count-up 480ms. Compatibility: 76 in a mint ring (`#cring` stroke-dashoffset from 264). Instant values when reduced motion is on.
 
 ### 6.10 Master card and booking tracker
 
@@ -174,7 +174,7 @@ Honour `prefers-reduced-motion: reduce`. Disable or snap: starfield shooting sta
 
 welcome, birth, today, monthly, yearly, floor-upload, floor-result, house-check, readings, tarot, palm, bazi, compatibility, shop, masters, master-profile, booking-pending, booking-confirm, prescription, profile, paywall.
 
-Sample household (all Example): Mei Lin, 12 Mar 1992 08:15 Singapore, Female, Kua 1. Partner Wei Hao, 3 Aug 1989, birth time unknown. Home: 4-room HDB Tampines, faces SE 142°, Period 8, completed 2012. “Today” is Monday 23 November 2026, Singapore time (UTC+8). Booking: Tue 24 Nov 2026, 7:30–8:15pm SGT, 45 min video, S$88 authorised not charged.
+Sample household (all Example): main user Chua Boon Eng, 26 Jun 1990, Male, Kua 1 (East), birth time unknown. Partner Chou Jiahui Victoria, 28 Oct 1991, Female, Kua 6 (West), birth time unknown. Home: 4-room HDB Tampines, faces SE 142°, Period 8, completed 2012. “Today” is Monday 23 November 2026, Singapore time (UTC+8). Booking: Tue 24 Nov 2026, 7:30–8:15pm SGT, 45 min video, S$88 authorised not charged.
 
 ## 9. Flutter mapping notes
 

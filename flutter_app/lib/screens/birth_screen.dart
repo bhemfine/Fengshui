@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:inkstone/data/sample_data.dart';
+import 'package:inkstone/data/household.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -13,12 +13,12 @@ class BirthScreen extends StatefulWidget {
 }
 
 class _BirthScreenState extends State<BirthScreen> {
-  final _name = TextEditingController(text: meiLin.name);
-  final _date = TextEditingController(text: '12 Mar 1992');
-  final _time = TextEditingController(text: '08:15');
-  final _place = TextEditingController(text: meiLin.place);
-  String _gender = 'Female';
-  bool _unknown = false;
+  final _name = TextEditingController(text: mainUser.name);
+  final _date = TextEditingController(text: birthLabel(mainUser));
+  final _time = TextEditingController(text: mainUser.timeKnown ? '${mainUser.birth.hour.toString().padLeft(2, '0')}:${mainUser.birth.minute.toString().padLeft(2, '0')}' : '');
+  final _place = TextEditingController(text: 'Singapore (example) · UTC+8');
+  String _gender = genderLabel(mainUser.gender);
+  bool _unknown = !mainUser.timeKnown;
 
   @override
   void dispose() {
