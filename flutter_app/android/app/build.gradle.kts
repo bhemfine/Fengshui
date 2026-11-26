@@ -6,6 +6,12 @@ plugins {
 
 android {
     namespace = "com.inkstone.app"
+
+    // Release lint crashes on the PC's JDK 17 inside a plugin (image_picker's
+    // ExifDataCopier: List.removeLast). Analyzer and tests still run.
+    lint {
+        checkReleaseBuilds = false
+    }
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
