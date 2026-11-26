@@ -15,3 +15,4 @@ export 'tarot_deck.dart';
 export 'term.dart';
 export 'transitions.dart';
 export 'choice_pills.dart';
+export 'year_afflictions_card.dart';

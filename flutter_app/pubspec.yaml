@@ -43,3 +43,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/content/home_checklist.json
+    - assets/content/forecast_templates.json
+    - assets/content/crystals.json
+    - assets/content/rituals.json

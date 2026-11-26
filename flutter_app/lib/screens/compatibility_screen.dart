@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inkstone/data/example_charts.dart';
 import 'package:inkstone/data/household.dart';
-import 'package:inkstone_engine/inkstone_engine.dart' show directionShort, sharedGoodDirections;
+import 'package:inkstone_engine/inkstone_engine.dart'
+    show directionShort, sharedGoodDirections, taiSuiRelations, TaiSuiRelation, zodiacForBirth;
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -16,6 +17,10 @@ class CompatibilityScreen extends StatelessWidget {
     final (verdict, line, score, good) = dayMasterFit(a, b);
     final ka = mainUser.kua, kb = partner.kua;
     final shared = sharedGoodDirections([ka, kb]);
+    final za = zodiacForBirth(mainUser.birth), zb = zodiacForBirth(partner.birth);
+    final zRel = taiSuiRelations(za.branch.index, zb.branch.index)
+        .map((r) => r == TaiSuiRelation.benMing ? 'Same sign 同肖' : '${r.english} ${r.chinese}')
+        .toList();
     final unknown = [for (final p in [mainUser, partner]) if (!p.timeKnown) shortName(p)];
     Widget list(String title, Color c, List<String> items) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,6 +57,16 @@ class CompatibilityScreen extends StatelessWidget {
               ]),
             ),
           ]),
+        ),
+        InkstoneCard(
+          key: const Key('compat-zodiac'),
+          title: 'Zodiac signs',
+          source: SourceBadge.calculated,
+          child: Text(
+            '${shortName(mainUser)}: ${za.name} ${za.pillar.chinese} · ${shortName(partner)}: ${zb.name} ${zb.pillar.chinese}. '
+            '${zRel.isEmpty ? 'No special clash or harmony between the signs.' : 'Signs: ${zRel.join(', ')}.'}',
+            style: InkText.body(height: 1.45),
+          ),
         ),
         Container(
           margin: const EdgeInsets.only(top: 10),

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:inkstone/data/example_charts.dart';
 import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/sample_data.dart';
+import 'package:inkstone_engine/inkstone_engine.dart' show zodiacForBirth;
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -18,6 +19,7 @@ class BaziScreen extends StatelessWidget {
     final pillars = c.pillars;
     final luck = c.luckPillars();
     final k = me.kua;
+    final z = zodiacForBirth(me.birth);
     return InkstoneScaffold(
       title: 'Your BaZi',
       showBack: true,
@@ -53,6 +55,18 @@ class BaziScreen extends StatelessWidget {
                 text: ' — the element that stands for you. ${c.dayMasterImage}${me.timeKnown ? '' : ' Birth time unknown, so the hour pillar is left out.'}',
                 style: InkText.body(height: 1.5)),
           ])),
+        ),
+        InkstoneCard(
+          key: const Key('bazi-zodiac'),
+          title: 'Zodiac · ${z.name} ${z.pillar.chinese}',
+          onTap: () => context.go(Routes.yearly),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('Year element ${z.yearElement.english} (stem ${z.pillar.stem.chinese}) · '
+                '${z.animal} fixed element ${z.animalElement.english} (branch ${z.branch.chinese}) · '
+                'Na Yin ${z.naYin.chinese} ${z.naYin.english}', style: InkText.body(height: 1.45)),
+            const SizedBox(height: 4),
+            Text('Tap for your year: Tai Sui, lucky colours, numbers and directions.', style: InkText.small),
+          ]),
         ),
         InkstoneCard(
           title: 'Element balance',

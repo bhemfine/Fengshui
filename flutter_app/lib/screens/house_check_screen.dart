@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkstone/data/example_charts.dart';
 import 'package:inkstone/data/household.dart';
-import 'package:inkstone/data/sample_data.dart';
-import 'package:inkstone_engine/inkstone_engine.dart' show directionAt, directionLong;
+import 'package:inkstone/data/current_home.dart';
+import 'package:inkstone/data/your_year.dart' show currentSolarYear;
+import 'package:inkstone_engine/inkstone_engine.dart' show directionLong;
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -16,9 +17,9 @@ class HouseCheckScreen extends StatefulWidget {
 }
 
 class _HouseCheckScreenState extends State<HouseCheckScreen> {
-  final _a = TextEditingController(text: sampleHome.address);
-  final _f = TextEditingController(
-      text: '${directionLong[directionAt(sampleHome.facingDegrees.toDouble())]} · ${sampleHome.facingDegrees}° (example)');
+  final _home = currentHome.value;
+  late final _a = TextEditingController(text: _home.label);
+  late final _f = TextEditingController(text: '${_home.facing.label}${_home.example ? ' (example)' : ''}');
 
   @override
   void dispose() {
@@ -38,26 +39,33 @@ class _HouseCheckScreenState extends State<HouseCheckScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final facing = directionAt(sampleHome.facingDegrees.toDouble());
+    final home = _home;
+    final facing = home.facing.direction;
+    final ex = home.example ? ' (example)' : '';
+    final door = home.chart.palaces[facing]!;
+    final year = currentSolarYear();
     final fits = [for (final p in [mainUser, partner]) homeFitFor(p, facing)];
     final dirName = directionLong[facing]!;
     final reasons = [
       for (final f in fits)
         '$dirName door is ${f.info.pinyin} (${f.info.english}) for ${shortName(f.person)}\'s Kua ${f.person.kua.kua}'
-            '${f.good ? '' : '; good directions are ${dirs(f.person.kua.lucky)}'} (example).',
-      'Wealth star 8 sits by the door this period (example).',
+            '${f.good ? '' : '; good directions are ${dirs(f.person.kua.lucky)}'}$ex.',
+      'Period ${home.period}: water star ${door.facing} and mountain star ${door.mountain} sit at the ${dirName.toLowerCase()} door side. '
+          '${palaceTip(door, home.period)}$ex',
+      if (yearAfflictionsHits(facing, year).isNotEmpty)
+        'In $year the $dirName holds ${yearAfflictionsHits(facing, year).join(', ')}: no renovation on that side this year.',
     ];
     return InkstoneScaffold(
       title: 'House check',
       showBack: true,
-      example: true,
+      example: home.example,
       fallbackRoute: Routes.floorResult,
       children: [
         _field('Address', _a),
         _field('Front door', _f),
         InkstoneCard(
           title: 'Couple fit',
-          example: true,
+          example: home.example,
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             for (final (i, f) in fits.indexed) ...[
               SizedBox(height: i == 0 ? 6 : 8),

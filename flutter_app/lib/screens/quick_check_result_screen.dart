@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:inkstone_engine/inkstone_engine.dart';
 
 import 'package:inkstone/data/household.dart';
+import 'package:inkstone/data/your_year.dart' show currentSolarYear;
 import 'package:inkstone/data/quick_check.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
@@ -78,7 +79,11 @@ class QuickCheckResultScreen extends StatelessWidget {
               style: InkText.body(),
             ),
           ),
+        YearAfflictionsCard(year: currentSolarYear()),
+        YearAfflictionsCard(year: currentSolarYear() + 1),
         const SizedBox(height: 14),
+        MidnightButton(label: 'Floor reading (Flying Stars)', onPressed: () => context.go(Routes.floorResult)),
+        const SizedBox(height: 10),
         ButtonRow(
           first: MidnightButton(label: 'Home checklist', onPressed: () => context.push(Routes.homeChecklist)),
           second: GhostButton(

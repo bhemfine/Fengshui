@@ -15,7 +15,7 @@ class ReadingsScreen extends StatelessWidget {
       ('✋', 'Palm reading', 'Read from your photo', Routes.palm),
       ('四', 'Your BaZi', 'Four pillars, calculated', Routes.bazi),
       ('∞', 'Compatibility', 'Boon Eng and Victoria', Routes.compatibility),
-      ('◐', 'This year', '2026 outlook', Routes.yearly),
+      ('◐', 'Your year', 'Zodiac, Tai Sui, lucky lists 2026–27', Routes.yearly),
     ];
     return InkstoneScaffold(
       children: [

@@ -1,96 +1,202 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:inkstone/data/sample_data.dart';
-import 'package:inkstone/motion/motion.dart';
+import 'package:inkstone_engine/inkstone_engine.dart';
+
+import 'package:inkstone/data/content_repo.dart';
+import 'package:inkstone/data/household.dart';
+import 'package:inkstone/data/your_year.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
 import 'package:inkstone/widgets/widgets.dart';
 
-class YearlyScreen extends StatelessWidget {
-  const YearlyScreen({super.key});
+/// "Your year": zodiac with its three elements, Tai Sui status, the written
+/// 2026 / 2027 guide, and rule-based lucky and unlucky lists. All offline.
+class YearlyScreen extends StatefulWidget {
+  const YearlyScreen({super.key, this.initialYear});
+  final int? initialYear;
+  @override
+  State<YearlyScreen> createState() => _YearlyScreenState();
+}
 
-  Widget _note(Widget child, bool first) => Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 11),
-        decoration:
-            BoxDecoration(border: first ? null : const Border(top: BorderSide(color: AppColors.hairline))),
-        child: child,
+class _YearlyScreenState extends State<YearlyScreen> {
+  late int _year = widget.initialYear ??
+      (forecastYears.contains(currentSolarYear()) ? currentSolarYear() : forecastYears.first);
+  int _person = 0;
+  late final Future<AppContent> _content = ContentRepo.load();
+
+  @override
+  Widget build(BuildContext context) {
+    final people = savedProfiles;
+    return FutureBuilder<AppContent>(
+      future: _content,
+      builder: (context, snap) {
+        final y = YourYear.compute(people[_person], _year, snap.data);
+        return InkstoneScaffold(
+          children: [
+            _YearSeg(onDay: () => context.go(Routes.today), onMonth: () => context.go(Routes.monthly)),
+            const SizedBox(height: 10),
+            ScreenTitle(
+              title: 'Your year · $_year',
+              example: y.person.example,
+              subtitle: '${y.taiSui.yearPillar.chinese} ${y.template?.yearName.split(' ').skip(1).join(' ') ?? ''} · from Li Chun',
+            ),
+            const SizedBox(height: 8),
+            ChoicePills<int>(
+              key: const Key('yy-person'),
+              options: [for (final (i, p) in people.indexed) (i, shortName(p))],
+              selected: _person,
+              onSelected: (i) => setState(() => _person = i),
+            ),
+            const SizedBox(height: 8),
+            ChoicePills<int>(
+              key: const Key('yy-year'),
+              options: [for (final yr in forecastYears) (yr, '$yr')],
+              selected: _year,
+              onSelected: (v) => setState(() => _year = v),
+            ),
+            YourYearBody(y: y, loading: snap.connectionState != ConnectionState.done),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// The card stack, reusable in tests.
+class YourYearBody extends StatelessWidget {
+  const YourYearBody({super.key, required this.y, this.loading = false});
+  final YourYear y;
+  final bool loading;
+
+  Widget _line(String label, String value, {Color? color}) => Padding(
+        padding: const EdgeInsets.only(top: 6),
+        child: Text.rich(TextSpan(children: [
+          TextSpan(text: '$label: ', style: InkText.body(weight: FontWeight.w600)),
+          TextSpan(text: value, style: InkText.body(height: 1.45, color: color ?? AppColors.ivory)),
+        ])),
       );
 
   @override
   Widget build(BuildContext context) {
-    final body = InkText.body(height: 1.4);
-    return InkstoneScaffold(
-      children: [
-        _YearSeg(onDay: () => context.go(Routes.today), onMonth: () => context.go(Routes.monthly)),
-        const SizedBox(height: 10),
-        const ScreenTitle(title: '2026 outlook', example: true, subtitle: 'A year to tidy, not to leap.'),
-        const SizedBox(height: 12),
-        MidnightButton(label: 'Read my BaZi', onPressed: () => context.go(Routes.bazi)),
-        InkstoneCard(
-          title: 'Key notes',
-          source: SourceBadge.calculated,
-          child: Column(children: [
-            _note(
-                Text.rich(TextSpan(children: [
-                  TextSpan(text: 'Tai Sui', style: body),
-                  TextSpan(text: " (太岁 — the year's ruling star)", style: InkText.body(size: 14, color: AppColors.ivory2)),
-                  TextSpan(text: ' calm this year (example).', style: body),
-                ])),
-                true),
-            _note(Text('Luck pillar: Fire decade, ages 32–41: visibility grows (example).', style: body), false),
-            _note(
-                Text.rich(TextSpan(children: [
-                  TextSpan(text: 'Home Flying Stars', style: body),
-                  TextSpan(
-                      text: ' (飞星 — energy in each area of the home)',
-                      style: InkText.body(size: 14, color: AppColors.ivory2)),
-                  TextSpan(text: ': Wealth star 8 sits south-east, by your door (example).', style: body),
-                ])),
-                false),
-          ]),
-        ),
-        const InkstoneCard(
-          title: 'Sky chart',
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            ExampleBadge(label: 'Decorative'),
-            SizedBox(height: 170, child: _Orbits()),
-          ]),
-        ),
-        InkstoneCard(
-          title: 'Month by month',
-          example: true,
-          child: GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: 4.2,
-            mainAxisSpacing: 6,
-            crossAxisSpacing: 6,
-            children: [
-              for (final m in yearMonths)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  alignment: Alignment.centerLeft,
-                  decoration: const BoxDecoration(border: Border(left: BorderSide(color: AppColors.goldDim))),
-                  child: Text.rich(
-                    TextSpan(children: [
-                      TextSpan(
-                          text: '${m.$1} ',
-                          style: InkText.body(size: 15, weight: FontWeight.w600, color: AppColors.gold2)),
-                      TextSpan(text: m.$2, style: InkText.body(size: 15)),
-                    ]),
-                    maxLines: 2,
-                  ),
-                ),
-            ],
+    final z = y.zodiac;
+    final t = y.template;
+    final l = y.lucky;
+    final tai = y.taiSui;
+    final offends = tai.status == TaiSuiStatus.offends;
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      InkstoneCard(
+        key: const Key('yy-zodiac'),
+        title: '${z.name} ${z.pillar.chinese}',
+        source: SourceBadge.calculated,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('${shortName(y.person)} · born ${birthLabel(y.person)} · solar year ${z.solarYear}', style: InkText.small),
+          _line('Year element (stem ${z.pillar.stem.chinese})', z.yearElement.english),
+          _line('Animal\'s fixed element (branch ${z.branch.chinese})', z.animalElement.english),
+          _line('Na Yin 纳音', '${z.naYin.chinese} ${z.naYin.english} (${z.naYin.element.english})'),
+          const SizedBox(height: 8),
+          Text(z.explainer, style: InkText.body(size: 15, height: 1.45, color: AppColors.ivory2)),
+        ]),
+      ),
+      InkstoneCard(
+        key: const Key('yy-taisui'),
+        title: 'Tai Sui 太岁 · ${tai.chineseLabel}',
+        source: SourceBadge.calculated,
+        borderColor: offends ? AppColors.care.withValues(alpha: 0.6) : null,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            offends ? 'Fan Tai Sui (犯太岁)' : (tai.status == TaiSuiStatus.harmony ? 'He Tai Sui (合太岁)' : 'Neutral'),
+            style: InkText.body(weight: FontWeight.w600, color: offends ? AppColors.care : AppColors.good),
           ),
+          const SizedBox(height: 4),
+          Text(tai.summary, style: InkText.body(height: 1.45)),
+          if (t != null) ...[
+            const SizedBox(height: 6),
+            Text(t.taiSuiNote, style: InkText.body(size: 15, height: 1.45, color: AppColors.ivory2)),
+          ],
+          const SizedBox(height: 6),
+          Text(l.yearElementNote, style: InkText.body(size: 15, height: 1.45)),
+        ]),
+      ),
+      if (t != null)
+        InkstoneCard(
+          key: const Key('yy-outlook'),
+          title: '${y.year} outlook',
+          source: 'Written guide (offline)',
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(t.overview, style: InkText.body(height: 1.45)),
+            _line('Career', t.career),
+            _line('Money', t.money),
+            _line('Love', t.love),
+            _line('Health', t.health),
+            if (t.luckyMonths.isNotEmpty)
+              _line('Lucky months', t.luckyMonths.map((m) => '${cap(m)} month').join(', ')),
+          ]),
+        )
+      else if (loading)
+        const Padding(padding: EdgeInsets.all(16), child: Center(child: CircularProgressIndicator()))
+      else
+        InkstoneCard(child: Text('The written guide covers 2026 and 2027.', style: InkText.body())),
+      InkstoneCard(
+        key: const Key('yy-dos'),
+        title: 'Do and avoid',
+        child: AlmanacList(goodFor: t?.dos ?? const [], avoid: y.allAvoids),
+      ),
+      InkstoneCard(
+        key: const Key('yy-lucky'),
+        title: 'Lucky for you in ${y.year}',
+        source: 'Rule-based',
+        borderColor: AppColors.good.withValues(alpha: 0.4),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          _line('Elements', l.favourable.map((e) => e.english).join(', '), color: AppColors.good),
+          _line('Colours', l.luckyColours.join(', ')),
+          _line('Numbers', l.luckyNumbers.join(', ')),
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text('Directions (Kua ${y.person.kua.kua})', style: InkText.body(weight: FontWeight.w600)),
+          ),
+          for (final d in l.luckyDirections)
+            Padding(
+              padding: const EdgeInsets.only(top: 3, left: 8),
+              child: Text(
+                '${directionLong[d.info.direction]} · ${d.info.english}'
+                '${d.caution == null ? '' : ' — take care in ${y.year}: ${d.caution}'}',
+                style: InkText.body(size: 15, height: 1.4, color: d.caution == null ? AppColors.ivory : AppColors.care),
+              ),
+            ),
+          if (l.luckyCrystals.isNotEmpty) _line('Crystals', l.luckyCrystals.map((c) => '${c.name} (${c.element.english})').join(', ')),
+          if (l.luckyRituals.isNotEmpty) _line('Rituals', l.luckyRituals.map((r) => r.name).join(', ')),
+        ]),
+      ),
+      InkstoneCard(
+        key: const Key('yy-unlucky'),
+        title: 'Go easy on',
+        source: 'Rule-based',
+        borderColor: AppColors.care.withValues(alpha: 0.4),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          _line('Elements', l.unfavourable.map((e) => e.english).join(', '), color: AppColors.care),
+          _line('Colours', l.unluckyColours.join(', ')),
+          _line('Numbers', l.unluckyNumbers.join(', ')),
+          _line('Directions', l.unluckyDirections.join('; ')),
+          if (l.unluckyCrystals.isNotEmpty) _line('Crystals', l.unluckyCrystals.map((c) => c.name).join(', ')),
+        ]),
+      ),
+      YearAfflictionsCard(year: y.year),
+      InkstoneCard(
+        title: 'Not available',
+        child: Text(
+          y.person.timeKnown
+              ? 'All items use the full birth time.'
+              : 'Birth time unknown: hour pillar, lucky birth hour and hour-based items are left out. '
+                  'Elements use 3 pillars, so treat them as a rough guide.',
+          style: InkText.body(size: 15, height: 1.45),
         ),
-      ],
-    );
+      ),
+      const SizedBox(height: 10),
+      Text(LuckyProfile.methodNote, style: InkText.caption),
+      const SizedBox(height: 6),
+      Text('For reflection and entertainment. Not professional advice.', style: InkText.caption),
+    ]);
   }
 }
 
@@ -137,71 +243,3 @@ class _YearSeg extends StatelessWidget {
   }
 }
 
-class _Orbits extends StatefulWidget {
-  const _Orbits();
-  @override
-  State<_Orbits> createState() => _OrbitsState();
-}
-
-class _OrbitsState extends State<_Orbits> with SingleTickerProviderStateMixin {
-  late final AnimationController _c = AnimationController(vsync: this, duration: const Duration(seconds: 120));
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (reduceMotion(context)) {
-      _c.stop();
-    } else if (!_c.isAnimating) {
-      _c.repeat();
-    }
-  }
-
-  @override
-  void dispose() {
-    _c.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) => ExcludeSemantics(
-        child: AnimatedBuilder(
-          animation: _c,
-          builder: (context, _) => CustomPaint(size: Size.infinite, painter: _OrbitPainter(_c.value)),
-        ),
-      );
-}
-
-class _OrbitPainter extends CustomPainter {
-  _OrbitPainter(this.t);
-  final double t;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final c = size.center(Offset.zero);
-    final secs = t * 120;
-    final ring = Paint()
-      ..style = PaintingStyle.stroke
-      ..color = AppColors.gold.withValues(alpha: 0.5);
-    canvas.drawCircle(c, 40, ring);
-    canvas.drawCircle(c, 70, ring);
-    canvas.drawCircle(c, 80, ring..color = AppColors.gold.withValues(alpha: 0.1));
-    canvas.drawCircle(c, 9, Paint()..color = AppColors.gold2);
-    canvas.drawCircle(
-        c,
-        15,
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..color = AppColors.gold2.withValues(alpha: 0.3));
-    void orb(double r, double start, double period, double dir, double rad, Color col) {
-      final a = start + dir * 2 * pi * (secs / period);
-      canvas.drawCircle(c + Offset(cos(a) * r, sin(a) * r), rad, Paint()..color = col);
-    }
-
-    orb(40, 0, Motion.orbit1.inSeconds.toDouble(), 1, 3.5, AppColors.ivory);
-    orb(70, -pi / 2, Motion.orbit2.inSeconds.toDouble(), -1, 4.5, AppColors.silver);
-    orb(80, pi, Motion.orbit3.inSeconds.toDouble(), 1, 3, AppColors.goldHi);
-  }
-
-  @override
-  bool shouldRepaint(covariant _OrbitPainter old) => old.t != t;
-}

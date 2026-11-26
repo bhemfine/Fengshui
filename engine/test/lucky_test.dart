@@ -80,6 +80,27 @@ void main() {
     });
   });
 
+  test('bundled app copies of content JSON match content/', () {
+    for (final f in ['forecast_templates', 'crystals', 'rituals']) {
+      expect(File('../flutter_app/assets/content/$f.json').readAsStringSync(),
+          File('../content/$f.json').readAsStringSync(),
+          reason: '$f.json drifted');
+    }
+  });
+
+  test('every animal has a 2026 and 2027 template with dos, avoids and Tai Sui note', () {
+    final t = jsonDecode(File('../content/forecast_templates.json').readAsStringSync())['yearly'] as Map;
+    for (final y in ['2026', '2027']) {
+      final animals = (t[y] as Map)['animals'] as Map;
+      for (final b in branches) {
+        final a = animals[b.animal.toLowerCase()] as Map;
+        expect((a['dos'] as List), isNotEmpty);
+        expect((a['avoids'] as List), isNotEmpty);
+        expect(a['tai_sui_note'], isNotNull);
+      }
+    }
+  });
+
   test('works without content lists (items empty, rest filled)', () {
     final r = luckyProfile(chart: chart(boonBirth), kua: computeKua(boonBirth, Gender.male), year: 2026);
     expect(r.luckyCrystals, isEmpty);

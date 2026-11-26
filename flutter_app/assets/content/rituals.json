@@ -1,0 +1,684 @@
+{
+  "version": 1,
+  "locale": "en-SG",
+  "disclaimer": "For reflection and entertainment. Not professional advice.",
+  "rituals": [
+    {
+      "id": "salt_water_bowl",
+      "name": "Salt-Water Bowl",
+      "zh": {"zh": "盐水碗", "pinyin": "yán shuǐ wǎn", "en": "Salt-Water Bowl"},
+      "intent": ["protection", "home_harmony"],
+      "best_timing": "1st or 15th lunar day",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "coarse sea salt", "qty": "3 tbsp", "note": "plain salt works too"},
+        {"item": "water", "qty": "1 cup", "note": "room temperature"},
+        {"item": "small glass or ceramic bowl", "qty": "1", "note": "not metal"}
+      ],
+      "steps": [
+        "Clean and dry the bowl.",
+        "Add the salt, then pour in the water.",
+        "Place it in a quiet corner of the room.",
+        "Say one simple wish for a calm home.",
+        "Replace the water and salt every two weeks."
+      ],
+      "safety": ["Keep out of reach of children and pets.", "Do not drink the water.", "Pour away down the sink, not onto plants."],
+      "why_traditional": "Salt has long been used in many cultures as a symbol of purity. Folk feng shui uses salt water to absorb stale energy.",
+      "modern_reflection": "Changing the bowl is a gentle reminder to check in on your home.",
+      "cost_band": "low"
+    },
+    {
+      "id": "citrus_peel_bath",
+      "name": "Citrus Peel Bath",
+      "zh": {"zh": "柚子叶浴", "pinyin": "yòu zi yè yù", "en": "Pomelo Leaf Bath"},
+      "intent": ["clarity", "protection", "health_mood"],
+      "best_timing": "Eve of Chinese New Year or after a hard week",
+      "duration_min": 20,
+      "ingredients": [
+        {"item": "pomelo leaves or citrus peel", "qty": "a handful", "note": "washed"},
+        {"item": "warm water", "qty": "1 basin or bath", "note": "comfortable warmth"}
+      ],
+      "steps": [
+        "Rinse the leaves or peel well.",
+        "Steep them in a pot of hot water for 10 minutes, then cool.",
+        "Add the water to a basin or bath until comfortably warm.",
+        "Splash or soak while thinking of letting go of the old.",
+        "Rinse with clean water after."
+      ],
+      "safety": ["Skin patch test first.", "Check water temperature before use.", "Stop if skin feels itchy."],
+      "why_traditional": "Pomelo leaf baths are a Chinese and Malay folk custom to wash away bad luck. They are common before the new year.",
+      "modern_reflection": "A warm, fragrant wash can mark a clean break from a tough period.",
+      "cost_band": "low"
+    },
+    {
+      "id": "incense_smudge",
+      "name": "Incense Room Clearing",
+      "zh": {"zh": "熏香净化", "pinyin": "xūn xiāng jìng huà", "en": "Incense Clearing"},
+      "intent": ["clarity", "home_harmony"],
+      "best_timing": "After moving in, or new moon",
+      "duration_min": 15,
+      "ingredients": [
+        {"item": "sandalwood incense stick", "qty": "1", "note": "or agarwood"},
+        {"item": "heat-safe holder", "qty": "1", "note": "with ash catcher"}
+      ],
+      "steps": [
+        "Open a window for airflow.",
+        "Light the incense and let the flame go out, leaving smoke.",
+        "Walk slowly clockwise around the room.",
+        "Pause at corners and doors.",
+        "Set the stick in its holder to finish burning safely."
+      ],
+      "safety": ["Never leave burning incense unattended.", "Keep away from curtains and paper.", "Ventilate well, especially around kids, pets or anyone with breathing issues."],
+      "why_traditional": "Incense has been used in Chinese homes and temples for centuries to honour and refresh spaces.",
+      "modern_reflection": "Walking through each room is a mindful way to notice what needs care.",
+      "cost_band": "low"
+    },
+    {
+      "id": "red_envelope_wealth_jar",
+      "name": "Red Envelope Wealth Jar",
+      "zh": {"zh": "红包聚财罐", "pinyin": "hóng bāo jù cái guàn", "en": "Red Packet Wealth Jar"},
+      "intent": ["wealth"],
+      "best_timing": "Li Chun or first day of Chinese New Year",
+      "duration_min": 15,
+      "ingredients": [
+        {"item": "glass jar with lid", "qty": "1", "note": "clean"},
+        {"item": "red envelope", "qty": "1", "note": "from the new year"},
+        {"item": "coins", "qty": "8", "note": "any value"},
+        {"item": "rice", "qty": "1 cup", "note": "uncooked"}
+      ],
+      "steps": [
+        "Fill the jar halfway with rice.",
+        "Place 8 coins in the red envelope.",
+        "Write one savings goal on the envelope.",
+        "Tuck the envelope into the rice and close the lid.",
+        "Add a coin each month as a saving habit."
+      ],
+      "safety": ["Keep the jar dry to avoid pests.", "Refresh the rice yearly."],
+      "why_traditional": "Rice and red envelopes both symbolise plenty in Chinese culture. Eight sounds like prosperity in Cantonese.",
+      "modern_reflection": "Writing a goal down makes it easier to stick to.",
+      "cost_band": "low"
+    },
+    {
+      "id": "coin_string",
+      "name": "Three Coin String",
+      "zh": {"zh": "三帝钱", "pinyin": "sān dì qián", "en": "Three Emperor Coins"},
+      "intent": ["wealth", "career"],
+      "best_timing": "Start of a lunar month",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "Chinese replica coins", "qty": "3", "note": "with square holes"},
+        {"item": "red string", "qty": "30 cm", "note": "cotton or silk"}
+      ],
+      "steps": [
+        "Lay the coins yang side up, the side with four characters.",
+        "Thread the red string through all three.",
+        "Tie a firm knot.",
+        "Hang it inside a drawer, wallet or by your desk."
+      ],
+      "safety": ["Keep small coins away from young children."],
+      "why_traditional": "Three tied coins are a classic feng shui charm for steady income. The red string is said to activate them.",
+      "modern_reflection": "Seeing the coins can remind you to keep money habits steady.",
+      "cost_band": "low"
+    },
+    {
+      "id": "moon_water",
+      "name": "Full Moon Water",
+      "zh": null,
+      "intent": ["clarity", "health_mood"],
+      "best_timing": "Full moon, or 15th lunar day",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "glass jar with lid", "qty": "1", "note": "clean"},
+        {"item": "tap or filtered water", "qty": "1 jar", "note": "for plants or cleansing only"}
+      ],
+      "steps": [
+        "Fill the jar with water and close it.",
+        "Set it on a windowsill or balcony where moonlight falls.",
+        "Say one intention for the coming month.",
+        "Collect it in the morning.",
+        "Use it to water plants or wipe your desk."
+      ],
+      "safety": ["Do not drink moon water.", "Keep the lid closed to avoid mosquitoes.", "Use within a few days."],
+      "why_traditional": "Many cultures honour the full moon as a time of fullness. In Chinese tradition the 15th day is a time for offerings and reflection.",
+      "modern_reflection": "Following the moon gives you a monthly pause to reset.",
+      "cost_band": "low"
+    },
+    {
+      "id": "new_year_cleaning",
+      "name": "New Year Spring Cleaning",
+      "zh": {"zh": "大扫除", "pinyin": "dà sǎo chú", "en": "Big Sweep"},
+      "intent": ["home_harmony", "clarity", "wealth"],
+      "best_timing": "Days before Chinese New Year; not on the first day",
+      "duration_min": 120,
+      "ingredients": [
+        {"item": "broom and mop", "qty": "1 each", "note": ""},
+        {"item": "cloths", "qty": "several", "note": ""},
+        {"item": "donation bag", "qty": "1", "note": "for unused items"}
+      ],
+      "steps": [
+        "Open all windows.",
+        "Sweep from the back of the home toward the front door.",
+        "Wipe windows, doors and the stove.",
+        "Fill a bag with things to donate.",
+        "Finish before the eve, and rest your broom on the first day."
+      ],
+      "safety": ["Do not mix cleaning chemicals.", "Use a stable ladder for high spots.", "Wear gloves."],
+      "why_traditional": "Sweeping before new year clears away the old year's bad luck. Sweeping on the first day is said to sweep away good fortune.",
+      "modern_reflection": "A clean, uncluttered home makes a fresh start feel real.",
+      "cost_band": "low"
+    },
+    {
+      "id": "door_threshold_clearing",
+      "name": "Door Threshold Clearing",
+      "zh": {"zh": "门口净化", "pinyin": "mén kǒu jìng huà", "en": "Doorway Clearing"},
+      "intent": ["protection", "home_harmony"],
+      "best_timing": "1st or 15th lunar day",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "bucket of water", "qty": "1", "note": ""},
+        {"item": "pinch of salt", "qty": "1 tsp", "note": ""},
+        {"item": "clean cloth", "qty": "1", "note": ""}
+      ],
+      "steps": [
+        "Clear shoes and clutter from the door area.",
+        "Dissolve salt in the water.",
+        "Wipe the door, handle and floor at the threshold.",
+        "Wipe again with plain water.",
+        "Leave the door open briefly to air out."
+      ],
+      "safety": ["Dry the floor fully to avoid slips."],
+      "why_traditional": "In feng shui the main door is the mouth of the home, where energy enters. Keeping it clean is said to welcome good luck.",
+      "modern_reflection": "A tidy entrance makes coming home feel lighter.",
+      "cost_band": "low"
+    },
+    {
+      "id": "intention_candle",
+      "name": "Intention Candle",
+      "zh": null,
+      "intent": ["clarity", "career", "love"],
+      "best_timing": "New moon",
+      "duration_min": 20,
+      "ingredients": [
+        {"item": "candle", "qty": "1", "note": "colour matched to intent: green wealth, pink love, white clarity"},
+        {"item": "paper and pen", "qty": "1", "note": ""},
+        {"item": "heat-safe plate", "qty": "1", "note": ""}
+      ],
+      "steps": [
+        "Write one clear intention on paper.",
+        "Place the candle on the plate and light it.",
+        "Read your intention aloud three times.",
+        "Sit quietly for a few minutes.",
+        "Blow or snuff it out and keep the paper somewhere safe."
+      ],
+      "safety": ["Never leave a lit candle unattended.", "Keep away from curtains, pets and kids.", "Use a stable, heat-safe surface."],
+      "why_traditional": "Lighting a flame to mark a wish appears in many traditions, from temple lamps to birthday candles.",
+      "modern_reflection": "Saying your goal aloud helps you remember it.",
+      "cost_band": "low"
+    },
+    {
+      "id": "oranges_pair",
+      "name": "Mandarin Orange Pair",
+      "zh": {"zh": "大吉", "pinyin": "dà jí", "en": "Great Luck"},
+      "intent": ["wealth", "home_harmony"],
+      "best_timing": "Chinese New Year",
+      "duration_min": 5,
+      "ingredients": [
+        {"item": "mandarin oranges", "qty": "2 or 8", "note": "with leaves if possible"},
+        {"item": "plate", "qty": "1", "note": "red or gold"}
+      ],
+      "steps": [
+        "Arrange the oranges in pairs on the plate.",
+        "Place them in the living room or near the door.",
+        "Offer a pair to visitors as a greeting.",
+        "Eat or share them before they spoil."
+      ],
+      "safety": ["Wash fruit before eating."],
+      "why_traditional": "Mandarin sounds like gold in Cantonese. Exchanging a pair wishes good fortune in twos.",
+      "modern_reflection": "Sharing fruit is a simple act of goodwill.",
+      "cost_band": "low"
+    },
+    {
+      "id": "rice_bucket_refresh",
+      "name": "Full Rice Bucket",
+      "zh": {"zh": "米缸常满", "pinyin": "mǐ gāng cháng mǎn", "en": "Rice Jar Always Full"},
+      "intent": ["wealth", "home_harmony"],
+      "best_timing": "Before Chinese New Year",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "rice container", "qty": "1", "note": "clean"},
+        {"item": "uncooked rice", "qty": "enough to fill", "note": ""},
+        {"item": "red paper", "qty": "1 small square", "note": "optional, write 满"}
+      ],
+      "steps": [
+        "Empty and wipe the rice container.",
+        "Refill it to the top.",
+        "Stick the red paper on the lid if you like.",
+        "Try never to let it run empty during the year."
+      ],
+      "safety": ["Store in a dry, cool place to avoid weevils."],
+      "why_traditional": "A full rice jar is a long-standing symbol of a household that never goes hungry.",
+      "modern_reflection": "Keeping basics stocked is a quiet form of care.",
+      "cost_band": "low"
+    },
+    {
+      "id": "lucky_bamboo",
+      "name": "Lucky Bamboo Setup",
+      "zh": {"zh": "富贵竹", "pinyin": "fù guì zhú", "en": "Wealth Bamboo"},
+      "intent": ["wealth", "health_mood", "career"],
+      "best_timing": "Any time; Li Chun is popular",
+      "duration_min": 15,
+      "ingredients": [
+        {"item": "lucky bamboo stalks", "qty": "3, 6 or 8", "note": "avoid 4"},
+        {"item": "vase", "qty": "1", "note": "glass or ceramic"},
+        {"item": "pebbles", "qty": "a handful", "note": ""},
+        {"item": "water", "qty": "to cover roots", "note": ""}
+      ],
+      "steps": [
+        "Place pebbles in the vase.",
+        "Stand the stalks upright and add water.",
+        "Place in the east or southeast, out of harsh sun.",
+        "Change water weekly."
+      ],
+      "safety": ["Change water weekly to avoid mosquito breeding.", "Keep away from pets that chew plants."],
+      "why_traditional": "Bamboo stands for resilience and growth. Stalk numbers carry meanings, with 8 for prosperity.",
+      "modern_reflection": "Caring for a plant each week builds a small, steady habit.",
+      "cost_band": "low"
+    },
+    {
+      "id": "crystal_cleansing_moonlight",
+      "name": "Crystal Moonlight Reset",
+      "zh": null,
+      "intent": ["clarity"],
+      "best_timing": "Full moon",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "your crystals", "qty": "any", "note": "check water-sensitive ones"},
+        {"item": "cloth or tray", "qty": "1", "note": ""}
+      ],
+      "steps": [
+        "Wipe each crystal with a dry cloth.",
+        "Lay them on a tray by a window.",
+        "Leave overnight in moonlight.",
+        "Collect before strong morning sun."
+      ],
+      "safety": ["Bring stones in before sunrise if they fade in sun.", "Keep small stones away from children."],
+      "why_traditional": "Moonlight is a gentle way crystal lovers refresh stones, without water or heat.",
+      "modern_reflection": "Handling each stone reminds you why you chose it.",
+      "cost_band": "low"
+    },
+    {
+      "id": "wind_chime_hang",
+      "name": "Metal Wind Chime",
+      "zh": {"zh": "风铃", "pinyin": "fēng líng", "en": "Wind Chime"},
+      "intent": ["protection", "home_harmony"],
+      "best_timing": "Start of the solar year (Li Chun)",
+      "duration_min": 15,
+      "ingredients": [
+        {"item": "metal wind chime", "qty": "1", "note": "5 or 6 rods are common"}
+      ],
+      "steps": [
+        "Check the Flying Stars chart in the app for this year's sector.",
+        "Hang the chime where a breeze reaches it.",
+        "Listen for a moment and set a calm intention.",
+        "Wipe it clean each month."
+      ],
+      "safety": ["Hang securely, away from walkways.", "Be considerate of neighbours with noise."],
+      "why_traditional": "In Flying Stars (飞星, fēi xīng) practice, metal chimes are used to soften challenging yearly stars.",
+      "modern_reflection": "A soft sound can pull you back to the present.",
+      "cost_band": "low"
+    },
+    {
+      "id": "declutter_27",
+      "name": "27-Item Declutter",
+      "zh": null,
+      "intent": ["clarity", "home_harmony", "health_mood"],
+      "best_timing": "Waning moon",
+      "duration_min": 30,
+      "ingredients": [
+        {"item": "bag or box", "qty": "2", "note": "donate and discard"}
+      ],
+      "steps": [
+        "Set a timer for 30 minutes.",
+        "Find 27 items you no longer need.",
+        "Sort them into donate or discard.",
+        "Take the bags out the same day."
+      ],
+      "safety": ["Lift heavy items carefully."],
+      "why_traditional": "Feng shui teaches that clutter blocks the flow of qi. Clearing space invites new energy.",
+      "modern_reflection": "Fewer things often means a clearer mind.",
+      "cost_band": "low"
+    },
+    {
+      "id": "plain_tea_meditation",
+      "name": "Plain Tea Pause",
+      "zh": {"zh": "品茶", "pinyin": "pǐn chá", "en": "Tasting Tea"},
+      "intent": ["clarity", "health_mood"],
+      "best_timing": "Morning, any day",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "plain tea leaves", "qty": "1 tsp", "note": "oolong or green"},
+        {"item": "hot water", "qty": "1 cup", "note": ""}
+      ],
+      "steps": [
+        "Boil water and let it cool slightly.",
+        "Pour over the tea leaves and wait.",
+        "Hold the cup and notice its warmth.",
+        "Sip slowly, phone away.",
+        "Name one thing you want from today."
+      ],
+      "safety": ["Take care with hot water.", "Use only plain food-grade tea."],
+      "why_traditional": "Tea culture in China links slow drinking with calm and reflection.",
+      "modern_reflection": "Ten quiet minutes can set the tone for the day.",
+      "cost_band": "low"
+    },
+    {
+      "id": "gratitude_red_paper",
+      "name": "Red Paper Gratitude List",
+      "zh": null,
+      "intent": ["health_mood", "home_harmony"],
+      "best_timing": "15th lunar day",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "red paper", "qty": "1 sheet", "note": ""},
+        {"item": "gold or black pen", "qty": "1", "note": ""}
+      ],
+      "steps": [
+        "Write the date at the top.",
+        "List eight things you are thankful for.",
+        "Fold the paper in half twice.",
+        "Keep it in a drawer and reread next month."
+      ],
+      "safety": ["None special."],
+      "why_traditional": "Red is the colour of joy in Chinese culture. Eight links to good fortune.",
+      "modern_reflection": "Noticing good things helps you see more of them.",
+      "cost_band": "low"
+    },
+    {
+      "id": "bagua_mirror_check",
+      "name": "Mirror Placement Check",
+      "zh": {"zh": "镜子摆位", "pinyin": "jìng zi bǎi wèi", "en": "Mirror Placement"},
+      "intent": ["home_harmony", "health_mood"],
+      "best_timing": "Any weekend",
+      "duration_min": 20,
+      "ingredients": [
+        {"item": "soft cloth", "qty": "1", "note": "glass cleaner optional"}
+      ],
+      "steps": [
+        "Walk through each room and note your mirrors.",
+        "Clean each one.",
+        "Move or cover mirrors that face your bed.",
+        "Avoid mirrors facing the main door directly.",
+        "Place one to reflect a pleasant view if you can."
+      ],
+      "safety": ["Get help moving large mirrors.", "Secure mirrors to the wall."],
+      "why_traditional": "Feng shui says mirrors double whatever they reflect. Mirrors facing the bed are said to disturb rest.",
+      "modern_reflection": "A calm bedroom view can make rest feel easier.",
+      "cost_band": "low"
+    },
+    {
+      "id": "lantern_light_corner",
+      "name": "Light the Dark Corner",
+      "zh": null,
+      "intent": ["career", "home_harmony"],
+      "best_timing": "Lantern Festival or Mid-Autumn",
+      "duration_min": 15,
+      "ingredients": [
+        {"item": "LED lantern or lamp", "qty": "1", "note": "LED is safest"}
+      ],
+      "steps": [
+        "Find the darkest corner of your living space.",
+        "Clear any clutter there.",
+        "Place the lamp and switch it on in the evening.",
+        "Keep it lit for a few hours on festival nights."
+      ],
+      "safety": ["Prefer LED over real flames.", "Do not overload power points."],
+      "why_traditional": "Lanterns mark reunion and hope at Chinese festivals. Lighting dim areas is said to lift stagnant energy.",
+      "modern_reflection": "A well-lit corner simply feels more welcoming.",
+      "cost_band": "low"
+    },
+    {
+      "id": "rose_petal_footbath",
+      "name": "Rose Petal Footbath",
+      "zh": null,
+      "intent": ["love", "health_mood"],
+      "best_timing": "Friday evening or full moon",
+      "duration_min": 20,
+      "ingredients": [
+        {"item": "warm water", "qty": "1 basin", "note": ""},
+        {"item": "dried or fresh rose petals", "qty": "a handful", "note": "pesticide-free if possible"},
+        {"item": "sea salt", "qty": "1 tbsp", "note": "optional"}
+      ],
+      "steps": [
+        "Fill a basin with warm water.",
+        "Add petals and salt.",
+        "Soak your feet for 15 minutes.",
+        "Think about how you want to give and receive care.",
+        "Dry well and moisturise."
+      ],
+      "safety": ["Check water temperature.", "Skin patch test with petals first.", "Skip if you have broken skin."],
+      "why_traditional": "Roses have symbolised love across cultures. Foot soaks are a common home comfort in Asia.",
+      "modern_reflection": "Making time to care for yourself sets the tone for how others treat you.",
+      "cost_band": "low"
+    },
+    {
+      "id": "essential_oil_diffuser",
+      "name": "Diffuser Mood Reset",
+      "zh": null,
+      "intent": ["clarity", "health_mood"],
+      "best_timing": "Start of a work session",
+      "duration_min": 30,
+      "ingredients": [
+        {"item": "diffuser", "qty": "1", "note": ""},
+        {"item": "essential oil", "qty": "3 to 5 drops", "note": "lemon, orange or lavender"},
+        {"item": "water", "qty": "to the fill line", "note": ""}
+      ],
+      "steps": [
+        "Fill the diffuser with water.",
+        "Add a few drops of oil.",
+        "Switch on and set a 30-minute timer.",
+        "Start one focused task while it runs."
+      ],
+      "safety": ["Never ingest essential oils.", "Keep away from cats and dogs, as some oils are harmful to pets.", "Ventilate the room and stop if you feel unwell."],
+      "why_traditional": "Fragrance has been used in Chinese homes and studies to set a calm mood for reading.",
+      "modern_reflection": "A scent cue can help your mind switch into focus mode.",
+      "cost_band": "mid"
+    },
+    {
+      "id": "wealth_wallet_refresh",
+      "name": "New Wallet Seeding",
+      "zh": {"zh": "新钱包", "pinyin": "xīn qián bāo", "en": "New Wallet"},
+      "intent": ["wealth"],
+      "best_timing": "Chinese New Year or Li Chun",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "new wallet", "qty": "1", "note": "red, gold or brown are popular"},
+        {"item": "crisp notes", "qty": "a few", "note": "an amount you are comfortable with"}
+      ],
+      "steps": [
+        "Clear old receipts from your old wallet.",
+        "Place the crisp notes in the new wallet.",
+        "Leave them untouched for the first month.",
+        "Keep the wallet tidy each week."
+      ],
+      "safety": ["Do not carry more cash than you are comfortable with."],
+      "why_traditional": "Starting a wallet with money is a Chinese custom so it never stays empty.",
+      "modern_reflection": "A tidy wallet makes spending easier to track.",
+      "cost_band": "mid"
+    },
+    {
+      "id": "kitchen_stove_clean",
+      "name": "Stove Care Ritual",
+      "zh": {"zh": "灶君", "pinyin": "zào jūn", "en": "Kitchen God"},
+      "intent": ["wealth", "home_harmony"],
+      "best_timing": "23rd or 24th day of the 12th lunar month",
+      "duration_min": 30,
+      "ingredients": [
+        {"item": "kitchen cleaner", "qty": "1", "note": ""},
+        {"item": "cloths", "qty": "2", "note": ""},
+        {"item": "something sweet", "qty": "1", "note": "e.g. a candy offering, optional"}
+      ],
+      "steps": [
+        "Turn off and cool the stove.",
+        "Clean the burners and surface thoroughly.",
+        "Fix or replace any faulty burners.",
+        "Optionally place a sweet nearby as a traditional gesture."
+      ],
+      "safety": ["Make sure the gas is off.", "Do not mix cleaners.", "Wear gloves."],
+      "why_traditional": "The Kitchen God is said to report on the household before new year. Sweets are offered for kind words.",
+      "modern_reflection": "A clean kitchen supports good meals and a happy home.",
+      "cost_band": "low"
+    },
+    {
+      "id": "fresh_flowers",
+      "name": "Fresh Flowers for Harmony",
+      "zh": null,
+      "intent": ["love", "home_harmony"],
+      "best_timing": "Any Friday or before guests arrive",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "fresh flowers", "qty": "1 bunch", "note": "peonies, orchids or roses"},
+        {"item": "vase", "qty": "1", "note": ""}
+      ],
+      "steps": [
+        "Trim the stems at an angle.",
+        "Place in fresh water.",
+        "Set in the southwest for love, or the living room for harmony.",
+        "Remove wilted flowers promptly."
+      ],
+      "safety": ["Change water often to prevent mosquito breeding.", "Some lilies are toxic to cats."],
+      "why_traditional": "Peonies are a classic Chinese symbol of romance. Dead flowers are removed as they are said to hold stale energy.",
+      "modern_reflection": "Fresh blooms brighten a room and a mood.",
+      "cost_band": "mid"
+    },
+    {
+      "id": "breathing_bell",
+      "name": "Singing Bowl Pause",
+      "zh": null,
+      "intent": ["clarity", "health_mood"],
+      "best_timing": "Evening wind-down",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "singing bowl or bell", "qty": "1", "note": "or a bell sound in the app"}
+      ],
+      "steps": [
+        "Sit comfortably.",
+        "Strike the bowl gently.",
+        "Breathe in and out slowly until the sound fades.",
+        "Repeat three times."
+      ],
+      "safety": ["Keep volume gentle for others nearby."],
+      "why_traditional": "Bells and bowls are used in Buddhist practice to mark moments of attention.",
+      "modern_reflection": "Following a sound until it fades is an easy way to slow down.",
+      "cost_band": "mid"
+    },
+    {
+      "id": "career_desk_reset",
+      "name": "Command Desk Reset",
+      "zh": null,
+      "intent": ["career", "clarity"],
+      "best_timing": "Monday morning or new moon",
+      "duration_min": 20,
+      "ingredients": [
+        {"item": "cloth", "qty": "1", "note": ""},
+        {"item": "small plant or crystal", "qty": "1", "note": "optional"}
+      ],
+      "steps": [
+        "Clear everything off your desk.",
+        "Wipe the surface.",
+        "Return only what you use daily.",
+        "Face the door if possible, with a solid wall behind you.",
+        "Add one plant or crystal on the left side."
+      ],
+      "safety": ["Mind cables and plugs while cleaning."],
+      "why_traditional": "The command position in feng shui lets you see the door, symbolising control over your path.",
+      "modern_reflection": "A clear desk makes it easier to start work.",
+      "cost_band": "low"
+    },
+    {
+      "id": "lucky_red_thread",
+      "name": "Red String Bracelet",
+      "zh": {"zh": "红绳", "pinyin": "hóng shéng", "en": "Red String"},
+      "intent": ["protection", "love"],
+      "best_timing": "Your zodiac year (本命年, běn mìng nián, birth-sign year) or new year",
+      "duration_min": 10,
+      "ingredients": [
+        {"item": "red cotton or silk string", "qty": "1 length", "note": ""}
+      ],
+      "steps": [
+        "Ask a loved one to tie it on your wrist, or tie it yourself.",
+        "Make one wish with each of three knots.",
+        "Wear it until it falls off naturally.",
+        "Thank it and let it go."
+      ],
+      "safety": ["Do not tie too tightly.", "Remove if skin gets irritated."],
+      "why_traditional": "Red string is worn for protection in your zodiac year. It is also tied to the legend of the red thread of fate.",
+      "modern_reflection": "A small band on your wrist can remind you of people who care.",
+      "cost_band": "low"
+    },
+    {
+      "id": "clothes_new_year",
+      "name": "New Clothes Fresh Start",
+      "zh": null,
+      "intent": ["career", "health_mood"],
+      "best_timing": "First day of Chinese New Year",
+      "duration_min": 15,
+      "ingredients": [
+        {"item": "one new or freshly washed outfit", "qty": "1", "note": "red is festive"}
+      ],
+      "steps": [
+        "Wash and iron the outfit the day before.",
+        "Lay it out with a short wish for the year.",
+        "Wear it on the first day.",
+        "Notice how it feels to start fresh."
+      ],
+      "safety": ["None special."],
+      "why_traditional": "New clothes at new year symbolise a fresh start and leaving old troubles behind.",
+      "modern_reflection": "Small changes in routine can help mark a new chapter.",
+      "cost_band": "mid"
+    },
+    {
+      "id": "water_feature",
+      "name": "Small Water Bowl for Flow",
+      "zh": null,
+      "intent": ["wealth", "career"],
+      "best_timing": "Li Chun",
+      "duration_min": 15,
+      "ingredients": [
+        {"item": "shallow bowl", "qty": "1", "note": ""},
+        {"item": "water", "qty": "to fill", "note": ""},
+        {"item": "floating flower or pebbles", "qty": "a few", "note": "optional"}
+      ],
+      "steps": [
+        "Fill the bowl with clean water.",
+        "Add pebbles or a floating flower.",
+        "Place in the north for career or southeast for wealth.",
+        "Change the water every two to three days."
+      ],
+      "safety": ["Change water often to prevent mosquito breeding, as required in Singapore.", "Keep away from electrical outlets."],
+      "why_traditional": "Water in feng shui symbolises the flow of money and opportunities.",
+      "modern_reflection": "Fresh water is a simple cue to keep things moving.",
+      "cost_band": "low"
+    },
+    {
+      "id": "letter_release",
+      "name": "Write and Release Letter",
+      "zh": null,
+      "intent": ["clarity", "health_mood", "love"],
+      "best_timing": "Waning moon or year-end",
+      "duration_min": 20,
+      "ingredients": [
+        {"item": "paper and pen", "qty": "1", "note": ""}
+      ],
+      "steps": [
+        "Write a letter about something you want to let go.",
+        "Do not edit; just write.",
+        "Read it once.",
+        "Tear it into small pieces and recycle it."
+      ],
+      "safety": ["Avoid burning paper indoors; tearing is safer.", "If heavy feelings stay, talk to someone you trust or a professional."],
+      "why_traditional": "Releasing written wishes or worries appears in many folk customs, from lanterns to paper offerings.",
+      "modern_reflection": "Putting thoughts on paper can make them feel smaller.",
+      "cost_band": "low"
+    }
+  ]
+}

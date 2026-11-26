@@ -17,25 +17,6 @@ class Person {
   final bool birthTimeKnown;
 }
 
-class HomeInfo {
-  const HomeInfo({
-    required this.type,
-    required this.town,
-    required this.address,
-    required this.facingDegrees,
-    required this.facingLabel,
-    required this.period,
-    required this.completed,
-  });
-  final String type;
-  final String town;
-  final String address;
-  final int facingDegrees;
-  final String facingLabel;
-  final int period;
-  final int completed;
-}
-
 class DoubleHour {
   const DoubleHour({
     required this.english,
@@ -51,12 +32,6 @@ class DoubleHour {
   final String meaning;
   final String range;
   final bool isGood;
-}
-
-class Almanac {
-  const Almanac({required this.goodFor, required this.avoid});
-  final List<String> goodFor;
-  final List<String> avoid;
 }
 
 class Master {
@@ -150,97 +125,13 @@ class PrescriptionStep {
 
 // ---- Household ----
 
-const sampleHome = HomeInfo(
-  type: '4-room HDB',
-  town: 'Tampines',
-  address: 'Block 123 Tampines Street 11, #08-45 (example)',
-  facingDegrees: 142,
-  facingLabel: 'South-east',
-  period: 8,
-  completed: 2012,
-);
-
 // ---- Today ----
-
-const todayWeekday = 'Monday';
-const todayDay = 23;
-const todayMonthYear = 'November 2026';
-const todayLunar = 'Lunar 10th month, day 15 — full moon (example)';
-const todayLucky = 'Lucky: face north-east when you work. Lucky colour: deep green (example).';
-
-const sampleAlmanac = Almanac(
-  goodFor: ['Sign papers', 'Travel', 'Visit family'],
-  avoid: ['Move heavy furniture', 'Start renovation', 'Cut hair'],
-);
-
-const sampleDoubleHours = <DoubleHour>[
-  DoubleHour(english: 'Zi', chinese: '子', meaning: 'Rat', range: '11pm–1am', isGood: true),
-  DoubleHour(english: 'Chou', chinese: '丑', meaning: 'Ox', range: '1–3am'),
-  DoubleHour(english: 'Yin', chinese: '寅', meaning: 'Tiger', range: '3–5am'),
-  DoubleHour(english: 'Mao', chinese: '卯', meaning: 'Rabbit', range: '5–7am', isGood: true),
-  DoubleHour(english: 'Chen', chinese: '辰', meaning: 'Dragon', range: '7–9am', isGood: true),
-  DoubleHour(english: 'Si', chinese: '巳', meaning: 'Snake', range: '9–11am'),
-  DoubleHour(english: 'Wu', chinese: '午', meaning: 'Horse', range: '11am–1pm', isGood: true),
-  DoubleHour(english: 'Wei', chinese: '未', meaning: 'Goat', range: '1–3pm'),
-  DoubleHour(english: 'Shen', chinese: '申', meaning: 'Monkey', range: '3–5pm'),
-  DoubleHour(english: 'You', chinese: '酉', meaning: 'Rooster', range: '5–7pm', isGood: true),
-  DoubleHour(english: 'Xu', chinese: '戌', meaning: 'Dog', range: '7–9pm'),
-  DoubleHour(english: 'Hai', chinese: '亥', meaning: 'Pig', range: '9–11pm'),
-];
-
-/// Index of the current double hour (Mao, 5–7am).
-const sampleCurrentHourIndex = 3;
 
 // ---- Month / year ----
 
-const monthGoodDays = <int>[2, 6, 9, 13, 17, 20, 23, 27];
-const monthCareDays = <int>[4, 11, 15, 22, 29];
-
-/// November 2026 starts on a Sunday (Sunday-start grid → 0 leading blanks).
-const monthLeadingBlanks = 0;
-const monthDays = 30;
-
-const monthOutlook = <(String, String)>[
-  ('Career', 'Steady. Finish what is open before starting new work.'),
-  ('Money', 'Good for saving. Delay big purchases to mid-month.'),
-  ('Health', 'Rest early on take-care days. Warm food helps.'),
-  ('Love', 'Plan time together; small gestures land well.'),
-];
-
-const yearMonths = <(String, String)>[
-  ('Jan', 'Plan quietly'), ('Feb', 'New starts at work'), ('Mar', 'Watch spending'),
-  ('Apr', 'Good for travel'), ('May', 'Rest more'), ('Jun', 'Family first'),
-  ('Jul', 'Money flows in'), ('Aug', 'Avoid big moves'), ('Sep', 'Learn something'),
-  ('Oct', 'Steady progress'), ('Nov', 'Finish projects'), ('Dec', 'Celebrate gently'),
-];
-
 // ---- Home / Flying Stars ----
 
-/// Palaces in grid order NW, N, NE, W, Centre, E, SW, S, SE.
-const samplePalaces = <Palace>[
-  Palace(direction: 'North-west', mountain: 1, water: 7, tip: 'Steady energy. Good for rest; keep the room tidy.'),
-  Palace(direction: 'North', mountain: 6, water: 2, tip: 'Quiet area. Soft light helps.'),
-  Palace(direction: 'North-east', mountain: 8, water: 4, tip: 'Strong, lucky area (吉 — favourable). Ideal for the desk or bed head.'),
-  Palace(direction: 'West', mountain: 9, water: 5, tip: 'Busy energy. Avoid clutter here.'),
-  Palace(direction: 'Centre', mountain: 2, water: 3, tip: 'Heart of the home. Keep it open and bright.'),
-  Palace(direction: 'East', mountain: 4, water: 9, tip: 'Growth area. Plants do well here.'),
-  Palace(direction: 'South-west', mountain: 5, water: 1, tip: 'Heavy energy. Keep metal decor, not fire colours.'),
-  Palace(direction: 'South', mountain: 7, water: 6, tip: 'Warm area. Good for gathering.'),
-  Palace(direction: 'South-east', mountain: 3, water: 8, tip: 'The door side. Keep it lit and clear to welcome good energy.'),
-];
-
-const samplePlacementTips = <PlacementTip>[
-  PlacementTip(room: 'Master bedroom', text: 'headboard to the north-east wall.', good: true),
-  PlacementTip(room: 'Kitchen', text: 'keep the stove off the sink line.', good: false),
-  PlacementTip(room: 'Study (bedroom 3)', text: 'desk facing north-east, back to a wall.', good: true),
-  PlacementTip(room: 'Entrance', text: 'keep it lit and clear.', good: true),
-];
-
-
 // ---- BaZi ----
-
-
-
 
 // ---- Masters & booking ----
 

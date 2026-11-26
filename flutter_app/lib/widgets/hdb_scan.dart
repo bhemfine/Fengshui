@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import '../data/current_home.dart';
 import '../data/sample_data.dart';
 import '../motion/motion.dart';
 import '../theme/colors.dart';
@@ -19,9 +20,9 @@ class HdbScan extends StatefulWidget {
   const HdbScan({
     super.key,
     this.controller,
-    this.palaces = samplePalaces,
-    this.facingDegrees = 142,
-    this.facingLabel = '142° SE',
+    this.palaces,
+    this.facingDegrees,
+    this.facingLabel,
     this.selected,
     this.onZoneTap,
     this.onScanComplete,
@@ -29,8 +30,9 @@ class HdbScan extends StatefulWidget {
   });
 
   final HdbScanController? controller;
-  final List<Palace> palaces;
-  final double facingDegrees;
+  /// Defaults to the engine chart of [currentHome].
+  final List<Palace>? palaces;
+  final double? facingDegrees;
   final String? facingLabel;
   final int? selected;
   final ValueChanged<int>? onZoneTap;
@@ -110,7 +112,7 @@ class _HdbScanState extends State<HdbScan> with SingleTickerProviderStateMixin {
           child: LayoutBuilder(builder: (context, box) {
             final scale = box.maxWidth / 340;
             return Semantics(
-              label: 'Example 4-room HDB floor plan',
+              label: 'Stylised floor plan with Flying Star palaces',
               child: GestureDetector(
                 onTapUp: (d) {
                   if (_c.isAnimating) return;
@@ -129,9 +131,10 @@ class _HdbScanState extends State<HdbScan> with SingleTickerProviderStateMixin {
                     painter: _PlanPainter(
                       progress: _c.value,
                       done: !_c.isAnimating && _c.value >= 1,
-                      palaces: widget.palaces,
-                      facing: widget.facingDegrees,
-                      facingLabel: widget.facingLabel,
+                      palaces: widget.palaces ?? planPalaces(currentHome.value),
+                      facing: widget.facingDegrees ?? currentHome.value.facingDegrees,
+                      facingLabel: widget.facingLabel ??
+                          '${currentHome.value.facingDegrees.toStringAsFixed(0)}° ${directionShortLabel(currentHome.value)}',
                       selected: widget.selected,
                     ),
                   ),

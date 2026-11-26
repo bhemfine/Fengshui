@@ -35,3 +35,9 @@ GitHub web upload takes max 100 files and 25 MB per file per upload, and keeps f
 - New packages: webview_flutter, path_provider, image_picker.
 - Examples: only Chua Boon Eng (main user) and Chou Jiahui Victoria (partner). BaZi, compatibility, house check and quick check verdicts are computed by the engine (`lib/data/example_charts.dart`).
 - Site status (tested Nov 2026): 99.co pages read with a plain fetch. PropertyGuru answers a plain fetch with a Cloudflare 403, including `/l/<id>` (no redirect is sent before the challenge), so the phone falls back to the WebView. HDB Flat Portal is a JavaScript app with no public JSON API found, so it always uses the WebView.
+
+## Your year, lucky lists and year afflictions (v4, Nov 2026)
+- Engine: `engine/lib/src/zodiac_year.dart` (Na Yin 60 table, `zodiacForBirth`, `taiSuiReading`, `yearAfflictions`) and `engine/lib/src/lucky.dart` (`luckyProfile`: colours, He Tu numbers, Kua directions with annual cautions, crystals and rituals by tag). Fixed `Mountain.centreDegree` (壬 345°, 子 0°).
+- Content: `forecast_templates.json`, `crystals.json`, `rituals.json` bundled byte-identical under `flutter_app/assets/content/` (engine and app tests fail on drift). Loaded by `lib/data/content_repo.dart`.
+- App: `lib/data/your_year.dart`, `lib/data/current_home.dart` (in-memory home from the last quick check, labelled example otherwise), `widgets/year_afflictions_card.dart`. Today, Month, Your year, BaZi and compatibility screens call the engine; `samplePalaces` and the leftover sample almanac data are gone.
+- Checked on the box (Flutter 3.50.1): `flutter analyze` 0 errors/warnings (59 info), `flutter test` 75 pass, engine `dart test` 96 pass.

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkstone_engine/inkstone_engine.dart';
 
+import 'package:inkstone/data/current_home.dart';
 import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/quick_check.dart';
 import 'package:inkstone/router.dart';
@@ -123,6 +124,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
       people: _people,
       home: _home.isEmpty ? null : _home,
     );
+    useAsCurrentHome(input);
     context.push(Routes.quickCheckResult, extra: input);
   }
 

@@ -1,0 +1,123 @@
+import 'package:flutter/foundation.dart';
+import 'package:inkstone_engine/inkstone_engine.dart';
+
+import 'quick_check.dart';
+import 'sample_data.dart' show Palace;
+
+/// The home the floor reading and house check use. Memory only, never saved.
+/// Starts as an example home; the quick check result replaces it.
+class CurrentHome {
+  const CurrentHome({
+    required this.label,
+    required this.facingDegrees,
+    required this.completionYear,
+    required this.period,
+    this.example = false,
+  });
+  final String label;
+  final double facingDegrees;
+  final int completionYear;
+  final int period;
+  final bool example;
+
+  FlyingStarChart get chart => natalChart(facingDegrees, period);
+  FacingReading get facing => facingFromDegrees(facingDegrees);
+}
+
+const exampleHome = CurrentHome(
+  label: 'Example 4-room HDB, Tampines',
+  facingDegrees: 142,
+  completionYear: 2012,
+  period: 8,
+  example: true,
+);
+
+final currentHome = ValueNotifier<CurrentHome>(exampleHome);
+
+/// Grid order used by the plan widget: NW, N, NE, W, Centre, E, SW, S, SE.
+const planGridOrder = [
+  Direction.nw, Direction.n, Direction.ne,
+  Direction.w, Direction.centre, Direction.e,
+  Direction.sw, Direction.s, Direction.se,
+];
+
+/// Is [star] timely (current or next period star) for [period]?
+bool isTimelyStar(int star, int period) => star == period || star == period % 9 + 1;
+
+/// Short rule-based tip for one palace of the natal chart.
+String palaceTip(PalaceStars p, int period) {
+  final m = p.mountain, w = p.facing;
+  if (m == 5 || w == 5) return 'Five Yellow in the chart: keep this area quiet; avoid heavy use or knocking.';
+  if (isTimelyStar(w, period) && isTimelyStar(m, period)) {
+    return 'Both stars timely: strong area for the door, living room, desk or bed.';
+  }
+  if (isTimelyStar(w, period)) return 'Timely water star $w: good for the door, living room or an active desk.';
+  if (isTimelyStar(m, period)) return 'Timely mountain star $m: good for a bed, a quiet room or tall furniture.';
+  if (m == 2 || w == 2) return 'Two Black (illness star): keep it calm and tidy; avoid long sleep here.';
+  if ({3, 7}.contains(m) || {3, 7}.contains(w)) return 'Quarrel or loss star (3 or 7): keep it tidy; a calm room suits it.';
+  return 'Ordinary area. Use it as you like and keep it clear.';
+}
+
+/// Engine stars for the plan widget, in [planGridOrder].
+List<Palace> planPalaces(CurrentHome h) {
+  final c = h.chart;
+  return [
+    for (final d in planGridOrder)
+      Palace(
+        direction: directionLong[d]!,
+        mountain: c.palaces[d]!.mountain,
+        water: c.palaces[d]!.facing,
+        tip: palaceTip(c.palaces[d]!, c.period),
+      ),
+  ];
+}
+
+
+/// Rule-based placement tips from the chart and this year's afflictions.
+List<(String, String, bool)> placementTips(CurrentHome h, int year) {
+  final c = h.chart;
+  final p = c.period;
+  final ps = [for (final d in planGridOrder) if (d != Direction.centre) (d, c.palaces[d]!)];
+  int rank(int star) => star == p ? 2 : (star == p % 9 + 1 ? 1 : 0);
+  final bestWater = (ps.toList()..sort((a, b) => rank(b.$2.facing).compareTo(rank(a.$2.facing)))).first;
+  final bestMountain = (ps.toList()..sort((a, b) => rank(b.$2.mountain).compareTo(rank(a.$2.mountain)))).first;
+  final fives = [for (final (d, s) in ps) if (s.mountain == 5 || s.facing == 5) d];
+  final a = yearAfflictions(year);
+  return [
+    (directionLong[bestWater.$1]!, 'water star ${bestWater.$2.facing}: living area, door side or desk.', true),
+    (directionLong[bestMountain.$1]!, 'mountain star ${bestMountain.$2.mountain}: bed head or a quiet room.', true),
+    if (fives.isNotEmpty) (fives.map((d) => directionLong[d]!).join(', '), 'Five Yellow in the chart: keep quiet.', false),
+    (
+      '$year renovation',
+      'avoid starting works in the ${directionLong[a.taiSui]} (Tai Sui), ${directionLong[a.yearBreaker]} (Year Breaker), '
+          '${directionLong[a.threeKillings]} (Three Killings) and ${directionLong[a.fiveYellow]} (Five Yellow).',
+      false
+    ),
+  ];
+}
+
+String directionShortLabel(CurrentHome h) => directionShort[h.facing.direction]!;
+
+/// Which of the year's afflictions sit in [d].
+List<String> yearAfflictionsHits(Direction d, int year) {
+  final a = yearAfflictions(year);
+  return [
+    if (a.taiSui == d) 'Tai Sui',
+    if (a.yearBreaker == d) 'the Year Breaker',
+    if (a.threeKillings == d) 'the Three Killings',
+    if (a.fiveYellow == d) 'the Five Yellow',
+  ];
+}
+
+/// The floor reading follows the last quick check (memory only).
+/// With two facings ("not sure"), the main door reading is used.
+void useAsCurrentHome(QuickCheckInput q) {
+  final deg = q.facings[FacingMethod.mainDoor] ?? q.facings.values.first;
+  currentHome.value = CurrentHome(
+    label: q.home?.summary.isNotEmpty == true ? q.home!.summary : propertyLabel[q.type]!,
+    facingDegrees: deg,
+    completionYear: q.completionYear,
+    period: q.period.period,
+    example: q.example,
+  );
+}

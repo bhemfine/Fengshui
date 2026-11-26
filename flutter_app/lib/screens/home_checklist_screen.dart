@@ -145,6 +145,7 @@ class _HomeChecklistScreenState extends State<HomeChecklistScreen> {
         ),
         if (_type == PropertyType.hdb) _Note(text: list.notes['hdb_cures'] ?? ''),
         if (_year == 2026 && list.notes['reno_2026'] != null) _Note(text: list.notes['reno_2026']!, care: true),
+        YearAfflictionsCard(key: const Key('hc-afflictions'), year: _year, title: 'Reno tips: $_year directions to respect'),
         for (final s in list.sections) ..._section(s, items.where((i) => i.section == s.id).toList()),
         if (list.notes['myths'] != null) _Note(text: list.notes['myths']!),
         const SizedBox(height: 14),

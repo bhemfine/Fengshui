@@ -405,6 +405,14 @@ Paste a listing link in the House tab or the quick check, or share it to Inkston
 - **Privacy.** Agent and seller names, phone numbers, prices and descriptions are never stored; the description is scanned in memory only for the postal code, unit, floor words and facing hint. Nothing is logged. Only what the user saves (the floor plan) is kept.
 - **Pre-fill.** "Use in quick check" fills the property type, TOP year, address, postal code, floor and unit. The facing is never pre-filled. (The floor-element note from the Singapore specifics above is not built yet.)
 
+### Your year, lucky lists and year afflictions (v4, offline)
+
+- **Zodiac year with three elements.** Year stem element (what most calculators name, e.g. 庚午 = Metal Horse), the animal's fixed branch element (Horse = Fire) and the Na Yin (庚午 = 路旁土 Roadside Earth), with a one-line explainer that all three are right. Uses the Li Chun solar year.
+- **Tai Sui status** for any year: 本命 (own year), 自刑, 冲, 刑, 害, 破 (offend) and 六合, 三合 (harmony). **Year afflictions**: Tai Sui direction (year branch), Year Breaker (opposite), Three Killings (申子辰 S, 寅午戌 N, 亥卯未 W, 巳酉丑 E), plus the annual 5 and 2 stars. Shown on the home result, quick check result, floor reading and home checklist (reno tips).
+- **Your year screen** (`/yearly`, also linked from Today and BaZi): forecast text, dos, avoids, lucky months and Tai Sui note from the bundled `content/forecast_templates.json` (2026 and 2027).
+- **Lucky / unlucky lists, rule-based**: favourable and clashing elements from the BaZi (heuristic), colours by element, He Tu numbers (Water 1/6, Fire 2/7, Wood 3/8, Metal 4/9, Earth 5/0), Kua directions minus the year's afflicted sectors, and crystals / rituals from `content/crystals.json` and `content/rituals.json` by element and tag. The method is stated on screen. Hour-based items are shown as unavailable when the birth time is unknown.
+- **Engine everywhere**: Today, Month, Year, BaZi and compatibility call the engine for the example couple; the floor reading and HDB plan compute Flying Stars for the home's period and facing (last quick check, kept in memory only; otherwise a labelled example).
+
 ### Quick check: home facing and Kua for one or two people (Phase 1, offline)
 
 A fast way to answer "does this HDB flat or house suit me and my partner?" before any maps or AI features. It runs fully on the phone and stores nothing beyond the local profiles. The fuller checks for HDB, condo and landed homes, including layout, surroundings, buying-stage questions and renovation tips, are in [Home checklist by property type](#home-checklist-by-property-type-hdb-condo-landed) in Module 2.

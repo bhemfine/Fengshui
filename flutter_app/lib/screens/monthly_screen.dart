@@ -1,47 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:inkstone/data/sample_data.dart';
+import 'package:inkstone_engine/inkstone_engine.dart' as eng;
+import 'package:inkstone/data/content_repo.dart';
+import 'package:inkstone/data/household.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
 import 'package:inkstone/widgets/widgets.dart';
 
-class MonthlyScreen extends StatelessWidget {
-  const MonthlyScreen({super.key});
+const _monthNames = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
 
-  void _openDay(BuildContext context, int d) {
-    final g = monthGoodDays.contains(d);
-    final c = monthCareDays.contains(d);
-    final txt = g
-        ? 'A good day for signing papers and travel.'
-        : c
-            ? 'A take-care day: rest, and avoid big purchases.'
-            : 'An ordinary day. Keep to your usual plans.';
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
-        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('$d November 2026', style: InkText.h2),
-          const SizedBox(height: 6),
-          Text(txt, style: InkText.body()),
-          const SizedBox(height: 8),
-          const Wrap(spacing: 8, children: [ExampleBadge(), SourceBadge(label: SourceBadge.calculated)]),
-          const SizedBox(height: 12),
-          GhostButton(label: 'Close', onPressed: () => Navigator.of(ctx).pop()),
-        ]),
-      ),
-    );
-  }
+/// The month for the main user: each day's score from the engine (almanac + BaZi).
+class MonthlyScreen extends StatelessWidget {
+  const MonthlyScreen({super.key, this.now});
+  final DateTime? now;
+
+  static const goodScore = 70;
+  static const careScore = 40;
 
   @override
   Widget build(BuildContext context) {
+    final n = now ?? DateTime.now();
+    final me = mainUser;
+    final chart = eng.computeBazi(birthLocal: me.birth, utcOffsetHours: 8, hourKnown: me.timeKnown);
+    final days = DateTime(n.year, n.month + 1, 0).day;
+    final blanks = DateTime(n.year, n.month, 1).weekday % 7; // Sunday-start grid
+    final scores = [for (var d = 1; d <= days; d++) eng.dailyScore(chart, DateTime(n.year, n.month, d))];
+    final monthName = '${_monthNames[n.month - 1]} ${n.year}';
+    final solarIdx = eng.solarMonthIndex(DateTime.utc(n.year, n.month, n.day, 4));
+    final liChunYear = eng.liChunYear(DateTime.utc(n.year, n.month, n.day, 4));
+    final monthStar = eng.monthlyCentreStar(liChunYear, solarIdx);
     const wd = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+    void openDay(int d) {
+      final date = DateTime(n.year, n.month, d);
+      final a = eng.computeAlmanac(date);
+      final sc = scores[d - 1];
+      final txt = sc >= goodScore
+          ? 'A good day for you (score $sc).'
+          : sc <= careScore
+              ? 'A take-care day (score $sc): rest, and avoid big purchases.'
+              : 'An ordinary day (score $sc). Keep to your usual plans.';
+      showModalBottomSheet<void>(
+        context: context,
+        builder: (ctx) => Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('$d ${_monthNames[n.month - 1]} ${n.year} · ${a.dayPillar.chinese}', style: InkText.h2),
+            const SizedBox(height: 6),
+            Text(txt, style: InkText.body()),
+            Text('Good for: ${a.goodFor.isEmpty ? '—' : a.goodFor.join(', ').replaceAll('_', ' ')}', style: InkText.body(size: 15)),
+            Text('Avoid: ${a.avoid.isEmpty ? '—' : a.avoid.join(', ').replaceAll('_', ' ')}', style: InkText.body(size: 15)),
+            Text('Clashes with ${a.clashBranch.animal}.', style: InkText.small),
+            const SizedBox(height: 8),
+            const Wrap(spacing: 8, children: [SourceBadge(label: SourceBadge.calculated)]),
+            const SizedBox(height: 12),
+            GhostButton(label: 'Close', onPressed: () => Navigator.of(ctx).pop()),
+          ]),
+        ),
+      );
+    }
+
     return InkstoneScaffold(
       children: [
         _Seg(selected: 1, onDay: () => context.go(Routes.today), onYear: () => context.go(Routes.yearly)),
         const SizedBox(height: 10),
-        const ScreenTitle(title: todayMonthYear, example: true),
+        ScreenTitle(title: monthName, subtitle: 'for ${shortName(me)} · day scores from your chart'),
         const SizedBox(height: 4),
         Wrap(crossAxisAlignment: WrapCrossAlignment.center, spacing: 6, children: [
           Container(width: 8, height: 8, decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.good)),
@@ -62,47 +89,77 @@ class MonthlyScreen extends StatelessWidget {
           children: [
             for (final w in wd)
               Center(child: Text(w, style: InkText.body(size: 12, color: AppColors.gold2))),
-            for (var i = 0; i < monthLeadingBlanks; i++) const SizedBox.shrink(),
-            for (var d = 1; d <= monthDays; d++) _DayCell(day: d, onTap: () => _openDay(context, d)),
+            for (var i = 0; i < blanks; i++) const SizedBox.shrink(),
+            for (var d = 1; d <= days; d++)
+              _DayCell(
+                day: d,
+                monthName: _monthNames[n.month - 1],
+                good: scores[d - 1] >= goodScore,
+                care: scores[d - 1] <= careScore,
+                today: d == n.day,
+                onTap: () => openDay(d),
+              ),
           ],
         ),
         const SizedBox(height: 12),
-        MidnightButton(label: 'Open a day', onPressed: () => _openDay(context, todayDay)),
-        InkstoneCard(
-          title: 'Month outlook',
-          source: SourceBadge.calculated,
-          child: Column(children: [
-            for (var i = 0; i < monthOutlook.length; i++)
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 11),
-                decoration: BoxDecoration(
-                    border: i == 0 ? null : const Border(top: BorderSide(color: AppColors.hairline))),
-                child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  SizedBox(width: 70, child: Text(monthOutlook[i].$1, style: InkText.body(weight: FontWeight.w600))),
-                  const SizedBox(width: 12),
-                  Expanded(child: Text(monthOutlook[i].$2, style: InkText.body(height: 1.4))),
-                ]),
-              ),
-          ]),
+        MidnightButton(label: 'Open today', onPressed: () => openDay(n.day)),
+        FutureBuilder<AppContent>(
+          future: ContentRepo.load(),
+          builder: (context, snap) {
+            final m = snap.data?.month(solarIdx);
+            final dm = chart.dayMaster.element.name;
+            return InkstoneCard(
+              title: m == null ? 'Month outlook' : 'Month outlook · ${m.zh} ${m.en}',
+              source: 'Written guide + calculated',
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                if (m != null) ...[
+                  Text(m.theme, style: InkText.body(height: 1.45)),
+                  if (m.focus[dm] != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Text('For your ${cap1(dm)} Day Master: ${m.focus[dm]}', style: InkText.body(height: 1.45)),
+                    ),
+                  const SizedBox(height: 8),
+                  AlmanacList(goodFor: m.dos.take(4).toList(), avoid: m.avoids.take(4).toList()),
+                ],
+                const SizedBox(height: 6),
+                Text('Monthly Flying Star in the centre: $monthStar. Solar months turn at the jie terms, not the 1st.',
+                    style: InkText.small),
+              ]),
+            );
+          },
         ),
       ],
     );
   }
 }
 
+String cap1(String s) => s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+
 class _DayCell extends StatelessWidget {
-  const _DayCell({required this.day, required this.onTap});
+  const _DayCell({
+    required this.day,
+    required this.monthName,
+    required this.good,
+    required this.care,
+    required this.today,
+    required this.onTap,
+  });
   final int day;
+  final String monthName;
+  final bool good;
+  final bool care;
+  final bool today;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final g = monthGoodDays.contains(day);
-    final c = monthCareDays.contains(day);
-    final t = day == todayDay;
+    final g = good;
+    final c = care;
+    final t = today;
     return Semantics(
       button: true,
-      label: '$day November${g ? ', good day' : ''}${c ? ', take care' : ''}${t ? ', today' : ''}',
+      label: '$day $monthName${g ? ', good day' : ''}${c ? ', take care' : ''}${t ? ', today' : ''}',
       child: Material(
         color: t ? AppColors.gold.withValues(alpha: 0.14) : const Color(0x8C0B1026),
         shape: RoundedRectangleBorder(

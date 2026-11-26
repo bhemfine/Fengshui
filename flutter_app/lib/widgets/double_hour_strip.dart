@@ -6,7 +6,7 @@ import '../theme/typography.dart';
 
 /// Horizontal strip of 12 double hours; current hour outlined and scrolled into view.
 class DoubleHourStrip extends StatefulWidget {
-  const DoubleHourStrip({super.key, this.hours = sampleDoubleHours, this.currentIndex = 3});
+  const DoubleHourStrip({super.key, required this.hours, required this.currentIndex});
 
   final List<DoubleHour> hours;
   final int currentIndex;
