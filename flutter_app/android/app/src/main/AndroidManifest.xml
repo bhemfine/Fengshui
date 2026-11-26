@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Map tiles and address search for the map bearing. No location permission. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="Inkstone"
         android:name="${applicationName}"

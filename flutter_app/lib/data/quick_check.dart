@@ -50,6 +50,6 @@ final exampleQuickCheck = QuickCheckInput(
   completionYear: 2012,
   method: FacingMethod.unsure,
   facings: const {FacingMethod.mainDoor: 142, FacingMethod.balcony: 322},
-  people: savedProfiles,
+  people: [profileNamed('Mei Lin'), profileNamed('Wei Hao')],
   example: true,
 );

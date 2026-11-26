@@ -26,6 +26,7 @@ import 'screens/quick_check_screen.dart';
 import 'screens/quick_check_result_screen.dart';
 import 'screens/direction_calculator_screen.dart';
 import 'screens/home_checklist_screen.dart';
+import 'screens/map_bearing_screen.dart';
 import 'data/quick_check.dart';
 import 'widgets/bottom_nav.dart';
 import 'widgets/transitions.dart';
@@ -57,6 +58,7 @@ abstract final class Routes {
   static const quickCheckResult = '/quick-check-result';
   static const directionCalculator = '/direction-calculator';
   static const homeChecklist = '/home-checklist';
+  static const mapBearing = '/map-bearing';
 }
 
 GoRoute _r(String path, Widget child) => GoRoute(
@@ -93,6 +95,7 @@ final GoRouter appRouter = GoRouter(
           ),
           _r(Routes.directionCalculator, const DirectionCalculatorScreen()),
           _r(Routes.homeChecklist, const HomeChecklistScreen()),
+          _r(Routes.mapBearing, const MapBearingScreen()),
         ]),
         StatefulShellBranch(routes: [
           _r(Routes.readings, const ReadingsScreen()),

@@ -27,6 +27,21 @@ class KuaPerson {
 
 /// Saved household profiles (example data until local profiles ship).
 final savedProfiles = <KuaPerson>[
+  // Example couple supplied for testing (birth times unknown).
+  KuaPerson(
+      name: 'Chua Boon Eng',
+      birth: DateTime(1990, 6, 26, 12),
+      gender: Gender.male,
+      saved: true,
+      example: true,
+      timeKnown: false),
+  KuaPerson(
+      name: 'Chou Jiahui Victoria',
+      birth: DateTime(1991, 10, 28, 12),
+      gender: Gender.female,
+      saved: true,
+      example: true,
+      timeKnown: false),
   KuaPerson(
       name: 'Mei Lin', birth: DateTime(1992, 3, 12, 8, 15), gender: Gender.female, saved: true, example: true),
   KuaPerson(
@@ -39,3 +54,5 @@ final savedProfiles = <KuaPerson>[
 ];
 
 String dirs(Iterable<DirectionInfo> list) => list.map((d) => directionShort[d.direction]).join(', ');
+
+KuaPerson profileNamed(String name) => savedProfiles.firstWhere((p) => p.name == name);

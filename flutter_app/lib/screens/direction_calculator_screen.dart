@@ -131,12 +131,22 @@ class _DirectionCalculatorScreenState extends State<DirectionCalculatorScreen> {
             title: 'Map bearing',
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
-                'Coming soon. You will drop a pin on the block and drag an arrow out of the opening. '
-                'This needs the map service (through our no-logging proxy), which is not live yet.',
+                'Search the postal code or block, drop a pin on the door or opening, then tap the way it looks out. '
+                'The bearing is worked out on your phone.',
                 style: InkText.body(),
               ),
-              const SizedBox(height: 8),
-              Text('For now, use the compass on site or type the degrees.', style: InkText.small),
+              const SizedBox(height: 6),
+              Text('Uses the internet for map tiles and address search only. No location access, nothing saved.',
+                  style: InkText.small),
+              const SizedBox(height: 12),
+              MidnightButton(
+                label: 'Open the map',
+                icon: Icons.map_outlined,
+                onPressed: () async {
+                  final d = await context.push<double>(Routes.mapBearing);
+                  if (d != null && mounted) _use(d);
+                },
+              ),
             ]),
           ),
         if (_mode == _Mode.degrees) ..._typed(),

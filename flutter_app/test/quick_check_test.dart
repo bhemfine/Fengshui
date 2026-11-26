@@ -27,10 +27,26 @@ void main() {
     final k = computeKua(DateTime(1992, 3, 12, 8, 15), Gender.female);
     expect(k.kua, 7);
     expect(meiLin.kua, k.kua);
-    expect(savedProfiles.first.kua.kua, 7);
-    expect(savedProfiles[1].kua.kua, 2); // Wei Hao, male 1989
+    expect(profileNamed('Mei Lin').kua.kua, 7);
+    expect(profileNamed('Wei Hao').kua.kua, 2); // male 1989
     expect(kuaGoodDirections, dirs(k.lucky));
     expect(kuaCareDirections, dirs(k.unlucky));
+  });
+
+  test('example couple profiles: Boon Eng Kua 1 (East), Victoria Kua 6 (West)', () {
+    final b = profileNamed('Chua Boon Eng').kua;
+    final v = profileNamed('Chou Jiahui Victoria').kua;
+    expect((b.kua, b.eastGroup, dirs(b.lucky)), (1, true, 'SE, E, S, N'));
+    expect((v.kua, v.eastGroup, dirs(v.lucky)), (6, false, 'W, NE, SW, NW'));
+    expect(profileNamed('Chua Boon Eng').timeKnown, isFalse);
+  });
+
+  testWidgets('quick check lists the example couple', (tester) async {
+    await _open(tester, Routes.quickCheck);
+    final list = find.byType(Scrollable).first;
+    await tester.scrollUntilVisible(find.text('Chua Boon Eng (example)'), 300, scrollable: list);
+    expect(find.text('Chua Boon Eng (example)'), findsOneWidget);
+    expect(find.text('Chou Jiahui Victoria (example)'), findsOneWidget);
   });
 
   testWidgets('example result: Kua and verdicts for both facings', (tester) async {

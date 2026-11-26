@@ -16,6 +16,10 @@ dependencies:
     path: ../engine
   # Compass for the direction calculator (accelerometer + magnetometer).
   sensors_plus: ^7.1.1
+  # Map bearing: OneMap / OpenStreetMap / Esri tiles, keyless. No location permission.
+  flutter_map: ^8.3.2
+  latlong2: ^0.10.1
+  http: ^1.6.0
   # Small on-device key/value store (checklist answers only; never synced).
   shared_preferences: ^2.5.6
   # TODO(phase-2): local encrypted storage

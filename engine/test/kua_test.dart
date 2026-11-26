@@ -125,4 +125,23 @@ void main() {
       expect(r.lucky.map((d) => d.direction).toSet(), r.eastGroup ? east : west);
     }
   });
+
+  test('example couple: Chua Boon Eng and Chou Jiahui Victoria', () {
+    final boonEng = computeKua(DateTime(1990, 6, 26, 12), Gender.male);
+    expect(boonEng.kua, 1);
+    expect(boonEng.eastGroup, isTrue);
+    expect(boonEng.lucky.map((d) => d.direction),
+        [Direction.se, Direction.e, Direction.s, Direction.n]);
+    final victoria = computeKua(DateTime(1991, 10, 28, 12), Gender.female);
+    expect(victoria.kua, 6);
+    expect(victoria.eastGroup, isFalse);
+    expect(victoria.lucky.map((d) => d.direction),
+        [Direction.w, Direction.ne, Direction.sw, Direction.nw]);
+    // Birth time unknown: any hour that day gives the same answer.
+    for (final h in [0, 23]) {
+      expect(computeKua(DateTime(1990, 6, 26, h), Gender.male).kua, 1);
+      expect(computeKua(DateTime(1991, 10, 28, h), Gender.female).kua, 6);
+    }
+    expect(sharedGoodDirections([boonEng, victoria]), isEmpty);
+  });
 }

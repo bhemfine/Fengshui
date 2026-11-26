@@ -23,3 +23,8 @@ GitHub web upload takes max 100 files and 25 MB per file per upload, and keeps f
 - App routes: `/quick-check`, `/quick-check-result`, `/direction-calculator`, `/home-checklist` (House tab; entry cards on Floor upload and House check).
 - Storage: checklist answers and last property type only, in SharedPreferences on the phone. Android backup and device transfer are off (`allowBackup=false`, `data_extraction_rules.xml`). Quick-entry birthdays are never stored.
 - Checked on the PC: `flutter analyze` 0 errors/warnings (50 info: material.dart deprecation), `flutter test` 55 pass, engine `dart test` 49 pass, `flutter build apk --release --split-per-abi` (debug-key signed).
+
+## Map bearing and example couple (Nov 2026)
+- `/map-bearing` (from Direction calculator → Map bearing): flutter_map with OneMap / OSM / Esri satellite tiles, Nominatim address search (keyless), north-up, pin + facing point → bearing (`engine/lib/src/geo.dart`). INTERNET permission added to the main manifest; no location permission.
+- Example profiles: Chua Boon Eng (26 Jun 1990, M, Kua 1 East) and Chou Jiahui Victoria (28 Oct 1991, F, Kua 6 West), plus Mei Lin and Wei Hao.
+- Checked on the box (Flutter 3.50.1): `flutter analyze` 0 errors/warnings (52 info, material.dart deprecation), `flutter test` 61 pass, engine `dart test` 54 pass.
