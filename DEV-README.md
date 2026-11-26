@@ -16,3 +16,10 @@ GitHub web upload takes max 100 files and 25 MB per file per upload, and keeps f
 1. Unzip each part zip on your computer.
 2. In github.com/bhemfine/Fengshui choose **Add file → Upload files**, drag the unzipped folder (e.g. `flutter_app`) into the page, commit.
 3. Repeat per part. `flutter_app` is split into two zips (`flutter_app-1` = lib/test/config, `flutter_app-2` = android/) so each upload stays under 100 files.
+
+## Quick check, direction calculator and home checklist (Nov 2026)
+- Engine: `engine/lib/src/home_facing.dart` (degrees → 8 directions / 24 Mountains with 3° line-facing flag, period from completion year, couple match, tilt-compensated compass maths) and `engine/lib/src/home_checklist.dart` (rule model + evaluator). Kua uses the PLAN.md mod-9 formula on the Li Chun solar year.
+- Content: `content/home_checklist.json` (76 rules, tagged classical / Black Hat / popular / practical; HDB-safe cures). A byte-identical copy is bundled at `flutter_app/assets/content/home_checklist.json`; an engine test fails if they drift.
+- App routes: `/quick-check`, `/quick-check-result`, `/direction-calculator`, `/home-checklist` (House tab; entry cards on Floor upload and House check).
+- Storage: checklist answers and last property type only, in SharedPreferences on the phone. Android backup and device transfer are off (`allowBackup=false`, `data_extraction_rules.xml`). Quick-entry birthdays are never stored.
+- Checked on the PC: `flutter analyze` 0 errors/warnings (50 info: material.dart deprecation), `flutter test` 55 pass, engine `dart test` 49 pass, `flutter build apk --release --split-per-abi` (debug-key signed).

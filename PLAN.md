@@ -421,7 +421,7 @@ It then asks which facing method to use: the main door, the balcony or living-ro
   - Female born 12 Mar 1992 gives Kua 7. This fixes the sample profile, which wrongly shows 1.
   - Male born 1992 gives 8.
   - Male born 2000 gives 9.
-  - Female born 2 Feb 1990 counts as 1989 and gives Kua 8.
+  - Female born 2 Feb 1990 counts as solar year 1989 and gives Kua 4. (A female born after Li Chun 1990 gives Kua 8.)
 - East group is 1, 3, 4 and 9. West group is 2, 6, 7 and 8.
 - Four good directions (Sheng Qi, Tian Yi, Yan Nian, Fu Wei):
 
