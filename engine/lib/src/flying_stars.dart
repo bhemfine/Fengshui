@@ -13,7 +13,8 @@ class Mountain {
 
   /// 0 = Earth (地元 Di Yuan), 1 = Heaven (天元 Tian Yuan), 2 = Man (人元 Ren Yuan).
   int get sub => index % 3;
-  double get centreDegree => (index * 15.0) % 360.0;
+  /// 壬 Ren = 345°, 子 Zi = 0°, 癸 Gui = 15°, ...
+  double get centreDegree => (index * 15.0 - 15.0) % 360.0;
   String get code => '${palace.name.toUpperCase()}${sub + 1}';
 }
 
