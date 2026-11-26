@@ -42,7 +42,7 @@ void main() {
     await tester.scrollUntilVisible(find.text('Wei Hao · Kua 2'), 300, scrollable: list);
     expect(find.text('Wei Hao · Kua 2'), findsOneWidget);
     await tester.scrollUntilVisible(find.text('Shared good directions'), 300, scrollable: list);
-    expect(find.textContaining('NW, SW, NE, W'), findsWidgets);
+    expect(find.textContaining('NE, SW, W, NW: good for both'), findsOneWidget);
   });
 
   testWidgets('example result shows the facing verdicts', (tester) async {
@@ -67,18 +67,23 @@ void main() {
 
   testWidgets('checklist: answering flags an issue and saves locally', (tester) async {
     await _open(tester, Routes.homeChecklist);
-    await tester.pump(const Duration(milliseconds: 500));
+    // Asset loading is real I/O: let it finish outside the fake clock.
+    for (var i = 0; i < 20 && find.text('Flagged issues · 0').evaluate().isEmpty; i++) {
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 100)));
+      await tester.pump();
+    }
     expect(find.text('Flagged issues · 0'), findsOneWidget);
     expect(find.textContaining('never moved'), findsOneWidget);
     if (DateTime.now().year == 2026) {
       expect(find.textContaining('2026 renovation note'), findsWidgets);
     }
     // First item in "All homes" is the shape question (flag on "No").
+    final list = find.byType(Scrollable).first;
+    await tester.scrollUntilVisible(find.text('No').first, 200, scrollable: list);
     await tester.tap(find.text('No').first);
     await tester.pump();
     expect(find.text('Flagged issues · 1'), findsOneWidget);
-    await tester.pump(const Duration(milliseconds: 100));
-    final saved = await LocalStore.instance.loadAnswers(PropertyType.hdb);
+    final saved = (await tester.runAsync(() => LocalStore.instance.loadAnswers(PropertyType.hdb)))!;
     expect(saved['shape_regular'], Answer.no);
   });
 }
