@@ -77,7 +77,7 @@ void main() {
       expect(d.completionYear, 2001);
       expect(d.completionApprox, isFalse);
       expect(d.floorLevel, 'High');
-      expect(d.facingHint, 'Listing: North');
+      expect(d.facingHint, 'North');
       expect(d.floorPlanUrls, hasLength(1));
       expect(d.floorPlanUrls.first, startsWith('https://pic2.99.co/'));
       expect(d.floorPlanUrls.first, isNot(contains('text=')));

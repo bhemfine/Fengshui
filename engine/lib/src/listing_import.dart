@@ -483,7 +483,7 @@ String? facingHintIn(String s) {
     final m = RegExp(r'^\s*facing\s*[:\-]?\s*(' + dir + r')\s*$', caseSensitive: false, multiLine: true).firstMatch(s);
     if (m != null) {
       final d = _normaliseDirectionWord(m.group(1)!);
-      if (d != null) hints.add('Listing: $d');
+      if (d != null) hints.add(d);
     }
   }
   return hints.isEmpty ? null : hints.join(' · ');
@@ -705,7 +705,7 @@ void _applyRows(_PageFacts f, Map<String, String> rows) {
         _applyFloorWords(f, v);
       case 'facing':
         final d = _normaliseDirectionWord(v);
-        if (d != null) f.facingHint ??= 'Listing: $d';
+        if (d != null) f.facingHint ??= d;
       case 'property type' || 'type':
         f.typeLabel ??= v;
         f.type ??= _typeFromWords(v);
