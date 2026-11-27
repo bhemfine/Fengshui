@@ -32,6 +32,7 @@ This document is the developer-ready specification for GitHub user **bhemfine** 
 19. [Feature rollout](#19-feature-rollout)
 20. [Risks and open decisions](#20-risks-and-open-decisions)
 21. [MVP (Phase 1) build checklist](#21-mvp-phase-1-build-checklist)
+22. [Commercial launch readiness](#22-commercial-launch-readiness)
 
 ---
 
@@ -124,6 +125,8 @@ Module 10 (master teleconsulting), built later, adds a small self-hosted server 
 
 ## 4. Module 1: Personal profile and chart engine
 
+> **Status (27 Nov 2026, `830dff7`):** Engine **built** (BaZi, Kua, Flying Stars natal and annual, almanac, Na Yin, Tai Sui / Year Breaker / Three Killings, lucky lists). User-owned profiles **not built** — the app hardcodes the example couple Chua Boon Eng and Chou Jiahui Victoria (`flutter_app/lib/data/household.dart`). Birth “Save” does not persist. Hour pillar is omitted when birth time is unknown. Encrypted database **not built** (SharedPreferences for checklist answers only). Swiss Ephemeris is not in the code (solar terms are plain Dart). Equation of time and Zi Wei Dou Shu are **not built**. Western signs are **not built**.
+
 The foundation. Users enter birth date, time and place for themselves and family members, and every other feature personalises from it. All of this stays on the phone.
 
 | | |
@@ -206,6 +209,8 @@ If birth time is unknown, still calculate year, month and day pillars, Kua and z
 ---
 
 ## 5. Module 2: Home and floor plan analyser
+
+> **Status (27 Nov 2026, `830dff7`):** Checklist **built** and persisted on the phone. Flying Stars tips **built** (engine). Floor-plan image can be saved from listing import. Home-tab photograph / camera is a **demo stub**. The facing stepper on that screen is labelled example and does not update the current home. “Read my home” opens a stylised 4-room grid, not an overlay on the real plan. No AI room detection, no manual room markup on a photo. `currentHome` is memory-only and resets after a restart. Encrypted plan storage **not built** (plain files in the app folder; Android backup is already off).
 
 Upload a floor plan or photos, set the facing direction, and get a room-by-room plan of what to place, move or fix. Plans, photos and findings are stored only on the phone.
 
@@ -377,6 +382,8 @@ The analyser and the house-hunting score use the same checklist. It applies to H
 
 ## 6. Module 3: House hunting with Google Maps
 
+> **Status (27 Nov 2026, `830dff7`):** Core house-check **built** without Google Maps: quick check, compass direction calculator, map bearing (OneMap / OSM / Esri tiles + Nominatim search), and listing import from PropertyGuru, 99.co and the HDB Flat Portal (the human still picks facing). Floor-element note **not built**. Licensed or self-hosted map tiles and geocoding are **required before a commercial launch** — the public OSM tile server, public Nominatim, and Esri World Imagery are not licensed for production apps. OneMap search already needs a token. Compass, map and WebView are untested on a real phone. Listing-page import may conflict with those sites’ terms; get legal advice before a public paid release.
+
 Drop a pin or paste a listing address and get a feng shui score for the home and for each household member. Shortlists and reports are saved on the phone. Maps and Street View go through the proxy.
 
 ### How it works
@@ -542,6 +549,8 @@ The proxy does not store addresses, coordinates or images. The app does not embe
 
 ## 7. Module 4: Relationships and compatibility
 
+> **Status (27 Nov 2026, `830dff7`):** Engine-based Kua and zodiac comparison **built** for the example couple only. No general couple picker, no Zi Wei marriage palace, no Western synastry. “Share result” is a snack stub. The screen is marked example.
+
 | | |
 | --- | --- |
 | **Who** | Partner, crush, spouse, business partner, boss, child, or a friend |
@@ -595,6 +604,8 @@ Both people are entered as local profiles. Charts come from the Module 1 engine 
 ---
 
 ## 8. Module 5: Daily, monthly and yearly forecasts
+
+> **Status (27 Nov 2026, `830dff7`):** Today, Month and Your Year **built** and offline (almanac + bundled templates + lucky colours, numbers and items). Yearly prose templates exist only for **2026 and 2027**, all 12 animals. Notifications (“Daily card at 7:00am”) are a **demo stub**. Auspicious-date finder is only the monthly almanac calendar, not a dedicated date picker.
 
 - Daily card: lucky colour, direction and hours, a short theme, and things good to do or avoid
 - Monthly outlook: how the month's pillar interacts with your chart for career, money, health and love
@@ -660,6 +671,8 @@ Both people are entered as local profiles. Charts come from the Module 1 engine 
 
 ## 9. Module 6: Ask the Master
 
+> **Status (27 Nov 2026, `830dff7`):** **Not built.** Only a row on the prototype paywall.
+
 A chat that knows your charts, your home and your family. Ask anything, like whether to take a job offer, which month to launch, or where to put a fish tank. Conversations are stored on the phone. The model is called through the proxy with a stripped context pack.
 
 ### How it works
@@ -719,6 +732,8 @@ Paid-tier access can be checked by sending a Play purchase token with the reques
 
 ## 10. Module 7: Palm and face reading
 
+> **Status (27 Nov 2026, `830dff7`):** Palm is a **demo** — hardcoded Heart / Head / Life lines that never change; camera is a stub. Face reading is **not built**.
+
 | | |
 | --- | --- |
 | **Palm** | Photo of the dominant hand; a vision model traces heart, head, life and fate lines, mounts and hand shape, then rule tables interpret them |
@@ -776,6 +791,8 @@ Paid-tier access can be checked by sending a Play purchase token with the reques
 
 ## 11. Module 8: Tarot, horoscope and I Ching
 
+> **Status (27 Nov 2026, `830dff7`):** Tarot is a **demo**: one-card shuffle UI, a question field that is never read, and 10 hardcoded cards in `flutter_app/lib/data/sample_data.dart` (no reversed meanings; reversals occur 1 in 5). A full 78-card JSON pack already exists in `content/tarot/` (upright and reversed summary, love, career, money, advice) but is not bundled or loaded, and there is no card art (only image prompts). I Ching, Western natal, transits and synastry are **not built**. Swiss Ephemeris is AGPL — commercial use needs a paid licence, so it is not in the app. A follow-up (section 22 and the tarot build after this plan update) is to load all 78 cards, classify the question **on the phone**, and compose the reading from pre-written category text, with no network call and no user question leaving the device.
+
 - Tarot: full 78-card deck, daily card, three-card and Celtic Cross spreads, animated shuffle, and a saved reading journal
 - Western astrology: natal chart, daily and monthly transits, and synastry, calculated on the device with Swiss Ephemeris
 - I Ching: virtual three-coin toss producing a hexagram and changing lines, with the classic text and a modern explanation
@@ -830,6 +847,8 @@ The free tier includes one tarot draw a day (see Monetisation). Do not hard-code
 
 ## 12. Module 9: Crystals, rituals and remedies
 
+> **Status (27 Nov 2026, `830dff7`):** 40 crystal and 30 ritual profiles are bundled and **used** as Your Year recommendations. There is no crystal or ritual browser. The shop is a **demo** (five fake items; Buy only shows a snack).
+
 Crystal picks, rituals and a shop catalogue live in the app. Recommendations are computed on the device from the user's element balance, the year's stars and a stated goal. Purchase is always optional.
 
 ### User stories
@@ -875,6 +894,8 @@ A public, non-personal catalogue refresh (static JSON) is optional. Do not send 
 ---
 
 ## 13. Module 10: Master teleconsulting marketplace
+
+> **Status (27 Nov 2026, `830dff7`):** **Demo only.** Sample masters, fake prices, booking, calendar, confirmation email and prescription are example snacks. No payments, no video, no server.
 
 Works like a teledoctor app. Users book verified feng shui and BaZi masters for video, voice or chat consultations, and masters can prescribe remedies like talismans, crystals and ritual kits that the user is free to buy or skip. The master sees the user's charts and home analysis only when the user chooses to share them for that session.
 
@@ -1702,3 +1723,100 @@ Phase 1, plus the Phase 0 foundations it depends on: a closed-test Android app w
 ### Definition of done for the closed test
 
 A tester can set up a local profile, enter birth details, see a correct BaZi chart and Kua directions, open today's daily card (including offline), upload a floor plan, mark rooms by hand, set facing, see overlays and household-matched findings, complete or restore a basic subscription, export or restore an encrypted backup, and delete all data on the device. Chart results match the golden-test set. No personal data is stored on an operator server.
+
+---
+
+## 22. Commercial launch readiness
+
+Audit of `main` at commit `830dff7` on 27 Nov 2026 (Asia/Singapore). This is a launch checklist for a paid Google Play release, not a change to the product vision above. **The app is not commercially ready.** The offline feng shui engine and house-check flow are the real product. Many other screens are still prototype shells. Shipping them as-is would fail Play policy (misleading features, debug signing, no hosted privacy policy, unlicensed map tiles) and would not be sellable.
+
+Confirm with the product owner before building any item below. Android only. No Supabase. Personal data stays on the phone, and the operator must not keep it. The Claude spend cap remains **USD 80** for the project; any AI writing is done at **build time**, and user questions and charts must not be sent off the device for the core product.
+
+### Snapshot of what is actually in the app
+
+| Area | State | Notes and paths |
+| --- | --- | --- |
+| Chart engine | Built | BaZi, Kua, Flying Stars, almanac, Na Yin, Tai Sui relations, lucky lists. `engine/lib/` |
+| Today / Month / Your Year | Built | Offline templates; yearly prose for 2026–2027 only. `flutter_app/assets/content/forecast_templates.json` |
+| Quick check, direction calculator, map bearing, listing import | Built | Facing is never auto-chosen. Map tiles and Nominatim are not licensed for production |
+| Home checklist | Built | Persisted in SharedPreferences. `local_store.dart` |
+| Compatibility | Partial | Engine result for the example couple only |
+| User profiles | Not built | Hardcoded Boon Eng (main) and Victoria (partner) |
+| Home facing persistence | Not built | `currentHome` is memory-only |
+| Floor-plan tab | Demo | Photograph button is a stub; result is a stylised grid |
+| Floor-element note | Not built | Called out in Module 3 |
+| Tarot | Demo | 10 sample cards; question ignored; 78-card JSON unused |
+| Palm / face | Demo / not built | Hardcoded palm; no face reading |
+| Ask the Master | Not built | |
+| I Ching / Western natal | Not built | Swiss Ephemeris would need a paid licence |
+| Replacement stars (替卦) | Not built | |
+| Crystals / rituals | Partial | Used in Your Year lists; no browser; shop is fake |
+| Masters marketplace | Demo | Sample data and snack stubs |
+| Paywall / Play Billing | Demo | Subscribe button does not bill. No IAP or ads SDK |
+| Notifications | Demo | Snack only |
+| Chinese localisation | Not built | Language control is a stub |
+| Encrypted database and backup | Not built | Android Auto Backup is already off |
+| Crash reporting | Not built | |
+
+Routes are in `flutter_app/lib/router.dart`. Bottom nav: Today, Home, Readings, Masters, Me. Version is `0.1.0+1`. `applicationId` is the placeholder `com.inkstone.app`. Release builds are signed with the **debug key** (`flutter_app/android/app/build.gradle.kts`). `targetSdk` is 36 via Flutter 3.50.1; `minSdk` is 26. The launcher icon is byte-identical to the default Flutter template. Direct pub packages are BSD, MIT or Apache — **no AGPL in `pubspec.lock`**.
+
+### (A) Launch blockers — do not ship until these are done
+
+1. **Release signing and final app id.** Choose the final application id before the first Play upload. Create an upload keystore and keep it off the repo. Stop signing release builds with the debug key.
+2. **Play Console legal pack.** Drafts in `store/` are not launchable. `privacy_policy.md`, `listing.md`, `data_safety.md` and `disclaimer.md` still contain placeholders (`[Publisher name]`, `[support email]`, `[date]`, `[privacy policy URL]`). Host the privacy policy at a public URL. Rewrite the listing so it only describes shipped features: it currently promises encrypted storage, an encrypted backup and a working subscription, marks some built features as “coming soon”, and describes a 78-card tarot the app does not yet load. Fill the Data safety form from the **actual** app. Complete IARC content rating, a closed test (required for new personal developer accounts), and the USD 25 Play fee if not already paid. There are no user accounts, so a web account-deletion URL is not required — but in-app “Delete my data” must actually delete stored data.
+3. **Misleading or fake commerce.** The paywall Subscribe control says “Google Play Billing comes in phase 6”. Restore purchases, shop Buy, masters booking, palm “read from your photo”, and tarot-as-a-real-reading would look like live features. Hide them, or clearly mark them unavailable, before a public listing. Play Billing is only required at launch if you charge; otherwise remove the Subscribe button and ship free first.
+4. **Map and geocoding licences.** `map_bearing_screen.dart` uses `tile.openstreetmap.org`, OneMap default tiles and Esri World Imagery. `address_search.dart` calls `nominatim.openstreetmap.org` (User-Agent set, 1 request/s). Those public endpoints are not licensed for production apps. Use a licensed or self-hosted tile set and geocoder. Register for OneMap if you keep it.
+5. **Listing-import legal risk.** PropertyGuru, 99.co and HDB Flat Portal pages are fetched or rendered in a WebView on the phone. That may breach those sites’ terms. Get advice or official permission before a public, paid app does this.
+6. **Store listing assets.** Replace the default Flutter icon. Add a feature graphic and device screenshots of real screens. Decide the final name (Inkstone is still a working title).
+7. **Real profiles and honest delete.** Users cannot save their own birth data. “Delete my data” currently says nothing is stored, but checklist answers and a floor-plan file are stored. Delete must clear SharedPreferences, the plan folder, and in-memory home/facing.
+8. **Entertainment disclaimer and content review.** Welcome and Me show “For guidance and entertainment. Not medical, legal or financial advice.” Tarot and palm do not surface it clearly. `content/README.md` says the copy is AI-drafted and needs a practitioner review before launch.
+9. **Fonts and Data safety for network.** `google_fonts` loads Cormorant SC and Source Serif 4 at runtime (`typography.dart`). Both faces are SIL OFL and should be bundled, with runtime fetching turned off. Declare any remaining network use (maps, listing import) on the Data safety form. The privacy draft also claims location, camera and notification permissions; the manifest currently requests only `INTERNET`.
+10. **Privacy-policy accuracy.** Align `store/privacy_policy.md` with the real permission set, the lack of encryption, and what is actually stored on the device.
+
+`allowBackup="false"` and the data-extraction rules that exclude cloud backup and device transfer are already correct and should be kept.
+
+### (B) Should-fix before launch
+
+1. Ship a full 78-card tarot: bundle the JSON, 50/50 reversals, `Random.secure()`, a one- or three-card spread, and an on-device question-category reading (love, career, money, health, family/home, general, yes/no, timing/decision). No user question leaves the phone. Card art can follow, with a clear licence. (Approved to build after this plan update.)
+2. Persist home facing and address on the phone.
+3. Honest floor-plan flow: wire the real gallery/camera already used in listing import; apply the bearing to the chart; do not pretend to “read” a photo if the result is still a stylised grid.
+4. Floor-element note for HDB and condo unit floors.
+5. Year coverage after 2027 (more templates, or a rule-based fallback).
+6. Notifications: a local daily card, or remove the toggle.
+7. Crash reporting with no personal data (stack, device, app version only).
+8. Fix Readings copy so calculated charts are not called “example data.”
+9. Test compass, map and WebView on a real phone.
+10. Chinese localisation if Singapore and Malaysia still require English and Chinese from day one.
+11. Re-enable release lint after the image_picker / JDK 17 issue is fixed.
+
+### (C) Nice-to-have after a sellable v1
+
+I Ching; Western natal (only with a paid Swiss Ephemeris licence); replacement stars; Ask the Master; the masters marketplace; ads on the free tier; an encrypted database and encrypted backup; Celtic Cross and a reading journal; face reading; a real shop or affiliate links; Google Maps house scoring; equation-of-time refinement.
+
+### Top 10 by what makes it sellable
+
+| Priority | Item | Effort | Bucket |
+| --- | --- | --- | --- |
+| 1 | Final app id, upload keystore, stop debug signing | S–M | A |
+| 2 | Hosted privacy policy, accurate listing, Data safety, IARC, icon and screenshots | M | A |
+| 3 | Hide or fence fake paywall, shop, masters, palm, and unfinished tarot | S | A |
+| 4 | User-owned on-device profiles and a delete that really deletes | M | A |
+| 5 | Licensed maps and geocoding | M | A |
+| 6 | Legal position on listing import | M (legal) | A |
+| 7 | 78-card tarot with on-device question-category reading (art can follow) | M | B |
+| 8 | Persist facing; honest floor-plan flow | M | B |
+| 9 | Bundle fonts; disclaimers on every fortune screen; practitioner review of copy | S–M | A / B |
+| 10 | Play Billing only if charging at launch; otherwise keep v1 free | M or S | A |
+
+Do not spend the Claude budget on a live tarot LLM. If tarot is enriched with AI, do it at build time, keep the result in bundled JSON, and compose readings on the device.
+
+### Play and licence notes (as audited)
+
+- **targetSdk 36**, minSdk 26 — should meet the current Play target-API bar. A 16 KB page-size check was not run in the audit (no release build).
+- **No accounts**, so Play’s account-deletion-URL rule does not apply until a later marketplace or cloud login exists.
+- **Libraries:** go_router, flutter_map, http, image_picker, webview_flutter, sensors_plus, shared_preferences, path_provider, google_fonts, latlong2 and so on are BSD, MIT or Apache. flutter_map’s licence does not grant map-tile rights.
+- **Fonts:** Cormorant SC and Source Serif 4 are SIL OFL — fine to embed.
+- **Tarot art:** none shipped; do not use unlicensed Rider-Waite or other deck scans. Meanings in `content/tarot/` are original / AI-drafted and must be reviewed.
+- **Swiss Ephemeris:** not included. Do not add the AGPL library to a commercial build without a paid licence.
+
+The Phase 1 checklist in section 21 remains the original MVP scope. Where this section and that checklist disagree about what is already in the app, this section is the source of truth as of 27 Nov 2026.
