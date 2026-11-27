@@ -133,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text('Delete my data', style: InkText.h2),
               const SizedBox(height: 8),
               Text(
-                'This removes the home you saved (facing, address, floor), checklist answers, the floor-plan photo, daily notification settings, any birth details you typed, and local crash reports from this phone. The profiles reset to Boon Eng and Jiahui. This cannot be undone.',
+                'This removes the home you saved (facing, address, floor), saved house results and drafts, checklist answers, the floor-plan photo, daily notification settings, any birth details you typed, and local crash reports from this phone. The profiles reset to Boon Eng and Jiahui. This cannot be undone.',
                 style: InkText.body(),
               ),
               const SizedBox(height: 12),

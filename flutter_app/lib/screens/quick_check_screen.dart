@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:inkstone_engine/inkstone_engine.dart';
 
 import 'package:inkstone/data/current_home.dart';
+import 'package:inkstone/data/house_records.dart';
 import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/quick_check.dart';
 import 'package:inkstone/router.dart';
@@ -12,15 +13,19 @@ import 'package:inkstone/screens/listing_import_screen.dart'
 import 'package:inkstone/screens/map_bearing_screen.dart' show MapBearingArgs;
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
+import 'package:inkstone/widgets/house_save.dart';
 import 'package:inkstone/widgets/widgets.dart';
 
 /// Quick check: property type, completion year, facing method, facing, people.
 /// Runs fully offline; quick-entry birthdays stay in memory only.
 class QuickCheckScreen extends StatefulWidget {
-  const QuickCheckScreen({super.key, this.prefill});
+  const QuickCheckScreen({super.key, this.prefill, this.draft});
 
   /// From a listing import. The facing is never pre-filled.
   final QuickCheckPrefill? prefill;
+
+  /// A previously saved draft to resume.
+  final HouseRecord? draft;
   @override
   State<QuickCheckScreen> createState() => _QuickCheckScreenState();
 }
@@ -42,19 +47,32 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
   String? _source;
   double? _lat, _lng;
   bool _yearApprox = false;
+  String? _draftId;
 
   @override
   void initState() {
     super.initState();
-    final p = widget.prefill;
+    _draftId = widget.draft?.id;
+    final p = widget.prefill ?? widget.draft?.draft;
     if (p != null) _apply(p);
   }
 
   void _apply(QuickCheckPrefill p) {
     if (p.type != null) _type = p.type;
-    if (p.completionYear != null) _year.text = '${p.completionYear}';
+    if (p.yearText != null && p.yearText!.trim().isNotEmpty) {
+      _year.text = p.yearText!.trim();
+    } else if (p.completionYear != null) {
+      _year.text = '${p.completionYear}';
+    }
     _yearApprox = p.completionApprox;
-    _beforeLiChun = null;
+    _beforeLiChun = p.beforeLiChun;
+    if (p.method != null) _method = p.method;
+    if (p.facings.isNotEmpty) _facings.addAll(p.facings);
+    if (p.picked.isNotEmpty) {
+      _picked
+        ..clear()
+        ..addAll(p.picked);
+    }
     final h = p.home;
     if (h != null) {
       _address.text = h.address ?? _address.text;
@@ -65,9 +83,35 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
       _lng = h.lng;
       _source = h.source;
     }
-    _facingHint = p.facingHint;
+    _facingHint = p.facingHint ?? _facingHint;
     if (_type == PropertyType.landed && _method == FacingMethod.block)
       _method = null;
+  }
+
+  QuickCheckPrefill get _draftPrefill => QuickCheckPrefill(
+    type: _type,
+    completionYear: _yearValue,
+    completionApprox: _yearApprox,
+    home: _home.isEmpty ? null : _home,
+    facingHint: _facingHint,
+    yearText: _year.text.trim().isEmpty ? null : _year.text.trim(),
+    beforeLiChun: _beforeLiChun,
+    method: _method,
+    facings: Map.of(_facings),
+    picked: _picked.toList(),
+  );
+
+  Future<void> _saveDraft() async {
+    final draft = _draftPrefill;
+    final name = await showHouseNameDialog(
+      context,
+      title: 'Save draft',
+      initial: defaultHouseName(null, draft: draft),
+    );
+    if (name == null) return;
+    final record = await saveHouseDraft(id: _draftId, name: name, draft: draft);
+    _draftId = record.id;
+    if (mounted) showInkSnack(context, 'Draft saved as ${record.name}');
   }
 
   Future<void> _importListing() async {
@@ -155,10 +199,19 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
       title: 'Quick check',
       showBack: true,
       fallbackRoute: Routes.floorUpload,
+      actions: [savedHomesAction(context)],
       stickyNote: _ready ? null : 'Answer each step to see the result',
-      stickyCta: MidnightButton(
-        label: 'See the result',
-        onPressed: _ready ? _go : null,
+      stickyCta: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          MidnightButton(
+            label: 'See the result',
+            onPressed: _ready ? _go : null,
+          ),
+          const SizedBox(height: 8),
+          GhostButton(label: 'Save draft', onPressed: _saveDraft),
+        ],
       ),
       children: [
         Text('Does this home suit me and my partner?', style: InkText.h1),

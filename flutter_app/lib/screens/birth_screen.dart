@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkstone/data/household.dart';
+import 'package:inkstone/data/onboarding.dart';
 import 'package:inkstone_engine/inkstone_engine.dart' show Gender;
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
@@ -91,6 +92,7 @@ class _BirthScreenState extends State<BirthScreen> {
           birth.day == defaultMainUser.birth.day,
     );
     await setMainUser(person);
+    await markOnboardingComplete();
     if (mounted) context.go(Routes.today);
   }
 

@@ -10,6 +10,7 @@ import 'package:inkstone/motion/motion.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
+import 'package:inkstone/widgets/house_save.dart';
 import 'package:inkstone/widgets/widgets.dart';
 import 'package:inkstone_engine/inkstone_engine.dart';
 
@@ -60,11 +61,13 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
 
   Future<void> _persist({int? deg, double? rot, bool? example}) async {
     final h = currentHome.value;
-    await setCurrentHome(h.copyWith(
-      facingDegrees: (deg ?? _deg).toDouble(),
-      planRotationDeg: rot ?? _rot,
-      example: example ?? h.example,
-    ));
+    await setCurrentHome(
+      h.copyWith(
+        facingDegrees: (deg ?? _deg).toDouble(),
+        planRotationDeg: rot ?? _rot,
+        example: example ?? h.example,
+      ),
+    );
   }
 
   void _nudgeDeg(int delta) {
@@ -85,7 +88,12 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
       final bytes = await x.readAsBytes();
       final ext = x.name.contains('.') ? x.name.split('.').last : 'jpg';
       final src = source == ImageSource.camera ? 'camera' : 'upload';
-      final p = await HomePlanStore.save(bytes, ext: ext, source: src, confirmed: true);
+      final p = await HomePlanStore.save(
+        bytes,
+        ext: ext,
+        source: src,
+        confirmed: true,
+      );
       if (!mounted) return;
       setState(() => _saved = p);
       await _persist(example: false);
@@ -121,6 +129,7 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
       title: 'Add your floor plan',
       showBack: true,
       fallbackRoute: Routes.floorResult,
+      actions: [savedHomesAction(context)],
       stickyCta: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -143,7 +152,10 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
             ),
             const SizedBox(height: 8),
           ],
-          MidnightButton(label: 'Read my home', onPressed: _reading ? null : _read),
+          MidnightButton(
+            label: 'Read my home',
+            onPressed: _reading ? null : _read,
+          ),
         ],
       ),
       children: [
@@ -170,15 +182,31 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
               ),
               const SizedBox(height: 8),
               ButtonRow(
-                first: MidnightButton(label: 'Quick check', onPressed: () => context.push(Routes.quickCheck)),
-                second: GhostButton(label: 'Checklist', onPressed: () => context.push(Routes.homeChecklist)),
+                first: MidnightButton(
+                  label: 'Quick check',
+                  onPressed: () => context.push(Routes.quickCheck),
+                ),
+                second: GhostButton(
+                  label: 'Checklist',
+                  onPressed: () => context.push(Routes.homeChecklist),
+                ),
+              ),
+              const SizedBox(height: 8),
+              GhostButton(
+                key: const Key('fu-saved-homes'),
+                label: 'Saved homes',
+                icon: Icons.bookmarks_outlined,
+                onPressed: () => context.push(Routes.savedHomes),
               ),
             ],
           ),
         ),
         if (_saved != null)
           FloorPlanOverlay(
-            home: home.copyWith(facingDegrees: _deg.toDouble(), planRotationDeg: _rot),
+            home: home.copyWith(
+              facingDegrees: _deg.toDouble(),
+              planRotationDeg: _rot,
+            ),
             image: File(_saved!.file.path),
             height: 280,
           )
@@ -193,11 +221,22 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.space_dashboard_outlined, size: 44, color: AppColors.gold),
+                const Icon(
+                  Icons.space_dashboard_outlined,
+                  size: 44,
+                  color: AppColors.gold,
+                ),
                 const SizedBox(height: 10),
-                Text('No plan chosen yet', style: InkText.body(color: AppColors.ivory2)),
+                Text(
+                  'No plan chosen yet',
+                  style: InkText.body(color: AppColors.ivory2),
+                ),
                 const SizedBox(height: 4),
-                Text('Take a photo or pick one from the gallery.', style: InkText.small, textAlign: TextAlign.center),
+                Text(
+                  'Take a photo or pick one from the gallery.',
+                  style: InkText.small,
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
           ),
@@ -221,14 +260,20 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
                   await clearCurrentHome();
                   if (!mounted) return;
                   setState(() {});
-                  showInkSnack(context, 'Example home loaded. Your saved plan, if any, is unchanged.');
+                  showInkSnack(
+                    context,
+                    'Example home loaded. Your saved plan, if any, is unchanged.',
+                  );
                 },
         ),
         InkstoneCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Front door faces', style: InkText.body(size: 15, color: AppColors.ivory2)),
+              Text(
+                'Front door faces',
+                style: InkText.body(size: 15, color: AppColors.ivory2),
+              ),
               const SizedBox(height: 6),
               Row(
                 children: [
@@ -238,7 +283,11 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
                     onTap: () => _nudgeDeg(-1),
                   ),
                   Expanded(
-                    child: Text('$_deg° $_dir', textAlign: TextAlign.center, style: InkText.body(size: 17)),
+                    child: Text(
+                      '$_deg° $_dir',
+                      textAlign: TextAlign.center,
+                      style: InkText.body(size: 17),
+                    ),
                   ),
                   InkIconButton(
                     icon: Icons.add,
@@ -248,7 +297,10 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
                 ],
               ),
               const SizedBox(height: 10),
-              Text('Rotate the plan so the front door is at the bottom', style: InkText.body(size: 15, color: AppColors.ivory2)),
+              Text(
+                'Rotate the plan so the front door is at the bottom',
+                style: InkText.body(size: 15, color: AppColors.ivory2),
+              ),
               Slider(
                 value: _rot,
                 min: 0,
@@ -271,7 +323,9 @@ class _FloorUploadScreenState extends State<FloorUploadScreen> {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 11),
             decoration: BoxDecoration(
-              border: i == 0 ? null : const Border(top: BorderSide(color: AppColors.hairline)),
+              border: i == 0
+                  ? null
+                  : const Border(top: BorderSide(color: AppColors.hairline)),
             ),
             child: Text(s, style: InkText.small),
           ),

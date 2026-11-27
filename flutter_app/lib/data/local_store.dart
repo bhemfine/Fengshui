@@ -6,7 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// On-device only key/value store (Android SharedPreferences in the app's
 /// private folder; Android backup is off in the manifest). Holds checklist
 /// answers, the last property type, the current home (facing, address, floor)
-/// notification preferences, and the household birth profiles.
+/// notification preferences, the household birth profiles, saved house
+/// results and drafts, and the first-run complete flag.
 ///
 /// This is not an encrypted database. "Delete my data" clears these keys.
 /// TODO(phase-2): move to the encrypted drift database once it lands.

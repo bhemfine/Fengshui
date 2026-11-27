@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkstone/data/current_home.dart';
+import 'package:inkstone/data/house_records.dart';
 import 'package:inkstone/data/sample_data.dart' show Palace;
 import 'package:inkstone/data/home_plan_store.dart';
 import 'package:inkstone/data/household.dart';
@@ -10,6 +11,7 @@ import 'package:inkstone/data/your_year.dart' show currentSolarYear;
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
+import 'package:inkstone/widgets/house_save.dart';
 import 'package:inkstone/widgets/widgets.dart';
 import 'package:inkstone_engine/inkstone_engine.dart';
 
@@ -52,6 +54,18 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
     super.dispose();
   }
 
+  Future<void> _saveResult() async {
+    final home = currentHome.value;
+    final name = await showHouseNameDialog(
+      context,
+      title: 'Save this result',
+      initial: defaultHouseName(home),
+    );
+    if (name == null) return;
+    await saveHouseResult(name: name, home: home);
+    if (mounted) showInkSnack(context, 'Saved $name');
+  }
+
   @override
   Widget build(BuildContext context) {
     final home = currentHome.value;
@@ -77,38 +91,71 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
     final mainChart = computeBazi(
       birthLocal: mainUser.timeKnown
           ? mainUser.birth
-          : DateTime(mainUser.birth.year, mainUser.birth.month, mainUser.birth.day, 12),
+          : DateTime(
+              mainUser.birth.year,
+              mainUser.birth.month,
+              mainUser.birth.day,
+              12,
+            ),
       utcOffsetHours: 8,
       hourKnown: mainUser.timeKnown,
     );
     final partnerChart = computeBazi(
       birthLocal: partner.timeKnown
           ? partner.birth
-          : DateTime(partner.birth.year, partner.birth.month, partner.birth.day, 12),
+          : DateTime(
+              partner.birth.year,
+              partner.birth.month,
+              partner.birth.day,
+              12,
+            ),
       utcOffsetHours: 8,
       hourKnown: partner.timeKnown,
     );
     return InkstoneScaffold(
       title: 'Your home reading',
       example: home.example,
+      actions: [savedHomesAction(context)],
       children: [
-        Wrap(crossAxisAlignment: WrapCrossAlignment.center, spacing: 6, runSpacing: 4, children: [
-          Text(
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 6,
+          runSpacing: 4,
+          children: [
+            Text(
               '${home.label} · Faces ${home.facing.label} · Period ${home.period} · completed ${home.completionYear}'
               '${home.example ? ' (example; run the quick check to use your home)' : ''}',
-              style: InkText.small),
-          const SourceBadge(label: SourceBadge.calculated),
-        ]),
+              style: InkText.small,
+            ),
+            const SourceBadge(label: SourceBadge.calculated),
+          ],
+        ),
         if (home.facing.isLineFacing)
           Padding(
             padding: const EdgeInsets.only(top: 4),
-            child: Text('Facing is within 3° of a sector line: some schools use a replacement chart (not shown yet).',
-                style: InkText.body(size: 14, color: AppColors.care)),
+            child: Text(
+              'Facing is within 3° of a sector line: some schools use a replacement chart (not shown yet).',
+              style: InkText.body(size: 14, color: AppColors.care),
+            ),
           ),
         const SizedBox(height: 8),
         ButtonRow(
-          first: MidnightButton(label: 'House check', onPressed: () => context.go(Routes.houseCheck)),
-          second: GhostButton(label: 'Change plan', onPressed: () => context.go(Routes.floorUpload)),
+          first: MidnightButton(
+            label: 'House check',
+            onPressed: () => context.go(Routes.houseCheck),
+          ),
+          second: GhostButton(
+            label: 'Change plan',
+            onPressed: () => context.go(Routes.floorUpload),
+          ),
+        ),
+        const SizedBox(height: 10),
+        ButtonRow(
+          first: MidnightButton(label: 'Save result', onPressed: _saveResult),
+          second: GhostButton(
+            label: 'Saved homes',
+            onPressed: () => context.push(Routes.savedHomes),
+          ),
         ),
         const SizedBox(height: 10),
         if (hasPhoto)
@@ -132,14 +179,23 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
         if (!_done)
           Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Row(children: [
-              const SizedBox(
+            child: Row(
+              children: [
+                const SizedBox(
                   width: 16,
                   height: 16,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.gold2)),
-              const SizedBox(width: 10),
-              Text('Reading the plan…', style: InkText.body(size: 17, color: AppColors.gold2)),
-            ]),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: AppColors.gold2,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  'Reading the plan…',
+                  style: InkText.body(size: 17, color: AppColors.gold2),
+                ),
+              ],
+            ),
           )
         else ...[
           const SizedBox(height: 8),
@@ -150,22 +206,34 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
             style: InkText.body(size: 14, color: AppColors.ivory2, height: 1.4),
           ),
           Text(
-              'Period ${home.period} chart from the engine (mountain·water star). '
-              '${home.chart.formations.isEmpty ? '' : 'Chart type: ${home.chart.formations.map(_formationName).join(', ')}. '}'
-              '${hasPhoto ? 'Your plan is shown with the facing palace at the bottom. ' : 'The plan drawing is a stylised 4-room layout. '}'
-              'Tap any square for a tip.',
-              style: InkText.small),
+            'Period ${home.period} chart from the engine (mountain·water star). '
+            '${home.chart.formations.isEmpty ? '' : 'Chart type: ${home.chart.formations.map(_formationName).join(', ')}. '}'
+            '${hasPhoto ? 'Your plan is shown with the facing palace at the bottom. ' : 'The plan drawing is a stylised 4-room layout. '}'
+            'Tap any square for a tip.',
+            style: InkText.small,
+          ),
           InkstoneCard(
             child: Semantics(
               liveRegion: true,
               child: p == null
-                  ? Text('Tap a square on the plan to see what its number means.', style: InkText.body(height: 1.5))
-                  : Text.rich(TextSpan(children: [
+                  ? Text(
+                      'Tap a square on the plan to see what its number means.',
+                      style: InkText.body(height: 1.5),
+                    )
+                  : Text.rich(
                       TextSpan(
-                          text: '${p.direction} · ${p.mountain}·${p.water}',
-                          style: InkText.body(weight: FontWeight.w600)),
-                      TextSpan(text: ' — ${p.tip}', style: InkText.body(height: 1.5)),
-                    ])),
+                        children: [
+                          TextSpan(
+                            text: '${p.direction} · ${p.mountain}·${p.water}',
+                            style: InkText.body(weight: FontWeight.w600),
+                          ),
+                          TextSpan(
+                            text: ' — ${p.tip}',
+                            style: InkText.body(height: 1.5),
+                          ),
+                        ],
+                      ),
+                    ),
             ),
           ),
           FloorElementCard(
@@ -177,43 +245,84 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
           InkstoneCard(
             title: 'Placement tips',
             source: SourceBadge.calculated,
-            child: Column(children: [
-              for (final (i, t) in [for (final x in tips) (room: x.$1, text: x.$2, good: x.$3)].indexed)
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                      border: i == 0 ? null : const Border(top: BorderSide(color: AppColors.hairline))),
-                  child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    SizedBox(
-                      width: 96,
-                      child: Row(children: [
-                        Icon(t.good ? Icons.circle : Icons.change_history,
-                            size: 14, color: t.good ? AppColors.good : AppColors.care),
-                        const SizedBox(width: 5),
-                        Flexible(
-                          child: Text(t.good ? 'Good' : 'Take care',
-                              style: InkText.body(
-                                  size: 14,
-                                  weight: FontWeight.w600,
-                                  color: t.good ? AppColors.good : AppColors.care)),
+            child: Column(
+              children: [
+                for (final (i, t) in [
+                  for (final x in tips) (room: x.$1, text: x.$2, good: x.$3),
+                ].indexed)
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      border: i == 0
+                          ? null
+                          : const Border(
+                              top: BorderSide(color: AppColors.hairline),
+                            ),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 96,
+                          child: Row(
+                            children: [
+                              Icon(
+                                t.good ? Icons.circle : Icons.change_history,
+                                size: 14,
+                                color: t.good ? AppColors.good : AppColors.care,
+                              ),
+                              const SizedBox(width: 5),
+                              Flexible(
+                                child: Text(
+                                  t.good ? 'Good' : 'Take care',
+                                  style: InkText.body(
+                                    size: 14,
+                                    weight: FontWeight.w600,
+                                    color: t.good
+                                        ? AppColors.good
+                                        : AppColors.care,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ]),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: t.room,
+                                  style: InkText.body(weight: FontWeight.w600),
+                                ),
+                                TextSpan(
+                                  text: ' — ${t.text}',
+                                  style: InkText.body(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text.rich(TextSpan(children: [
-                        TextSpan(text: t.room, style: InkText.body(weight: FontWeight.w600)),
-                        TextSpan(text: ' — ${t.text}', style: InkText.body()),
-                      ])),
-                    ),
-                  ]),
-                ),
-            ]),
+                  ),
+              ],
+            ),
           ),
-          YearAfflictionsCard(year: year, title: '$year reno tips: directions to respect'),
-          YearAfflictionsCard(year: year + 1, title: '${year + 1} (from Li Chun) for planning ahead'),
+          YearAfflictionsCard(
+            year: year,
+            title: '$year reno tips: directions to respect',
+          ),
+          YearAfflictionsCard(
+            year: year + 1,
+            title: '${year + 1} (from Li Chun) for planning ahead',
+          ),
           const SizedBox(height: 12),
-          GhostButton(label: 'See optional remedies', onPressed: () => context.go(Routes.shop)),
+          GhostButton(
+            label: 'See optional remedies',
+            onPressed: () => context.go(Routes.shop),
+          ),
           if (!hasPhoto)
             LinkButton(
               label: 'Scan again',
@@ -232,11 +341,11 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
 }
 
 String _formationName(String f) => switch (f) {
-      'wang_shan_wang_shui' => 'Prosperous Mountain and Water 旺山旺水',
-      'shang_shan_xia_shui' => 'Reversed 上山下水',
-      'double_facing' => 'Double stars at facing 双星到向',
-      'double_sitting' => 'Double stars at sitting 双星到坐',
-      'sum_of_ten_mountain' => 'Sum of ten (mountain) 合十',
-      'sum_of_ten_facing' => 'Sum of ten (water) 合十',
-      _ => f,
-    };
+  'wang_shan_wang_shui' => 'Prosperous Mountain and Water 旺山旺水',
+  'shang_shan_xia_shui' => 'Reversed 上山下水',
+  'double_facing' => 'Double stars at facing 双星到向',
+  'double_sitting' => 'Double stars at sitting 双星到坐',
+  'sum_of_ten_mountain' => 'Sum of ten (mountain) 合十',
+  'sum_of_ten_facing' => 'Sum of ten (water) 合十',
+  _ => f,
+};

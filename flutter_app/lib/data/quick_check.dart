@@ -43,6 +43,63 @@ class QuickCheckInput {
   PeriodResult get period => beforeLiChun == null
       ? periodForCompletion(completionYear)
       : periodForCompletion(completionYear, month: beforeLiChun! ? 1 : 3);
+
+  Map<String, Object?> toJson() => {
+    'type': type.name,
+    'completionYear': completionYear,
+    'beforeLiChun': beforeLiChun,
+    'method': method.name,
+    'facings': {for (final e in facings.entries) e.key.name: e.value},
+    'people': [for (final p in people) p.toJson()],
+    'example': example,
+    'home': home?.toJson(),
+  };
+
+  factory QuickCheckInput.fromJson(Map<String, Object?> m) {
+    var type = PropertyType.hdb;
+    for (final t in PropertyType.values) {
+      if (t.name == m['type']) type = t;
+    }
+    var method = FacingMethod.mainDoor;
+    for (final f in FacingMethod.values) {
+      if (f.name == m['method']) method = f;
+    }
+    final facings = <FacingMethod, double>{};
+    final rawFacings = m['facings'];
+    if (rawFacings is Map) {
+      for (final e in rawFacings.entries) {
+        for (final f in FacingMethod.values) {
+          if (f.name == e.key) {
+            facings[f] = (e.value as num).toDouble();
+          }
+        }
+      }
+    }
+    final people = <KuaPerson>[];
+    final rawPeople = m['people'];
+    if (rawPeople is List) {
+      for (final p in rawPeople) {
+        if (p is Map) {
+          people.add(KuaPerson.fromJson(Map<String, Object?>.from(p)));
+        }
+      }
+    }
+    HomeDetails? home;
+    final rawHome = m['home'];
+    if (rawHome is Map) {
+      home = HomeDetails.fromJson(Map<String, Object?>.from(rawHome));
+    }
+    return QuickCheckInput(
+      type: type,
+      completionYear: (m['completionYear'] as num?)?.toInt() ?? 2000,
+      beforeLiChun: m['beforeLiChun'] as bool?,
+      method: method,
+      facings: facings,
+      people: people,
+      example: m['example'] == true,
+      home: home,
+    );
+  }
 }
 
 /// Methods whose facing the user must enter.
@@ -96,6 +153,26 @@ class HomeDetails {
     if (unit != null && unit!.isNotEmpty && !(address ?? '').contains(unit!))
       unit!,
   ].join(' · ');
+
+  Map<String, Object?> toJson() => {
+    'address': address,
+    'postalCode': postalCode,
+    'floor': floor,
+    'unit': unit,
+    'lat': lat,
+    'lng': lng,
+    'source': source,
+  };
+
+  factory HomeDetails.fromJson(Map<String, Object?> m) => HomeDetails(
+    address: m['address'] as String?,
+    postalCode: m['postalCode'] as String?,
+    floor: m['floor'] as String?,
+    unit: m['unit'] as String?,
+    lat: (m['lat'] as num?)?.toDouble(),
+    lng: (m['lng'] as num?)?.toDouble(),
+    source: m['source'] as String?,
+  );
 }
 
 /// What the quick check is pre-filled with (from a listing import).
@@ -107,10 +184,81 @@ class QuickCheckPrefill {
     this.completionApprox = false,
     this.home,
     this.facingHint,
+    this.yearText,
+    this.beforeLiChun,
+    this.method,
+    this.facings = const {},
+    this.picked = const [],
   });
   final PropertyType? type;
   final int? completionYear;
   final bool completionApprox;
   final HomeDetails? home;
   final String? facingHint;
+
+  /// Draft-only fields so an incomplete form can be restored.
+  final String? yearText;
+  final bool? beforeLiChun;
+  final FacingMethod? method;
+  final Map<FacingMethod, double> facings;
+  final List<int> picked;
+
+  Map<String, Object?> toJson() => {
+    'type': type?.name,
+    'completionYear': completionYear,
+    'completionApprox': completionApprox,
+    'home': home?.toJson(),
+    'facingHint': facingHint,
+    'yearText': yearText,
+    'beforeLiChun': beforeLiChun,
+    'method': method?.name,
+    'facings': {for (final e in facings.entries) e.key.name: e.value},
+    'picked': picked,
+  };
+
+  factory QuickCheckPrefill.fromJson(Map<String, Object?> m) {
+    PropertyType? type;
+    for (final t in PropertyType.values) {
+      if (t.name == m['type']) type = t;
+    }
+    FacingMethod? method;
+    for (final f in FacingMethod.values) {
+      if (f.name == m['method']) method = f;
+    }
+    final facings = <FacingMethod, double>{};
+    final rawFacings = m['facings'];
+    if (rawFacings is Map) {
+      for (final e in rawFacings.entries) {
+        for (final f in FacingMethod.values) {
+          if (f.name == e.key) {
+            facings[f] = (e.value as num).toDouble();
+          }
+        }
+      }
+    }
+    final picked = <int>[];
+    final rawPicked = m['picked'];
+    if (rawPicked is List) {
+      for (final v in rawPicked) {
+        if (v is num) picked.add(v.toInt());
+      }
+    }
+    HomeDetails? home;
+    final rawHome = m['home'];
+    if (rawHome is Map) {
+      home = HomeDetails.fromJson(Map<String, Object?>.from(rawHome));
+    }
+    return QuickCheckPrefill(
+      type: type,
+      completionYear: (m['completionYear'] as num?)?.toInt(),
+      completionApprox: m['completionApprox'] == true,
+      home: home,
+      facingHint: m['facingHint'] as String?,
+      yearText: m['yearText'] as String?,
+      beforeLiChun: m['beforeLiChun'] as bool?,
+      method: method,
+      facings: facings,
+      picked: picked,
+    );
+  }
 }
