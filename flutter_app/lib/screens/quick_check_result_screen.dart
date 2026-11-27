@@ -23,6 +23,7 @@ class QuickCheckResultScreen extends StatelessWidget {
     final period = q.period;
     final people = [for (final p in q.people) (p, p.kua)];
     final shared = people.length > 1 ? sharedGoodDirections([for (final p in people) p.$2]) : null;
+    final charts = [for (final p in q.people) _chartOf(p)];
     return InkstoneScaffold(
       title: 'Quick check result',
       showBack: true,
@@ -52,6 +53,12 @@ class QuickCheckResultScreen extends StatelessWidget {
             const SizedBox(height: 4),
             Text('The full Flying Stars chart for this period is on the floor reading.', style: InkText.small),
           ]),
+        ),
+        FloorElementCard(
+          floorRaw: q.home?.floor,
+          favourable: charts.isEmpty ? const [] : charts.first.favourableElements,
+          unfavourable: charts.isEmpty ? const [] : unfavourableElements(charts.first),
+          partnerFavourable: charts.length > 1 ? charts[1].favourableElements : const [],
         ),
         for (final m in methodsToRead(q.method))
           if (q.facings[m] != null)
@@ -165,3 +172,10 @@ class _PersonCard extends StatelessWidget {
         ]),
       );
 }
+
+
+BaziChart _chartOf(KuaPerson p) => computeBazi(
+      birthLocal: p.timeKnown ? p.birth : DateTime(p.birth.year, p.birth.month, p.birth.day, 12),
+      utcOffsetHours: 8,
+      hourKnown: p.timeKnown,
+    );

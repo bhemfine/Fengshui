@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkstone/data/current_home.dart';
+import 'package:inkstone/data/sample_data.dart' show Palace;
+import 'package:inkstone/data/home_plan_store.dart';
+import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/your_year.dart' show currentSolarYear;
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
 import 'package:inkstone/widgets/widgets.dart';
+import 'package:inkstone_engine/inkstone_engine.dart';
 
 class FloorResultScreen extends StatefulWidget {
   const FloorResultScreen({super.key});
@@ -17,9 +23,31 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
   final _scan = HdbScanController();
   bool _done = false;
   int? _sel;
+  SavedPlan? _saved;
+
+  @override
+  void initState() {
+    super.initState();
+    currentHome.addListener(_rebuild);
+    _loadPlan();
+  }
+
+  void _rebuild() {
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _loadPlan() async {
+    final p = await HomePlanStore.load();
+    if (!mounted) return;
+    setState(() {
+      _saved = p;
+      if (p != null) _done = true;
+    });
+  }
 
   @override
   void dispose() {
+    currentHome.removeListener(_rebuild);
     _scan.dispose();
     super.dispose();
   }
@@ -30,7 +58,36 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
     final palaces = planPalaces(home);
     final year = currentSolarYear();
     final tips = placementTips(home, year);
-    final p = _sel == null ? null : palaces[_sel!];
+    final hasPhoto = _saved != null && _saved!.file.existsSync();
+    final Palace? p;
+    if (_sel == null) {
+      p = null;
+    } else if (hasPhoto) {
+      final d = palacesInGridOrder(nearestPalace(home.facingDegrees))[_sel!];
+      final stars = home.chart.palaces[d]!;
+      p = Palace(
+        direction: directionLong[d]!,
+        mountain: stars.mountain,
+        water: stars.facing,
+        tip: palaceTip(stars, home.period),
+      );
+    } else {
+      p = palaces[_sel!];
+    }
+    final mainChart = computeBazi(
+      birthLocal: mainUser.timeKnown
+          ? mainUser.birth
+          : DateTime(mainUser.birth.year, mainUser.birth.month, mainUser.birth.day, 12),
+      utcOffsetHours: 8,
+      hourKnown: mainUser.timeKnown,
+    );
+    final partnerChart = computeBazi(
+      birthLocal: partner.timeKnown
+          ? partner.birth
+          : DateTime(partner.birth.year, partner.birth.month, partner.birth.day, 12),
+      utcOffsetHours: 8,
+      hourKnown: partner.timeKnown,
+    );
     return InkstoneScaffold(
       title: 'Your home reading',
       example: home.example,
@@ -54,13 +111,24 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
           second: GhostButton(label: 'Change plan', onPressed: () => context.go(Routes.floorUpload)),
         ),
         const SizedBox(height: 10),
-        HdbScan(
-          controller: _scan,
-          palaces: palaces,
-          selected: _sel,
-          onZoneTap: (i) => setState(() => _sel = i),
-          onScanComplete: () => setState(() => _done = true),
-        ),
+        if (hasPhoto)
+          FloorPlanOverlay(
+            home: home,
+            image: File(_saved!.file.path),
+            selected: _sel,
+            onZoneTap: (i) => setState(() {
+              _sel = i;
+              _done = true;
+            }),
+          )
+        else
+          HdbScan(
+            controller: _scan,
+            palaces: palaces,
+            selected: _sel,
+            onZoneTap: (i) => setState(() => _sel = i),
+            onScanComplete: () => setState(() => _done = true),
+          ),
         if (!_done)
           Padding(
             padding: const EdgeInsets.only(top: 10),
@@ -84,7 +152,8 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
           Text(
               'Period ${home.period} chart from the engine (mountain·water star). '
               '${home.chart.formations.isEmpty ? '' : 'Chart type: ${home.chart.formations.map(_formationName).join(', ')}. '}'
-              'The plan drawing is a stylised 4-room layout. Tap any square for a tip.',
+              '${hasPhoto ? 'Your plan is shown with the facing palace at the bottom. ' : 'The plan drawing is a stylised 4-room layout. '}'
+              'Tap any square for a tip.',
               style: InkText.small),
           InkstoneCard(
             child: Semantics(
@@ -98,6 +167,12 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
                       TextSpan(text: ' — ${p.tip}', style: InkText.body(height: 1.5)),
                     ])),
             ),
+          ),
+          FloorElementCard(
+            floorRaw: home.floor,
+            favourable: mainChart.favourableElements,
+            unfavourable: unfavourableElements(mainChart),
+            partnerFavourable: partnerChart.favourableElements,
           ),
           InkstoneCard(
             title: 'Placement tips',
@@ -139,16 +214,17 @@ class _FloorResultScreenState extends State<FloorResultScreen> {
           YearAfflictionsCard(year: year + 1, title: '${year + 1} (from Li Chun) for planning ahead'),
           const SizedBox(height: 12),
           GhostButton(label: 'See optional remedies', onPressed: () => context.go(Routes.shop)),
-          LinkButton(
-            label: 'Scan again',
-            onPressed: () {
-              setState(() {
-                _done = false;
-                _sel = null;
-              });
-              _scan.scan();
-            },
-          ),
+          if (!hasPhoto)
+            LinkButton(
+              label: 'Scan again',
+              onPressed: () {
+                setState(() {
+                  _done = false;
+                  _sel = null;
+                });
+                _scan.scan();
+              },
+            ),
         ],
       ],
     );

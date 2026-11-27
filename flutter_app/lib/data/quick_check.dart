@@ -12,7 +12,7 @@ const facingMethodLabel = {
   FacingMethod.unsure: 'Not sure, show both',
 };
 
-/// Everything the result screen needs. Held in memory only, never stored.
+/// Everything the result screen needs. The form itself is in memory; tapping through saves the home via useAsCurrentHome.
 class QuickCheckInput {
   const QuickCheckInput({
     required this.type,
@@ -37,7 +37,7 @@ class QuickCheckInput {
   final List<KuaPerson> people;
   final bool example;
 
-  /// Address details typed in or imported from a listing (memory only).
+  /// Address details typed in or imported from a listing. Saved with the current home when the result is applied.
   final HomeDetails? home;
 
   PeriodResult get period => beforeLiChun == null
@@ -59,7 +59,6 @@ final exampleQuickCheck = QuickCheckInput(
 );
 
 /// Home details for the quick check, typed in or imported from a listing.
-/// Held in memory only; nothing here is saved.
 class HomeDetails {
   const HomeDetails({
     this.address,

@@ -16,3 +16,5 @@ export 'term.dart';
 export 'transitions.dart';
 export 'choice_pills.dart';
 export 'year_afflictions_card.dart';
+export 'floor_element_card.dart';
+export 'floor_plan_overlay.dart';

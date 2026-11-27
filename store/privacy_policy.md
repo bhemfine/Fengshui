@@ -1,42 +1,48 @@
 # Inkstone Privacy Policy
 
-Effective: [date]
+Effective: 27 November 2026 (draft, updated as this build stores more on the phone)
 Operator: [Publisher name] ("we", "us")
 Contact: [support email]
 
-## 1. Summary
+## 1. Summary (this build)
 
-- We do not keep your personal data. There is no account and no user database.
-- Everything you enter or create is stored **encrypted on your phone**. This includes birth details, family members, charts, homes, floor plans, palm and face photos, readings and journals.
-- Some features send data through our relay ("proxy") to AI or map services. The proxy processes each request and forgets it. It does not store or log the content.
-- Backup is optional and owned by you.
-- To delete your data, use **Settings > Delete all data**, then uninstall the app.
+- There is no account and no company server that keeps your personal data.
+- What you save stays **on this phone**, in the app's private folder. Android's automatic backup is switched **off**.
+- This build does **not** use an encrypted database. Checklist answers, the current home (facing, address, floor, unit, property type, completion year), notification time, and floor-plan photos are stored in ordinary on-device files (SharedPreferences and the app documents folder). Example birth profiles are built into the app and are not user-editable storage yet.
+- "Delete my data" on the Me screen clears those saved items, the floor-plan photo, notification settings and local crash reports, and resets the home to the example. Uninstalling the app also removes them.
+- Optional permissions: **camera** (only if you photograph a floor plan), **notifications** (only if you turn on the daily reminder). There is no location permission.
+- Listing import and maps use the internet. Crash reports stay on the phone until you choose **Send crash report**, which opens your share sheet; we do not receive them unless you send them to us.
+- Sections from "Intended at launch" onwards describe features that are **not all in this build** (encrypted database, backups, bookings, a proxy). They will be rewritten before a Play Store release so they match the shipped app.
 
-## 2. Data on your device
+## 2. Data on your device (this build)
 
-All of the following stays on your phone:
+The app may store:
 
-- your profile and the people you add (name, relationship, birth date, birth time, birthplace, gender)
-- calculated charts and readings
-- homes, addresses, floor plans and room markings
-- photos you choose to save
-- chats and journals
-- settings and a local record of your purchases
+- the current home you set: label, facing, completion year, period, address, postal code, floor, unit, property type, and the rotation of a floor-plan photo
+- home-checklist answers and the last property type you used
+- a floor-plan image you took, picked from the gallery, or confirmed from a listing
+- whether the daily reminder is on, and the time you chose
+- local crash logs (time, app version, device and OS if available, error and stack). These do **not** include names, birth dates, addresses or photos
 
-This data is held in an encrypted database. The key is protected by the Android Keystore. We cannot access it.
+Birth details for Chua Boon Eng and Chou Jiahui Victoria are example data shipped in the app, not a saved user profile. You cannot yet save your own birth profile.
 
-Android's automatic cloud backup of the raw database is switched off. Your data is copied off the phone only if you make a backup yourself.
+We cannot read any of this from our side. If you uninstall the app or use **Delete my data**, it is gone. We cannot recover it.
 
-## 3. Optional backup (you own it)
+## 3. Optional backup
 
-You may choose to:
+Encrypted backup and Google Drive backup are **not built**. Do not rely on a backup of this prototype. Intended launch behaviour, if it ships, will be described here before release.
 
-- export an encrypted backup file and keep it wherever you like, or
-- save an encrypted backup to your own Google Drive app folder.
+## 3a. Permissions (this build)
 
-Only you can open the backup. We have no access to it.
+- **Internet:** map tiles, address search, and listing import (when you paste a link or share one).
+- **Camera:** optional, to photograph a floor plan. You can pick a photo from the gallery instead, or skip both.
+- **Notifications:** optional daily reminder. The notification text is generic ("Today's card is ready") and does not include your name or address. Alarms are inexact; the app does not use exact-alarm permission.
+- No location, contacts, microphone or storage-access permission is requested in this build.
 
-If you uninstall the app or lose your phone without a backup, your data is permanently lost. We cannot recover it.
+
+## 4. Intended at launch (not all built yet)
+
+The headings below may still describe planned launch features. Do not treat them as a description of this prototype.
 
 ## 4. The stateless proxy
 

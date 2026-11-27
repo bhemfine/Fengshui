@@ -10,8 +10,8 @@ import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
 import 'package:inkstone/widgets/widgets.dart';
 
-/// "Your year": zodiac with its three elements, Tai Sui status, the written
-/// 2026 / 2027 guide, and rule-based lucky and unlucky lists. All offline.
+/// "Your year": zodiac with its three elements, Tai Sui status, a written
+/// guide when bundled or a rule-based guide for any other year, and lucky lists. All offline.
 class YearlyScreen extends StatefulWidget {
   const YearlyScreen({super.key, this.initialYear});
   final int? initialYear;
@@ -20,8 +20,7 @@ class YearlyScreen extends StatefulWidget {
 }
 
 class _YearlyScreenState extends State<YearlyScreen> {
-  late int _year = widget.initialYear ??
-      (forecastYears.contains(currentSolarYear()) ? currentSolarYear() : forecastYears.first);
+  late int _year = widget.initialYear ?? currentSolarYear();
   int _person = 0;
   late final Future<AppContent> _content = ContentRepo.load();
 
@@ -39,7 +38,7 @@ class _YearlyScreenState extends State<YearlyScreen> {
             ScreenTitle(
               title: 'Your year · $_year',
               example: y.person.example,
-              subtitle: '${y.taiSui.yearPillar.chinese} ${y.template?.yearName.split(' ').skip(1).join(' ') ?? ''} · from Li Chun',
+              subtitle: '${y.taiSui.yearPillar.chinese} ${yearEnglishName(_year)} · from Li Chun',
             ),
             const SizedBox(height: 8),
             ChoicePills<int>(
@@ -49,9 +48,28 @@ class _YearlyScreenState extends State<YearlyScreen> {
               onSelected: (i) => setState(() => _person = i),
             ),
             const SizedBox(height: 8),
+            Row(children: [
+              InkIconButton(
+                icon: Icons.remove,
+                semanticLabel: 'Previous year',
+                onTap: () => setState(() => _year = (_year - 1).clamp(1924, 2100)),
+              ),
+              Expanded(
+                child: Text('$_year', textAlign: TextAlign.center, style: InkText.display(size: 22)),
+              ),
+              InkIconButton(
+                icon: Icons.add,
+                semanticLabel: 'Next year',
+                onTap: () => setState(() => _year = (_year + 1).clamp(1924, 2100)),
+              ),
+            ]),
+            const SizedBox(height: 8),
             ChoicePills<int>(
               key: const Key('yy-year'),
-              options: [for (final yr in forecastYears) (yr, '$yr')],
+              options: [
+                for (final yr in {...forecastYears, currentSolarYear(), currentSolarYear() + 1}.toList()..sort())
+                  (yr, '$yr'),
+              ],
               selected: _year,
               onSelected: (v) => setState(() => _year = v),
             ),
@@ -80,7 +98,7 @@ class YourYearBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final z = y.zodiac;
-    final t = y.template;
+    final t = y.guide;
     final l = y.lucky;
     final tai = y.taiSui;
     final offends = tai.status == TaiSuiStatus.offends;
@@ -110,37 +128,30 @@ class YourYearBody extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(tai.summary, style: InkText.body(height: 1.45)),
-          if (t != null) ...[
-            const SizedBox(height: 6),
-            Text(t.taiSuiNote, style: InkText.body(size: 15, height: 1.45, color: AppColors.ivory2)),
-          ],
+          const SizedBox(height: 6),
+          Text(t.taiSuiNote, style: InkText.body(size: 15, height: 1.45, color: AppColors.ivory2)),
           const SizedBox(height: 6),
           Text(l.yearElementNote, style: InkText.body(size: 15, height: 1.45)),
         ]),
       ),
-      if (t != null)
-        InkstoneCard(
-          key: const Key('yy-outlook'),
-          title: '${y.year} outlook',
-          source: 'Written guide (offline)',
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(t.overview, style: InkText.body(height: 1.45)),
-            _line('Career', t.career),
-            _line('Money', t.money),
-            _line('Love', t.love),
-            _line('Health', t.health),
-            if (t.luckyMonths.isNotEmpty)
-              _line('Lucky months', t.luckyMonths.map((m) => '${cap(m)} month').join(', ')),
-          ]),
-        )
-      else if (loading)
-        const Padding(padding: EdgeInsets.all(16), child: Center(child: CircularProgressIndicator()))
-      else
-        InkstoneCard(child: Text('The written guide covers 2026 and 2027.', style: InkText.body())),
+      InkstoneCard(
+        key: const Key('yy-outlook'),
+        title: '${y.year} outlook',
+        source: y.hasWrittenGuide ? 'Written guide (offline)' : 'Rule-based (offline)',
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(t.overview, style: InkText.body(height: 1.45)),
+          _line('Career', t.career),
+          _line('Money', t.money),
+          _line('Love', t.love),
+          _line('Health', t.health),
+          if (t.luckyMonths.isNotEmpty)
+            _line('Lucky months', t.luckyMonths.map((m) => '${cap(m)} month').join(', ')),
+        ]),
+      ),
       InkstoneCard(
         key: const Key('yy-dos'),
         title: 'Do and avoid',
-        child: AlmanacList(goodFor: t?.dos ?? const [], avoid: y.allAvoids),
+        child: AlmanacList(goodFor: t.dos, avoid: y.allAvoids),
       ),
       InkstoneCard(
         key: const Key('yy-lucky'),

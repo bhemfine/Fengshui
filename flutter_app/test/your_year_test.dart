@@ -74,9 +74,26 @@ void main() {
     expect(h.period, 8);
   });
 
+  test('any year has a non-empty guide (written or rule-based)', () {
+    for (final year in [2024, 2025, 2028, 2035, 2040]) {
+      final y = YourYear.compute(mainUser, year, content);
+      expect(y.guide.overview.length, greaterThan(40), reason: '$year overview');
+      expect(y.guide.career, isNotEmpty, reason: '$year career');
+      expect(y.guide.money, isNotEmpty, reason: '$year money');
+      expect(y.guide.love, isNotEmpty, reason: '$year love');
+      expect(y.guide.health, isNotEmpty, reason: '$year health');
+      expect(y.guide.dos, isNotEmpty, reason: '$year dos');
+      expect(y.guide.avoids, isNotEmpty, reason: '$year avoids');
+      expect(y.guide.taiSuiNote, isNotEmpty, reason: '$year tai sui');
+      expect(y.guide.yearName, isNotEmpty);
+    }
+    final written = YourYear.compute(mainUser, 2026, content);
+    expect(written.hasWrittenGuide, isTrue);
+  });
+
   testWidgets('Your year screen shows zodiac, Tai Sui, lucky and unlucky cards', (tester) async {
     await _open(tester, Routes.yearly);
-    for (final k in ['yy-zodiac', 'yy-taisui', 'yy-lucky']) {
+    for (final k in ['yy-zodiac', 'yy-taisui', 'yy-lucky', 'yy-outlook']) {
       expect(find.byKey(Key(k)), findsOneWidget, reason: k);
     }
     expect(find.textContaining('Metal Horse'), findsWidgets);

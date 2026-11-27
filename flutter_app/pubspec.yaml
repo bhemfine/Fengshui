@@ -28,6 +28,11 @@ dependencies:
   path_provider: ^2.1.6
   # Upload your own floor plan (Android photo picker, no storage permission).
   image_picker: ^1.2.4
+  # Opt-in daily reminder (inexact; no exact-alarm permission).
+  flutter_local_notifications: ^19.5.0
+  timezone: ^0.10.1
+  # Share a local crash report (no personal data) from the Me screen.
+  share_plus: ^11.0.0
   # TODO(phase-2): local encrypted storage
   # drift: ^2.22.0
   # sqlcipher_flutter_libs: ^0.6.4

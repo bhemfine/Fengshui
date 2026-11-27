@@ -4,7 +4,7 @@ import 'package:inkstone/data/example_charts.dart';
 import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/current_home.dart';
 import 'package:inkstone/data/your_year.dart' show currentSolarYear;
-import 'package:inkstone_engine/inkstone_engine.dart' show directionLong;
+import 'package:inkstone_engine/inkstone_engine.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -81,6 +81,30 @@ class _HouseCheckScreenState extends State<HouseCheckScreen> {
             const SizedBox(height: 6),
             Text('Birth times unknown — hour-based checks left out. Scores rank the facing within each person\'s 8 directions.', style: InkText.small),
           ]),
+        ),
+        FloorElementCard(
+          floorRaw: home.floor,
+          favourable: computeBazi(
+            birthLocal: mainUser.timeKnown
+                ? mainUser.birth
+                : DateTime(mainUser.birth.year, mainUser.birth.month, mainUser.birth.day, 12),
+            utcOffsetHours: 8,
+            hourKnown: mainUser.timeKnown,
+          ).favourableElements,
+          unfavourable: unfavourableElements(computeBazi(
+            birthLocal: mainUser.timeKnown
+                ? mainUser.birth
+                : DateTime(mainUser.birth.year, mainUser.birth.month, mainUser.birth.day, 12),
+            utcOffsetHours: 8,
+            hourKnown: mainUser.timeKnown,
+          )),
+          partnerFavourable: computeBazi(
+            birthLocal: partner.timeKnown
+                ? partner.birth
+                : DateTime(partner.birth.year, partner.birth.month, partner.birth.day, 12),
+            utcOffsetHours: 8,
+            hourKnown: partner.timeKnown,
+          ).favourableElements,
         ),
         const SizedBox(height: 12),
         MidnightButton(label: 'See the floor reading', onPressed: () => context.go(Routes.floorResult)),

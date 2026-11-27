@@ -1,15 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:inkstone/data/crash_log.dart';
 import 'package:inkstone/data/household.dart';
+import 'package:inkstone/data/notifications.dart';
+import 'package:inkstone/data/user_data.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
 import 'package:inkstone/widgets/widgets.dart';
+import 'package:share_plus/share_plus.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
 
-  void _delete(BuildContext context) {
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool _notifyOn = false;
+  int _hour = DailyNotifications.defaultHour;
+  int _minute = DailyNotifications.defaultMinute;
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final p = await DailyNotifications.loadPrefs();
+    if (!mounted) return;
+    setState(() {
+      _notifyOn = p.on;
+      _hour = p.hour;
+      _minute = p.minute;
+      _loaded = true;
+    });
+  }
+
+  String get _timeLabel {
+    final h = _hour % 12 == 0 ? 12 : _hour % 12;
+    final am = _hour < 12 ? 'am' : 'pm';
+    return '${h.toString().padLeft(1, '0')}:${_minute.toString().padLeft(2, '0')}$am';
+  }
+
+  Future<void> _pickTime() async {
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(hour: _hour, minute: _minute),
+    );
+    if (picked == null) return;
+    setState(() {
+      _hour = picked.hour;
+      _minute = picked.minute;
+    });
+    if (_notifyOn) {
+      await DailyNotifications.enable(hour: _hour, minute: _minute);
+      if (mounted) showInkSnack(context, 'Daily card set for $_timeLabel.');
+    }
+  }
+
+  Future<void> _toggleNotify() async {
+    if (!_notifyOn) {
+      final ok = await DailyNotifications.requestPermission();
+      if (!ok) {
+        if (mounted) showInkSnack(context, 'Notifications are off in system settings.');
+        return;
+      }
+      await DailyNotifications.enable(hour: _hour, minute: _minute);
+      if (mounted) {
+        setState(() => _notifyOn = true);
+        showInkSnack(context, 'Daily card set for $_timeLabel.');
+      }
+    } else {
+      await DailyNotifications.cancel();
+      if (mounted) setState(() => _notifyOn = false);
+    }
+  }
+
+  Future<void> _shareCrashes() async {
+    final records = await CrashLogStore.load();
+    final text = CrashLogStore.shareText(records);
+    if (records.isEmpty) {
+      if (mounted) showInkSnack(context, 'No crash reports are stored on this phone.');
+      return;
+    }
+    await Share.share(text, subject: 'Inkstone crash report');
+  }
+
+  void _delete() {
     showDialog<void>(
       context: context,
       barrierColor: AppColors.scrim,
@@ -22,9 +102,24 @@ class ProfileScreen extends StatelessWidget {
           child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('Delete my data', style: InkText.h2),
             const SizedBox(height: 8),
-            Text('This is a prototype. No real data is stored, so nothing is deleted.', style: InkText.body()),
+            Text(
+              'This removes the home you saved (facing, address, floor), checklist answers, the floor-plan photo, daily notification settings and local crash reports from this phone. The example profiles stay in the app. This cannot be undone.',
+              style: InkText.body(),
+            ),
             const SizedBox(height: 12),
-            MidnightButton(label: 'OK', onPressed: () => Navigator.of(ctx).pop()),
+            MidnightButton(
+              label: 'Delete everything stored',
+              onPressed: () async {
+                await deleteAllUserData();
+                if (ctx.mounted) Navigator.of(ctx).pop();
+                if (mounted) {
+                  setState(() => _notifyOn = false);
+                  showInkSnack(context, 'Saved data on this phone was deleted.');
+                }
+              },
+            ),
+            const SizedBox(height: 8),
+            GhostButton(label: 'Cancel', onPressed: () => Navigator.of(ctx).pop()),
           ]),
         ),
       ),
@@ -78,16 +173,27 @@ class ProfileScreen extends StatelessWidget {
             row(
                 Text('Notifications', style: InkText.body()),
                 LinkButton(
-                    label: 'Daily card at 7:00am',
+                    label: _loaded ? (_notifyOn ? 'Daily card at $_timeLabel' : 'Off — tap to turn on') : '…',
                     center: false,
-                    onPressed: () => showInkSnack(context, 'Daily card at 7:00am (example)')),
+                    onPressed: _toggleNotify),
+                false),
+            row(
+                Text('Reminder time', style: InkText.body()),
+                LinkButton(label: _timeLabel, center: false, onPressed: _pickTime),
                 false),
             row(
                 Text('Language', style: InkText.body()),
                 LinkButton(
                     label: 'English',
                     center: false,
-                    onPressed: () => showInkSnack(context, 'Only English in this prototype')),
+                    onPressed: () => showInkSnack(context, 'English only. Chinese language is out of scope.')),
+                false),
+            row(
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: LinkButton(label: 'Send crash report', center: false, onPressed: _shareCrashes),
+                ),
+                null,
                 false),
             row(
                 Align(
@@ -96,7 +202,7 @@ class ProfileScreen extends StatelessWidget {
                       label: 'Delete my data',
                       color: AppColors.care,
                       center: false,
-                      onPressed: () => _delete(context)),
+                      onPressed: _delete),
                 ),
                 null,
                 false),

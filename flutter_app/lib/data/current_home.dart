@@ -1,11 +1,16 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:inkstone_engine/inkstone_engine.dart';
 
+import 'local_store.dart';
 import 'quick_check.dart';
 import 'sample_data.dart' show Palace;
 
-/// The home the floor reading and house check use. Memory only, never saved.
-/// Starts as an example home; the quick check result replaces it.
+/// The home the floor reading and house check use. Starts as an example
+/// home; the quick check or floor-plan screen replaces it and saves it
+/// on the phone (SharedPreferences, backup off).
 class CurrentHome {
   const CurrentHome({
     required this.label,
@@ -13,15 +18,90 @@ class CurrentHome {
     required this.completionYear,
     required this.period,
     this.example = false,
+    this.address,
+    this.postalCode,
+    this.floor,
+    this.unit,
+    this.type,
+    this.planRotationDeg = 0,
   });
   final String label;
   final double facingDegrees;
   final int completionYear;
   final int period;
   final bool example;
+  final String? address;
+  final String? postalCode;
+  final String? floor;
+  final String? unit;
+  final PropertyType? type;
+  /// Rotation of the saved plan photo so the front door sits at the bottom.
+  final double planRotationDeg;
 
   FlyingStarChart get chart => natalChart(facingDegrees, period);
   FacingReading get facing => facingFromDegrees(facingDegrees);
+
+  CurrentHome copyWith({
+    String? label,
+    double? facingDegrees,
+    int? completionYear,
+    int? period,
+    bool? example,
+    String? address,
+    String? postalCode,
+    String? floor,
+    String? unit,
+    PropertyType? type,
+    double? planRotationDeg,
+    bool clearAddress = false,
+  }) =>
+      CurrentHome(
+        label: label ?? this.label,
+        facingDegrees: facingDegrees ?? this.facingDegrees,
+        completionYear: completionYear ?? this.completionYear,
+        period: period ?? this.period,
+        example: example ?? this.example,
+        address: clearAddress ? address : (address ?? this.address),
+        postalCode: clearAddress ? postalCode : (postalCode ?? this.postalCode),
+        floor: clearAddress ? floor : (floor ?? this.floor),
+        unit: clearAddress ? unit : (unit ?? this.unit),
+        type: type ?? this.type,
+        planRotationDeg: planRotationDeg ?? this.planRotationDeg,
+      );
+
+  Map<String, Object?> toJson() => {
+        'label': label,
+        'facingDegrees': facingDegrees,
+        'completionYear': completionYear,
+        'period': period,
+        'example': example,
+        'address': address,
+        'postalCode': postalCode,
+        'floor': floor,
+        'unit': unit,
+        'type': type?.name,
+        'planRotationDeg': planRotationDeg,
+      };
+
+  factory CurrentHome.fromJson(Map<String, Object?> m) {
+    PropertyType? type;
+    for (final t in PropertyType.values) {
+      if (t.name == m['type']) type = t;
+    }
+    return CurrentHome(
+      label: '${m['label'] ?? exampleHome.label}',
+      facingDegrees: (m['facingDegrees'] as num?)?.toDouble() ?? exampleHome.facingDegrees,
+      completionYear: (m['completionYear'] as num?)?.toInt() ?? exampleHome.completionYear,
+      period: (m['period'] as num?)?.toInt() ?? exampleHome.period,
+      example: m['example'] == true,
+      address: m['address'] as String?,
+      postalCode: m['postalCode'] as String?,
+      floor: m['floor'] as String?,
+      unit: m['unit'] as String?,
+      type: type,
+      planRotationDeg: (m['planRotationDeg'] as num?)?.toDouble() ?? 0,
+    );
+  }
 }
 
 const exampleHome = CurrentHome(
@@ -109,15 +189,44 @@ List<String> yearAfflictionsHits(Direction d, int year) {
   ];
 }
 
-/// The floor reading follows the last quick check (memory only).
+/// Apply a quick-check result as the current home and save it on the phone.
 /// With two facings ("not sure"), the main door reading is used.
 void useAsCurrentHome(QuickCheckInput q) {
   final deg = q.facings[FacingMethod.mainDoor] ?? q.facings.values.first;
-  currentHome.value = CurrentHome(
+  final home = CurrentHome(
     label: q.home?.summary.isNotEmpty == true ? q.home!.summary : propertyLabel[q.type]!,
     facingDegrees: deg,
     completionYear: q.completionYear,
     period: q.period.period,
     example: q.example,
+    address: q.home?.address,
+    postalCode: q.home?.postalCode,
+    floor: q.home?.floor,
+    unit: q.home?.unit,
+    type: q.type,
   );
+  unawaited(setCurrentHome(home));
 }
+
+/// Load the saved home at startup. Falls back to [exampleHome] if none is saved.
+Future<void> bootstrapCurrentHome() async {
+  final raw = await LocalStore.instance.loadString(currentHomeKey);
+  if (raw == null || raw.isEmpty) return;
+  try {
+    currentHome.value = CurrentHome.fromJson(jsonDecode(raw) as Map<String, Object?>);
+  } catch (_) {
+    // Keep the example home if the saved record is damaged.
+  }
+}
+
+Future<void> setCurrentHome(CurrentHome home) async {
+  currentHome.value = home;
+  await LocalStore.instance.saveString(currentHomeKey, jsonEncode(home.toJson()));
+}
+
+Future<void> clearCurrentHome() async {
+  currentHome.value = exampleHome;
+  await LocalStore.instance.remove(currentHomeKey);
+}
+
+const currentHomeKey = 'current_home.v1';

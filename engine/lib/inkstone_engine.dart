@@ -14,3 +14,5 @@ export 'src/geo.dart';
 export 'src/listing_import.dart';
 export 'src/zodiac_year.dart';
 export 'src/lucky.dart';
+export 'src/floor_element.dart';
+export 'src/plan_grid.dart';

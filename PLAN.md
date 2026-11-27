@@ -382,7 +382,7 @@ The analyser and the house-hunting score use the same checklist. It applies to H
 
 ## 6. Module 3: House hunting with Google Maps
 
-> **Status (27 Nov 2026, `830dff7`):** Core house-check **built** without Google Maps: quick check, compass direction calculator, map bearing (OneMap / OSM / Esri tiles + Nominatim search), and listing import from PropertyGuru, 99.co and the HDB Flat Portal (the human still picks facing). Floor-element note **not built**. Licensed or self-hosted map tiles and geocoding are **required before a commercial launch** — the public OSM tile server, public Nominatim, and Esri World Imagery are not licensed for production apps. OneMap search already needs a token. Compass, map and WebView are untested on a real phone. Listing-page import may conflict with those sites’ terms; get legal advice before a public paid release.
+> **Status (27 Nov 2026):** Core house-check **built** without Google Maps: quick check, compass direction calculator, map bearing (OneMap / OSM / Esri tiles + Nominatim search), and listing import from PropertyGuru, 99.co and the HDB Flat Portal (the human still picks facing). The current home (facing, address, floor) **persists** on the phone. Floor-plan photos can be taken or picked, with a 3×3 grid (facing at the bottom). Floor-element note **built** (popular He Tu last-digit belief, labelled as such). Licensed or self-hosted map tiles and geocoding are **required before a commercial launch** — the public OSM tile server, public Nominatim, and Esri World Imagery are not licensed for production apps. OneMap search already needs a token. Compass, map and WebView are untested on a real phone (`docs/phone_test_checklist.md`). Listing-page import may conflict with those sites’ terms; get legal advice before a public paid release.
 
 Drop a pin or paste a listing address and get a feng shui score for the home and for each household member. Shortlists and reports are saved on the phone. Maps and Street View go through the proxy.
 
@@ -410,13 +410,13 @@ Paste a listing link in the House tab or the quick check, or share it to Inkston
 - **Map.** Missing coordinates (and a missing postal code) come from the Nominatim address search. The map bearing screen opens centred on the block, with the listing's facing shown only as a hint.
 - **Floor plan.** Shown only when the user asks, downloaded only when they tap "Save as my home plan", kept in the app's private folder (backup off) and shown on Add your floor plan, where it can be confirmed, replaced or removed. HDB Flat Portal has no per-flat plan the app can fetch, so the user is asked to upload a photo or screenshot (Android photo picker, no storage permission).
 - **Privacy.** Agent and seller names, phone numbers, prices and descriptions are never stored; the description is scanned in memory only for the postal code, unit, floor words and facing hint. Nothing is logged. Only what the user saves (the floor plan) is kept.
-- **Pre-fill.** "Use in quick check" fills the property type, TOP year, address, postal code, floor and unit. The facing is never pre-filled. (The floor-element note from the Singapore specifics above is not built yet.)
+- **Pre-fill.** "Use in quick check" fills the property type, TOP year, address, postal code, floor and unit. The facing is never pre-filled. (The floor-element note from the Singapore specifics above is now shown, labelled as popular belief, not classical Flying Stars.)
 
 ### Your year, lucky lists and year afflictions (v4, offline)
 
 - **Zodiac year with three elements.** Year stem element (what most calculators name, e.g. 庚午 = Metal Horse), the animal's fixed branch element (Horse = Fire) and the Na Yin (庚午 = 路旁土 Roadside Earth), with a one-line explainer that all three are right. Uses the Li Chun solar year.
 - **Tai Sui status** for any year: 本命 (own year), 自刑, 冲, 刑, 害, 破 (offend) and 六合, 三合 (harmony). **Year afflictions**: Tai Sui direction (year branch), Year Breaker (opposite), Three Killings (申子辰 S, 寅午戌 N, 亥卯未 W, 巳酉丑 E), plus the annual 5 and 2 stars. Shown on the home result, quick check result, floor reading and home checklist (reno tips).
-- **Your year screen** (`/yearly`, also linked from Today and BaZi): forecast text, dos, avoids, lucky months and Tai Sui note from the bundled `content/forecast_templates.json` (2026 and 2027).
+- **Your year screen** (`/yearly`, also linked from Today and BaZi): forecast text, dos, avoids, lucky months and Tai Sui note from the bundled `content/forecast_templates.json` (written 2026 and 2027; 2028–2035 in progress). Any other year gets a rule-based guide so the screen is never blank.
 - **Lucky / unlucky lists, rule-based**: favourable and clashing elements from the BaZi (heuristic), colours by element, He Tu numbers (Water 1/6, Fire 2/7, Wood 3/8, Metal 4/9, Earth 5/0), Kua directions minus the year's afflicted sectors, and crystals / rituals from `content/crystals.json` and `content/rituals.json` by element and tag. The method is stated on screen. Hour-based items are shown as unavailable when the birth time is unknown.
 - **Engine everywhere**: Today, Month, Year, BaZi and compatibility call the engine for the example couple; the floor reading and HDB plan compute Flying Stars for the home's period and facing (last quick check, kept in memory only; otherwise a labelled example).
 
@@ -605,7 +605,7 @@ Both people are entered as local profiles. Charts come from the Module 1 engine 
 
 ## 8. Module 5: Daily, monthly and yearly forecasts
 
-> **Status (27 Nov 2026, `830dff7`):** Today, Month and Your Year **built** and offline (almanac + bundled templates + lucky colours, numbers and items). Yearly prose templates exist only for **2026 and 2027**, all 12 animals. Notifications (“Daily card at 7:00am”) are a **demo stub**. Auspicious-date finder is only the monthly almanac calendar, not a dedicated date picker.
+> **Status (27 Nov 2026):** Today, Month and Your Year **built** and offline (almanac + bundled templates + lucky colours, numbers and items). Written yearly prose ships for **2026 and 2027** (12 animals); a rule-based guide covers any other year so the screen is never blank. Written packs for 2028–2035 are in progress (Opus 5.5, build time only). Daily local notifications are **built** (opt-in, inexact, generic text, Asia/Singapore). Auspicious-date finder is only the monthly almanac calendar, not a dedicated date picker.
 
 - Daily card: lucky colour, direction and hours, a short theme, and things good to do or avoid
 - Monthly outlook: how the month's pillar interacts with your chart for career, money, health and love
@@ -1758,14 +1758,14 @@ Confirm with the product owner before building any item below. Android only. No 
 | Area | State | Notes and paths |
 | --- | --- | --- |
 | Chart engine | Built | BaZi, Kua, Flying Stars, almanac, Na Yin, Tai Sui relations, lucky lists. `engine/lib/` |
-| Today / Month / Your Year | Built | Offline templates; yearly prose for 2026–2027 only. `flutter_app/assets/content/forecast_templates.json` |
+| Today / Month / Your Year | Built | Written 2026–2027; rule-based fallback for any year; 2028–2035 written pack in progress |
 | Quick check, direction calculator, map bearing, listing import | Built | Facing is never auto-chosen. Map tiles and Nominatim are not licensed for production |
 | Home checklist | Built | Persisted in SharedPreferences. `local_store.dart` |
 | Compatibility | Partial | Engine result for the example couple only |
 | User profiles | Not built | Hardcoded Boon Eng (main) and Victoria (partner) |
-| Home facing persistence | Not built | `currentHome` is memory-only |
-| Floor-plan tab | Demo | Photograph button is a stub; result is a stylised grid |
-| Floor-element note | Not built | Called out in Module 3 |
+| Home facing persistence | Built | SharedPreferences (`current_home.v1`); cleared by Delete my data |
+| Floor-plan tab | Built | Gallery and camera; 3×3 overlay with facing at the bottom; stylised grid only if no photo |
+| Floor-element note | Built | He Tu last digit, labelled popular belief, on quick check / floor / house check |
 | Tarot | Built (offline) | 78 cards, on-device classifier and composed reading; typography fronts, no card art yet |
 | Palm / face | Demo / not built | Hardcoded palm; no face reading |
 | Ask the Master | Not built | |
@@ -1774,10 +1774,10 @@ Confirm with the product owner before building any item below. Android only. No 
 | Crystals / rituals | Partial | Used in Your Year lists; no browser; shop is fake |
 | Masters marketplace | Demo | Sample data and snack stubs |
 | Paywall / Play Billing | Demo | Subscribe button does not bill. No IAP or ads SDK |
-| Notifications | Demo | Snack only |
+| Notifications | Built | Opt-in daily card, inexact, generic text; time picker on Me |
 | Chinese localisation | Out of scope | English only, decided 27 Nov 2026. The language control in Me stays English. |
 | Encrypted database and backup | Not built | Android Auto Backup is already off |
-| Crash reporting | Not built | |
+| Crash reporting | Built | Local last-20 logs, no PII; Me → Send crash report uses the share sheet |
 
 Routes are in `flutter_app/lib/router.dart`. Bottom nav: Today, Home, Readings, Masters, Me. Version is `0.1.0+1`. `applicationId` is the placeholder `com.inkstone.app`. Release builds are signed with the **debug key** (`flutter_app/android/app/build.gradle.kts`). `targetSdk` is 36 via Flutter 3.50.1; `minSdk` is 26. The launcher icon is byte-identical to the default Flutter template. Direct pub packages are BSD, MIT or Apache — **no AGPL in `pubspec.lock`**.
 
@@ -1789,25 +1789,25 @@ Routes are in `flutter_app/lib/router.dart`. Bottom nav: Today, Home, Readings, 
 4. **Map and geocoding licences.** `map_bearing_screen.dart` uses `tile.openstreetmap.org`, OneMap default tiles and Esri World Imagery. `address_search.dart` calls `nominatim.openstreetmap.org` (User-Agent set, 1 request/s). Those public endpoints are not licensed for production apps. Use a licensed or self-hosted tile set and geocoder. Register for OneMap if you keep it.
 5. **Listing-import legal risk.** PropertyGuru, 99.co and HDB Flat Portal pages are fetched or rendered in a WebView on the phone. That may breach those sites’ terms. Get advice or official permission before a public, paid app does this.
 6. **Store listing assets.** Replace the default Flutter icon. Add a feature graphic and device screenshots of real screens. Decide the final name (Inkstone is still a working title).
-7. **Real profiles and honest delete.** Users cannot save their own birth data. “Delete my data” currently says nothing is stored, but checklist answers and a floor-plan file are stored. Delete must clear SharedPreferences, the plan folder, and in-memory home/facing.
+7. **Real profiles.** Users still cannot save their own birth data (example couple only). **Delete my data** now clears SharedPreferences (home, checklist, notification prefs), the floor-plan folder, local crash logs, and resets the example home.
 8. **Entertainment disclaimer and content review.** Welcome and Me show “For guidance and entertainment. Not medical, legal or financial advice.” Tarot and palm do not surface it clearly. `content/README.md` says the copy is AI-drafted and needs a practitioner review before launch.
-9. **Fonts and Data safety for network.** `google_fonts` loads Cormorant SC and Source Serif 4 at runtime (`typography.dart`). Both faces are SIL OFL and should be bundled, with runtime fetching turned off. Declare any remaining network use (maps, listing import) on the Data safety form. The privacy draft also claims location, camera and notification permissions; the manifest currently requests only `INTERNET`.
-10. **Privacy-policy accuracy.** Align `store/privacy_policy.md` with the real permission set, the lack of encryption, and what is actually stored on the device.
+9. **Fonts and Data safety for network.** `google_fonts` still loads Cormorant SC and Source Serif 4 at runtime (`typography.dart`). Both faces are SIL OFL and should be bundled, with runtime fetching turned off. Declare remaining network use (maps, listing import) on the Data safety form. The manifest now requests `INTERNET`, optional `CAMERA`, `POST_NOTIFICATIONS`, `RECEIVE_BOOT_COMPLETED` and `VIBRATE` — still no location permission. The privacy draft’s opening sections were updated on 27 Nov 2026 to match this build.
+10. **Privacy-policy accuracy.** The opening sections of `store/privacy_policy.md` now describe this build honestly (no encryption, what is stored, camera/notifications, delete). Later sections are marked “intended at launch” and still need a publisher name, contact and hosted URL before Play.
 
 `allowBackup="false"` and the data-extraction rules that exclude cloud backup and device transfer are already correct and should be kept.
 
 ### (B) Should-fix before launch
 
-1. Ship a full 78-card tarot: bundle the JSON, 50/50 reversals, `Random.secure()`, a one- or three-card spread, and an on-device question-category reading (love, career, money, health, family/home, general, yes/no, timing/decision). No user question leaves the phone. Card art can follow, with a clear licence. (Approved to build after this plan update.)
-2. Persist home facing and address on the phone.
-3. Honest floor-plan flow: wire the real gallery/camera already used in listing import; apply the bearing to the chart; do not pretend to “read” a photo if the result is still a stylised grid.
-4. Floor-element note for HDB and condo unit floors.
-5. Year coverage after 2027 (more templates, or a rule-based fallback).
-6. Notifications: a local daily card, or remove the toggle.
-7. Crash reporting with no personal data (stack, device, app version only).
+1. ~~Ship a full 78-card tarot~~ **Done** (8fdaa78). Card art can follow, with a clear licence. An Opus 5.5 rewrite of the reading texts (3–5 sentences per field) is in progress, build time only.
+2. ~~Persist home facing and address on the phone.~~ **Done** (SharedPreferences, survives restart; Delete my data clears it).
+3. ~~Honest floor-plan flow.~~ **Done**: gallery and camera; the facing is applied to the chart; a 3×3 grid is overlaid on the user’s plan with the facing palace at the bottom (stylised grid only if no photo is saved).
+4. ~~Floor-element note for HDB and condo unit floors.~~ **Done**, labelled as popular belief.
+5. Year coverage after 2027: **rule-based fallback done** (any year). Written 2028–2035 templates in progress (Opus 5.5).
+6. ~~Notifications.~~ **Done**: opt-in daily card, inexact, generic text, time picker on Me.
+7. ~~Crash reporting with no personal data.~~ **Done**: last 20 local logs; share from Me.
 8. Fix Readings copy so calculated charts are not called “example data.”
-9. Test compass, map and WebView on a real phone.
-10. Re-enable release lint after the image_picker / JDK 17 issue is fixed.
+9. Test compass, map and WebView on a real phone — checklist in `docs/phone_test_checklist.md`. Not yet run on a device.
+10. Re-enable release lint after the image_picker / JDK 17 issue is fixed. Still off (`checkReleaseBuilds = false`); not re-enabled in this pass because the ExifDataCopier / `List.removeLast` failure is unchanged.
 
 ### (C) Nice-to-have after a sellable v1
 
