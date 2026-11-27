@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkstone/data/current_home.dart';
 import 'package:inkstone/data/house_records.dart';
+import 'package:inkstone/data/quick_check.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -16,12 +17,18 @@ class SavedHomesScreen extends StatelessWidget {
       context.push(Routes.quickCheck, extra: record);
       return;
     }
-    if (record.home != null) {
+    if (record.home != null && !record.home!.example) {
       await setCurrentHome(record.home!);
     }
     if (!context.mounted) return;
     if (record.quickCheck != null) {
-      context.push(Routes.quickCheckResult, extra: record.quickCheck);
+      context.push(
+        Routes.quickCheckResult,
+        extra: QuickCheckResultArgs(
+          input: record.quickCheck!,
+          recordId: record.id,
+        ),
+      );
     } else {
       context.go(Routes.houseCheck);
     }

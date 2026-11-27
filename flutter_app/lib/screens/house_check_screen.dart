@@ -49,9 +49,10 @@ class _HouseCheckScreenState extends State<HouseCheckScreen> {
   Future<void> _saveResult() async {
     var home = currentHome.value;
     final label = _a.text.trim();
-    if (label.isNotEmpty && (label != home.label || home.example)) {
-      home = home.copyWith(label: label, example: false);
-      await setCurrentHome(home);
+    if (label.isNotEmpty && label != home.label) {
+      // Keep the example flag: renaming a sample chart does not make it the
+      // user's real home. Current home is only updated after the user confirms.
+      home = home.copyWith(label: label);
     }
     if (!mounted) return;
     final name = await showHouseNameDialog(
@@ -61,6 +62,7 @@ class _HouseCheckScreenState extends State<HouseCheckScreen> {
     );
     if (name == null) return;
     await saveHouseResult(name: name, home: home);
+    if (!home.example) await setCurrentHome(home);
     if (mounted) showInkSnack(context, 'Saved $name');
   }
 

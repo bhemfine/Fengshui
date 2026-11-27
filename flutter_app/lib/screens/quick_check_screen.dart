@@ -48,11 +48,13 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
   double? _lat, _lng;
   bool _yearApprox = false;
   String? _draftId;
+  String? _draftName;
 
   @override
   void initState() {
     super.initState();
     _draftId = widget.draft?.id;
+    _draftName = widget.draft?.name;
     final p = widget.prefill ?? widget.draft?.draft;
     if (p != null) _apply(p);
   }
@@ -106,11 +108,12 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
     final name = await showHouseNameDialog(
       context,
       title: 'Save draft',
-      initial: defaultHouseName(null, draft: draft),
+      initial: suggestedDraftName(existingName: _draftName, draft: draft),
     );
     if (name == null) return;
     final record = await saveHouseDraft(id: _draftId, name: name, draft: draft);
     _draftId = record.id;
+    _draftName = record.name;
     if (mounted) showInkSnack(context, 'Draft saved as ${record.name}');
   }
 
@@ -175,7 +178,10 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
       home: _home.isEmpty ? null : _home,
     );
     useAsCurrentHome(input);
-    context.push(Routes.quickCheckResult, extra: input);
+    context.push(
+      Routes.quickCheckResult,
+      extra: QuickCheckResultArgs(input: input, recordId: _draftId),
+    );
   }
 
   List<(FacingMethod, String)> get _methodOptions => [

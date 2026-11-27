@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkstone/data/household.dart';
@@ -5,6 +7,7 @@ import 'package:inkstone/data/tarot_art.dart';
 import 'package:inkstone/data/tarot_catalog.dart';
 import 'package:inkstone/data/tarot_classifier.dart';
 import 'package:inkstone/data/tarot_reading.dart';
+import 'package:inkstone/motion/motion.dart';
 import 'package:inkstone/router.dart';
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -25,6 +28,8 @@ class TarotScreen extends StatefulWidget {
 
 class _TarotScreenState extends State<TarotScreen> {
   final _deck = TarotDeckController();
+  final _deckKey = GlobalKey();
+  Timer? _stuckTimer;
   final _q = TextEditingController();
   final _dealer = TarotDealer();
   TarotPhase _phase = TarotPhase.idle;
@@ -32,7 +37,7 @@ class _TarotScreenState extends State<TarotScreen> {
   Object? _loadError;
   String _spreadId = 'single';
   TarotSpread? _dealSpread;
-  List<TarotDrawn> _draws = const [];
+  int _pickedCount = 0;
   TarotReading? _reading;
 
   @override
@@ -47,7 +52,6 @@ class _TarotScreenState extends State<TarotScreen> {
     if (seed != null) {
       _phase = TarotPhase.revealed;
       _reading = seed;
-      _draws = [for (final p in seed.passages) p.drawn];
       _spreadId = seed.spread.id;
       _dealSpread = seed.spread;
       _q.text = seed.question.raw;
@@ -67,6 +71,7 @@ class _TarotScreenState extends State<TarotScreen> {
 
   @override
   void dispose() {
+    _stuckTimer?.cancel();
     _deck.dispose();
     _q.dispose();
     super.dispose();
@@ -76,7 +81,7 @@ class _TarotScreenState extends State<TarotScreen> {
 
   String get _prompt {
     final need = _spread.size;
-    final got = _draws.length;
+    final got = _pickedCount;
     return switch (_phase) {
       TarotPhase.shuffling => 'Shuffling…',
       TarotPhase.arc =>
@@ -88,18 +93,50 @@ class _TarotScreenState extends State<TarotScreen> {
     };
   }
 
+  void _failShuffle() {
+    _stuckTimer?.cancel();
+    if (!mounted) return;
+    setState(() => _phase = TarotPhase.idle);
+  }
+
   void _start() {
     final cat = _catalog;
     if (cat == null) return;
-    final spread = _spread;
-    final draws = _dealer.draw(cat.cards, spread.size);
-    _deck.prepare(draws);
-    setState(() {
-      _dealSpread = spread;
-      _draws = const [];
-      _reading = null;
-    });
-    _deck.shuffle();
+    try {
+      final spread = _spread;
+      final draws = _dealer.draw(cat.cards, spread.size);
+      setState(() {
+        _dealSpread = spread;
+        _pickedCount = 0;
+        _reading = null;
+      });
+      // Wait a frame so the deck is mounted (it is hidden while a reading
+      // is shown) and tickers are enabled before the shuffle starts.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        try {
+          if (!_deck.isAttached) {
+            _failShuffle();
+            return;
+          }
+          _deck.prepare(draws);
+          _deck.shuffle();
+          _stuckTimer?.cancel();
+          _stuckTimer = Timer(
+            Motion.tarotShuffle + const Duration(milliseconds: 800),
+            () {
+              if (mounted && _phase == TarotPhase.shuffling) {
+                _deck.completeShuffleIfStuck();
+              }
+            },
+          );
+        } catch (_) {
+          _failShuffle();
+        }
+      });
+    } catch (_) {
+      _failShuffle();
+    }
   }
 
   void _onRevealed(List<TarotDrawn> draws) {
@@ -112,7 +149,7 @@ class _TarotScreenState extends State<TarotScreen> {
       disclaimer: cat.disclaimer,
     ).compose(draws: draws, spread: spread, question: q);
     setState(() {
-      _draws = draws;
+      _pickedCount = draws.length;
       _reading = reading;
     });
   }
@@ -160,27 +197,52 @@ class _TarotScreenState extends State<TarotScreen> {
                     flex: drawn ? 5 : 6,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                      child: drawn
-                          ? TarotRevealedCards(
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          // Keep the deck State alive when a reading is shown.
+                          // Replacing it with the revealed row used to dispose
+                          // the animation mid-shuffle and leave "Shuffling..." stuck.
+                          TickerMode(
+                            enabled: true,
+                            child: IgnorePointer(
+                              ignoring: drawn,
+                              child: Opacity(
+                                opacity: drawn ? 0 : 1,
+                                child: LayoutBuilder(
+                                  key: const Key('tarot-deck'),
+                                  builder: (context, box) {
+                                    final h = box.maxHeight.isFinite
+                                        ? box.maxHeight.clamp(180.0, 520.0)
+                                        : 280.0;
+                                    return TarotDeck(
+                                      key: _deckKey,
+                                      controller: _deck,
+                                      height: h,
+                                      onPhaseChanged: (p) {
+                                        if (p != TarotPhase.shuffling) {
+                                          _stuckTimer?.cancel();
+                                        }
+                                        setState(() {
+                                          _phase = p;
+                                          _pickedCount = _deck.pickedCount;
+                                        });
+                                      },
+                                      onRevealed: _onRevealed,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                          if (drawn)
+                            TarotRevealedCards(
                               passages: _reading!.passages,
                               onTap: (p) =>
                                   showTarotCardViewer(context, passage: p),
-                            )
-                          : LayoutBuilder(
-                              builder: (context, box) {
-                                final h = box.maxHeight.isFinite
-                                    ? box.maxHeight.clamp(180.0, 520.0)
-                                    : 280.0;
-                                return TarotDeck(
-                                  key: const Key('tarot-deck'),
-                                  controller: _deck,
-                                  height: h,
-                                  onPhaseChanged: (p) =>
-                                      setState(() => _phase = p),
-                                  onRevealed: _onRevealed,
-                                );
-                              },
                             ),
+                        ],
+                      ),
                     ),
                   ),
                   if (_prompt.isNotEmpty)

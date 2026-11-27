@@ -11,6 +11,8 @@ import 'package:inkstone/data/current_home.dart';
 import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/your_year.dart';
 import 'package:inkstone/router.dart';
+import 'package:inkstone/screens/yearly_screen.dart';
+import 'package:inkstone/theme/app_theme.dart';
 import 'package:inkstone_engine/inkstone_engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -150,4 +152,73 @@ void main() {
     expect(find.byKey(const Key('compat-zodiac')), findsOneWidget);
     expect(find.textContaining('Six Harmony'), findsWidgets);
   });
+
+  test('written lucky months follow the selected year, not the birth animal', () {
+    final y26 = YourYear.compute(mainUser, 2026, content);
+    final y27 = YourYear.compute(mainUser, 2027, content);
+    final y30 = YourYear.compute(mainUser, 2030, content);
+    expect(y26.hasWrittenGuide, isTrue);
+    expect(y27.hasWrittenGuide, isTrue);
+    expect(y30.hasWrittenGuide, isTrue);
+    // 2026 Horse year: Tiger + Dog (三合), Goat (六合).
+    expect(y26.guide.luckyMonths.toSet(), {'tiger', 'dog', 'goat'});
+    // 2027 Goat year: Rabbit + Pig (三合), Horse (六合) — must not stay as Horse months.
+    expect(y27.guide.luckyMonths.toSet(), {'rabbit', 'pig', 'horse'});
+    expect(y27.guide.luckyMonths, isNot(orderedEquals(y26.guide.luckyMonths)));
+    // 2030 Dog year: Tiger + Horse (三合), Rabbit (六合).
+    expect(y30.guide.luckyMonths.toSet(), {'tiger', 'horse', 'rabbit'});
+    expect(y26.guide.overview, isNot(y27.guide.overview));
+    expect(y26.guide.career, isNot(y27.guide.career));
+    expect(y26.guide.love, isNot(y30.guide.love));
+    expect(y26.taiSui.chineseLabel, isNot(y27.taiSui.chineseLabel));
+    expect(y26.lucky.yearElementNote, isNot(y30.lucky.yearElementNote));
+    expect(yearEnglishName(2026), 'Fire Horse year');
+    expect(yearEnglishName(2027), 'Fire Goat year');
+    expect(yearEnglishName(2030), 'Metal Dog year');
+  });
+
+  testWidgets(
+    'changing year updates this-year, outlook, Tai Sui, months, stars and colours',
+    (tester) async {
+      tester.view.physicalSize = const Size(412, 915);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+      final theme = buildInkTheme();
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: theme,
+          darkTheme: theme,
+          themeMode: ThemeMode.dark,
+          home: const YearlyScreen(initialYear: 2026),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+
+      expect(find.byKey(const Key('yy-this-year')), findsOneWidget);
+      expect(find.textContaining('Fire Horse year'), findsWidgets);
+      expect(find.textContaining('2026 outlook'), findsOneWidget);
+      expect(find.textContaining('本命年'), findsWidgets);
+      expect(find.textContaining('Lucky months'), findsOneWidget);
+
+      await tester.tap(find.text('2027'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      expect(find.textContaining('Fire Goat year'), findsWidgets);
+      expect(find.textContaining('2027 outlook'), findsOneWidget);
+      expect(find.textContaining('2026 outlook'), findsNothing);
+      expect(find.textContaining('六合'), findsWidgets);
+      expect(find.textContaining('Rabbit month'), findsWidgets);
+
+      await tester.ensureVisible(find.text('2030'));
+      await tester.tap(find.text('2030'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      expect(find.textContaining('Metal Dog year'), findsWidgets);
+      expect(find.textContaining('2030 outlook'), findsOneWidget);
+      expect(find.textContaining('2027 outlook'), findsNothing);
+      expect(find.textContaining('Tiger month'), findsWidgets);
+      expect(find.textContaining('This year\'s colours'), findsOneWidget);
+    },
+  );
 }

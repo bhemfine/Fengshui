@@ -21,7 +21,7 @@ class ReadingsScreen extends StatelessWidget {
         '${shortName(mainUser)} and ${shortName(partner)}',
         Routes.compatibility,
       ),
-      ('◐', 'Your year', 'Zodiac, Tai Sui, lucky lists 2026–27', Routes.yearly),
+      ('◐', 'Your year', 'Zodiac, Tai Sui and lucky lists', Routes.yearly),
     ];
     return InkstoneScaffold(
       children: [

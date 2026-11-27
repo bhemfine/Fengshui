@@ -15,20 +15,24 @@ import 'package:inkstone/widgets/widgets.dart';
 
 /// Quick check result: each person's Kua, good directions, facing verdict, period.
 class QuickCheckResultScreen extends StatelessWidget {
-  const QuickCheckResultScreen({super.key, this.input});
+  const QuickCheckResultScreen({super.key, this.input, this.recordId});
 
   /// Null when opened directly: shows the example household.
   final QuickCheckInput? input;
 
+  /// Draft or previous result to replace when saving.
+  final String? recordId;
+
   Future<void> _save(BuildContext context, QuickCheckInput q) async {
-    useAsCurrentHome(q);
     final name = await showHouseNameDialog(
       context,
       title: 'Save this result',
       initial: defaultHouseName(currentHome.value, input: q),
     );
     if (name == null) return;
-    await saveHouseResult(name: name, home: currentHome.value, quickCheck: q);
+    final home = currentHomeFromQuickCheck(q);
+    if (!q.example) useAsCurrentHome(q);
+    await saveHouseResult(id: recordId, name: name, home: home, quickCheck: q);
     if (context.mounted) showInkSnack(context, 'Saved $name');
   }
 

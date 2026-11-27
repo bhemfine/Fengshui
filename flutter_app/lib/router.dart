@@ -123,8 +123,13 @@ final GoRouter appRouter = GoRouter(
               pageBuilder: (context, state) => fadeRisePage(
                 state: state,
                 child: QuickCheckResultScreen(
-                  input: state.extra is QuickCheckInput
+                  input: state.extra is QuickCheckResultArgs
+                      ? (state.extra as QuickCheckResultArgs).input
+                      : state.extra is QuickCheckInput
                       ? state.extra as QuickCheckInput
+                      : null,
+                  recordId: state.extra is QuickCheckResultArgs
+                      ? (state.extra as QuickCheckResultArgs).recordId
                       : null,
                 ),
               ),
@@ -176,8 +181,24 @@ final GoRouter appRouter = GoRouter(
           routes: [
             _r(Routes.masters, const MastersScreen()),
             _r(Routes.masterProfile, const MasterProfileScreen()),
-            _r(Routes.bookingPending, const BookingPendingScreen()),
-            _r(Routes.bookingConfirm, const BookingConfirmScreen()),
+            GoRoute(
+              path: Routes.bookingPending,
+              pageBuilder: (context, state) => fadeRisePage(
+                state: state,
+                child: BookingPendingScreen(
+                  slot: state.extra is String ? state.extra as String : null,
+                ),
+              ),
+            ),
+            GoRoute(
+              path: Routes.bookingConfirm,
+              pageBuilder: (context, state) => fadeRisePage(
+                state: state,
+                child: BookingConfirmScreen(
+                  slot: state.extra is String ? state.extra as String : null,
+                ),
+              ),
+            ),
             _r(Routes.prescription, const PrescriptionScreen()),
           ],
         ),

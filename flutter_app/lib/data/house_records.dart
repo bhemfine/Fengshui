@@ -130,6 +130,16 @@ String defaultHouseName(
   return 'Untitled home';
 }
 
+/// Name shown when saving or re-saving a draft. Keeps a name the user already chose.
+String suggestedDraftName({
+  String? existingName,
+  required QuickCheckPrefill draft,
+}) {
+  final n = existingName?.trim();
+  if (n != null && n.isNotEmpty) return n;
+  return defaultHouseName(null, draft: draft);
+}
+
 String houseResultSummary(CurrentHome home) {
   final facing = home.facing.direction;
   final fits = [
@@ -195,7 +205,7 @@ Future<HouseRecord> saveHouseResult({
         : name.trim(),
     kind: HouseRecordKind.result,
     updatedAt: DateTime.now(),
-    home: home.copyWith(example: false),
+    home: home,
     quickCheck: quickCheck,
     summary: summary ?? houseResultSummary(home),
   );

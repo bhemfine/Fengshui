@@ -136,4 +136,31 @@ void main() {
     expect(find.text('New name'), findsNothing);
     expect(find.textContaining('No saved homes yet'), findsOneWidget);
   });
+
+  test('suggested draft name keeps the name already chosen', () {
+    const draft = QuickCheckPrefill(type: PropertyType.condo, yearText: '2018');
+    expect(suggestedDraftName(draft: draft), isNot(isEmpty));
+    expect(
+      suggestedDraftName(existingName: 'My draft', draft: draft),
+      'My draft',
+    );
+    expect(suggestedDraftName(existingName: '  ', draft: draft), isNot('  '));
+  });
+
+  test('saving a result with the draft id replaces the draft', () async {
+    final draft = await saveHouseDraft(
+      name: 'In progress',
+      draft: const QuickCheckPrefill(type: PropertyType.hdb, yearText: '2012'),
+    );
+    await saveHouseResult(id: draft.id, name: 'Finished', home: _home());
+    expect(houseRecords.value, hasLength(1));
+    expect(houseRecords.value.single.id, draft.id);
+    expect(houseRecords.value.single.isDraft, isFalse);
+    expect(houseRecords.value.single.name, 'Finished');
+  });
+
+  test('saving a result keeps the example flag', () async {
+    final rec = await saveHouseResult(name: 'Sample', home: exampleHome);
+    expect(rec.home!.example, isTrue);
+  });
 }

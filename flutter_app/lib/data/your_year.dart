@@ -56,7 +56,15 @@ class YourYear {
   final YearTemplate? template;
 
   /// Bundled text when present, otherwise a rule-based guide so the year is never blank.
-  YearTemplate get guide => template ?? ruleBasedYearTemplate(this);
+  /// Lucky months always follow the selected year's branch (three-harmony and
+  /// six-harmony), not the person's birth animal. Older written packs listed
+  /// the birth-animal months, so they stayed the same when the year changed.
+  YearTemplate get guide {
+    final base = template ?? ruleBasedYearTemplate(this);
+    return base.copyWith(
+      luckyMonths: luckyMonthAnimals(taiSui.yearPillar.branch.index),
+    );
+  }
 
   bool get hasWrittenGuide => template != null;
 

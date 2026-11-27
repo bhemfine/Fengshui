@@ -12,6 +12,15 @@ const facingMethodLabel = {
   FacingMethod.unsure: 'Not sure, show both',
 };
 
+/// Route extra when opening a quick-check result, optionally to update a draft.
+class QuickCheckResultArgs {
+  const QuickCheckResultArgs({required this.input, this.recordId});
+  final QuickCheckInput input;
+
+  /// Existing draft or result id to replace when the user saves.
+  final String? recordId;
+}
+
 /// Everything the result screen needs. The form itself is in memory; tapping through saves the home via useAsCurrentHome.
 class QuickCheckInput {
   const QuickCheckInput({

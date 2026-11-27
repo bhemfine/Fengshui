@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -14,11 +15,16 @@ enum TarotPhase { idle, shuffling, arc, flipping, revealed }
 class TarotDeckController extends ChangeNotifier {
   _TarotDeckState? _s;
   TarotPhase get phase => _s?._phase ?? TarotPhase.idle;
+  bool get isAttached => _s != null;
+  int get pickedCount => _s?._picked.length ?? 0;
 
   /// Cards to reveal, in pick order. Call before [shuffle].
   void prepare(List<TarotDrawn> draws) => _s?._prepare(draws);
   void shuffle() => _s?._shuffle();
   void reset() => _s?._reset();
+
+  /// If a shuffle animation never finished, jump to the pickable arc.
+  void completeShuffleIfStuck() => _s?._completeShuffleIfStuck();
 }
 
 /// Seven backs: shuffle orbit → arc → tap until the prepared spread is filled.
@@ -58,6 +64,7 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
   List<TarotDrawn> _pending = const [];
   final _picked = <int, TarotDrawn>{};
   final _order = <int>[];
+  Timer? _arcFallback;
 
   @override
   void initState() {
@@ -77,6 +84,7 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
   @override
   void dispose() {
     if (widget.controller?._s == this) widget.controller?._s = null;
+    _arcFallback?.cancel();
     _orbit.dispose();
     _settle.dispose();
     _flip.dispose();
@@ -105,19 +113,44 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
     _setPhase(TarotPhase.idle);
   }
 
+  void _goToArc() {
+    _arcFallback?.cancel();
+    _arcFallback = null;
+    if (!mounted || _phase != TarotPhase.shuffling) return;
+    _setPhase(TarotPhase.arc);
+    if (reduceMotion(context)) {
+      _settle.value = 1;
+    } else {
+      _settle.forward(from: 0);
+    }
+  }
+
+  void _completeShuffleIfStuck() => _goToArc();
+
   void _shuffle() {
-    _reset();
+    // Do not bounce through idle: that made the parent rebuild the setup
+    // panel and could remount this State, leaving the screen stuck on
+    // "Shuffling..." with a fresh idle deck.
+    _orbit.stop();
+    _settle.stop();
+    _flip.stop();
+    _orbit.value = 0;
+    _settle.value = 0;
+    _flip.value = 0;
+    _picked.clear();
+    _order.clear();
     _setPhase(TarotPhase.shuffling);
     if (reduceMotion(context)) {
       _settle.value = 1;
       _setPhase(TarotPhase.arc);
       return;
     }
-    _orbit.forward(from: 0).then((_) {
-      if (!mounted || _phase != TarotPhase.shuffling) return;
-      _setPhase(TarotPhase.arc);
-      _settle.forward(from: 0);
-    });
+    _orbit.forward(from: 0).then((_) => _goToArc(), onError: (_) => _goToArc());
+    _arcFallback?.cancel();
+    _arcFallback = Timer(
+      Motion.tarotShuffle + const Duration(milliseconds: 400),
+      _goToArc,
+    );
   }
 
   void _pick(int i) {
@@ -286,6 +319,7 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
               button: _phase == TarotPhase.arc && !_picked.containsKey(i),
               label: 'Card ${i + 1}',
               child: GestureDetector(
+                key: Key('tarot-pick-$i'),
                 behavior: HitTestBehavior.opaque,
                 onTap: _phase == TarotPhase.arc ? () => _pick(i) : null,
                 child: SizedBox(width: 76, height: 120, child: face),
