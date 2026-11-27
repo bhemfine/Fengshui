@@ -11,10 +11,10 @@ Map<String, Object?> _j(String rel) =>
     jsonDecode(File(rel).readAsStringSync()) as Map<String, Object?>;
 
 TarotCatalog _catalog() => TarotCatalog.parse(
-      readings: _j('assets/content/tarot/readings.json'),
-      classifier: _j('assets/content/tarot/classifier.json'),
-      spreads: _j('assets/content/tarot/spreads.json'),
-    );
+  readings: _j('assets/content/tarot/readings.json'),
+  classifier: _j('assets/content/tarot/classifier.json'),
+  spreads: _j('assets/content/tarot/spreads.json'),
+);
 
 void main() {
   late TarotCatalog cat;
@@ -55,9 +55,15 @@ void main() {
   test('classifier: love and career questions, plus Singlish and pinyin', () {
     expect(clf.classify("Does he still love me?").topic, TarotTopic.love);
     expect(clf.classify("Does he still love me?").yesNo, isTrue);
-    expect(clf.classify('Should I take the new job in my career?').topic, TarotTopic.career);
+    expect(
+      clf.classify('Should I take the new job in my career?').topic,
+      TarotTopic.career,
+    );
     expect(clf.classify('yuan fen with this person').topic, TarotTopic.love);
-    expect(clf.classify('how is my gong zuo this year').topic, TarotTopic.career);
+    expect(
+      clf.classify('how is my gong zuo this year').topic,
+      TarotTopic.career,
+    );
     expect(clf.classify('cai yun looking bad').topic, TarotTopic.money);
     expect(clf.classify('jian kang and my energy').topic, TarotTopic.health);
     expect(clf.classify('jia ting and my parents').topic, TarotTopic.family);
@@ -71,9 +77,14 @@ void main() {
     final a = TarotDealer(Random(42)).draw(cat.cards, 3);
     final b = TarotDealer(Random(42)).draw(cat.cards, 3);
     expect({for (final d in a) d.card.id}, hasLength(3));
-    expect([for (final d in a) (d.card.id, d.reversed)], [for (final d in b) (d.card.id, d.reversed)]);
+    expect(
+      [for (final d in a) (d.card.id, d.reversed)],
+      [for (final d in b) (d.card.id, d.reversed)],
+    );
     final c = TarotDealer(Random(99)).draw(cat.cards, 3);
-    expect([for (final d in a) d.card.id], isNot([for (final d in c) d.card.id]));
+    expect([
+      for (final d in a) d.card.id,
+    ], isNot([for (final d in c) d.card.id]));
   });
 
   test('reversals are about half over many seeded draws', () {
@@ -97,11 +108,10 @@ void main() {
       TarotDrawn(card: cat.cardById('the-lovers'), reversed: false),
       TarotDrawn(card: cat.cardById('the-star'), reversed: true),
     ];
-    final r = TarotComposer(cat.spreads, disclaimer: cat.disclaimer).compose(
-      draws: draws,
-      spread: spread,
-      question: q,
-    );
+    final r = TarotComposer(
+      cat.spreads,
+      disclaimer: cat.disclaimer,
+    ).compose(draws: draws, spread: spread, question: q);
     expect(r.passages, hasLength(3));
     expect(r.passages[0].position.id, 'past');
     expect(r.passages[0].body, cat.cardById('the-fool').upright.love);
@@ -119,15 +129,27 @@ void main() {
     final q = clf.classify('Should I take this new job?');
     expect(q.topic, TarotTopic.career);
     expect(q.yesNo, isTrue);
-    final draws = [TarotDrawn(card: cat.cardById('ace-of-wands'), reversed: false)];
-    final r = TarotComposer(cat.spreads, disclaimer: cat.disclaimer).compose(
-      draws: draws,
-      spread: spread,
-      question: q,
-    );
+    final draws = [
+      TarotDrawn(card: cat.cardById('ace-of-wands'), reversed: false),
+    ];
+    final r = TarotComposer(
+      cat.spreads,
+      disclaimer: cat.disclaimer,
+    ).compose(draws: draws, spread: spread, question: q);
     expect(r.passages.single.body, cat.cardById('ace-of-wands').upright.career);
     expect(r.yesNo, isNotNull);
     expect(r.yesNoLean, isNotNull);
     expect(r.summary.toLowerCase(), contains('in short'));
+  });
+
+  test('every card id has a bundled art asset', () {
+    for (final c in cat.cards) {
+      expect(
+        File('assets/tarot/${c.id}.webp').existsSync(),
+        isTrue,
+        reason: 'missing art for ${c.id}',
+      );
+    }
+    expect(File('assets/tarot/card-back.webp').existsSync(), isTrue);
   });
 }

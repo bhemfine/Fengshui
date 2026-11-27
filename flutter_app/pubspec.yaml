@@ -54,3 +54,4 @@ flutter:
     - assets/content/tarot/readings.json
     - assets/content/tarot/classifier.json
     - assets/content/tarot/spreads.json
+    - assets/tarot/

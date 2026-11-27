@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../data/tarot_art.dart';
 import '../data/tarot_reading.dart';
 import '../motion/motion.dart';
 import '../theme/colors.dart';
@@ -41,9 +42,18 @@ class TarotDeck extends StatefulWidget {
 
 class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
   static const _n = 7;
-  late final AnimationController _orbit = AnimationController(vsync: this, duration: Motion.tarotShuffle);
-  late final AnimationController _settle = AnimationController(vsync: this, duration: Motion.tarotSettle);
-  late final AnimationController _flip = AnimationController(vsync: this, duration: Motion.tarotFlip);
+  late final AnimationController _orbit = AnimationController(
+    vsync: this,
+    duration: Motion.tarotShuffle,
+  );
+  late final AnimationController _settle = AnimationController(
+    vsync: this,
+    duration: Motion.tarotSettle,
+  );
+  late final AnimationController _flip = AnimationController(
+    vsync: this,
+    duration: Motion.tarotFlip,
+  );
   TarotPhase _phase = TarotPhase.idle;
   List<TarotDrawn> _pending = const [];
   final _picked = <int, TarotDrawn>{};
@@ -164,7 +174,9 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
                   height: 260,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.gold.withValues(alpha: 0.5)),
+                    border: Border.all(
+                      color: AppColors.gold.withValues(alpha: 0.5),
+                    ),
                   ),
                 ),
               for (var i = 0; i < _n; i++)
@@ -184,7 +196,8 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
     double opacity = 1;
     double angle = 0;
     final drawn = _picked[i];
-    final isLatest = _order.isNotEmpty && _order.last == i && _phase == TarotPhase.flipping;
+    final isLatest =
+        _order.isNotEmpty && _order.last == i && _phase == TarotPhase.flipping;
     final alreadyFront = drawn != null && !isLatest;
     switch (_phase) {
       case TarotPhase.idle:
@@ -207,11 +220,28 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
       case TarotPhase.revealed:
         final (p, r) = _arc(i);
         if (isLatest) {
-          final m = rm ? 1.0 : const Interval(0, 0.4, curve: Curves.ease).transform(_flip.value);
-          pos = Offset.lerp(p, Offset(0, -10.0 * (_pending.length == 1 ? 1 : 0)), m)!;
+          final m = rm
+              ? 1.0
+              : const Interval(
+                  0,
+                  0.4,
+                  curve: Curves.ease,
+                ).transform(_flip.value);
+          pos = Offset.lerp(
+            p,
+            Offset(0, -10.0 * (_pending.length == 1 ? 1 : 0)),
+            m,
+          )!;
           rot = r * (1 - m);
           scale = 1 + 0.12 * m;
-          angle = rm ? pi : const Interval(0.4, 1, curve: Motion.flip).transform(_flip.value) * pi;
+          angle = rm
+              ? pi
+              : const Interval(
+                      0.4,
+                      1,
+                      curve: Motion.flip,
+                    ).transform(_flip.value) *
+                    pi;
         } else if (drawn != null) {
           pos = p;
           rot = r;
@@ -228,7 +258,9 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
     if (rm && (isLatest || alreadyFront)) {
       face = AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
-        child: showFront ? _Front(key: ValueKey('f$i'), draw: drawn) : const _Back(key: ValueKey('b')),
+        child: showFront
+            ? _Front(key: ValueKey('f$i'), draw: drawn)
+            : const _Back(key: ValueKey('b')),
       );
     } else {
       final m = Matrix4.identity()
@@ -271,30 +303,20 @@ class _Back extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(9),
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF18214D), Color(0xFF0C1230)],
-          ),
-          border: Border.all(color: AppColors.gold.withValues(alpha: 0.7)),
-          boxShadow: const [BoxShadow(color: Color(0x80000000), blurRadius: 16, offset: Offset(0, 6))],
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(9),
+      border: Border.all(color: AppColors.gold.withValues(alpha: 0.7)),
+      boxShadow: const [
+        BoxShadow(
+          color: Color(0x80000000),
+          blurRadius: 16,
+          offset: Offset(0, 6),
         ),
-        padding: const EdgeInsets.all(8),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: AppColors.gold.withValues(alpha: 0.35)),
-          ),
-          alignment: Alignment.center,
-          child: Container(
-            width: 7,
-            height: 7,
-            decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.gold.withValues(alpha: 0.4)),
-          ),
-        ),
-      );
+      ],
+    ),
+    clipBehavior: Clip.antiAlias,
+    child: Image.asset(TarotArt.backAsset, fit: BoxFit.cover),
+  );
 }
 
 class _Front extends StatelessWidget {
@@ -303,23 +325,64 @@ class _Front extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inner = Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Icon(Icons.auto_awesome, size: 22, color: AppColors.gold2),
-        const SizedBox(height: 6),
-        Text(draw.card.name, textAlign: TextAlign.center, style: InkText.display(size: 12, height: 1.1)),
-      ],
+    final art = Image.asset(
+      TarotArt.assetFor(draw.card.id),
+      fit: BoxFit.cover,
+      width: 76,
+      height: 120,
+      errorBuilder: (_, __, ___) => const ColoredBox(color: Color(0xFF0F1636)),
     );
     return Container(
-      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: const Color(0xFF0F1636),
         borderRadius: BorderRadius.circular(9),
         border: Border.all(color: AppColors.gold2),
-        boxShadow: [BoxShadow(color: const Color(0xFFE4DCC8).withValues(alpha: 0.12), blurRadius: 10)],
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFE4DCC8).withValues(alpha: 0.12),
+            blurRadius: 10,
+          ),
+        ],
       ),
-      child: draw.reversed ? Transform.rotate(angle: pi, child: inner) : inner,
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          draw.reversed ? Transform.rotate(angle: pi, child: art) : art,
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: IgnorePointer(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0x000B1026), Color(0xCC0B1026)],
+                  ),
+                ),
+                child: SizedBox(width: double.infinity, height: 36),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(3, 0, 3, 4),
+              child: Text(
+                draw.card.name,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: InkText.display(
+                  size: 8,
+                  height: 1.05,
+                  letterSpacing: 0.2,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
