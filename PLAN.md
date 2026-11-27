@@ -416,7 +416,7 @@ Paste a listing link in the House tab or the quick check, or share it to Inkston
 
 - **Zodiac year with three elements.** Year stem element (what most calculators name, e.g. 庚午 = Metal Horse), the animal's fixed branch element (Horse = Fire) and the Na Yin (庚午 = 路旁土 Roadside Earth), with a one-line explainer that all three are right. Uses the Li Chun solar year.
 - **Tai Sui status** for any year: 本命 (own year), 自刑, 冲, 刑, 害, 破 (offend) and 六合, 三合 (harmony). **Year afflictions**: Tai Sui direction (year branch), Year Breaker (opposite), Three Killings (申子辰 S, 寅午戌 N, 亥卯未 W, 巳酉丑 E), plus the annual 5 and 2 stars. Shown on the home result, quick check result, floor reading and home checklist (reno tips).
-- **Your year screen** (`/yearly`, also linked from Today and BaZi): forecast text, dos, avoids, lucky months and Tai Sui note from the bundled `content/forecast_templates.json` (written 2026 and 2027; 2028–2035 in progress). Any other year gets a rule-based guide so the screen is never blank.
+- **Your year screen** (`/yearly`, also linked from Today and BaZi): forecast text, dos, avoids, lucky months and Tai Sui note from the bundled `content/forecast_templates.json` (written 2026–2035). Any other year gets a rule-based guide so the screen is never blank.
 - **Lucky / unlucky lists, rule-based**: favourable and clashing elements from the BaZi (heuristic), colours by element, He Tu numbers (Water 1/6, Fire 2/7, Wood 3/8, Metal 4/9, Earth 5/0), Kua directions minus the year's afflicted sectors, and crystals / rituals from `content/crystals.json` and `content/rituals.json` by element and tag. The method is stated on screen. Hour-based items are shown as unavailable when the birth time is unknown.
 - **Engine everywhere**: Today, Month, Year, BaZi and compatibility call the engine for the example couple; the floor reading and HDB plan compute Flying Stars for the home's period and facing (last quick check, kept in memory only; otherwise a labelled example).
 
@@ -605,7 +605,7 @@ Both people are entered as local profiles. Charts come from the Module 1 engine 
 
 ## 8. Module 5: Daily, monthly and yearly forecasts
 
-> **Status (27 Nov 2026):** Today, Month and Your Year **built** and offline (almanac + bundled templates + lucky colours, numbers and items). Written yearly prose ships for **2026 and 2027** (12 animals); a rule-based guide covers any other year so the screen is never blank. Written packs for 2028–2035 are in progress (Opus 5.5, build time only). Daily local notifications are **built** (opt-in, inexact, generic text, Asia/Singapore). Auspicious-date finder is only the monthly almanac calendar, not a dedicated date picker.
+> **Status (27 Nov 2026):** Today, Month and Your Year **built** and offline (almanac + bundled templates + lucky colours, numbers and items). Written yearly prose ships for **2026–2035** (12 animals; 2028–2035 in more detail). A rule-based guide covers any other year so the screen is never blank. Daily local notifications are **built** (opt-in, inexact, generic text, Asia/Singapore). Auspicious-date finder is only the monthly almanac calendar, not a dedicated date picker.
 
 - Daily card: lucky colour, direction and hours, a short theme, and things good to do or avoid
 - Monthly outlook: how the month's pillar interacts with your chart for career, money, health and love
@@ -1758,7 +1758,7 @@ Confirm with the product owner before building any item below. Android only. No 
 | Area | State | Notes and paths |
 | --- | --- | --- |
 | Chart engine | Built | BaZi, Kua, Flying Stars, almanac, Na Yin, Tai Sui relations, lucky lists. `engine/lib/` |
-| Today / Month / Your Year | Built | Written 2026–2027; rule-based fallback for any year; 2028–2035 written pack in progress |
+| Today / Month / Your Year | Built | Written 2026–2035 (12 animals); rule-based fallback for any other year |
 | Quick check, direction calculator, map bearing, listing import | Built | Facing is never auto-chosen. Map tiles and Nominatim are not licensed for production |
 | Home checklist | Built | Persisted in SharedPreferences. `local_store.dart` |
 | Compatibility | Partial | Engine result for the example couple only |
@@ -1802,7 +1802,7 @@ Routes are in `flutter_app/lib/router.dart`. Bottom nav: Today, Home, Readings, 
 2. ~~Persist home facing and address on the phone.~~ **Done** (SharedPreferences, survives restart; Delete my data clears it).
 3. ~~Honest floor-plan flow.~~ **Done**: gallery and camera; the facing is applied to the chart; a 3×3 grid is overlaid on the user’s plan with the facing palace at the bottom (stylised grid only if no photo is saved).
 4. ~~Floor-element note for HDB and condo unit floors.~~ **Done**, labelled as popular belief.
-5. Year coverage after 2027: **rule-based fallback done** (any year). Written 2028–2035 templates in progress (Opus 5.5).
+5. ~~Year coverage after 2027.~~ **Done**: rule-based fallback for any year, plus written 2028–2035 templates (Opus 5.5, build time only).
 6. ~~Notifications.~~ **Done**: opt-in daily card, inexact, generic text, time picker on Me.
 7. ~~Crash reporting with no personal data.~~ **Done**: last 20 local logs; share from Me.
 8. Fix Readings copy so calculated charts are not called “example data.”

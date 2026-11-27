@@ -101,6 +101,38 @@ void main() {
     }
   });
 
+  test('every animal has a detailed 2028–2035 template with no placeholders', () {
+    final t = jsonDecode(File('../content/forecast_templates.json').readAsStringSync())['yearly'] as Map;
+    const months = {
+      'rat', 'ox', 'tiger', 'rabbit', 'dragon', 'snake',
+      'horse', 'goat', 'monkey', 'rooster', 'dog', 'pig',
+    };
+    const prose = ['overview', 'career', 'money', 'love', 'health_wellbeing', 'tai_sui_note'];
+    for (var year = 2028; year <= 2035; year++) {
+      final block = t['$year'] as Map;
+      expect(block['zh'], isNotEmpty, reason: '$year zh');
+      expect(block['en'], isNotEmpty, reason: '$year en');
+      final animals = block['animals'] as Map;
+      expect(animals.length, 12, reason: '$year animal count');
+      for (final b in branches) {
+        final key = b.animal.toLowerCase();
+        final a = animals[key] as Map;
+        for (final f in prose) {
+          final text = '${a[f]}'.trim();
+          expect(text.length, greaterThanOrEqualTo(80), reason: '$year $key.$f');
+          expect(text.toLowerCase().contains('todo'), isFalse, reason: '$year $key.$f');
+          expect(text.toLowerCase().contains('lorem'), isFalse, reason: '$year $key.$f');
+          expect(text.toLowerCase().contains('placeholder'), isFalse, reason: '$year $key.$f');
+        }
+        expect((a['dos'] as List).length, greaterThanOrEqualTo(4), reason: '$year $key.dos');
+        expect((a['avoids'] as List).length, greaterThanOrEqualTo(4), reason: '$year $key.avoids');
+        final lucky = [for (final m in (a['lucky_months'] as List)) '$m'.toLowerCase()];
+        expect(lucky.length, greaterThanOrEqualTo(2), reason: '$year $key.lucky_months');
+        expect(lucky, everyElement(isIn(months)));
+      }
+    }
+  });
+
   test('works without content lists (items empty, rest filled)', () {
     final r = luckyProfile(chart: chart(boonBirth), kua: computeKua(boonBirth, Gender.male), year: 2026);
     expect(r.luckyCrystals, isEmpty);

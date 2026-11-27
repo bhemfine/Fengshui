@@ -10,7 +10,7 @@
 | tarot/spreads.json | One-card and two three-card spreads, openers, position intros and closings |
 | crystals.json | 40 crystal profiles |
 | rituals.json | 30 rituals ("potions") with steps and safety notes |
-| forecast_templates.json | daily score bands, 12 day officers, 16 activity tags, 12 monthly themes, yearly 2026 + 2027 for all 12 animals |
+| forecast_templates.json | daily score bands, 12 day officers, 16 activity tags, 12 monthly themes, yearly 2026–2035 for all 12 animals (2026–2027 shorter original pack; 2028–2035 written in more detail at build time). Any other year uses a rule-based guide in the app |
 | kua_directions.json | Kua 1–9 and 8 direction types with HDB tips |
 | flying_stars.json | stars 1–9, 30 combinations, 2026/2027 annual notes |
 | home_checklist.json | 76 rule-based home checks (All homes, HDB, Condo, Landed, Buying stage, Reno tips), each tagged by school, with HDB-safe cures. A copy is bundled in `flutter_app/assets/content/` (engine test checks they match) |

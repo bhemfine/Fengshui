@@ -106,12 +106,22 @@ def call_claude(system, messages, tools=None, max_tokens=16000, label="", effort
         },
         method="POST",
     )
-    try:
-        with urllib.request.urlopen(req, timeout=180) as r:
-            data = json.loads(r.read().decode())
-    except urllib.error.HTTPError as e:
-        err = e.read().decode()[:2000]
-        raise SystemExit(f"HTTP {e.code} on {label}: {err}") from e
+    last_err = None
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=300) as r:
+                data = json.loads(r.read().decode())
+            last_err = None
+            break
+        except urllib.error.HTTPError as e:
+            err = e.read().decode()[:2000]
+            raise SystemExit(f"HTTP {e.code} on {label}: {err}") from e
+        except (TimeoutError, urllib.error.URLError) as e:
+            last_err = e
+            print(f"  timeout/retry {attempt+1} on {label}: {e}", flush=True)
+            time.sleep(4 * (attempt + 1))
+    if last_err is not None:
+        raise SystemExit(f"Giving up on {label}: {last_err}")
     usage = data.get("usage") or {}
     usd, toks = cost_of(usage)
     rec["total_usd"] = rec.get("total_usd", 0) + usd

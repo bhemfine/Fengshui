@@ -61,7 +61,7 @@ class YourYear {
 }
 
 /// Years that currently have a bundled written forecast (extended as packs land).
-const forecastYears = [2026, 2027];
+const forecastYears = [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035];
 
 /// English name of a Li Chun year, e.g. "Earth Monkey year".
 String yearEnglishName(int year) {
