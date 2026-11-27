@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "locale": "en-SG",
+  "spreads": [
+    {
+      "id": "single",
+      "name": "One card",
+      "blurb": "A single card for this question.",
+      "positions": [
+        {
+          "id": "focus",
+          "label": "This card",
+          "intro": "Here is the one card that speaks to your question."
+        }
+      ]
+    },
+    {
+      "id": "past_present_future",
+      "name": "Past, present, future",
+      "blurb": "Three cards showing where things began, where they stand, and where they may be heading.",
+      "positions": [
+        {
+          "id": "past",
+          "label": "Past",
+          "intro": "This card shows what has shaped the situation so far."
+        },
+        {
+          "id": "present",
+          "label": "Present",
+          "intro": "This card describes where things stand right now."
+        },
+        {
+          "id": "future",
+          "label": "Future",
+          "intro": "This card suggests where things may head if the current course continues."
+        }
+      ]
+    },
+    {
+      "id": "situation_action_outcome",
+      "name": "Situation, action, outcome",
+      "blurb": "Three cards looking at what is going on, what you can do, and what it may lead to.",
+      "positions": [
+        {
+          "id": "situation",
+          "label": "Situation",
+          "intro": "This card names what is really going on underneath."
+        },
+        {
+          "id": "action",
+          "label": "Action",
+          "intro": "This card points to a step or attitude within your reach."
+        },
+        {
+          "id": "outcome",
+          "label": "Outcome",
+          "intro": "This card shows a likely direction, not a fixed result."
+        }
+      ]
+    }
+  ],
+  "openers": {
+    "love": "Matters of the heart rarely move in straight lines, so let us look at this one gently.",
+    "career": "Work takes up a lot of space in our days, so let us see what these cards say about yours.",
+    "money": "Money questions often carry worry, so we will look at this calmly and practically.",
+    "health": "Your energy and wellbeing matter, so let us read this with care and without alarm.",
+    "family": "Home and family hold both comfort and pressure, so let us look at what is present here.",
+    "general": "Without a specific question, these cards offer a general view of what is around you now."
+  },
+  "closings": {
+    "single": "Take this card as a prompt for reflection, not a verdict.",
+    "all_upright": "The cards lean in one steady direction, though what you do next still shapes the story.",
+    "mixed": "The mix suggests some things are ready while others need time, so move at a pace that feels honest.",
+    "all_reversed": "Reversed cards ask for patience and inner work, and slowing down can be useful rather than a setback."
+  },
+  "yes_no_bridge": "On the yes-or-no side of the question:",
+  "timing_bridge": "As for timing and pace:"
+}

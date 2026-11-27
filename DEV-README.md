@@ -41,3 +41,9 @@ GitHub web upload takes max 100 files and 25 MB per file per upload, and keeps f
 - Content: `forecast_templates.json`, `crystals.json`, `rituals.json` bundled byte-identical under `flutter_app/assets/content/` (engine and app tests fail on drift). Loaded by `lib/data/content_repo.dart`.
 - App: `lib/data/your_year.dart`, `lib/data/current_home.dart` (in-memory home from the last quick check, labelled example otherwise), `widgets/year_afflictions_card.dart`. Today, Month, Your year, BaZi and compatibility screens call the engine; `samplePalaces` and the leftover sample almanac data are gone.
 - Checked on the box (Flutter 3.50.1): `flutter analyze` 0 errors/warnings (59 info), `flutter test` 75 pass, engine `dart test` 96 pass.
+
+## Tarot (offline, Nov 2026)
+- Pack: `content/tarot/readings.json` (78 cards), `classifier.json`, `spreads.json`, bundled under `flutter_app/assets/content/tarot/`. Seed short meanings remain in `major_arcana.json`, `wands_cups.json` and `swords_pentacles.json`.
+- App: `lib/data/tarot_catalog.dart`, `tarot_classifier.dart`, `tarot_reading.dart`, `screens/tarot_screen.dart`, `widgets/tarot_deck.dart`. Question classification and reading composition run only on the phone. No network call.
+- Copy was drafted at build time with Claude Sonnet 5.5 (no user questions were sent). Have a practitioner review before launch. Card art is not included; fronts are typography.
+- Tests: `flutter_app/test/tarot_test.dart`.

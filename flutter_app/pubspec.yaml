@@ -46,3 +46,6 @@ flutter:
     - assets/content/forecast_templates.json
     - assets/content/crystals.json
     - assets/content/rituals.json
+    - assets/content/tarot/readings.json
+    - assets/content/tarot/classifier.json
+    - assets/content/tarot/spreads.json

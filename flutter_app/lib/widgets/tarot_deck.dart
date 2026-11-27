@@ -2,41 +2,36 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../data/sample_data.dart';
+import '../data/tarot_reading.dart';
 import '../motion/motion.dart';
 import '../theme/colors.dart';
 import '../theme/typography.dart';
 
 enum TarotPhase { idle, shuffling, arc, flipping, revealed }
 
-class TarotDraw {
-  const TarotDraw({required this.card, required this.reversed});
-  final TarotCardData card;
-  final bool reversed;
-}
-
-/// Drive the deck from a screen: controller.shuffle() / controller.reset().
+/// Drive the deck from a screen: prepare draws, then shuffle / reset.
 class TarotDeckController extends ChangeNotifier {
   _TarotDeckState? _s;
   TarotPhase get phase => _s?._phase ?? TarotPhase.idle;
+
+  /// Cards to reveal, in pick order. Call before [shuffle].
+  void prepare(List<TarotDrawn> draws) => _s?._prepare(draws);
   void shuffle() => _s?._shuffle();
   void reset() => _s?._reset();
 }
 
-/// Seven backs: shuffle orbit (1.9s) → arc → tap one → 3D flip (1.1s).
+/// Seven backs: shuffle orbit → arc → tap until the prepared spread is filled.
 class TarotDeck extends StatefulWidget {
   const TarotDeck({
     super.key,
     this.controller,
-    this.cards = sampleTarotCards,
-    this.onDrawn,
+    this.onRevealed,
     this.onPhaseChanged,
     this.height = 280,
   });
 
   final TarotDeckController? controller;
-  final List<TarotCardData> cards;
-  final ValueChanged<TarotDraw>? onDrawn;
+  final ValueChanged<List<TarotDrawn>>? onRevealed;
   final ValueChanged<TarotPhase>? onPhaseChanged;
   final double height;
 
@@ -46,13 +41,13 @@ class TarotDeck extends StatefulWidget {
 
 class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
   static const _n = 7;
-  final _rng = Random();
   late final AnimationController _orbit = AnimationController(vsync: this, duration: Motion.tarotShuffle);
   late final AnimationController _settle = AnimationController(vsync: this, duration: Motion.tarotSettle);
   late final AnimationController _flip = AnimationController(vsync: this, duration: Motion.tarotFlip);
   TarotPhase _phase = TarotPhase.idle;
-  int? _chosen;
-  TarotDraw? _draw;
+  List<TarotDrawn> _pending = const [];
+  final _picked = <int, TarotDrawn>{};
+  final _order = <int>[];
 
   @override
   void initState() {
@@ -84,6 +79,10 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
     widget.onPhaseChanged?.call(p);
   }
 
+  void _prepare(List<TarotDrawn> draws) {
+    _pending = List.of(draws);
+  }
+
   void _reset() {
     _orbit.stop();
     _settle.stop();
@@ -91,8 +90,8 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
     _orbit.value = 0;
     _settle.value = 0;
     _flip.value = 0;
-    _chosen = null;
-    _draw = null;
+    _picked.clear();
+    _order.clear();
     _setPhase(TarotPhase.idle);
   }
 
@@ -112,15 +111,24 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
   }
 
   void _pick(int i) {
-    if (_phase != TarotPhase.arc) return;
-    final card = widget.cards[_rng.nextInt(widget.cards.length)];
-    _draw = TarotDraw(card: card, reversed: _rng.nextInt(5) == 0);
-    _chosen = i;
+    if (_phase != TarotPhase.arc && _phase != TarotPhase.revealed) return;
+    if (_phase == TarotPhase.revealed) return;
+    if (_picked.containsKey(i)) return;
+    if (_picked.length >= _pending.length || _pending.isEmpty) return;
+    final drawn = _pending[_picked.length];
+    setState(() {
+      _picked[i] = drawn;
+      _order.add(i);
+    });
     _setPhase(TarotPhase.flipping);
     void done() {
-      _setPhase(TarotPhase.revealed);
-      final d = _draw;
-      if (d != null) widget.onDrawn?.call(d);
+      if (!mounted) return;
+      if (_picked.length >= _pending.length) {
+        _setPhase(TarotPhase.revealed);
+        widget.onRevealed?.call([for (final k in _order) _picked[k]!]);
+      } else {
+        _setPhase(TarotPhase.arc);
+      }
     }
 
     if (reduceMotion(context)) {
@@ -133,7 +141,6 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
     }
   }
 
-  // position + rotation (radians) for card i
   (Offset, double) _arc(int i) {
     final o = i - 3;
     return (Offset(o * 44.0, o.abs() * 8.0), o * 7 * pi / 180);
@@ -161,8 +168,8 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
                   ),
                 ),
               for (var i = 0; i < _n; i++)
-                if (i != _chosen) _buildCard(i, rm),
-              if (_chosen != null) _buildCard(_chosen!, rm),
+                if (!_order.contains(i)) _buildCard(i, rm),
+              for (final i in _order) _buildCard(i, rm),
             ],
           );
         },
@@ -176,6 +183,9 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
     double scale = 1;
     double opacity = 1;
     double angle = 0;
+    final drawn = _picked[i];
+    final isLatest = _order.isNotEmpty && _order.last == i && _phase == TarotPhase.flipping;
+    final alreadyFront = drawn != null && !isLatest;
     switch (_phase) {
       case TarotPhase.idle:
         pos = Offset(i * 0.6, -i * 0.6);
@@ -190,38 +200,44 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
         final s = Curves.ease.transform(_settle.value);
         pos = Offset.lerp(Offset.zero, p, s)!;
         rot = r * s;
+        if (alreadyFront) {
+          angle = pi;
+        }
       case TarotPhase.flipping:
       case TarotPhase.revealed:
         final (p, r) = _arc(i);
-        if (i == _chosen) {
+        if (isLatest) {
           final m = rm ? 1.0 : const Interval(0, 0.4, curve: Curves.ease).transform(_flip.value);
-          pos = Offset.lerp(p, const Offset(0, -10), m)!;
+          pos = Offset.lerp(p, Offset(0, -10.0 * (_pending.length == 1 ? 1 : 0)), m)!;
           rot = r * (1 - m);
-          scale = 1 + 0.25 * m;
+          scale = 1 + 0.12 * m;
           angle = rm ? pi : const Interval(0.4, 1, curve: Motion.flip).transform(_flip.value) * pi;
+        } else if (drawn != null) {
+          pos = p;
+          rot = r;
+          angle = pi;
         } else {
           pos = p;
           rot = r;
-          opacity = 0.12;
+          if (_phase == TarotPhase.revealed) opacity = 0.12;
         }
     }
 
-    final d = _draw;
-    final showFront = angle > pi / 2 && d != null && i == _chosen;
+    final showFront = (angle > pi / 2 || alreadyFront) && drawn != null;
     Widget face;
-    if (rm && i == _chosen) {
+    if (rm && (isLatest || alreadyFront)) {
       face = AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
-        child: showFront ? _Front(key: const ValueKey('f'), draw: d) : const _Back(key: ValueKey('b')),
+        child: showFront ? _Front(key: ValueKey('f$i'), draw: drawn) : const _Back(key: ValueKey('b')),
       );
     } else {
       final m = Matrix4.identity()
         ..setEntry(3, 2, 0.0012)
-        ..rotateY(showFront ? angle - pi : angle);
+        ..rotateY(showFront ? (isLatest ? angle - pi : 0) : angle);
       face = Transform(
         alignment: Alignment.center,
         transform: m,
-        child: showFront ? _Front(draw: d) : const _Back(),
+        child: showFront ? _Front(draw: drawn) : const _Back(),
       );
     }
 
@@ -235,7 +251,7 @@ class _TarotDeckState extends State<TarotDeck> with TickerProviderStateMixin {
             opacity: opacity,
             duration: Duration(milliseconds: rm ? 200 : 500),
             child: Semantics(
-              button: _phase == TarotPhase.arc,
+              button: _phase == TarotPhase.arc && !_picked.containsKey(i),
               label: 'Card ${i + 1}',
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
@@ -283,7 +299,7 @@ class _Back extends StatelessWidget {
 
 class _Front extends StatelessWidget {
   const _Front({super.key, required this.draw});
-  final TarotDraw draw;
+  final TarotDrawn draw;
 
   @override
   Widget build(BuildContext context) {
@@ -292,8 +308,7 @@ class _Front extends StatelessWidget {
       children: [
         const Icon(Icons.auto_awesome, size: 22, color: AppColors.gold2),
         const SizedBox(height: 6),
-        Text(draw.card.name,
-            textAlign: TextAlign.center, style: InkText.display(size: 12, height: 1.1)),
+        Text(draw.card.name, textAlign: TextAlign.center, style: InkText.display(size: 12, height: 1.1)),
       ],
     );
     return Container(

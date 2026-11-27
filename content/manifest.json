@@ -1,17 +1,85 @@
 {
-  "version": 1,
+  "version": 2,
   "locale": "en-SG",
   "disclaimer": "For reflection and entertainment. Not professional advice.",
   "files": [
-    {"path": "content/forecast_templates.json", "counts": {"day_officers": 12, "monthly": 12, "yearly_animals_per_year": 12}},
-    {"path": "content/kua_directions.json", "counts": {"kua": 9, "direction_types": 8}},
-    {"path": "content/flying_stars.json", "counts": {"stars": 9, "combinations_min": 30}},
-    {"path": "content/tarot/major_arcana.json", "counts": {"major_arcana": 22}},
-    {"path": "content/tarot/wands_cups.json", "counts": {"wands_cups": 28}},
-    {"path": "content/tarot/swords_pentacles.json", "counts": {"swords_pentacles": 28}},
-    {"path": "content/crystals.json", "counts": {"crystals": 40}},
-    {"path": "content/rituals.json", "counts": {"rituals": 30}},
-    {"path": "content/home_checklist.json", "counts": {"home_checklist_items": 76, "sections": 6}}
+    {
+      "path": "content/forecast_templates.json",
+      "counts": {
+        "day_officers": 12,
+        "monthly": 12,
+        "yearly_animals_per_year": 12
+      }
+    },
+    {
+      "path": "content/kua_directions.json",
+      "counts": {
+        "kua": 9,
+        "direction_types": 8
+      }
+    },
+    {
+      "path": "content/flying_stars.json",
+      "counts": {
+        "stars": 9,
+        "combinations_min": 30
+      }
+    },
+    {
+      "path": "content/tarot/major_arcana.json",
+      "counts": {
+        "major_arcana": 22
+      }
+    },
+    {
+      "path": "content/tarot/wands_cups.json",
+      "counts": {
+        "wands_cups": 28
+      }
+    },
+    {
+      "path": "content/tarot/swords_pentacles.json",
+      "counts": {
+        "swords_pentacles": 28
+      }
+    },
+    {
+      "path": "content/crystals.json",
+      "counts": {
+        "crystals": 40
+      }
+    },
+    {
+      "path": "content/rituals.json",
+      "counts": {
+        "rituals": 30
+      }
+    },
+    {
+      "path": "content/home_checklist.json",
+      "counts": {
+        "home_checklist_items": 76,
+        "sections": 6
+      }
+    },
+    {
+      "path": "content/tarot/readings.json",
+      "counts": {
+        "tarot": 78
+      }
+    },
+    {
+      "path": "content/tarot/classifier.json",
+      "counts": {
+        "topics": 6
+      }
+    },
+    {
+      "path": "content/tarot/spreads.json",
+      "counts": {
+        "spreads": 3
+      }
+    }
   ],
   "expected_totals": {
     "tarot": 78,

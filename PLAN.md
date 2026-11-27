@@ -791,7 +791,7 @@ Paid-tier access can be checked by sending a Play purchase token with the reques
 
 ## 11. Module 8: Tarot, horoscope and I Ching
 
-> **Status (27 Nov 2026, `830dff7`):** Tarot is a **demo**: one-card shuffle UI, a question field that is never read, and 10 hardcoded cards in `flutter_app/lib/data/sample_data.dart` (no reversed meanings; reversals occur 1 in 5). A full 78-card JSON pack already exists in `content/tarot/` (upright and reversed summary, love, career, money, advice) but is not bundled or loaded, and there is no card art (only image prompts). I Ching, Western natal, transits and synastry are **not built**. Swiss Ephemeris is AGPL — commercial use needs a paid licence, so it is not in the app. A follow-up (section 22 and the tarot build after this plan update) is to load all 78 cards, classify the question **on the phone**, and compose the reading from pre-written category text, with no network call and no user question leaving the device.
+> **Status (27 Nov 2026, after the tarot build):** Tarot is **built** as an offline reader. The app loads all 78 cards from `content/tarot/readings.json` (bundled in `flutter_app/assets/content/tarot/`). The user types a question, picks a one-card or three-card spread (past/present/future, or situation/action/outcome), and shuffles. Draws use `Random.secure()` with 50/50 reversals and no duplicate cards. A keyword/phrase classifier (`classifier.json`, English plus common Singlish and pinyin) runs **on the phone** and picks a topic (love, career, money, health, family, general) plus yes/no and timing flags. The reading is composed from pre-written texts and spread phrases — no network call, and the question never leaves the device. Card fronts are typography only; licensed card art is still a follow-up. I Ching, Western natal, transits and synastry are **not built**. Swiss Ephemeris is AGPL — commercial use needs a paid licence, so it is not in the app.
 
 - Tarot: full 78-card deck, daily card, three-card and Celtic Cross spreads, animated shuffle, and a saved reading journal
 - Western astrology: natal chart, daily and monthly transits, and synastry, calculated on the device with Swiss Ephemeris
@@ -1728,7 +1728,7 @@ A tester can set up a local profile, enter birth details, see a correct BaZi cha
 
 ## 22. Commercial launch readiness
 
-Audit of `main` at commit `830dff7` on 27 Nov 2026 (Asia/Singapore). This is a launch checklist for a paid Google Play release, not a change to the product vision above. **The app is not commercially ready.** The offline feng shui engine and house-check flow are the real product. Many other screens are still prototype shells. Shipping them as-is would fail Play policy (misleading features, debug signing, no hosted privacy policy, unlicensed map tiles) and would not be sellable.
+Audit of `main` at commit `830dff7` on 27 Nov 2026 (Asia/Singapore). Later the same day, the 78-card on-device tarot reader (B1 / top-10 item 7) was built; Module 8 and the snapshot table were updated to match. This is a launch checklist for a paid Google Play release, not a change to the product vision above. **The app is not commercially ready.** The offline feng shui engine and house-check flow are the real product. Many other screens are still prototype shells. Shipping them as-is would fail Play policy (misleading features, debug signing, no hosted privacy policy, unlicensed map tiles) and would not be sellable.
 
 Confirm with the product owner before building any item below. Android only. No Supabase. Personal data stays on the phone, and the operator must not keep it. The Claude spend cap remains **USD 80** for the project; any AI writing is done at **build time**, and user questions and charts must not be sent off the device for the core product.
 
@@ -1745,7 +1745,7 @@ Confirm with the product owner before building any item below. Android only. No 
 | Home facing persistence | Not built | `currentHome` is memory-only |
 | Floor-plan tab | Demo | Photograph button is a stub; result is a stylised grid |
 | Floor-element note | Not built | Called out in Module 3 |
-| Tarot | Demo | 10 sample cards; question ignored; 78-card JSON unused |
+| Tarot | Built (offline) | 78 cards, on-device classifier and composed reading; typography fronts, no card art yet |
 | Palm / face | Demo / not built | Hardcoded palm; no face reading |
 | Ask the Master | Not built | |
 | I Ching / Western natal | Not built | Swiss Ephemeris would need a paid licence |
@@ -1803,7 +1803,7 @@ I Ching; Western natal (only with a paid Swiss Ephemeris licence); replacement s
 | 4 | User-owned on-device profiles and a delete that really deletes | M | A |
 | 5 | Licensed maps and geocoding | M | A |
 | 6 | Legal position on listing import | M (legal) | A |
-| 7 | 78-card tarot with on-device question-category reading (art can follow) | M | B |
+| 7 | 78-card tarot with on-device question-category reading (art can follow) | M | B — **built 27 Nov 2026**; licensed card art still open |
 | 8 | Persist facing; honest floor-plan flow | M | B |
 | 9 | Bundle fonts; disclaimers on every fortune screen; practitioner review of copy | S–M | A / B |
 | 10 | Play Billing only if charging at launch; otherwise keep v1 free | M or S | A |

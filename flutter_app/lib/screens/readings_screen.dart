@@ -11,7 +11,7 @@ class ReadingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const rows = [
-      ('✧', 'Tarot', 'One card a day on Free', Routes.tarot),
+      ('✧', 'Tarot', 'Ask a question, draw one or three cards', Routes.tarot),
       ('✋', 'Palm reading', 'Read from your photo', Routes.palm),
       ('四', 'Your BaZi', 'Four pillars, calculated', Routes.bazi),
       ('∞', 'Compatibility', 'Boon Eng and Victoria', Routes.compatibility),
@@ -23,7 +23,7 @@ class ReadingsScreen extends StatelessWidget {
         for (final r in rows)
           _NavRow(glyph: r.$1, title: r.$2, sub: r.$3, onTap: () => context.go(r.$4)),
         const SizedBox(height: 12),
-        Text('All readings shown are example data.', style: InkText.small),
+        Text('Tarot, BaZi and Your year are calculated on this phone. Palm and masters are still examples.', style: InkText.small),
       ],
     );
   }
