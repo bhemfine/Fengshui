@@ -791,7 +791,7 @@ Paid-tier access can be checked by sending a Play purchase token with the reques
 
 ## 11. Module 8: Tarot, horoscope and I Ching
 
-> **Status (27 Nov 2026, after the tarot build):** Tarot is **built** as an offline reader. The app loads all 78 cards from `content/tarot/readings.json` (bundled in `flutter_app/assets/content/tarot/`). The user types a question, picks a one-card or three-card spread (past/present/future, or situation/action/outcome), and shuffles. Draws use `Random.secure()` with 50/50 reversals and no duplicate cards. A keyword/phrase classifier (`classifier.json`, English plus common Singlish and pinyin) runs **on the phone** and picks a topic (love, career, money, health, family, general) plus yes/no and timing flags. The reading is composed from pre-written texts and spread phrases — no network call, and the question never leaves the device. Card fronts are typography only; licensed card art is still a follow-up. I Ching, Western natal, transits and synastry are **not built**. Swiss Ephemeris will not be used (see the Western natal licence note below).
+> **Status (27 Nov 2026, after the tarot build):** Tarot is **built** as an offline reader. The app loads all 78 cards from `content/tarot/readings.json` (bundled in `flutter_app/assets/content/tarot/`). The user types a question, picks a one-card or three-card spread (past/present/future, or situation/action/outcome), and shuffles. Draws use `Random.secure()` with 50/50 reversals and no duplicate cards. A keyword/phrase classifier (`classifier.json`, English plus common Singlish and pinyin) runs **on the phone** and picks a topic (love, career, money, health, family, general) plus yes/no and timing flags. The reading is composed from pre-written texts and spread phrases — no network call, and the question never leaves the device. Card fronts are typography only; card art is being handled separately. Reading texts were rewritten in more detail with Opus 5.5 (build time only). I Ching, Western natal, transits and synastry are **not built**. Swiss Ephemeris will not be used (see the Western natal licence note below).
 
 - Tarot: full 78-card deck, daily card, three-card and Celtic Cross spreads, animated shuffle, and a saved reading journal
 - Western astrology (later): natal chart, daily and monthly transits, and synastry, calculated on the device with a **permissively licensed** method (not Swiss Ephemeris; see below)
@@ -1798,7 +1798,7 @@ Routes are in `flutter_app/lib/router.dart`. Bottom nav: Today, Home, Readings, 
 
 ### (B) Should-fix before launch
 
-1. ~~Ship a full 78-card tarot~~ **Done** (8fdaa78). Card art can follow, with a clear licence. An Opus 5.5 rewrite of the reading texts (3–5 sentences per field) is in progress, build time only.
+1. ~~Ship a full 78-card tarot~~ **Done** (8fdaa78). Reading texts were rewritten in more detail with Opus 5.5 (3–5 sentences per field, schema unchanged, build time only). Card art is being handled separately and is not part of this pass.
 2. ~~Persist home facing and address on the phone.~~ **Done** (SharedPreferences, survives restart; Delete my data clears it).
 3. ~~Honest floor-plan flow.~~ **Done**: gallery and camera; the facing is applied to the chart; a 3×3 grid is overlaid on the user’s plan with the facing palace at the bottom (stylised grid only if no photo is saved).
 4. ~~Floor-element note for HDB and condo unit floors.~~ **Done**, labelled as popular belief.

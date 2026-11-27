@@ -49,4 +49,45 @@ void main() {
       }
     }
   });
+
+
+  test('app copy of tarot readings matches content/ byte for byte', () {
+    expect(
+      File('assets/content/tarot/readings.json').readAsBytesSync(),
+      File('../content/tarot/readings.json').readAsBytesSync(),
+    );
+  });
+
+  test('all 78 tarot cards have detailed upright and reversed fields', () {
+    final pack = _root('../content/tarot/readings.json');
+    final cards = pack['cards'] as List;
+    expect(cards, hasLength(78));
+    const fields = [
+      'summary', 'love', 'career', 'money', 'health', 'family',
+      'general', 'yes_no', 'timing', 'advice', 'thread',
+    ];
+    final ids = <String>{};
+    for (final raw in cards) {
+      final c = raw as Map;
+      final id = '${c['id']}';
+      expect(ids.add(id), isTrue, reason: 'duplicate $id');
+      expect(c['yes_no_lean'], isNotNull, reason: id);
+      for (final orient in ['upright', 'reversed']) {
+        final block = c[orient] as Map;
+        for (final f in fields) {
+          final text = '${block[f]}'.trim();
+          expect(text, isNotEmpty, reason: '$id $orient.$f');
+          expect(text.toLowerCase().contains('todo'), isFalse, reason: '$id $orient.$f');
+          expect(text.toLowerCase().contains('lorem'), isFalse, reason: '$id $orient.$f');
+          expect(text.toLowerCase().contains('placeholder'), isFalse, reason: '$id $orient.$f');
+          if (f == 'thread') {
+            final wc = text.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
+            expect(wc, inInclusiveRange(5, 18), reason: '$id $orient.thread words=$wc');
+          } else {
+            expect(text.length, greaterThanOrEqualTo(160), reason: '$id $orient.$f length');
+          }
+        }
+      }
+    }
+  });
 }

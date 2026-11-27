@@ -5,7 +5,7 @@
 | tarot/major_arcana.json | Seed pack: 22 major-arcana cards (short meanings) |
 | tarot/wands_cups.json | Seed pack: 28 minor-arcana cards |
 | tarot/swords_pentacles.json | Seed pack: 28 minor-arcana cards |
-| tarot/readings.json | App pack: all 78 cards, upright and reversed texts for summary, love, career, money, health, family, general, yes/no, timing, advice, plus a short thread clause. Drafted at build time; the app never sends a user question to a model |
+| tarot/readings.json | App pack: all 78 cards, upright and reversed texts for summary, love, career, money, health, family, general, yes/no, timing, advice, plus a short thread clause. Rewritten in more detail with Opus 5.5 at build time (3–5 sentences per field, except a short thread). The app never sends a user question to a model. Card art is a separate follow-up |
 | tarot/classifier.json | On-device keyword and phrase lists (English, Singlish, pinyin) that map a question to a topic and to yes/no or timing flags |
 | tarot/spreads.json | One-card and two three-card spreads, openers, position intros and closings |
 | crystals.json | 40 crystal profiles |
