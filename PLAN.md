@@ -5,7 +5,7 @@ Every feature of a personal feng shui and destiny app, how each one works, the t
 This document is the developer-ready specification for GitHub user **bhemfine** to build from. Product intent is taken from the agreed plan. Where this document adds user stories, screens, operations, data fields, diagrams and acceptance criteria, those are implementation details to help you build, not a change to the product. Tech stack and vendor choices are **recommendations** unless stated otherwise. Do not treat any price, commission rate, user volume or running cost as decided; those are open and should be tested after launch. The only known fee in this plan is the Google Play developer account fee of **USD 25** (one-time).
 
 **Working title:** Ultimate Feng Shui App (final name is an open decision). The approved UI prototype uses the temporary name **Inkstone**.  
-**First market:** Singapore (and Malaysia), English and Chinese.  
+**First market:** Singapore (and Malaysia), English only (Chinese language dropped on 27 Nov 2026).  
 **Platform:** Android first, iOS later from the same code.  
 **UI source of truth:** the clickable prototype in `fengshui-ui-v3` and **[DESIGN.md](DESIGN.md)** (midnight astrolabe, champagne gold `#bfa577` / `#e3d6b8`, ivory, twinkling starfield).
 
@@ -46,7 +46,7 @@ One app that knows you, your family and your home, and turns classical Chinese m
 
 | | |
 | --- | --- |
-| **First market** | Singapore and Malaysia, English and Chinese |
+| **First market** | Singapore and Malaysia, English only (decided 27 Nov 2026) |
 | **Platform** | Android first, iOS later from the same code |
 | **Users** | Home buyers, renovators, couples, and anyone who checks their luck daily |
 | **Default schools** | Flying Stars (Xuan Kong) and Eight Mansions (Ba Zhai) for homes, Four Pillars (BaZi) for people |
@@ -98,7 +98,7 @@ These are recommended choices, not locked decisions. Swap a vendor only if it st
 | Mobile app | Flutter | One codebase for Android and iOS, smooth animations for tarot, compass and the starfield |
 | On-device database | SQLite via drift, or Isar | All personal data lives on the phone |
 | Encryption | Encrypted database; key in Android Keystore via flutter_secure_storage | Birth details, homes and photos stay unreadable if the file is copied off the device |
-| Chart engine | Dart library on the device, using Swiss Ephemeris (FFI or a Dart port) plus a lunar calendar library | Exact solar terms, true solar time and lunar dates, works offline |
+| Chart engine | Dart library on the device (plain Dart today: solar terms, BaZi, Kua, Flying Stars). Western natal, when built later, must **not** use Swiss Ephemeris; see Module 8 | Offline charts |
 | Knowledge base | Texts bundled in the app, searched on the device (SQLite full-text search; a local vector index is optional) | Lets Ask the Master cite the right classical rule without a cloud database |
 | Stateless proxy | A Cloudflare Worker, or a tiny Node service with no database | Hides AI and Maps keys, rate-limits, verifies paid features; does not log or store request contents |
 | AI models | A vision-capable large language model, called only through the proxy | Reads palms, floor plans and photos, and writes readings |
@@ -138,7 +138,7 @@ The foundation. Users enter birth date, time and place for themselves and family
 ### How it works
 
 1. **Convert birthplace to coordinates and time zone.** A bundled place list can resolve many cities offline. If the user needs a fuller lookup, Geocoding goes through the proxy; the coordinates are saved only on the device. Longitude corrects clock time to true solar time.
-2. **Find the solar year and month.** BaZi years start at Li Chun (around 4 February) and months at solar terms, not lunar new year, so the on-device engine computes exact solar term moments with Swiss Ephemeris.
+2. **Find the solar year and month.** BaZi years start at Li Chun (around 4 February) and months at solar terms, not lunar new year. The on-device engine already computes solar term moments in plain Dart (not Swiss Ephemeris).
 3. **Derive the four pillars.** Heavenly Stem and Earthly Branch for year, month, day and hour from the sexagenary cycle.
 4. **Score element strength.** Count stems, hidden stems and seasonal strength to rate Wood, Fire, Earth, Metal and Water, and pick favourable elements.
 5. **Calculate Kua and Zi Wei.** Kua from birth year and gender; Zi Wei from lunar date and hour using fixed star placement tables.
@@ -791,10 +791,10 @@ Paid-tier access can be checked by sending a Play purchase token with the reques
 
 ## 11. Module 8: Tarot, horoscope and I Ching
 
-> **Status (27 Nov 2026, after the tarot build):** Tarot is **built** as an offline reader. The app loads all 78 cards from `content/tarot/readings.json` (bundled in `flutter_app/assets/content/tarot/`). The user types a question, picks a one-card or three-card spread (past/present/future, or situation/action/outcome), and shuffles. Draws use `Random.secure()` with 50/50 reversals and no duplicate cards. A keyword/phrase classifier (`classifier.json`, English plus common Singlish and pinyin) runs **on the phone** and picks a topic (love, career, money, health, family, general) plus yes/no and timing flags. The reading is composed from pre-written texts and spread phrases — no network call, and the question never leaves the device. Card fronts are typography only; licensed card art is still a follow-up. I Ching, Western natal, transits and synastry are **not built**. Swiss Ephemeris is AGPL — commercial use needs a paid licence, so it is not in the app.
+> **Status (27 Nov 2026, after the tarot build):** Tarot is **built** as an offline reader. The app loads all 78 cards from `content/tarot/readings.json` (bundled in `flutter_app/assets/content/tarot/`). The user types a question, picks a one-card or three-card spread (past/present/future, or situation/action/outcome), and shuffles. Draws use `Random.secure()` with 50/50 reversals and no duplicate cards. A keyword/phrase classifier (`classifier.json`, English plus common Singlish and pinyin) runs **on the phone** and picks a topic (love, career, money, health, family, general) plus yes/no and timing flags. The reading is composed from pre-written texts and spread phrases — no network call, and the question never leaves the device. Card fronts are typography only; licensed card art is still a follow-up. I Ching, Western natal, transits and synastry are **not built**. Swiss Ephemeris will not be used (see the Western natal licence note below).
 
 - Tarot: full 78-card deck, daily card, three-card and Celtic Cross spreads, animated shuffle, and a saved reading journal
-- Western astrology: natal chart, daily and monthly transits, and synastry, calculated on the device with Swiss Ephemeris
+- Western astrology (later): natal chart, daily and monthly transits, and synastry, calculated on the device with a **permissively licensed** method (not Swiss Ephemeris; see below)
 - I Ching: virtual three-coin toss producing a hexagram and changing lines, with the classic text and a modern explanation
 - Card draws and coin tosses use a proper random generator **on the device**; AI only writes the interpretation
 
@@ -803,7 +803,7 @@ The free tier includes one tarot draw a day (see Monetisation). Do not hard-code
 ### User stories
 
 - As a user, I want to draw a daily tarot card, a three-card spread or a Celtic Cross from a full 78-card deck, with an animated shuffle, and save the reading in a journal on this phone.
-- As a user, I want a Western natal chart plus daily and monthly transits, and synastry with another person, calculated with Swiss Ephemeris on the device.
+- As a user, I want a Western natal chart plus daily and monthly transits, and synastry with another person, calculated on the device with a permissively licensed ephemeris (not Swiss Ephemeris).
 - As a user, I want a three-coin I Ching toss that shows the hexagram, changing lines, the classic text and a modern explanation.
 
 ### Key screens
@@ -821,7 +821,7 @@ The free tier includes one tarot draw a day (see Monetisation). Do not hard-code
 | --- | --- |
 | Draw tarot | Proper random generator for a chosen spread; store the draw locally |
 | List or open the journal | Saved tarot, astrology and I Ching readings |
-| Calculate natal / transits / synastry | Swiss Ephemeris on the device from stored birth data |
+| Calculate natal / transits / synastry | Permissively licensed ephemeris on the device, or compact tables pre-computed at build time, from stored birth data (not Swiss Ephemeris) |
 | Cast I Ching | Three-coin toss; store hexagram and changing lines; show classic text |
 
 ### Online calls (stateless proxy)
@@ -837,11 +837,32 @@ The free tier includes one tarot draw a day (see Monetisation). Do not hard-code
 ### Acceptance criteria
 
 - Tarot uses a full 78-card deck and supports daily card, three-card and Celtic Cross spreads, with a shuffle animation and a journal, matching the motion notes in [DESIGN.md](DESIGN.md) as closely as practical.
-- Western natal, transits and synastry are calculated with Swiss Ephemeris from stored birth data, on the device.
+- Western natal, transits and synastry are calculated on the device from stored birth data, using the permissively licensed method below — never Swiss Ephemeris.
 - I Ching uses a virtual three-coin toss, then shows hexagram, changing lines, classic text and a modern explanation.
 - All draws and tosses use a proper cryptographic or well-seeded random generator **on the device**. AI must not choose the cards or coins.
 - AI only writes interpretations of the already generated result, through the proxy.
+
 - The journal stays on the phone.
+
+### Western natal licence (later; decided 27 Nov 2026)
+
+Western natal, transits and synastry are **not built yet**. This note is the agreed approach when they are.
+
+**Do not use Swiss Ephemeris.** The library is dual-licensed: GNU Affero GPL (AGPL) or Astrodienst's paid Professional Licence. AGPL is not avoided by making the natal chart free, or by putting it behind a premium paywall, or by calling it an add-on. If any part of this closed-source app links to or ships Swiss Ephemeris, the AGPL can require the **whole app's** source to be published under AGPL. That is incompatible with the current product. The paid alternative, checked on 27 Nov 2026, is **CHF 700 for a six-year licence** covering an unlimited number of the licensee's projects, then renewal or you must stop using it. The official price list is [https://www.astro.com/swisseph/swephprice_e.htm](https://www.astro.com/swisseph/swephprice_e.htm). The contract (Professional License, edition September 2026, update 9 Nov 2026) is [https://www.astro.com/swisseph/secont_e_2609.pdf](https://www.astro.com/swisseph/secont_e_2609.pdf), signed and emailed to order@astro.com. Checkout converts CHF to local currency (the order form showed about **USD 834 / EUR 760** on 27 Nov 2026; the exact dollar amount moves with the exchange rate). Software is downloaded from [https://github.com/aloistr/swisseph](https://github.com/aloistr/swisseph). Inkstone will not take this path.
+
+**Chosen method (permissive, no AGPL, no paid Swiss licence):** pre-compute compact planetary and lunar position tables at **build time** from NASA/JPL Development Ephemeris kernels **DE421** or **DE440**, using **Skyfield**, then ship only those tables and a small Dart interpolator in the app.
+
+Licences, checked 27 Nov 2026:
+
+| Source | What it is | Licence | Proof |
+| --- | --- | --- | --- |
+| NASA/JPL DE421 and DE440 (NAIF SPK kernels) | Planetary and lunar ephemeris data | **Public domain** (US government work). JPL Solar System Dynamics: no permission needed to use or publish; cite the source; no NASA/JPL endorsement is implied | [https://ssd.jpl.nasa.gov/faq.html](https://ssd.jpl.nasa.gov/faq.html) (“The data provided on this site are considered public domain.”). Kernels: [https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/](https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/) |
+| Skyfield (Python) | Library used only at build time to read the kernels and write tables | **MIT** | [https://github.com/skyfielders/python-skyfield/blob/master/LICENSE](https://github.com/skyfielders/python-skyfield/blob/master/LICENSE) (PyPI also lists MIT) |
+| Dart interpolator and chart logic | Our own code in the app | Same as the rest of the app | Do not copy source from Swiss Ephemeris, including its Moshier fallback, which is AGPL |
+
+A second, on-device option is to implement **VSOP87** (planets) and a published lunar series such as **ELP** in original Dart from the official coefficient files. The VSOP87 files from IMCCE / Bureau des Longitudes ([https://ftp.imcce.fr/pub/ephem/planets/vsop87/](https://ftp.imcce.fr/pub/ephem/planets/vsop87/), Bretagnon & Francou 1988) are distributed as scientific data with attribution, but the README does **not** state a standard OSI licence, so they are not the first choice. If used, keep official files unmodified, attribute the authors, write our own evaluator, and do not copy Swiss Ephemeris or Moshier code.
+
+**Accuracy.** Sign-level and degree-level positions are fine for a Western natal chart and transits. The **Ascendant and houses** need a known **birth time and birth place** (latitude and longitude). If the time is unknown, show the Sun and other time-insensitive points only, and do not invent a rising sign.
 
 ---
 
@@ -1594,7 +1615,7 @@ The app is a native Android app built with Flutter, released only on Google Play
 
 2. **Design to code.** Turn the approved prototype in `fengshui-ui-v3` into reusable Flutter widgets that follow **[DESIGN.md](DESIGN.md)**. That means midnight ink (`#0b1026`), champagne gold (`#bfa577` / `#e3d6b8`), ivory text, a twinkling starfield with the odd shooting star, Cormorant SC and Source Serif 4 typography, buttons, cards, and screen transitions. Use Android edge-to-edge layout, the Android back gesture and predictive back, and Material 3 behaviour underneath the custom look. Respect Android's "Remove animations" setting. Check the layout on small (360 dp wide) and large phones.
 
-3. **Core engine.** Build the calculation logic on the device, with no AI: BaZi (Four Pillars), Kua (lucky directions), Flying Stars, the almanac and daily scores, using Swiss Ephemeris or a Dart port. Each function gets automated golden tests against known example charts. Publish it as a versioned Dart library.
+3. **Core engine.** Build the calculation logic on the device, with no AI: BaZi (Four Pillars), Kua (lucky directions), Flying Stars, the almanac and daily scores, in plain Dart (already in place). Each function gets automated golden tests against known example charts. Publish it as a versioned Dart library. Do not add Swiss Ephemeris.
 
 4. **Android local storage and backup.** Add the encrypted on-device database (SQLite via drift, or Isar) with the key held in the Android Keystore through flutter_secure_storage. Implement people, charts, homes, readings and settings. Add export and import of an encrypted backup file through the Android file picker, an optional backup to the user's own Google Drive app folder, a warning that uninstalling without a backup loses data, and "delete all data on this device". Exclude the raw database from Android Auto Backup in the backup rules.
 
@@ -1628,7 +1649,7 @@ Steps 1 to 7 repeat as each feature phase is built. An iOS version is not part o
 
 6. **Phase 5: Master marketplace.** Recruit and vet a first group of masters. Stand up a small PocketBase instance on a VPS with minimal booking data, Stripe Connect, accept or decline, 24-hour expiry, confirmation email, reminders, optional-purchase prescriptions, and the master dashboard. A soft launch with a few masters can start earlier, booked manually, without this server.
 
-7. **Phase 6: Growth.** Optional iOS version, Chinese language, referral rewards, master courses.
+7. **Phase 6: Growth.** Optional iOS version, referral rewards, master courses. **Chinese language is out of scope** (decided 27 Nov 2026: English only).
 
 A recommended detailed checklist for Phase 0 and Phase 1 is in [MVP (Phase 1) build checklist](#21-mvp-phase-1-build-checklist).
 
@@ -1650,7 +1671,7 @@ A recommended detailed checklist for Phase 0 and Phase 1 is in [MVP (Phase 1) bu
 ### Decisions for you
 
 - App name and brand style (the prototype look in [DESIGN.md](DESIGN.md) is approved; the name Inkstone is still open)
-- English only, or Chinese from day one
+- **English only** (decided 27 Nov 2026). Chinese language localisation is out of scope.
 - Which features are free
 - Own crystal products or affiliate only
 - Whether to partner with a real master for credibility
@@ -1682,7 +1703,7 @@ Phase 1, plus the Phase 0 foundations it depends on: a closed-test Android app w
 - [ ] Design key screens from the prototype: onboarding, add person, chart overview, Kua directions, daily card, floor plan upload, manual room editor, facing compass, findings, settings (backup and delete data), paywall. No cloud sign-up screen.
 - [ ] Scaffold the Flutter Android app, the encrypted on-device database, and a skeleton stateless proxy with no datastore.
 - [ ] Do **not** provision Supabase, a hosted Postgres, or any user-account backend.
-- [ ] Build the on-device chart engine with Swiss Ephemeris (FFI or a Dart port) and a lunar calendar library: true solar time, solar terms (Li Chun and month terms), Four Pillars, element strength, Kua.
+- [x] Build the on-device chart engine in plain Dart: solar terms (Li Chun and month terms), Four Pillars, element strength, Kua. (Swiss Ephemeris was not used and will not be added.)
 - [ ] Add golden tests against a set of established known charts; do not ship until they pass.
 - [ ] State the method used on chart screens (BaZi for people; Flying Stars and Eight Mansions when the home analyser runs).
 - [ ] Do **not** create the Google Play developer account yet. Leave it until the closed test at the end of Phase 1.
@@ -1718,7 +1739,7 @@ Phase 1, plus the Phase 0 foundations it depends on: a closed-test Android app w
 - Google Maps house scoring, Street View analysis, home comparison, pre-purchase report (Phase 3).
 - Palm and face reading, tarot, Western astrology, I Ching, crystals and rituals, shop (Phase 4).
 - Master marketplace booking, payments, video calls and dashboard (Phase 5). A soft launch with a few masters can start earlier, booked **manually**, without the marketplace server.
-- iOS, Chinese language, referral rewards, master courses (Phase 6), unless you decide Chinese is required from day one.
+- iOS, referral rewards, master courses (Phase 6). Chinese language is out of scope (decided 27 Nov 2026).
 
 ### Definition of done for the closed test
 
@@ -1748,13 +1769,13 @@ Confirm with the product owner before building any item below. Android only. No 
 | Tarot | Built (offline) | 78 cards, on-device classifier and composed reading; typography fronts, no card art yet |
 | Palm / face | Demo / not built | Hardcoded palm; no face reading |
 | Ask the Master | Not built | |
-| I Ching / Western natal | Not built | Swiss Ephemeris would need a paid licence |
+| I Ching / Western natal | Not built | When natal is built: use JPL DE421/DE440 tables via Skyfield (MIT) at build time — not Swiss Ephemeris (AGPL) |
 | Replacement stars (替卦) | Not built | |
 | Crystals / rituals | Partial | Used in Your Year lists; no browser; shop is fake |
 | Masters marketplace | Demo | Sample data and snack stubs |
 | Paywall / Play Billing | Demo | Subscribe button does not bill. No IAP or ads SDK |
 | Notifications | Demo | Snack only |
-| Chinese localisation | Not built | Language control is a stub |
+| Chinese localisation | Out of scope | English only, decided 27 Nov 2026. The language control in Me stays English. |
 | Encrypted database and backup | Not built | Android Auto Backup is already off |
 | Crash reporting | Not built | |
 
@@ -1786,12 +1807,11 @@ Routes are in `flutter_app/lib/router.dart`. Bottom nav: Today, Home, Readings, 
 7. Crash reporting with no personal data (stack, device, app version only).
 8. Fix Readings copy so calculated charts are not called “example data.”
 9. Test compass, map and WebView on a real phone.
-10. Chinese localisation if Singapore and Malaysia still require English and Chinese from day one.
-11. Re-enable release lint after the image_picker / JDK 17 issue is fixed.
+10. Re-enable release lint after the image_picker / JDK 17 issue is fixed.
 
 ### (C) Nice-to-have after a sellable v1
 
-I Ching; Western natal (only with a paid Swiss Ephemeris licence); replacement stars; Ask the Master; the masters marketplace; ads on the free tier; an encrypted database and encrypted backup; Celtic Cross and a reading journal; face reading; a real shop or affiliate links; Google Maps house scoring; equation-of-time refinement.
+I Ching; Western natal using pre-computed JPL DE421/DE440 tables (Skyfield at build time, MIT + public domain — **not** Swiss Ephemeris); replacement stars; Ask the Master; the masters marketplace; ads on the free tier; an encrypted database and encrypted backup; Celtic Cross and a reading journal; face reading; a real shop or affiliate links; Google Maps house scoring; equation-of-time refinement.
 
 ### Top 10 by what makes it sellable
 
@@ -1817,6 +1837,6 @@ Do not spend the Claude budget on a live tarot LLM. If tarot is enriched with AI
 - **Libraries:** go_router, flutter_map, http, image_picker, webview_flutter, sensors_plus, shared_preferences, path_provider, google_fonts, latlong2 and so on are BSD, MIT or Apache. flutter_map’s licence does not grant map-tile rights.
 - **Fonts:** Cormorant SC and Source Serif 4 are SIL OFL — fine to embed.
 - **Tarot art:** none shipped; do not use unlicensed Rider-Waite or other deck scans. Meanings in `content/tarot/` are original / AI-drafted and must be reviewed.
-- **Swiss Ephemeris:** not included. Do not add the AGPL library to a commercial build without a paid licence.
+- **Swiss Ephemeris:** not included and not planned. AGPL would cover the whole closed-source app (a free natal chart plus paid premium still would not avoid that). The paid Professional Licence is CHF 700 / six years ([price list](https://www.astro.com/swisseph/swephprice_e.htm)). The agreed later path is NASA/JPL DE421 or DE440 (public domain) tables built with Skyfield (MIT). See Module 8.
 
 The Phase 1 checklist in section 21 remains the original MVP scope. Where this section and that checklist disagree about what is already in the app, this section is the source of truth as of 27 Nov 2026.
