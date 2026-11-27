@@ -46,10 +46,11 @@ class QuickCheckInput {
 }
 
 /// Methods whose facing the user must enter.
-List<FacingMethod> methodsToRead(FacingMethod m) =>
-    m == FacingMethod.unsure ? const [FacingMethod.mainDoor, FacingMethod.balcony] : [m];
+List<FacingMethod> methodsToRead(FacingMethod m) => m == FacingMethod.unsure
+    ? const [FacingMethod.mainDoor, FacingMethod.balcony]
+    : [m];
 
-final exampleQuickCheck = QuickCheckInput(
+QuickCheckInput get exampleQuickCheck => QuickCheckInput(
   type: PropertyType.hdb,
   completionYear: 2012,
   method: FacingMethod.unsure,
@@ -81,20 +82,32 @@ class HomeDetails {
   /// e.g. "PropertyGuru listing 500236540".
   final String? source;
 
-  bool get isEmpty => [address, postalCode, floor, unit].every((s) => s == null || s.trim().isEmpty);
+  bool get isEmpty => [
+    address,
+    postalCode,
+    floor,
+    unit,
+  ].every((s) => s == null || s.trim().isEmpty);
 
   String get summary => [
-        if (address != null && address!.isNotEmpty) address!,
-        if (postalCode != null && postalCode!.isNotEmpty) 'Singapore $postalCode',
-        if (floor != null && floor!.isNotEmpty) 'Floor $floor',
-        if (unit != null && unit!.isNotEmpty && !(address ?? '').contains(unit!)) unit!,
-      ].join(' · ');
+    if (address != null && address!.isNotEmpty) address!,
+    if (postalCode != null && postalCode!.isNotEmpty) 'Singapore $postalCode',
+    if (floor != null && floor!.isNotEmpty) 'Floor $floor',
+    if (unit != null && unit!.isNotEmpty && !(address ?? '').contains(unit!))
+      unit!,
+  ].join(' · ');
 }
 
 /// What the quick check is pre-filled with (from a listing import).
 /// The facing is never pre-filled: [facingHint] is only shown as a hint.
 class QuickCheckPrefill {
-  const QuickCheckPrefill({this.type, this.completionYear, this.completionApprox = false, this.home, this.facingHint});
+  const QuickCheckPrefill({
+    this.type,
+    this.completionYear,
+    this.completionApprox = false,
+    this.home,
+    this.facingHint,
+  });
   final PropertyType? type;
   final int? completionYear;
   final bool completionApprox;

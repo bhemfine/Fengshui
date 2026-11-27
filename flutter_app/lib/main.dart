@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'app.dart';
 import 'data/crash_log.dart';
 import 'data/current_home.dart';
+import 'data/household.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,5 +19,6 @@ Future<void> main() async {
     return true;
   };
   await bootstrapCurrentHome();
+  await bootstrapHousehold();
   runApp(const InkstoneApp());
 }

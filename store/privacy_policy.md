@@ -19,12 +19,13 @@ Contact: [support email]
 The app may store:
 
 - the current home you set: label, facing, completion year, period, address, postal code, floor, unit, property type, and the rotation of a floor-plan photo
+- your household birth profiles (name, date, gender, and birth time if you add one). These start as the example couple and are only on this phone
 - home-checklist answers and the last property type you used
 - a floor-plan image you took, picked from the gallery, or confirmed from a listing
 - whether the daily reminder is on, and the time you chose
 - local crash logs (time, app version, device and OS if available, error and stack). These do **not** include names, birth dates, addresses or photos
 
-Birth details for Chua Boon Eng and Chou Jiahui Victoria are example data shipped in the app, not a saved user profile. You cannot yet save your own birth profile.
+Birth details default to the example couple Chua Boon Eng (you) and Chou Jiahui Victoria (partner). You can edit and save your own birth profile on this phone. **Delete my data** clears the saved profile and restores those two defaults.
 
 We cannot read any of this from our side. If you uninstall the app or use **Delete my data**, it is gone. We cannot recover it.
 

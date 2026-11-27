@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/tarot_catalog.dart';
 import 'package:inkstone/data/tarot_classifier.dart';
 import 'package:inkstone/data/tarot_reading.dart';
@@ -110,7 +111,7 @@ class _TarotScreenState extends State<TarotScreen> {
       ),
       children: [
         Text(
-          'Ask a question, pick a spread, then shuffle. Cards are drawn on this phone. For reflection and entertainment only.',
+          'A reading for ${shortName(mainUser)}. Ask a question, pick a spread, then shuffle. Cards are drawn on this phone. For reflection and entertainment only.',
           style: InkText.body(color: AppColors.ivory2),
         ),
         if (_loadError != null) ...[

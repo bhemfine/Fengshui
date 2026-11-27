@@ -65,7 +65,7 @@ void main() {
     expect(y.lucky.luckyRituals.first.id, 'lucky_red_thread');
   });
 
-  test('Boon Eng 2027: 六合; Victoria 2026 六合, 2027 本命年', () {
+  test('Boon Eng 2027: 六合; Jiahui 2026 六合, 2027 本命年', () {
     expect(
       YourYear.compute(mainUser, 2027, content).taiSui.relations,
       contains(TaiSuiRelation.sixHarmony),

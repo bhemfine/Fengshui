@@ -25,7 +25,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    household.addListener(_onHousehold);
     _load();
+  }
+
+  void _onHousehold() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    household.removeListener(_onHousehold);
+    super.dispose();
   }
 
   Future<void> _load() async {
@@ -122,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text('Delete my data', style: InkText.h2),
               const SizedBox(height: 8),
               Text(
-                'This removes the home you saved (facing, address, floor), checklist answers, the floor-plan photo, daily notification settings and local crash reports from this phone. The example profiles stay in the app. This cannot be undone.',
+                'This removes the home you saved (facing, address, floor), checklist answers, the floor-plan photo, daily notification settings, any birth details you typed, and local crash reports from this phone. The profiles reset to Boon Eng and Jiahui. This cannot be undone.',
                 style: InkText.body(),
               ),
               const SizedBox(height: 12),
@@ -203,13 +214,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
-                    mainUser.name,
+                    shortName(mainUser),
                     style: InkText.body(weight: FontWeight.w600),
                   ),
-                  const ExampleBadge(),
+                  if (mainUser.example) const ExampleBadge(),
                 ],
               ),
               Text(
+                '${mainUser.name == shortName(mainUser) ? '' : '${mainUser.name} · '}'
                 '${birthLabel(mainUser)} · Singapore · ${genderLabel(mainUser.gender)} · Kua ${mainUser.kua.kua}${mainUser.timeKnown ? '' : ' · birth time unknown'}',
                 style: InkText.small,
               ),
@@ -223,7 +235,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         nav(
           'Family',
-          '${partner.name} — partner, Kua ${partner.kua.kua}',
+          '${shortName(partner)} — partner, Kua ${partner.kua.kua}',
           () => showInkSnack(context, 'Family details are example only'),
         ),
         nav(

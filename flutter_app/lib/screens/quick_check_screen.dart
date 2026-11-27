@@ -7,7 +7,8 @@ import 'package:inkstone/data/current_home.dart';
 import 'package:inkstone/data/household.dart';
 import 'package:inkstone/data/quick_check.dart';
 import 'package:inkstone/router.dart';
-import 'package:inkstone/screens/listing_import_screen.dart' show ListingImportArgs;
+import 'package:inkstone/screens/listing_import_screen.dart'
+    show ListingImportArgs;
 import 'package:inkstone/screens/map_bearing_screen.dart' show MapBearingArgs;
 import 'package:inkstone/theme/colors.dart';
 import 'package:inkstone/theme/typography.dart';
@@ -30,7 +31,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
   bool? _beforeLiChun;
   FacingMethod? _method;
   final Map<FacingMethod, double> _facings = {};
-  // Boon Eng (main user) and Victoria (partner) are picked by default.
+  // Boon Eng (main user) and Jiahui (partner) are picked by default.
   final Set<int> _picked = {0, 1};
   final List<KuaPerson> _quick = [];
   final _address = TextEditingController();
@@ -65,23 +66,27 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
       _source = h.source;
     }
     _facingHint = p.facingHint;
-    if (_type == PropertyType.landed && _method == FacingMethod.block) _method = null;
+    if (_type == PropertyType.landed && _method == FacingMethod.block)
+      _method = null;
   }
 
   Future<void> _importListing() async {
-    final p = await context.push<QuickCheckPrefill>(Routes.listingImport, extra: const ListingImportArgs(returnResult: true));
+    final p = await context.push<QuickCheckPrefill>(
+      Routes.listingImport,
+      extra: const ListingImportArgs(returnResult: true),
+    );
     if (p != null && mounted) setState(() => _apply(p));
   }
 
   HomeDetails get _home => HomeDetails(
-        address: _address.text.trim().isEmpty ? null : _address.text.trim(),
-        postalCode: _postal.text.trim().isEmpty ? null : _postal.text.trim(),
-        floor: _floor.text.trim().isEmpty ? null : _floor.text.trim(),
-        unit: _unit.text.trim().isEmpty ? null : _unit.text.trim(),
-        lat: _lat,
-        lng: _lng,
-        source: _source,
-      );
+    address: _address.text.trim().isEmpty ? null : _address.text.trim(),
+    postalCode: _postal.text.trim().isEmpty ? null : _postal.text.trim(),
+    floor: _floor.text.trim().isEmpty ? null : _floor.text.trim(),
+    unit: _unit.text.trim().isEmpty ? null : _unit.text.trim(),
+    lat: _lat,
+    lng: _lng,
+    source: _source,
+  );
 
   @override
   void dispose() {
@@ -99,12 +104,13 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
     return y;
   }
 
-  bool get _needsLiChun => _yearValue != null && periodForCompletion(_yearValue!).ambiguous;
+  bool get _needsLiChun =>
+      _yearValue != null && periodForCompletion(_yearValue!).ambiguous;
 
   List<KuaPerson> get _people => [
-        for (final i in _picked) savedProfiles[i],
-        ..._quick,
-      ];
+    for (final i in _picked) savedProfiles[i],
+    ..._quick,
+  ];
 
   bool get _ready =>
       _type != null &&
@@ -129,11 +135,12 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
   }
 
   List<(FacingMethod, String)> get _methodOptions => [
-        (FacingMethod.mainDoor, facingMethodLabel[FacingMethod.mainDoor]!),
-        (FacingMethod.balcony, facingMethodLabel[FacingMethod.balcony]!),
-        if (_type != PropertyType.landed) (FacingMethod.block, facingMethodLabel[FacingMethod.block]!),
-        (FacingMethod.unsure, facingMethodLabel[FacingMethod.unsure]!),
-      ];
+    (FacingMethod.mainDoor, facingMethodLabel[FacingMethod.mainDoor]!),
+    (FacingMethod.balcony, facingMethodLabel[FacingMethod.balcony]!),
+    if (_type != PropertyType.landed)
+      (FacingMethod.block, facingMethodLabel[FacingMethod.block]!),
+    (FacingMethod.unsure, facingMethodLabel[FacingMethod.unsure]!),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -141,19 +148,25 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
     final period = y == null
         ? null
         : (_needsLiChun && _beforeLiChun != null)
-            ? periodForCompletion(y, month: _beforeLiChun! ? 1 : 3)
-            : periodForCompletion(y);
+        ? periodForCompletion(y, month: _beforeLiChun! ? 1 : 3)
+        : periodForCompletion(y);
     final total = _people.length;
     return InkstoneScaffold(
       title: 'Quick check',
       showBack: true,
       fallbackRoute: Routes.floorUpload,
       stickyNote: _ready ? null : 'Answer each step to see the result',
-      stickyCta: MidnightButton(label: 'See the result', onPressed: _ready ? _go : null),
+      stickyCta: MidnightButton(
+        label: 'See the result',
+        onPressed: _ready ? _go : null,
+      ),
       children: [
         Text('Does this home suit me and my partner?', style: InkText.h1),
         const SizedBox(height: 6),
-        Text('Works offline. Nothing here leaves your phone.', style: InkText.small),
+        Text(
+          'Works offline. Nothing here leaves your phone.',
+          style: InkText.small,
+        ),
         const SizedBox(height: 10),
         GhostButton(
           key: const Key('qc-import'),
@@ -164,18 +177,24 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
         if (_source != null)
           Padding(
             padding: const EdgeInsets.only(top: 6),
-            child: Text('Filled in from $_source. Check each field.', style: InkText.body(size: 14, color: AppColors.gold2)),
+            child: Text(
+              'Filled in from $_source. Check each field.',
+              style: InkText.body(size: 14, color: AppColors.gold2),
+            ),
           ),
 
         const SectionHeader(title: '1 · The home'),
         FieldBlock(
           label: 'Property type',
           child: ChoicePills<PropertyType>(
-            options: [for (final t in PropertyType.values) (t, propertyLabel[t]!)],
+            options: [
+              for (final t in PropertyType.values) (t, propertyLabel[t]!),
+            ],
             selected: _type,
             onSelected: (t) => setState(() {
               _type = t;
-              if (t == PropertyType.landed && _method == FacingMethod.block) _method = null;
+              if (t == PropertyType.landed && _method == FacingMethod.block)
+                _method = null;
             }),
           ),
         ),
@@ -188,7 +207,10 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
             key: const Key('qc-year'),
             controller: _year,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(4)],
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(4),
+            ],
             style: InkText.body(size: 15),
             decoration: const InputDecoration(hintText: 'e.g. 2012'),
             onChanged: (_) => setState(() => _beforeLiChun = null),
@@ -197,15 +219,20 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
         if (_yearApprox)
           Padding(
             padding: const EdgeInsets.only(top: 6),
-            child: Text('Worked out from the remaining lease, so it may be a year out. Check the TOP year.',
-                style: InkText.body(size: 14, color: AppColors.care)),
+            child: Text(
+              'Worked out from the remaining lease, so it may be a year out. Check the TOP year.',
+              style: InkText.body(size: 14, color: AppColors.care),
+            ),
           ),
         if (_needsLiChun)
           FieldBlock(
             label: 'Was it completed before Li Chun 立春 (about 4 February $y)?',
             hint: 'The period changes at Li Chun, not on 1 January.',
             child: ChoicePills<bool>(
-              options: const [(true, 'Before 4 Feb'), (false, 'On or after 4 Feb')],
+              options: const [
+                (true, 'Before 4 Feb'),
+                (false, 'On or after 4 Feb'),
+              ],
               selected: _beforeLiChun,
               onSelected: (v) => setState(() => _beforeLiChun = v),
             ),
@@ -213,7 +240,10 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
         if (period != null && (!_needsLiChun || _beforeLiChun != null))
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: Text('Period ${period.period} building', style: InkText.body(color: AppColors.gold2)),
+            child: Text(
+              'Period ${period.period} building',
+              style: InkText.body(color: AppColors.gold2),
+            ),
           ),
 
         FieldBlock(
@@ -222,42 +252,54 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
             key: const Key('qc-address'),
             controller: _address,
             style: InkText.body(size: 15),
-            decoration: const InputDecoration(hintText: 'Block and street, or project'),
+            decoration: const InputDecoration(
+              hintText: 'Block and street, or project',
+            ),
           ),
         ),
-        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Expanded(
-            child: FieldBlock(
-              label: 'Postal code',
-              child: TextField(
-                key: const Key('qc-postal'),
-                controller: _postal,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(6)],
-                style: InkText.body(size: 15),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: FieldBlock(
+                label: 'Postal code',
+                child: TextField(
+                  key: const Key('qc-postal'),
+                  controller: _postal,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(6),
+                  ],
+                  style: InkText.body(size: 15),
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: FieldBlock(
-              label: 'Floor',
-              child: TextField(key: const Key('qc-floor'), controller: _floor, style: InkText.body(size: 15)),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: FieldBlock(
-              label: 'Unit',
-              child: TextField(
-                key: const Key('qc-unit'),
-                controller: _unit,
-                style: InkText.body(size: 15),
-                decoration: const InputDecoration(hintText: '#12-34'),
+            const SizedBox(width: 8),
+            Expanded(
+              child: FieldBlock(
+                label: 'Floor',
+                child: TextField(
+                  key: const Key('qc-floor'),
+                  controller: _floor,
+                  style: InkText.body(size: 15),
+                ),
               ),
             ),
-          ),
-        ]),
+            const SizedBox(width: 8),
+            Expanded(
+              child: FieldBlock(
+                label: 'Unit',
+                child: TextField(
+                  key: const Key('qc-unit'),
+                  controller: _unit,
+                  style: InkText.body(size: 15),
+                  decoration: const InputDecoration(hintText: '#12-34'),
+                ),
+              ),
+            ),
+          ],
+        ),
 
         const SectionHeader(title: '2 · Facing method'),
         Text(
@@ -275,8 +317,10 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
 
         if (_method != null) ...[
           const SectionHeader(title: '3 · Which way does it face?'),
-          Text('The facing is the direction the opening looks out towards, standing inside.',
-              style: InkText.small),
+          Text(
+            'The facing is the direction the opening looks out towards, standing inside.',
+            style: InkText.small,
+          ),
           for (final m in methodsToRead(_method!))
             _FacingPicker(
               key: ValueKey('picker-${m.name}'),
@@ -284,36 +328,47 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
               value: _facings[m],
               hint: _facingHint,
               mapCenter: _lat != null && _lng != null ? (_lat!, _lng!) : null,
-              mapQuery: _postal.text.trim().isNotEmpty ? _postal.text.trim() : _address.text.trim(),
-              onChanged: (d) => setState(() => d == null ? _facings.remove(m) : _facings[m] = d),
+              mapQuery: _postal.text.trim().isNotEmpty
+                  ? _postal.text.trim()
+                  : _address.text.trim(),
+              onChanged: (d) => setState(
+                () => d == null ? _facings.remove(m) : _facings[m] = d,
+              ),
             ),
         ],
 
         const SectionHeader(title: '4 · Who is it for?'),
-        Text('Pick one or two people. Quick entries are not saved.', style: InkText.small),
+        Text(
+          'Pick one or two people. Quick entries are not saved.',
+          style: InkText.small,
+        ),
         const SizedBox(height: 8),
-        Wrap(spacing: 8, runSpacing: 8, children: [
-          for (final (i, p) in savedProfiles.indexed)
-            InkPill(
-              label: '${p.name}${p.example ? ' (example)' : ''}',
-              selected: _picked.contains(i),
-              onTap: () => setState(() {
-                if (_picked.contains(i)) {
-                  _picked.remove(i);
-                } else if (total < 2) {
-                  _picked.add(i);
-                } else {
-                  showInkSnack(context, 'Up to two people per check');
-                }
-              }),
-            ),
-          for (final (i, p) in _quick.indexed)
-            InkPill(
-              label: '${p.name} ✕',
-              selected: true,
-              onTap: () => setState(() => _quick.removeAt(i)),
-            ),
-        ]),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            for (final (i, p) in savedProfiles.indexed)
+              InkPill(
+                label: '${p.name}${p.example ? ' (example)' : ''}',
+                selected: _picked.contains(i),
+                onTap: () => setState(() {
+                  if (_picked.contains(i)) {
+                    _picked.remove(i);
+                  } else if (total < 2) {
+                    _picked.add(i);
+                  } else {
+                    showInkSnack(context, 'Up to two people per check');
+                  }
+                }),
+              ),
+            for (final (i, p) in _quick.indexed)
+              InkPill(
+                label: '${p.name} ✕',
+                selected: true,
+                onTap: () => setState(() => _quick.removeAt(i)),
+              ),
+          ],
+        ),
         const SizedBox(height: 10),
         if (total < 2)
           GhostButton(
@@ -330,7 +385,10 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
             },
           ),
         const SizedBox(height: 16),
-        Text('For reflection and entertainment. Not professional advice.', style: InkText.caption),
+        Text(
+          'For reflection and entertainment. Not professional advice.',
+          style: InkText.caption,
+        ),
       ],
     );
   }
@@ -376,80 +434,114 @@ class _FacingPickerState extends State<_FacingPicker> {
     final reading = v == null ? null : facingFromDegrees(v);
     return InkstoneCard(
       title: widget.title,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        if (widget.hint != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text('Listing says ${widget.hint}. Hint only: agents are often rough. Check it yourself.',
-                style: InkText.body(size: 14, color: AppColors.ivory2)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (widget.hint != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                'Listing says ${widget.hint}. Hint only: agents are often rough. Check it yourself.',
+                style: InkText.body(size: 14, color: AppColors.ivory2),
+              ),
+            ),
+          Text(
+            'Do you know which way this opening faces?',
+            style: InkText.body(),
           ),
-        Text('Do you know which way this opening faces?', style: InkText.body()),
-        const SizedBox(height: 8),
-        ChoicePills<bool>(
-          options: const [(true, 'Yes, I know it'), (false, 'No, work it out')],
-          selected: _know,
-          onSelected: (k) => setState(() => _know = k),
-        ),
-        if (_know == true) ...[
-          const SizedBox(height: 12),
-          ChoicePills<Direction>(
-            options: [for (final d in compassDirections) (d, directionShort[d]!)],
-            selected: reading != null && v == directionCentreDegrees(reading.direction)
-                ? reading.direction
-                : null,
-            onSelected: (d) {
-              _deg.clear();
-              widget.onChanged(directionCentreDegrees(d));
-            },
+          const SizedBox(height: 8),
+          ChoicePills<bool>(
+            options: const [
+              (true, 'Yes, I know it'),
+              (false, 'No, work it out'),
+            ],
+            selected: _know,
+            onSelected: (k) => setState(() => _know = k),
           ),
-          const SizedBox(height: 10),
-          TextField(
-            controller: _deg,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            style: InkText.body(size: 15),
-            decoration: const InputDecoration(hintText: 'or type degrees, 0–359 (0 = north)'),
-            onChanged: (s) {
-              final d = double.tryParse(s.trim());
-              widget.onChanged(d == null || d < 0 || d >= 360 ? null : d);
-            },
-          ),
-        ],
-        if (_know == false) ...[
-          const SizedBox(height: 12),
-          MidnightButton(
-            label: 'Open the direction calculator',
-            icon: Icons.explore_outlined,
-            onPressed: () async {
-              final d = await context.push<double>(Routes.directionCalculator);
-              if (d != null) widget.onChanged(d);
-            },
-          ),
-          if (widget.mapCenter != null) ...[
-            const SizedBox(height: 8),
-            GhostButton(
-              label: 'Pick it on the map (centred on this home)',
-              icon: Icons.map_outlined,
-              onPressed: () async {
-                final c = widget.mapCenter!;
-                final d = await context.push<double>(Routes.mapBearing,
-                    extra: MapBearingArgs(lat: c.$1, lng: c.$2, query: widget.mapQuery, facingHint: widget.hint));
-                if (d != null) widget.onChanged(d);
+          if (_know == true) ...[
+            const SizedBox(height: 12),
+            ChoicePills<Direction>(
+              options: [
+                for (final d in compassDirections) (d, directionShort[d]!),
+              ],
+              selected:
+                  reading != null &&
+                      v == directionCentreDegrees(reading.direction)
+                  ? reading.direction
+                  : null,
+              onSelected: (d) {
+                _deg.clear();
+                widget.onChanged(directionCentreDegrees(d));
+              },
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _deg,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              style: InkText.body(size: 15),
+              decoration: const InputDecoration(
+                hintText: 'or type degrees, 0–359 (0 = north)',
+              ),
+              onChanged: (s) {
+                final d = double.tryParse(s.trim());
+                widget.onChanged(d == null || d < 0 || d >= 360 ? null : d);
               },
             ),
           ],
-        ],
-        if (reading != null) ...[
-          const SizedBox(height: 12),
-          Text(reading.label, style: InkText.body(color: AppColors.gold2, weight: FontWeight.w600)),
-          if (reading.isLineFacing)
-            Text(
-              reading.isDirectionLine
-                  ? 'Line facing: within 3° of the line between two directions. Please re-check on site.'
-                  : 'Line facing: within 3° of a 24 Mountains boundary. Please re-check on site.',
-              style: InkText.body(size: 14, color: AppColors.care),
+          if (_know == false) ...[
+            const SizedBox(height: 12),
+            MidnightButton(
+              label: 'Open the direction calculator',
+              icon: Icons.explore_outlined,
+              onPressed: () async {
+                final d = await context.push<double>(
+                  Routes.directionCalculator,
+                );
+                if (d != null) widget.onChanged(d);
+              },
             ),
+            if (widget.mapCenter != null) ...[
+              const SizedBox(height: 8),
+              GhostButton(
+                label: 'Pick it on the map (centred on this home)',
+                icon: Icons.map_outlined,
+                onPressed: () async {
+                  final c = widget.mapCenter!;
+                  final d = await context.push<double>(
+                    Routes.mapBearing,
+                    extra: MapBearingArgs(
+                      lat: c.$1,
+                      lng: c.$2,
+                      query: widget.mapQuery,
+                      facingHint: widget.hint,
+                    ),
+                  );
+                  if (d != null) widget.onChanged(d);
+                },
+              ),
+            ],
+          ],
+          if (reading != null) ...[
+            const SizedBox(height: 12),
+            Text(
+              reading.label,
+              style: InkText.body(
+                color: AppColors.gold2,
+                weight: FontWeight.w600,
+              ),
+            ),
+            if (reading.isLineFacing)
+              Text(
+                reading.isDirectionLine
+                    ? 'Line facing: within 3° of the line between two directions. Please re-check on site.'
+                    : 'Line facing: within 3° of a 24 Mountains boundary. Please re-check on site.',
+                style: InkText.body(size: 14, color: AppColors.care),
+              ),
+          ],
         ],
-      ]),
+      ),
     );
   }
 }
@@ -475,50 +567,70 @@ class _QuickEntrySheetState extends State<_QuickEntrySheet> {
   Widget build(BuildContext context) {
     final ok = _date != null && _gender != null;
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 16, 20, 20 + MediaQuery.of(context).viewInsets.bottom),
-      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('Quick entry', style: InkText.h2),
-        Text('Used for this check only. Not saved.', style: InkText.small),
-        FieldBlock(
-          label: 'Name or nickname (optional)',
-          child: TextField(controller: _name, style: InkText.body(size: 15)),
-        ),
-        FieldBlock(
-          label: 'Birth date',
-          child: GhostButton(
-            label: _date == null ? 'Pick a date' : '${_date!.day}/${_date!.month}/${_date!.year}',
-            onPressed: () async {
-              final d = await showDatePicker(
-                context: context,
-                initialDate: _date ?? DateTime(1990, 6, 15),
-                firstDate: DateTime(1900),
-                lastDate: DateTime.now(),
-              );
-              if (d != null) setState(() => _date = d);
-            },
+      padding: EdgeInsets.fromLTRB(
+        20,
+        16,
+        20,
+        20 + MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Quick entry', style: InkText.h2),
+          Text('Used for this check only. Not saved.', style: InkText.small),
+          FieldBlock(
+            label: 'Name or nickname (optional)',
+            child: TextField(controller: _name, style: InkText.body(size: 15)),
           ),
-        ),
-        FieldBlock(
-          label: 'Gender (for Kua number)',
-          child: ChoicePills<Gender>(
-            options: const [(Gender.female, 'Female'), (Gender.male, 'Male')],
-            selected: _gender,
-            onSelected: (g) => setState(() => _gender = g),
+          FieldBlock(
+            label: 'Birth date',
+            child: GhostButton(
+              label: _date == null
+                  ? 'Pick a date'
+                  : '${_date!.day}/${_date!.month}/${_date!.year}',
+              onPressed: () async {
+                final d = await showDatePicker(
+                  context: context,
+                  initialDate: _date ?? defaultMainUser.birth,
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime.now(),
+                );
+                if (d != null) setState(() => _date = d);
+              },
+            ),
           ),
-        ),
-        const SizedBox(height: 16),
-        MidnightButton(
-          label: 'Add',
-          onPressed: ok
-              ? () => Navigator.of(context).pop(KuaPerson(
-                    name: _name.text.trim().isEmpty ? 'Person' : _name.text.trim(),
-                    birth: DateTime(_date!.year, _date!.month, _date!.day, 12),
-                    gender: _gender!,
-                    timeKnown: false,
-                  ))
-              : null,
-        ),
-      ]),
+          FieldBlock(
+            label: 'Gender (for Kua number)',
+            child: ChoicePills<Gender>(
+              options: const [(Gender.female, 'Female'), (Gender.male, 'Male')],
+              selected: _gender,
+              onSelected: (g) => setState(() => _gender = g),
+            ),
+          ),
+          const SizedBox(height: 16),
+          MidnightButton(
+            label: 'Add',
+            onPressed: ok
+                ? () => Navigator.of(context).pop(
+                    KuaPerson(
+                      name: _name.text.trim().isEmpty
+                          ? 'Person'
+                          : _name.text.trim(),
+                      birth: DateTime(
+                        _date!.year,
+                        _date!.month,
+                        _date!.day,
+                        12,
+                      ),
+                      gender: _gender!,
+                      timeKnown: false,
+                    ),
+                  )
+                : null,
+          ),
+        ],
+      ),
     );
   }
 }

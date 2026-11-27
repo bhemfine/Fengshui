@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// On-device only key/value store (Android SharedPreferences in the app's
 /// private folder; Android backup is off in the manifest). Holds checklist
 /// answers, the last property type, the current home (facing, address, floor)
-/// and notification preferences. Birth profiles are not saved here yet.
+/// notification preferences, and the household birth profiles.
 ///
 /// This is not an encrypted database. "Delete my data" clears these keys.
 /// TODO(phase-2): move to the encrypted drift database once it lands.
@@ -44,7 +44,9 @@ class LocalStore {
   Future<void> saveAnswers(PropertyType t, Map<String, Answer> answers) async {
     final p = await _prefs();
     await p?.setString(
-        '$_answersKey.${t.name}', jsonEncode({for (final e in answers.entries) e.key: e.value.name}));
+      '$_answersKey.${t.name}',
+      jsonEncode({for (final e in answers.entries) e.key: e.value.name}),
+    );
   }
 
   Future<void> clearAnswers(PropertyType t) async {
