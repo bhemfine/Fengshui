@@ -21,6 +21,7 @@ class _TarotScreenState extends State<TarotScreen> {
   TarotCatalog? _catalog;
   Object? _loadError;
   String _spreadId = 'single';
+  TarotSpread? _dealSpread;
   List<TarotDrawn> _draws = const [];
   TarotReading? _reading;
   @override
@@ -54,9 +55,10 @@ class _TarotScreenState extends State<TarotScreen> {
     final got = _draws.length;
     return switch (_phase) {
       TarotPhase.shuffling => 'Shuffling…',
-      TarotPhase.arc => need == 1
-          ? 'Pick one card'
-          : (got == 0 ? 'Pick $need cards' : 'Pick ${need - got} more'),
+      TarotPhase.arc =>
+        need == 1
+            ? 'Pick one card'
+            : (got == 0 ? 'Pick $need cards' : 'Pick ${need - got} more'),
       TarotPhase.flipping => 'Turning…',
       _ => '',
     };
@@ -65,9 +67,11 @@ class _TarotScreenState extends State<TarotScreen> {
   void _start() {
     final cat = _catalog;
     if (cat == null) return;
-    final draws = _dealer.draw(cat.cards, _spread.size);
+    final spread = _spread;
+    final draws = _dealer.draw(cat.cards, spread.size);
     _deck.prepare(draws);
     setState(() {
+      _dealSpread = spread;
       _draws = const [];
       _reading = null;
     });
@@ -78,11 +82,11 @@ class _TarotScreenState extends State<TarotScreen> {
     final cat = _catalog;
     if (cat == null) return;
     final q = TarotClassifier(cat.classifier).classify(_q.text);
-    final reading = TarotComposer(cat.spreads, disclaimer: cat.disclaimer).compose(
-      draws: draws,
-      spread: _spread,
-      question: q,
-    );
+    final spread = _dealSpread ?? _spread;
+    final reading = TarotComposer(
+      cat.spreads,
+      disclaimer: cat.disclaimer,
+    ).compose(draws: draws, spread: spread, question: q);
     setState(() {
       _draws = draws;
       _reading = reading;
@@ -93,7 +97,9 @@ class _TarotScreenState extends State<TarotScreen> {
   Widget build(BuildContext context) {
     final cat = _catalog;
     final drawn = _phase == TarotPhase.revealed && _reading != null;
-    final busy = _phase == TarotPhase.shuffling || _phase == TarotPhase.flipping;
+    final busy =
+        _phase == TarotPhase.shuffling || _phase == TarotPhase.flipping;
+    final spreadLocked = busy || drawn || _phase == TarotPhase.arc;
     return InkstoneScaffold(
       title: 'Tarot',
       showBack: true,
@@ -109,18 +115,24 @@ class _TarotScreenState extends State<TarotScreen> {
         ),
         if (_loadError != null) ...[
           const SizedBox(height: 12),
-          Text('The deck could not be loaded.', style: InkText.body(color: AppColors.care)),
+          Text(
+            'The deck could not be loaded.',
+            style: InkText.body(color: AppColors.care),
+          ),
         ] else if (cat == null) ...[
           const SizedBox(height: 24),
           const Center(child: CircularProgressIndicator()),
         ] else ...[
           const SizedBox(height: 12),
-          Text('Spread', style: InkText.body(size: 15, color: AppColors.ivory2)),
+          Text(
+            'Spread',
+            style: InkText.body(size: 15, color: AppColors.ivory2),
+          ),
           const SizedBox(height: 6),
           ChoicePills<String>(
             options: [for (final s in cat.spreads.spreads) (s.id, s.name)],
             selected: _spreadId,
-            onSelected: busy || drawn
+            onSelected: spreadLocked
                 ? (_) {}
                 : (id) => setState(() => _spreadId = id),
           ),
@@ -128,13 +140,18 @@ class _TarotScreenState extends State<TarotScreen> {
           Text(_spread.blurb, style: InkText.small),
           if (!drawn) ...[
             const SizedBox(height: 10),
-            Text('Your question (optional)', style: InkText.body(size: 15, color: AppColors.ivory2)),
+            Text(
+              'Your question (optional)',
+              style: InkText.body(size: 15, color: AppColors.ivory2),
+            ),
             const SizedBox(height: 5),
             TextField(
               controller: _q,
               style: InkText.body(size: 15),
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(hintText: 'What should I focus on this week?'),
+              decoration: const InputDecoration(
+                hintText: 'What should I focus on this week?',
+              ),
             ),
           ],
           SizedBox(height: drawn ? 0 : 6),
@@ -148,7 +165,11 @@ class _TarotScreenState extends State<TarotScreen> {
             liveRegion: true,
             child: SizedBox(
               height: 30,
-              child: Text(_prompt, textAlign: TextAlign.center, style: InkText.display(size: 24)),
+              child: Text(
+                _prompt,
+                textAlign: TextAlign.center,
+                style: InkText.display(size: 24),
+              ),
             ),
           ),
           if (_reading != null) _Result(reading: _reading!),
@@ -169,40 +190,70 @@ class _Result extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         InkstoneCard(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(reading.opener, style: InkText.body(size: 17, height: 1.5)),
-            if (q.hasText) ...[
-              const SizedBox(height: 8),
-              Text('Your question: ${q.raw}', style: InkText.small),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(reading.opener, style: InkText.body(size: 17, height: 1.5)),
+              if (q.hasText) ...[
+                const SizedBox(height: 8),
+                Text('Your question: ${q.raw}', style: InkText.small),
+              ],
             ],
-          ]),
+          ),
         ),
         for (final p in reading.passages)
           InkstoneCard(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Wrap(spacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
-                Text(p.position.label, style: InkText.small),
-                Text(p.drawn.card.name, style: InkText.display(size: 24)),
-                InkTag(label: p.drawn.reversed ? 'Reversed' : 'Upright'),
-              ]),
-              const SizedBox(height: 6),
-              Text(p.position.intro, style: InkText.small),
-              const SizedBox(height: 6),
-              Text(p.body, style: InkText.body(size: 17, height: 1.5)),
-              const SizedBox(height: 6),
-              Text(p.advice, style: InkText.body(size: 16, height: 1.45, color: AppColors.ivory2)),
-            ]),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  spacing: 8,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(p.position.label, style: InkText.small),
+                    Text(p.drawn.card.name, style: InkText.display(size: 24)),
+                    InkTag(label: p.drawn.reversed ? 'Reversed' : 'Upright'),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(p.position.intro, style: InkText.small),
+                const SizedBox(height: 6),
+                Text(p.body, style: InkText.body(size: 17, height: 1.5)),
+                const SizedBox(height: 6),
+                Text(
+                  p.advice,
+                  style: InkText.body(
+                    size: 16,
+                    height: 1.45,
+                    color: AppColors.ivory2,
+                  ),
+                ),
+              ],
+            ),
           ),
         if (reading.yesNo != null)
-          InkstoneCard(child: Text(reading.yesNo!, style: InkText.body(size: 17, height: 1.5))),
+          InkstoneCard(
+            child: Text(
+              reading.yesNo!,
+              style: InkText.body(size: 17, height: 1.5),
+            ),
+          ),
         if (reading.timing != null)
-          InkstoneCard(child: Text(reading.timing!, style: InkText.body(size: 17, height: 1.5))),
+          InkstoneCard(
+            child: Text(
+              reading.timing!,
+              style: InkText.body(size: 17, height: 1.5),
+            ),
+          ),
         InkstoneCard(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('Together', style: InkText.display(size: 22)),
-            const SizedBox(height: 6),
-            Text(reading.summary, style: InkText.body(size: 17, height: 1.5)),
-          ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Together', style: InkText.display(size: 22)),
+              const SizedBox(height: 6),
+              Text(reading.summary, style: InkText.body(size: 17, height: 1.5)),
+            ],
+          ),
         ),
         const SizedBox(height: 8),
         Text(reading.disclaimer, style: InkText.small),

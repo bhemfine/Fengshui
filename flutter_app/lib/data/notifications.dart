@@ -42,17 +42,22 @@ class DailyNotifications {
 
   static Future<bool> requestPermission() async {
     await _ensure();
-    final android = _plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    final android = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
     if (android == null) return true;
     return await android.requestNotificationsPermission() ?? false;
   }
 
-  static Future<void> enable({required int hour, required int minute}) async {
-    await _ensure();
+  static Future<void> saveTime({required int hour, required int minute}) async {
     final s = LocalStore.instance;
-    await s.saveBool(onKey, true);
     await s.saveInt(hourKey, hour);
     await s.saveInt(minuteKey, minute);
+  }
+
+  static Future<void> enable({required int hour, required int minute}) async {
+    await _ensure();
     const details = NotificationDetails(
       android: AndroidNotificationDetails(
         'daily_card',
@@ -72,6 +77,10 @@ class DailyNotifications {
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );
+    // Persist only after the schedule succeeds, so a failure cannot leave
+    // the toggle saved as On with no reminder.
+    await saveTime(hour: hour, minute: minute);
+    await LocalStore.instance.saveBool(onKey, true);
   }
 
   static Future<void> cancel() async {
@@ -86,7 +95,14 @@ class DailyNotifications {
 
   static tz.TZDateTime _next(int hour, int minute) {
     final now = tz.TZDateTime.now(tz.local);
-    var scheduled = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+    var scheduled = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minute,
+    );
     if (!scheduled.isAfter(now)) {
       scheduled = scheduled.add(const Duration(days: 1));
     }

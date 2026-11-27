@@ -15,7 +15,8 @@ import 'package:inkstone_engine/inkstone_engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Map<String, Object?> _j(String f) =>
-    jsonDecode(File('assets/content/$f.json').readAsStringSync()) as Map<String, Object?>;
+    jsonDecode(File('assets/content/$f.json').readAsStringSync())
+        as Map<String, Object?>;
 
 Future<void> _open(WidgetTester tester, String path) async {
   tester.view.physicalSize = const Size(412, 915);
@@ -31,14 +32,22 @@ void main() {
   GoogleFonts.config.allowRuntimeFetching = false;
   late AppContent content;
   setUpAll(() {
-    content = AppContent.fromJson(forecast: _j('forecast_templates'), crystals: _j('crystals'), rituals: _j('rituals'));
+    content = AppContent.fromJson(
+      forecast: _j('forecast_templates'),
+      crystals: _j('crystals'),
+      rituals: _j('rituals'),
+    );
     ContentRepo.setForTest(content);
   });
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   test('bundled content matches content/ byte for byte', () {
     for (final f in ['forecast_templates', 'crystals', 'rituals']) {
-      expect(File('assets/content/$f.json').readAsStringSync(), File('../content/$f.json').readAsStringSync(), reason: f);
+      expect(
+        File('assets/content/$f.json').readAsStringSync(),
+        File('../content/$f.json').readAsStringSync(),
+        reason: f,
+      );
     }
   });
 
@@ -57,9 +66,18 @@ void main() {
   });
 
   test('Boon Eng 2027: 六合; Victoria 2026 六合, 2027 本命年', () {
-    expect(YourYear.compute(mainUser, 2027, content).taiSui.relations, contains(TaiSuiRelation.sixHarmony));
-    expect(YourYear.compute(partner, 2026, content).taiSui.relations, contains(TaiSuiRelation.sixHarmony));
-    expect(YourYear.compute(partner, 2027, content).taiSui.relations, contains(TaiSuiRelation.benMing));
+    expect(
+      YourYear.compute(mainUser, 2027, content).taiSui.relations,
+      contains(TaiSuiRelation.sixHarmony),
+    );
+    expect(
+      YourYear.compute(partner, 2026, content).taiSui.relations,
+      contains(TaiSuiRelation.sixHarmony),
+    );
+    expect(
+      YourYear.compute(partner, 2027, content).taiSui.relations,
+      contains(TaiSuiRelation.benMing),
+    );
   });
 
   test('floor plan palaces come from the engine for the current home', () {
@@ -77,7 +95,11 @@ void main() {
   test('any year has a non-empty guide (written or rule-based)', () {
     for (final year in [2024, 2025, 2028, 2035, 2040]) {
       final y = YourYear.compute(mainUser, year, content);
-      expect(y.guide.overview.length, greaterThan(40), reason: '$year overview');
+      expect(
+        y.guide.overview.length,
+        greaterThan(40),
+        reason: '$year overview',
+      );
       expect(y.guide.career, isNotEmpty, reason: '$year career');
       expect(y.guide.money, isNotEmpty, reason: '$year money');
       expect(y.guide.love, isNotEmpty, reason: '$year love');
@@ -91,15 +113,37 @@ void main() {
     expect(written.hasWrittenGuide, isTrue);
   });
 
-  testWidgets('Your year screen shows zodiac, Tai Sui, lucky and unlucky cards', (tester) async {
-    await _open(tester, Routes.yearly);
-    for (final k in ['yy-zodiac', 'yy-taisui', 'yy-lucky', 'yy-outlook']) {
-      expect(find.byKey(Key(k)), findsOneWidget, reason: k);
-    }
-    expect(find.textContaining('Metal Horse'), findsWidgets);
-  });
+  test(
+    'rule-based lucky months are the year branch partners, not the user animal',
+    () {
+      // 2028 is a Monkey year (申). Partners: Rat and Dragon (三合), Snake (六合).
+      final y = YourYear.compute(mainUser, 2028, content);
+      expect(y.zodiac.animal.toLowerCase(), 'horse');
+      final months = ruleBasedYearTemplate(y).luckyMonths;
+      expect(months, ['rat', 'dragon', 'snake']);
+      expect(months, luckyMonthAnimals(y.taiSui.yearPillar.branch.index));
+      expect(months, isNot(contains('horse')));
+      // 2040 is also a Monkey year and has no bundled written guide.
+      final later = YourYear.compute(mainUser, 2040, content);
+      expect(later.hasWrittenGuide, isFalse);
+      expect(later.guide.luckyMonths, ['rat', 'dragon', 'snake']);
+    },
+  );
 
-  testWidgets('BaZi and compatibility show the zodiac from the engine', (tester) async {
+  testWidgets(
+    'Your year screen shows zodiac, Tai Sui, lucky and unlucky cards',
+    (tester) async {
+      await _open(tester, Routes.yearly);
+      for (final k in ['yy-zodiac', 'yy-taisui', 'yy-lucky', 'yy-outlook']) {
+        expect(find.byKey(Key(k)), findsOneWidget, reason: k);
+      }
+      expect(find.textContaining('Metal Horse'), findsWidgets);
+    },
+  );
+
+  testWidgets('BaZi and compatibility show the zodiac from the engine', (
+    tester,
+  ) async {
     await _open(tester, Routes.bazi);
     expect(find.byKey(const Key('bazi-zodiac')), findsOneWidget);
     await _open(tester, Routes.compatibility);

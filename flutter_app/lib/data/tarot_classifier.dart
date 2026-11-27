@@ -28,7 +28,12 @@ class TarotClassifier {
   /// to beat "general". Flags need at least 3.
   TarotQuestion classify(String question) {
     final raw = question.trim();
-    final lower = raw.toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
+    // Strip punctuation so 'Should I quit my job?' still matches 'quit my job'.
+    final lower = raw
+        .toLowerCase()
+        .replaceAll(RegExp(r"[^a-z0-9']+"), ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
     if (lower.isEmpty) {
       return const TarotQuestion(
         raw: '',

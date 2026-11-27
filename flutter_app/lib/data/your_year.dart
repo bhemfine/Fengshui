@@ -17,9 +17,15 @@ class YourYear {
   });
 
   factory YourYear.compute(KuaPerson person, int year, AppContent? content) {
-    final birth = person.timeKnown ? person.birth : DateTime(person.birth.year, person.birth.month, person.birth.day, 12);
+    final birth = person.timeKnown
+        ? person.birth
+        : DateTime(person.birth.year, person.birth.month, person.birth.day, 12);
     final z = zodiacForBirth(birth);
-    final chart = computeBazi(birthLocal: person.birth, utcOffsetHours: 8, hourKnown: person.timeKnown);
+    final chart = computeBazi(
+      birthLocal: person.birth,
+      utcOffsetHours: 8,
+      hourKnown: person.timeKnown,
+    );
     return YourYear._(
       person: person,
       year: year,
@@ -56,12 +62,24 @@ class YourYear {
 
   /// Template avoids first, then the lucky-list avoids. Rule-based guides
   /// already include those lucky-list avoids, so they are not repeated.
-  List<String> get allAvoids =>
-      hasWrittenGuide ? [...template!.avoids, ...lucky.avoids] : List<String>.from(guide.avoids);
+  List<String> get allAvoids => hasWrittenGuide
+      ? [...template!.avoids, ...lucky.avoids]
+      : List<String>.from(guide.avoids);
 }
 
 /// Years that currently have a bundled written forecast (extended as packs land).
-const forecastYears = [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035];
+const forecastYears = [
+  2026,
+  2027,
+  2028,
+  2029,
+  2030,
+  2031,
+  2032,
+  2033,
+  2034,
+  2035,
+];
 
 /// English name of a Li Chun year, e.g. "Earth Monkey year".
 String yearEnglishName(int year) {
@@ -92,8 +110,8 @@ YearTemplate ruleBasedYearTemplate(YourYear y) {
   final overview = offends
       ? 'In the $yearName your animal meets Tai Sui as $relations. Tradition treats this as a year to keep plans steady, finish what you have started, and avoid needless conflict. Use your lucky elements ($fav) in colour, direction and daily rhythm. This is a rule-based outline, not a written yearly essay.'
       : harmony
-          ? 'In the $yearName your sign sits in $relations with Tai Sui. Tradition reads this as a supportive year for cooperation and for starting work you already have in mind. Favour $fav and go gently with $unfav. This is a rule-based outline, not a written yearly essay.'
-          : 'In the $yearName your sign has no direct clash or harmony with Tai Sui. A steady year suits most plans. Lean on $fav and treat $unfav as secondary. This is a rule-based outline, not a written yearly essay.';
+      ? 'In the $yearName your sign sits in $relations with Tai Sui. Tradition reads this as a supportive year for cooperation and for starting work you already have in mind. Favour $fav and go gently with $unfav. This is a rule-based outline, not a written yearly essay.'
+      : 'In the $yearName your sign has no direct clash or harmony with Tai Sui. A steady year suits most plans. Lean on $fav and treat $unfav as secondary. This is a rule-based outline, not a written yearly essay.';
   final career = offends
       ? 'Keep the job you have in good shape before reaching for a headline move. Review promises, document work, and pick one visible task you can finish well. A new role can wait until the ground is firm, unless the offer is already clear.'
       : 'A good year to show your work and ask for the next step if the work is already solid. Favour rooms and seats in your lucky Kua directions. Avoid rushing a job change on a rumour.';
@@ -118,19 +136,9 @@ YearTemplate ruleBasedYearTemplate(YourYear y) {
     'Starting heavy renovation in Tai Sui, Year Breaker, Three Killings or Five Yellow',
     ...y.lucky.avoids.take(4),
   ]);
-  // Lucky months: the year's three-harmony and six-harmony animals, when present.
-  final luckyMonths = <String>[
-    for (final r in y.taiSui.relations)
-      if (r == TaiSuiRelation.threeHarmony || r == TaiSuiRelation.sixHarmony) y.zodiac.animal.toLowerCase(),
-  ];
-  // Always include a simple seasonal hint from the year branch's element friends — use the
-  // next and previous animals as a mild "neighbouring month" cue when the list would be empty.
-  final months = luckyMonths.isNotEmpty
-      ? luckyMonths
-      : [
-          branches[(p.branch.index + 3) % 12].animal.toLowerCase(),
-          branches[(p.branch.index + 9) % 12].animal.toLowerCase(),
-        ];
+  // Lucky months: animals in three-harmony or six-harmony with the year branch,
+  // not the user's own animal.
+  final months = luckyMonthAnimals(p.branch.index);
   return YearTemplate(
     year: y.year,
     yearName: yearName,
@@ -150,6 +158,16 @@ YearTemplate ruleBasedYearTemplate(YourYear y) {
 int currentSolarYear([DateTime? now]) {
   final n = (now ?? DateTime.now()).toUtc();
   return liChunYear(n);
+}
+
+/// Animals whose months are in three-harmony or six-harmony with [yearBranch].
+List<String> luckyMonthAnimals(int yearBranch) {
+  final ids = <int>{
+    (yearBranch + 4) % 12,
+    (yearBranch + 8) % 12,
+    sixHarmonyPartner(yearBranch),
+  };
+  return [for (final i in ids) branches[i].animal.toLowerCase()];
 }
 
 String cap(String s) => s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);

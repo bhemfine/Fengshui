@@ -23,22 +23,24 @@ class CrashRecord {
   final String? os;
 
   Map<String, Object?> toJson() => {
-        'at': at.toIso8601String(),
-        'message': message,
-        'stack': stack,
-        'appVersion': appVersion,
-        'device': device,
-        'os': os,
-      };
+    'at': at.toIso8601String(),
+    'message': message,
+    'stack': stack,
+    'appVersion': appVersion,
+    'device': device,
+    'os': os,
+  };
 
   factory CrashRecord.fromJson(Map<String, Object?> m) => CrashRecord(
-        at: DateTime.tryParse('${m['at']}') ?? DateTime.fromMillisecondsSinceEpoch(0),
-        message: '${m['message'] ?? ''}',
-        stack: '${m['stack'] ?? ''}',
-        appVersion: '${m['appVersion'] ?? ''}',
-        device: m['device'] as String?,
-        os: m['os'] as String?,
-      );
+    at:
+        DateTime.tryParse('${m['at']}') ??
+        DateTime.fromMillisecondsSinceEpoch(0),
+    message: '${m['message'] ?? ''}',
+    stack: '${m['stack'] ?? ''}',
+    appVersion: '${m['appVersion'] ?? ''}',
+    device: m['device'] as String?,
+    os: m['os'] as String?,
+  );
 
   String get asShareText =>
       'Inkstone crash report (no personal data)\n'
@@ -56,6 +58,9 @@ class CrashLogStore {
   static const _keep = 20;
   static const appVersion = '0.1.0+1';
   static Directory? debugDirectory;
+  // Serialize load-append-write so overlapping FlutterError hooks cannot
+  // overwrite each other's records.
+  static Future<void> _chain = Future.value();
 
   static Future<File?> _file() async {
     try {
@@ -71,17 +76,32 @@ class CrashLogStore {
     if (f == null || !f.existsSync()) return const [];
     try {
       final raw = jsonDecode(f.readAsStringSync()) as List;
-      return [for (final x in raw) CrashRecord.fromJson(x as Map<String, Object?>)];
+      return [
+        for (final x in raw) CrashRecord.fromJson(x as Map<String, Object?>),
+      ];
     } catch (_) {
       return const [];
     }
   }
 
-  static Future<void> record(Object error, StackTrace stack, {String? device, String? os}) async {
-    await recordFlutter(FlutterErrorDetails(exception: error, stack: stack), device: device, os: os);
+  static Future<void> record(
+    Object error,
+    StackTrace stack, {
+    String? device,
+    String? os,
+  }) async {
+    await recordFlutter(
+      FlutterErrorDetails(exception: error, stack: stack),
+      device: device,
+      os: os,
+    );
   }
 
-  static Future<void> recordFlutter(FlutterErrorDetails details, {String? device, String? os}) async {
+  static Future<void> recordFlutter(
+    FlutterErrorDetails details, {
+    String? device,
+    String? os,
+  }) {
     final rec = CrashRecord(
       at: DateTime.now().toUtc(),
       message: details.exceptionAsString(),
@@ -90,26 +110,41 @@ class CrashLogStore {
       device: device,
       os: os,
     );
+    final op = _chain.then((_) => _append(rec));
+    _chain = op.catchError((_) {});
+    return op;
+  }
+
+  static Future<void> _append(CrashRecord rec) async {
     try {
       final all = [...await load(), rec];
       final kept = all.length <= _keep ? all : all.sublist(all.length - _keep);
       final f = await _file();
       if (f == null) return;
-      f.writeAsStringSync(jsonEncode([for (final r in kept) r.toJson()]), flush: true);
+      f.writeAsStringSync(
+        jsonEncode([for (final r in kept) r.toJson()]),
+        flush: true,
+      );
     } catch (_) {
       // Never throw from a crash hook.
     }
   }
 
-  static Future<void> clear() async {
-    try {
-      final f = await _file();
-      if (f != null && f.existsSync()) f.deleteSync();
-    } catch (_) {}
+  static Future<void> clear() {
+    final op = _chain.then((_) async {
+      try {
+        final f = await _file();
+        if (f != null && f.existsSync()) f.deleteSync();
+      } catch (_) {}
+    });
+    _chain = op.catchError((_) {});
+    return op;
   }
 
   static String shareText(List<CrashRecord> records) {
-    if (records.isEmpty) return 'Inkstone: no crash reports are stored on this phone.';
+    if (records.isEmpty) {
+      return 'Inkstone: no crash reports are stored on this phone.';
+    }
     return records.reversed.map((r) => r.asShareText).join('\n---\n');
   }
 }

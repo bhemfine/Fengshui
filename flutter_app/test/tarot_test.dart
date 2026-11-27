@@ -73,6 +73,19 @@ void main() {
     expect(clf.classify('hello there').topic, TarotTopic.general);
   });
 
+  test(
+    'classifier: phrases still match when a question mark or comma follows',
+    () {
+      final q = clf.classify('Should I quit my job?');
+      expect(q.topic, TarotTopic.career);
+      expect(q.topicScore, greaterThanOrEqualTo(3));
+      expect(q.yesNo, isTrue);
+      final love = clf.classify('Does he still love me?');
+      expect(love.topic, TarotTopic.love);
+      expect(love.yesNo, isTrue);
+    },
+  );
+
   test('draw uses unique cards and is deterministic with a seeded Random', () {
     final a = TarotDealer(Random(42)).draw(cat.cards, 3);
     final b = TarotDealer(Random(42)).draw(cat.cards, 3);
@@ -140,6 +153,21 @@ void main() {
     expect(r.yesNo, isNotNull);
     expect(r.yesNoLean, isNotNull);
     expect(r.summary.toLowerCase(), contains('in short'));
+  });
+
+  test('compose throws when the draw count does not match the spread', () {
+    final spread = cat.spreads.byId('past_present_future');
+    final q = clf.classify('Should I take this new job?');
+    final draws = [
+      TarotDrawn(card: cat.cardById('ace-of-wands'), reversed: false),
+    ];
+    expect(
+      () => TarotComposer(
+        cat.spreads,
+        disclaimer: cat.disclaimer,
+      ).compose(draws: draws, spread: spread, question: q),
+      throwsArgumentError,
+    );
   });
 
   test('every card id has a bundled art asset', () {

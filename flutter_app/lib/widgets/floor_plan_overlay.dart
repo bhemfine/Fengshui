@@ -41,49 +41,30 @@ class FloorPlanOverlay extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                ColoredBox(color: const Color(0xE60B1026), child: _photo(facing)),
-                GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-                  itemCount: 9,
-                  itemBuilder: (context, i) {
-                    final d = order[i];
-                    final stars = chart.palaces[d]!;
-                    final sel = selected == i;
-                    return GestureDetector(
-                      onTap: onZoneTap == null ? null : () => onZoneTap!(i),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: sel ? AppColors.gold2 : AppColors.gold.withValues(alpha: 0.45),
-                            width: sel ? 2 : 0.7,
-                          ),
-                          color: sel ? AppColors.gold.withValues(alpha: 0.18) : Colors.black.withValues(alpha: 0.15),
-                        ),
-                        padding: const EdgeInsets.all(4),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                ColoredBox(
+                  color: const Color(0xE60B1026),
+                  child: _photo(facing),
+                ),
+                Column(
+                  children: [
+                    for (var row = 0; row < 3; row++)
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(
-                              d == Direction.centre ? 'Centre' : directionShort[d]!,
-                              style: InkText.small.copyWith(
-                                color: AppColors.gold2,
-                                fontWeight: FontWeight.w600,
+                            for (var col = 0; col < 3; col++)
+                              Expanded(
+                                child: _zone(
+                                  order[row * 3 + col],
+                                  row * 3 + col,
+                                  facing,
+                                  chart,
+                                ),
                               ),
-                            ),
-                            Text(
-                              d == facing ? 'Facing' : (d == oppositeDirection[facing] ? 'Sitting' : ''),
-                              style: InkText.small.copyWith(color: AppColors.ivory2, fontSize: 10),
-                            ),
-                            Text(
-                              '${stars.mountain} / ${stars.facing}',
-                              style: InkText.body(size: 13, color: AppColors.ivory),
-                            ),
                           ],
                         ),
                       ),
-                    );
-                  },
+                  ],
                 ),
               ],
             ),
@@ -96,6 +77,53 @@ class FloorPlanOverlay extends StatelessWidget {
           style: InkText.small,
         ),
       ],
+    );
+  }
+
+  Widget _zone(Direction d, int i, Direction facing, FlyingStarChart chart) {
+    final stars = chart.palaces[d]!;
+    final sel = selected == i;
+    return GestureDetector(
+      onTap: onZoneTap == null ? null : () => onZoneTap!(i),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: sel
+                ? AppColors.gold2
+                : AppColors.gold.withValues(alpha: 0.45),
+            width: sel ? 2 : 0.7,
+          ),
+          color: sel
+              ? AppColors.gold.withValues(alpha: 0.18)
+              : Colors.black.withValues(alpha: 0.15),
+        ),
+        padding: const EdgeInsets.all(4),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              d == Direction.centre ? 'Centre' : directionShort[d]!,
+              style: InkText.small.copyWith(
+                color: AppColors.gold2,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Text(
+              d == facing
+                  ? 'Facing'
+                  : (d == oppositeDirection[facing] ? 'Sitting' : ''),
+              style: InkText.small.copyWith(
+                color: AppColors.ivory2,
+                fontSize: 10,
+              ),
+            ),
+            Text(
+              '${stars.mountain} / ${stars.facing}',
+              style: InkText.body(size: 13, color: AppColors.ivory),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

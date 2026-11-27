@@ -50,14 +50,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       initialTime: TimeOfDay(hour: _hour, minute: _minute),
     );
-    if (picked == null) return;
+    if (picked == null || !mounted) return;
     setState(() {
       _hour = picked.hour;
       _minute = picked.minute;
     });
-    if (_notifyOn) {
-      await DailyNotifications.enable(hour: _hour, minute: _minute);
-      if (mounted) showInkSnack(context, 'Daily card set for $_timeLabel.');
+    try {
+      await DailyNotifications.saveTime(hour: _hour, minute: _minute);
+      if (_notifyOn) {
+        await DailyNotifications.enable(hour: _hour, minute: _minute);
+        if (mounted) showInkSnack(context, 'Daily card set for $_timeLabel.');
+      }
+    } catch (e) {
+      if (mounted)
+        showInkSnack(context, 'Could not set the reminder. Try again.');
     }
   }
 
@@ -65,10 +71,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (!_notifyOn) {
       final ok = await DailyNotifications.requestPermission();
       if (!ok) {
-        if (mounted) showInkSnack(context, 'Notifications are off in system settings.');
+        if (mounted)
+          showInkSnack(context, 'Notifications are off in system settings.');
         return;
       }
-      await DailyNotifications.enable(hour: _hour, minute: _minute);
+      try {
+        await DailyNotifications.enable(hour: _hour, minute: _minute);
+      } catch (e) {
+        if (mounted)
+          showInkSnack(context, 'Could not set the reminder. Try again.');
+        return;
+      }
       if (mounted) {
         setState(() => _notifyOn = true);
         showInkSnack(context, 'Daily card set for $_timeLabel.');
@@ -83,7 +96,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final records = await CrashLogStore.load();
     final text = CrashLogStore.shareText(records);
     if (records.isEmpty) {
-      if (mounted) showInkSnack(context, 'No crash reports are stored on this phone.');
+      if (mounted)
+        showInkSnack(context, 'No crash reports are stored on this phone.');
       return;
     }
     await Share.share(text, subject: 'Inkstone crash report');
@@ -96,31 +110,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (ctx) => Dialog(
         backgroundColor: AppColors.panel,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20), side: const BorderSide(color: AppColors.gold)),
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(color: AppColors.gold),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('Delete my data', style: InkText.h2),
-            const SizedBox(height: 8),
-            Text(
-              'This removes the home you saved (facing, address, floor), checklist answers, the floor-plan photo, daily notification settings and local crash reports from this phone. The example profiles stay in the app. This cannot be undone.',
-              style: InkText.body(),
-            ),
-            const SizedBox(height: 12),
-            MidnightButton(
-              label: 'Delete everything stored',
-              onPressed: () async {
-                await deleteAllUserData();
-                if (ctx.mounted) Navigator.of(ctx).pop();
-                if (mounted) {
-                  setState(() => _notifyOn = false);
-                  showInkSnack(context, 'Saved data on this phone was deleted.');
-                }
-              },
-            ),
-            const SizedBox(height: 8),
-            GhostButton(label: 'Cancel', onPressed: () => Navigator.of(ctx).pop()),
-          ]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Delete my data', style: InkText.h2),
+              const SizedBox(height: 8),
+              Text(
+                'This removes the home you saved (facing, address, floor), checklist answers, the floor-plan photo, daily notification settings and local crash reports from this phone. The example profiles stay in the app. This cannot be undone.',
+                style: InkText.body(),
+              ),
+              const SizedBox(height: 12),
+              MidnightButton(
+                label: 'Delete everything stored',
+                onPressed: () async {
+                  await deleteAllUserData();
+                  if (ctx.mounted) Navigator.of(ctx).pop();
+                  if (mounted) {
+                    setState(() => _notifyOn = false);
+                    showInkSnack(
+                      context,
+                      'Saved data on this phone was deleted.',
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 8),
+              GhostButton(
+                label: 'Cancel',
+                onPressed: () => Navigator.of(ctx).pop(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -129,87 +155,162 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     Widget nav(String t, String s, VoidCallback onTap) => InkstoneCard(
-          margin: const EdgeInsets.only(top: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          onTap: onTap,
-          child: Row(children: [
-            Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      margin: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      onTap: onTap,
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(t, style: InkText.display(size: 20)),
                 Text(s, style: InkText.body(size: 15, color: AppColors.ivory2)),
-              ]),
+              ],
             ),
-            const Icon(Icons.chevron_right, color: AppColors.gold),
-          ]),
-        );
+          ),
+          const Icon(Icons.chevron_right, color: AppColors.gold),
+        ],
+      ),
+    );
     Widget row(Widget a, Widget? b, bool first) => Container(
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          decoration: BoxDecoration(
-              border: first ? null : const Border(top: BorderSide(color: AppColors.hairline))),
-          child: Row(children: [Expanded(child: a), if (b != null) Flexible(child: b)]),
-        );
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      decoration: BoxDecoration(
+        border: first
+            ? null
+            : const Border(top: BorderSide(color: AppColors.hairline)),
+      ),
+      child: Row(
+        children: [
+          Expanded(child: a),
+          if (b != null) Flexible(child: b),
+        ],
+      ),
+    );
     return InkstoneScaffold(
-      stickyCta: MidnightButton(label: 'See plans', onPressed: () => context.push(Routes.paywall)),
+      stickyCta: MidnightButton(
+        label: 'See plans',
+        onPressed: () => context.push(Routes.paywall),
+      ),
       children: [
         const ScreenTitle(title: 'Me'),
         InkstoneCard(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Wrap(spacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
-              Text(mainUser.name, style: InkText.body(weight: FontWeight.w600)),
-              const ExampleBadge(),
-            ]),
-            Text('${birthLabel(mainUser)} · Singapore · ${genderLabel(mainUser.gender)} · Kua ${mainUser.kua.kua}${mainUser.timeKnown ? '' : ' · birth time unknown'}', style: InkText.small),
-            LinkButton(label: 'Edit birth details', center: false, onPressed: () => context.go(Routes.birth)),
-          ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Wrap(
+                spacing: 8,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
+                    mainUser.name,
+                    style: InkText.body(weight: FontWeight.w600),
+                  ),
+                  const ExampleBadge(),
+                ],
+              ),
+              Text(
+                '${birthLabel(mainUser)} · Singapore · ${genderLabel(mainUser.gender)} · Kua ${mainUser.kua.kua}${mainUser.timeKnown ? '' : ' · birth time unknown'}',
+                style: InkText.small,
+              ),
+              LinkButton(
+                label: 'Edit birth details',
+                center: false,
+                onPressed: () => context.go(Routes.birth),
+              ),
+            ],
+          ),
         ),
-        nav('Family', '${partner.name} — partner, Kua ${partner.kua.kua}',
-            () => showInkSnack(context, 'Family details are example only')),
-        nav('Bookings', 'Tue 24 Nov with Master Tan', () => context.go(Routes.bookingConfirm)),
-        nav('Prescription', 'View example prescription', () => context.go(Routes.prescription)),
+        nav(
+          'Family',
+          '${partner.name} — partner, Kua ${partner.kua.kua}',
+          () => showInkSnack(context, 'Family details are example only'),
+        ),
+        nav(
+          'Bookings',
+          'Tue 24 Nov with Master Tan',
+          () => context.go(Routes.bookingConfirm),
+        ),
+        nav(
+          'Prescription',
+          'View example prescription',
+          () => context.go(Routes.prescription),
+        ),
         InkstoneCard(
-          child: Column(children: [
-            row(Text('Current plan', style: InkText.body()),
-                Text('Free', style: InkText.body(weight: FontWeight.w600)), true),
-            row(
+          child: Column(
+            children: [
+              row(
+                Text('Current plan', style: InkText.body()),
+                Text('Free', style: InkText.body(weight: FontWeight.w600)),
+                true,
+              ),
+              row(
                 Text('Notifications', style: InkText.body()),
                 LinkButton(
-                    label: _loaded ? (_notifyOn ? 'Daily card at $_timeLabel' : 'Off — tap to turn on') : '…',
-                    center: false,
-                    onPressed: _toggleNotify),
-                false),
-            row(
+                  label: _loaded
+                      ? (_notifyOn
+                            ? 'Daily card at $_timeLabel'
+                            : 'Off — tap to turn on')
+                      : '…',
+                  center: false,
+                  onPressed: _toggleNotify,
+                ),
+                false,
+              ),
+              row(
                 Text('Reminder time', style: InkText.body()),
-                LinkButton(label: _timeLabel, center: false, onPressed: _pickTime),
-                false),
-            row(
+                LinkButton(
+                  label: _timeLabel,
+                  center: false,
+                  onPressed: _pickTime,
+                ),
+                false,
+              ),
+              row(
                 Text('Language', style: InkText.body()),
                 LinkButton(
-                    label: 'English',
-                    center: false,
-                    onPressed: () => showInkSnack(context, 'English only. Chinese language is out of scope.')),
-                false),
-            row(
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: LinkButton(label: 'Send crash report', center: false, onPressed: _shareCrashes),
+                  label: 'English',
+                  center: false,
+                  onPressed: () => showInkSnack(
+                    context,
+                    'English only. Chinese language is out of scope.',
+                  ),
                 ),
-                null,
-                false),
-            row(
+                false,
+              ),
+              row(
                 Align(
                   alignment: Alignment.centerLeft,
                   child: LinkButton(
-                      label: 'Delete my data',
-                      color: AppColors.care,
-                      center: false,
-                      onPressed: _delete),
+                    label: 'Send crash report',
+                    center: false,
+                    onPressed: _shareCrashes,
+                  ),
                 ),
                 null,
-                false),
-          ]),
+                false,
+              ),
+              row(
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: LinkButton(
+                    label: 'Delete my data',
+                    color: AppColors.care,
+                    center: false,
+                    onPressed: _delete,
+                  ),
+                ),
+                null,
+                false,
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 10),
-        Text('For guidance and entertainment. Not medical, legal or financial advice.', style: InkText.small),
+        Text(
+          'For guidance and entertainment. Not medical, legal or financial advice.',
+          style: InkText.small,
+        ),
       ],
     );
   }
